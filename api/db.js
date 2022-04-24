@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
-const FilmModel = require('./models/film');
-const UserModel = require('./models/user');
+const FilmModel = require('./src/models/film');
+const UserModel = require('./src/models/user');
 
 const sequelize = new Sequelize('Peliculas', 'postgres', 'password', {
     host: 'localhost',
