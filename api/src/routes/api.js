@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const middlewares = require('./middlewares');
 
-const apiFilmsRouter = require('./api/films');
-const apiUsersRouter = require('./api/users');
+const apiFilmsRouter = require('./films');
+const apiUsersRouter = require('./users');
 
 router.use('/films', middlewares.checkToken, apiFilmsRouter);
 router.use('/users', apiUsersRouter);
