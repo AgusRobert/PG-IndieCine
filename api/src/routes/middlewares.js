@@ -17,7 +17,7 @@ checkToken = (req, res, next) => {
    if(payload.exp <= moment().unix()) {
          return res.status(401).send({message: 'Token has expired'});
     }
-    req.user = payload.user;
+    req.user = payload.user; // ver esta linea
 
    next();
 }
