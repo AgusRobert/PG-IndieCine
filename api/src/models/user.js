@@ -28,15 +28,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     direccion: {
-      type: DataTypes.STRING ,
+      type: DataTypes.STRING(100) ,
       allowNull: true,
     },
     ciudad: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
       allowNull: true,
     },
     estado: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
       allowNull: true,
     },
     zip: {
@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     role: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true,
     },
     favoritos: {
