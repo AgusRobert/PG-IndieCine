@@ -10,7 +10,11 @@ module.exports =(sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        description: {
+        poster: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        synopsis: {
             type: DataTypes.TEXT,
             allowNull: false
         },
@@ -19,25 +23,32 @@ module.exports =(sequelize, DataTypes) => {
             allowNull: false
         },
         duration: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
-        genre: {
+        director:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        genres: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
         },
-        rating: {
-            type: DataTypes.REAL,
-            allowNull: false
+        mainActors:{
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: false,
         },
-        image: {
+        country:{
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+        },  
+        movieUrl: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
-        location: {
+        associateProducer:{
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true,
         }
-
     });
 };
