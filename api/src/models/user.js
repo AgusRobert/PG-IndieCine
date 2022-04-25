@@ -17,36 +17,45 @@ module.exports = (sequelize, DataTypes) => {
     },
     nombre: {
       type: DataTypes.STRING(50),
-      allowNull: true,
+      allowNull: false,
     },
     apellido: {
       type: DataTypes.STRING(50),
-      allowNull: true,
+      allowNull: false,
+    },
+    persona: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    tipoDocumento: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    numeroDocumento: {
+      type: DataTypes.STRING(20),
+      allowNull: false, 
+    },
+    frenteDocumento: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    dorsoDocumento: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+    },
+    terminosCondiciones: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
     },
     telefono: {
       type: DataTypes.STRING(30),
-      allowNull: true,
-    },
-    direccion: {
-      type: DataTypes.STRING(100) ,
-      allowNull: true,
-    },
-    ciudad: {
-      type: DataTypes.STRING(30),
-      allowNull: true,
-    },
-    estado: {
-      type: DataTypes.STRING(30),
-      allowNull: true,
-    },
-    zip: {
-      type: DataTypes.STRING(20),
       allowNull: true,
     },
     pais: {
       type: DataTypes.STRING(30),
       allowNull: true,
     },
+
     role: {
       type: DataTypes.STRING(50),
       allowNull: true,
@@ -55,9 +64,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: true,
     },
-    peliculas: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      allowNull: true,
-    },
+   
   });
 };
