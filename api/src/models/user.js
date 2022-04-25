@@ -2,21 +2,18 @@ module.exports = (sequelize, DataTypes) => {
   return sequelize.define("user", {
     
     username: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
       allowNull: false,
       unique: true,
+      primaryKey: true
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
       allowNull: false,
-    },
-    favoritos: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER), //array con id de peliculas
-      allowNull: true,
     },
     nombre: {
       type: DataTypes.STRING(50),
@@ -27,11 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     telefono: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
       allowNull: true,
     },
     direccion: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING ,
       allowNull: true,
     },
     ciudad: {
@@ -43,15 +40,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     zip: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: true,
     },
     pais: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(30),
       allowNull: true,
     },
     role: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    favoritos: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: true,
+    },
+    peliculas: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: true,
     },
   });

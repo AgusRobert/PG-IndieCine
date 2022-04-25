@@ -14,9 +14,14 @@ router.post('/register',[
     if (!errors.isEmpty()) {
         return res.status(422).json({errors: errors.array()});
     }
-    
-    req.body.password = bcrypt.hashSync(req.body.password, 10);
-    const user = await User.create(req.body);
+    let {username, password, email} = req.body;
+    password = bcrypt.hashSync(password, 10);
+
+    const user = await User.create({
+        username : username,
+        password : password,
+        email : email,
+    });
     res.json(user);
 });
 
