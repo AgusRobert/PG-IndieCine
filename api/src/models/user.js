@@ -1,14 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define("user", {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
+    
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -18,41 +14,45 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    favoritos: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER), //array con id de peliculas
+      allowNull: true,
     },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    nombre: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
     },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    apellido: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
     },
-    address: {
+    telefono: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    city: {
+    direccion: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    state: {
+    ciudad: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+    },
+    estado: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     zip: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    country: {
+    pais: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   });
 };
