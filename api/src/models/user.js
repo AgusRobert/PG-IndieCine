@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(30),
       allowNull: false,
     },
+    creador: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     nombre: {
       type: DataTypes.STRING(50),
       allowNull: false,
