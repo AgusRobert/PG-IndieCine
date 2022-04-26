@@ -1,4 +1,5 @@
 import { useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
 
 export default function CreatorForm() {
 
@@ -11,7 +12,7 @@ export default function CreatorForm() {
         passwordConfirm: '',
         country: '', // Un select que renderice todos los paises?
         person: '',//-------> tipo de persona.
-        role: '',// Cuales van a ser los roles?
+        role: '',
         idType: '',//-------> tipo de identificacion.
         //id file uploaded.
         idPhotoFrontside: '',
@@ -21,6 +22,90 @@ export default function CreatorForm() {
         termsAndConditions: false,
     });
     const [errors, setErrors] = useState({})
+    const [personSelected, setPersonSelected] = useState(false);
+
+    // Validación del username
+    // const dispacth = useDispatch();
+    // const { listOfUsers } = useSelector(state => state);
+
+    // Traer todos los países.
+    // const { countries } = useSelector(state => state);
+
+    function validateForm(state) {
+        const errors = {};
+        // name
+        if (!state.name) {
+            errors.name = "Nombre es requerido";
+        } else if (!/^[a-zñá-ú\s']{3,}$/i.test(state.name)) {
+            errors.name = "Nombre debe tener al menos 3 caracteres";
+        }
+        // surname
+        if (!state.surname) {
+            errors.surname = "Apellido es requerido";
+        } else if (!/^[a-zñá-ú\s']{3,}$/i.test(state.surname)) {
+            errors.surname = "Apellido debe tener al menos 3 caracteres";
+        }
+        // username
+        if (!state.username) {
+            errors.username = "Username es requerido";
+        } else if (!/^[a-zñá-ú\s'\d]{6,}$/i.test(state.surname)) {
+            errors.surname = "Username debe tener al menos 6 caracteres";
+        }
+        // mail
+        if (!state.mail) {
+            errors.mail = "Email es requerido";
+        } else if (!/\S+@\S+\.\S+/i.test(state.mail)) {
+            errors.mail = "Email debe ser un correo válido.";
+        }
+        // password
+        if (!state.password) {
+            errors.password = "Contraseña es requerido";
+        } /*else if (!/^[a-zñá-ú\s']{8,}$/i.test(state.password)) {
+            errors.password = "Contraseña debe contener por lo menos 8 caracteres.";
+        }*/
+        // passwordConfirm
+        if (!state.passwordConfirm) {
+            errors.passwordConfirm = "Confirmar contraseña es requerido";
+        } else if (state.password !== state.passwordConfirm) {
+            errors.passwordConfirm = "Las contraseñas no coinciden";
+        }
+        // country
+        if (!state.country) {
+            errors.country = "Pais es requerido";
+        }
+        // person
+        if (!state.person) {
+            errors.person = "Tipo de persona es requerido";
+        }
+        // role
+        if (!state.role) {
+            errors.role = "Rol es requerido";
+        } /*else if (!/^[a-zñá-ú\s']$/i.test(state.role)) {
+            errors.role = "Rol no pueden ser números.";
+        }*/
+        // idType
+        if (!state.idType) {
+            errors.idType = "Tipo de identificación es requerido";
+        }
+        // idNumber
+        if (!state.idNumber) {
+            errors.idNumber = "Número de identificación es requerido";
+        } else if (!/^[\d.]$/i.test(state.idNumber)) {
+            errors.idNumber = "Número de identificación debe contener por lo menos 8 caracteres.";
+        }
+        // phoneNumber
+        if (!state.phoneNumber) {
+            errors.phoneNumber = "Número de teléfono es requerido";
+        } else if (!/^[\d.+-]$/i.test(state.phoneNumber)) {
+            errors.phoneNumber = "Número de teléfono debe ser válido.";
+        }
+        // termsAndConditions
+        if (!state.termsAndConditions) {
+            errors.termsAndConditions = "Debe aceptar los términos y condiciones.";
+        }
+
+        return errors;
+    }
 
     function handleOnChange(e) {
         setInput({
@@ -35,6 +120,7 @@ export default function CreatorForm() {
                 ...input,
                 [e.target.name]: e.target.value
             });
+            setPersonSelected(true);
         }
         if (e.target.name === 'idType') {
             setInput({
@@ -151,24 +237,34 @@ export default function CreatorForm() {
                     <select
                         name="person"
                         onChange={handleOnSelect}>
+                        <option value="">Seleccione una opción</option>
                         <option value="natural">Persona Natural</option>
                         <option value="juridica">Persona Jurídica</option>
                     </select>
                 </div>
                 {errors.person && <span>{errors.person}</span>}
             </div>
-            {/* {input.person === 'natural' ? () : ()} //---> en el handleOnSelect que setea un estado en true si seleccionó alguna persona*/}
-            <div>
+            {personSelected ?
                 <div>
-                    <label htmlFor="role">Rol</label>
-                    <input
-                        type="text"
-                        name="role" //----> ACÁ VA UN SELECT CON TRES ROLES. BASADO EN EL RADIO DE PERSONA.
-                        onChange={handleOnChange}
-                        placeholder="Ingrese su rol" />
+                    {
+                        input.person === 'natural' ? (
+                            <select name="role" onChange={handleOnSelect}>
+                                <option value='' disabled selected>Roles</option>
+                                <option value='director'>Director/a</option>
+                                <option value='productor'>Productor/a</option>
+                                <option value='montajista'>Montajista</option>
+                            </select>
+                        ) : (
+                            <select name="role" onChange={handleOnSelect}>
+                                <option value='' disabled selected>Roles</option>
+                                <option value='productora'>Productora</option>
+                            </select>
+                        )
+                    }
+                    {errors.role && <span>{errors.role}</span>}
                 </div>
-                {errors.role && <span>{errors.role}</span>}
-            </div>
+                : null
+            }
             <div>
                 <div>
                     <label htmlFor="idType">Tipo de identificación</label>
