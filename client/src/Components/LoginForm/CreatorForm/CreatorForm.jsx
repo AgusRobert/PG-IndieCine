@@ -236,7 +236,7 @@ export default function CreatorForm() {
                     <input
                         type="checkbox"
                         name="termsAndConditions"
-                        onChange={handleOnCheck} />
+                        onChange={handleOnCheckbox} />
                 </div>
                 {errors.termsAndConditions && <span>{errors.termsAndConditions}</span>}
             </div>
