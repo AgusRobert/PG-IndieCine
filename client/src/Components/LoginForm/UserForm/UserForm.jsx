@@ -74,21 +74,6 @@ export default function UserForm() {
         });
     }
 
-    // function handleOnSelect(e) {
-    //     if (e.target.name === 'person') {
-    //         setInput({
-    //             ...input,
-    //             [e.target.name]: e.target.value
-    //         });
-    //     }
-    //     // if (e.target.name === 'idType') {
-    //     //     setInput({
-    //     //         ...input,
-    //     //         [e.target.name]: e.target.value
-    //     //     });
-    //     // }
-    // }
-
     function handleOnCheckbox(e) {
         setInput((prevState) => {
             const newInput = {

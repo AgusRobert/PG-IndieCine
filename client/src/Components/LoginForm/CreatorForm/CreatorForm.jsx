@@ -116,16 +116,24 @@ export default function CreatorForm() {
 
     function handleOnSelect(e) {
         if (e.target.name === 'person') {
-            setInput({
-                ...input,
-                [e.target.name]: e.target.value
+            setInput((prevState) => {
+                const newInput = {
+                    ...prevState,
+                    [e.target.name]: e.target.value
+                }
+                setErrors(validateForm(newInput));
+                return newInput;
             });
             setPersonSelected(true);
         }
         if (e.target.name === 'idType') {
-            setInput({
-                ...input,
-                [e.target.name]: e.target.value
+            setInput((prevState) => {
+                const newInput = {
+                    ...prevState,
+                    [e.target.name]: e.target.value
+                }
+                setErrors(validateForm(newInput));
+                return newInput;
             });
         }
     }
