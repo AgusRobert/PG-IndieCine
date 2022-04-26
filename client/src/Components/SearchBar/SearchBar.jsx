@@ -2,34 +2,24 @@ import React from "react";
 import { useState } from "react";
 import {useDispatch} from "react-redux";
 
-export default function SearchBar({setCurrentPage}){
-
-    /* const dispatch = useDispatch();
-
-    const [name, setName] = useState("");
-
-   function handleInputChange(e){ //setea los cambios que escriba el usuario en el input
-       e.preventDefault();
-       setName(e.target.value)
+export default function SearchBar () {
+    
+    const [search,setSearch] = useState ('')
+    let dispatch = useDispatch()
+    function onSubmit(e){
+      e.preventDefault();
+      dispatch (searchPelicula_Actor(search))
     }
-
-    function handleSubmit(e){
-        e.preventDefault();
-        dispatch(getNameVideogames(name)); //despacha el estado local, que sera lo que escribe el usuario al buscar con el boton
-        setName("")
-        setCurrentPage(1);
-    } */
-
-    return(
-        <div>
-            <input
-            /* value={name} */
-            type="text"
-            placeholder="Buscar Videojuego..."
-            /* onChange={(e) => handleInputChange(e)} */
-            />
-            <button type="submit" /* onClick={(e) => handleSubmit(e)} */>Buscar</button>
-        </div>
-    )
-
+    function onInputChange(e){
+        e.preventDefault()
+        setSearch (e.target.value)
+    }
+    return <div className='search'>
+        <form onSubmit={onSubmit}>
+            
+            <input  placeholder="Busca una pelicula o actor..." type="text" onChange={onInputChange} value = {search} />
+           <button type="submit" value="Search">Buscar</button> 
+        </form>
+        
+    </div>
 }
