@@ -44,6 +44,13 @@ export default function CreatorForm() {
         }
     }
 
+    function handleOnCheckbox(e) {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.checked
+        });
+    }
+
     return (
         <div>
             <div>
