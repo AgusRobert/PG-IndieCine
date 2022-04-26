@@ -1,5 +1,4 @@
 import axios from "axios";
-export const SEARCH_PELIS = 'SEARCH_PELIS'
 
  export function searchPelicula_Actor(search){
     return function (dispatch) {

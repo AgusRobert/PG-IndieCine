@@ -1,10 +1,6 @@
 //LOGICA A LA ESPERA DEL BACK
-
-const initialState = { //estados iniciales
-    /* videogames: [],
-    allVideogames: [],
-    genres: [],
-    detail: [] */
+import { SEARCH_PELIS } from "../actions/actionstype";
+const initialState = { 
     peliculas:[],
     pelisfiltradas:[]
 }
