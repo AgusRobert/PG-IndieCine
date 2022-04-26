@@ -13,7 +13,7 @@ export default function UserForm() {
     });
     const [errors, setErrors] = useState({})
 
-    // Validación del username
+    // --- VALIDACIÓN DEL USERNAME ---
     // const dispacth = useDispatch();
     // const { listOfUsers } = useSelector(state => state);
 

@@ -1,7 +1,7 @@
 import CreatorForm from "./CreatorForm/CreatorForm";
 import UserForm from "./UserForm/UserForm";
 
-export default function LoginForm() {
+export default function SignInForm() {
 
     const [user, setUser] = useState(false);
     const [creator, setCreator] = useState(false);
