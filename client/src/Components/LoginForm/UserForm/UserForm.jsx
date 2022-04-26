@@ -16,12 +16,27 @@ export default function UserForm() {
     // Validación del username
     // const dispacth = useDispatch();
     // const { listOfUsers } = useSelector(state => state);
-    
-    function handleOnChange (e){
+
+    function handleOnChange(e) {
         setInput({
             ...input,
             [e.target.name]: e.target.value
         });
+    }
+
+    function handleOnSelect(e) {
+        if (e.target.name === 'person') {
+            setInput({
+                ...input,
+                [e.target.name]: e.target.value
+            });
+        }
+        // if (e.target.name === 'idType') {
+        //     setInput({
+        //         ...input,
+        //         [e.target.name]: e.target.value
+        //     });
+        // }
     }
 
 
