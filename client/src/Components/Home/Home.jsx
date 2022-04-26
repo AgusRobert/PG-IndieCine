@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card.jsx"
-import Paginado from "../Paginado/Paginado.jsx"
+import Paginated from "../Paginated/Paginated.jsx"
 import SearchBar from "../SearchBar/SearchBar.jsx"
 import SearchRating from "../SearchRating/SearchRating.jsx"
 
