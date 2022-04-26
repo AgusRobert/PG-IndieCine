@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { /*useEffect, */useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 
 export default function CreatorForm() {
@@ -30,6 +30,9 @@ export default function CreatorForm() {
 
     // Traer todos los países.
     // const { countries } = useSelector(state => state);
+    // useEffect(() => {
+    //     dispatch(getCountries());
+    // }, []);
 
     function validateForm(state) {
         const errors = {};
@@ -108,9 +111,13 @@ export default function CreatorForm() {
     }
 
     function handleOnChange(e) {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
+        setInput((prevState) => {
+            const newInput = {
+                ...prevState,
+                [e.target.name]: e.target.value
+            }
+            setErrors(validateForm(newInput));
+            return newInput;
         });
     }
 
