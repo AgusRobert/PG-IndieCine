@@ -1,8 +1,8 @@
 import axios from "axios";
 
-//aca se conecta el back con el front
+//LOGICA PENDIENTE PARA TRABAJAR CUANDO VENGA INFO DEL BACK
 
-export function getVideogames() { //obtener todos los videojuegos
+/* export function getVideogames() { //obtener todos los videojuegos
     return async function (dispatch) {
         let json = await axios.get("http://localhost:3001/videogames") //nos traemos los juegos
 
@@ -98,4 +98,4 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
             console.log(error)
         }
     }
-}
+} */
