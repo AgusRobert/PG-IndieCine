@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function CreatorForm() {
 
     const [input, setInput] = useState({
@@ -18,6 +20,14 @@ export default function CreatorForm() {
         phoneNumber: '',
         termsAndConditions: false,
     });
+    const [errors, setErrors] = useState({})
+
+    function handleOnChange(e) {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        });
+    }
 
     return (
         <div>
@@ -125,6 +135,7 @@ export default function CreatorForm() {
                 </div>
                 {errors.person && <span>{errors.person}</span>}
             </div>
+            {/* {input.person === 'natural' ? () : ()} //---> en el handleOnSelect que setea un estado en true si seleccionó alguna persona*/}
             <div>
                 <div>
                     <label htmlFor="role">Rol</label>
