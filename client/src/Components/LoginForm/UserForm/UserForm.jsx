@@ -85,11 +85,28 @@ export default function UserForm() {
         });
     }
 
-    function handleOnSubmit(e) { }
+    function handleOnSubmit(e) {
+        e.preventDefault();
+        setErrors(validateForm(input));
+        if (!Object.keys(errors).length &&
+            input.name &&
+            input.surname &&
+            input.username &&
+            input.mail &&
+            input.password &&
+            input.passwordConfirm &&
+            input.termsAndConditions
+        ) {
+            alert("Formulario enviado correctamente");
+            // direccionamiento al home?
+        } else {
+            alert("Formulario no enviado");
+        }
+    }
 
     return (
-        <div>
-            <form onSubmit={handleOnSubmit}>
+        <form onSubmit={handleOnSubmit}>
+            <div>
                 <div>
                     <div>
                         <label htmlFor="name">Nombre</label>
@@ -165,7 +182,7 @@ export default function UserForm() {
                 <div>
                     <div>
                         <label htmlFor="mail">Términos y Condiciones</label>
-                        <Link>Link a los términos y condiciones.</Link> 
+                        <Link>Link a los términos y condiciones.</Link>
                         {/* ver este link que onda, si queda así o si va un componente TyC o qué */}
                         <input
                             type="checkbox"
@@ -174,7 +191,7 @@ export default function UserForm() {
                     </div>
                     {errors.termsAndConditions && <span>{errors.termsAndConditions}</span>}
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     )
 }
