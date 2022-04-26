@@ -131,9 +131,13 @@ export default function CreatorForm() {
     }
 
     function handleOnCheckbox(e) {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.checked
+        setInput((prevState) => {
+            const newInput = {
+                ...prevState,
+                [e.target.name]: e.target.value
+            }
+            setErrors(validateForm(newInput));
+            return newInput;
         });
     }
 

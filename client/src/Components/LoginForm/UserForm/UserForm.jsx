@@ -180,7 +180,8 @@ export default function UserForm() {
                 <div>
                     <div>
                         <label htmlFor="mail">Términos y Condiciones</label>
-                        <Link>Link a los términos y condiciones.</Link>
+                        <Link>Link a los términos y condiciones.</Link> 
+                        {/* ver este link que onda, si queda así o si va un componente TyC o qué */}
                         <input
                             type="checkbox"
                             name="termsAndConditions"
