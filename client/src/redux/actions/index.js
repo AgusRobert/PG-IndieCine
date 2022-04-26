@@ -1,20 +1,20 @@
 import axios from "axios";
 export const SEARCH_PELIS = 'SEARCH_PELIS'
 
- export function searchPelicula_Actor(search){
+export function searchPelicula_Actor(search) {
     return function (dispatch) {
-        axios.get(RUTABACK + search)
-        .then((pelis) => {
-          dispatch({
-            type: SEARCH_PELIS,
-            payload: pelis.data
-          });
-        })
-        .catch((error)=>{
-           console.log(error)
-        })
-      };
- }
+        axios.get( /* RUTABACK */ +search)
+            .then((pelis) => {
+                dispatch({
+                    type: SEARCH_PELIS,
+                    payload: pelis.data
+                });
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
+}
 //LOGICA PENDIENTE PARA TRABAJAR CUANDO VENGA INFO DEL BACK
 
 /* export function getVideogames() { //obtener todos los videojuegos
@@ -114,6 +114,3 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
         }
     }
 } */
-
-
-

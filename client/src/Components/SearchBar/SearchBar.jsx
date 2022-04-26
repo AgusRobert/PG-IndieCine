@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import {useDispatch} from "react-redux";
+import {searchPelicula_Actor} from "../../redux/actions/index"
 
 export default function SearchBar () {
     

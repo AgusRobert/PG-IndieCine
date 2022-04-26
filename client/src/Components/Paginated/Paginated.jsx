@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Paginado ({videogamesPerPage, allVideogames, paginado, currentPage}){
+export default function Paginated ({videogamesPerPage, allVideogames, paginado, currentPage}){
 
     const pageNumbers = []
 
