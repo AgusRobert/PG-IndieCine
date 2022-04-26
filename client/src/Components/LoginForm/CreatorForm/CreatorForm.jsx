@@ -15,8 +15,8 @@ export default function CreatorForm() {
         role: '',
         idType: '',//-------> tipo de identificacion.
         //id file uploaded.
-        idPhotoFrontside: '', // OJO CON ESTO
-        idPhotoBackside: '', // OJO CON ESTO
+        idPhotoFrontside: '', // OJO CON ESTO    //---> id file updated.--> input type file
+        idPhotoBackside: '', // OJO CON ESTO     //---^
         idNumber: '',
         phoneNumber: '',
         termsAndConditions: false,
@@ -24,11 +24,12 @@ export default function CreatorForm() {
     const [errors, setErrors] = useState({})
     const [personSelected, setPersonSelected] = useState(false);
 
-    // Validación del username
+    // --- VALIDACIÓN DEL USERNAME ---
     // const dispacth = useDispatch();
     // const { listOfUsers } = useSelector(state => state);
 
-    // Traer todos los países.
+    // --- TRAER LA LISTA DE PAISES ---
+    const countries = [{ id: 01, name: 'Argentina' }, { id: 02, name: 'Bolivia' }, 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'];
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
     //     dispatch(getCountries());
@@ -167,6 +168,7 @@ export default function CreatorForm() {
         ) {
             alert("Formulario enviado correctamente");
             // direccionamiento al home?
+            // resetear el estado de input??
         } else {
             alert("Formulario no enviado");
         }
@@ -365,6 +367,7 @@ export default function CreatorForm() {
                     <div>
                         <label htmlFor="mail">Términos y Condiciones</label>
                         <Link>Link a los términos y condiciones.</Link>
+                        {/* ver este link que onda, si queda así o si va un componente TyC o qué */}
                         <input
                             type="checkbox"
                             name="termsAndConditions"

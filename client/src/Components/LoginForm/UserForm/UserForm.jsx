@@ -99,6 +99,7 @@ export default function UserForm() {
         ) {
             alert("Formulario enviado correctamente");
             // direccionamiento al home?
+            // resetear el estado de input??
         } else {
             alert("Formulario no enviado");
         }
