@@ -6,7 +6,7 @@ export default function UserForm() {
         name: '',
         surname: '',
         username: '', // Validar que no se repita
-        mail: '',
+        mail: '', // Validar que no se repita
         password: '',
         passwordConfirm: '',
         termsAndConditions: false,
@@ -16,39 +16,44 @@ export default function UserForm() {
     // --- VALIDACIÓN DEL USERNAME ---
     // const dispacth = useDispatch();
     // const { listOfUsers } = useSelector(state => state);
+    const listOfUsers = []
+
+    // --- VALIDACIÓN DEL MAIL ---
+    // const { listOfMails } = useSelector(state => state);
+    const listOfMails = []
 
     function validateForm(state) {
         const errors = {};
         // name
         if (!state.name) {
             errors.name = "Nombre es requerido";
-        } else if (!/^[a-zñá-ú\s']{3,}$/i.test(state.name)) {
+        } else if (!/^[a-zñá-ú\s']{3,20}$/i.test(state.name)) {
             errors.name = "Nombre debe tener al menos 3 caracteres";
         }
         // surname
         if (!state.surname) {
             errors.surname = "Apellido es requerido";
-        } else if (!/^[a-zñá-ú\s']{3,}$/i.test(state.surname)) {
+        } else if (!/^[a-zñá-ú\s']{3,20}$/i.test(state.surname)) {
             errors.surname = "Apellido debe tener al menos 3 caracteres";
         }
         // username
         if (!state.username) {
             errors.username = "Username es requerido";
-        } else if (!/^[a-zñá-ú\s'\d]{6,}$/i.test(state.surname)) {
-            errors.surname = "Username debe tener al menos 6 caracteres";
+        } else if (!/^[a-zñá-ú'\d_@./#&+-]{6,15}$/i.test(state.username) && !listOfUsers.includes(state.username)) {
+            errors.surname = "Username debe tener al menos 6 caracteres y no puede haber espacios.";
         }
         // mail
         if (!state.mail) {
             errors.mail = "Email es requerido";
-        } else if (!/\S+@\S+\.\S+/i.test(state.mail)) {
+        } else if (!/\S+@\S+\.\S+/i.test(state.mail) && !listOfMails.includes(state.mail)) {
             errors.mail = "Email debe ser un correo válido.";
         }
         // password
         if (!state.password) {
             errors.password = "Contraseña es requerido";
-        } /*else if (!/^[a-zñá-ú\s']{8,}$/i.test(state.password)) {
-            errors.password = "Contraseña debe contener por lo menos 8 caracteres.";
-        }*/
+        } else if (!/^(?=.*[A-Z])(?=.[0-9])[a-zñA-ZÑ0-9!@#$%^&]{6,16}$/.test(state.password)) {
+            errors.password = "Contraseña debe tener entre 6 y 16 caracteres, al menos una mayúscula y un número. Ejemplo: Pepito123";
+        }
         // passwordConfirm
         if (!state.passwordConfirm) {
             errors.passwordConfirm = "Confirmar contraseña es requerido";
