@@ -39,6 +39,12 @@ export default function UserForm() {
         // }
     }
 
+    function handleOnCheckbox(e) {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.checked
+        });
+    }
 
     return (
         <div>
