@@ -1,11 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define("user", {
-    
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     username: {
       type: DataTypes.STRING(30),
       allowNull: false,
       unique: true,
-      primaryKey: true
     },
     password: {
       type: DataTypes.STRING(100),
@@ -21,35 +24,35 @@ module.exports = (sequelize, DataTypes) => {
     },
     nombre: {
       type: DataTypes.STRING(50),
-      allowNull: false,
+      allowNull: true,
     },
     apellido: {
       type: DataTypes.STRING(50),
-      allowNull: false,
+      allowNull: true,
     },
     persona: {
       type: DataTypes.STRING(50),
-      allowNull: false,
+      allowNull: true,
     },
     tipoDocumento: {
       type: DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
     },
     numeroDocumento: {
       type: DataTypes.STRING(20),
-      allowNull: false, 
+      allowNull: true, 
     },
     frenteDocumento: {
       type: DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
     },
     dorsoDocumento: {
       type: DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
     },
     terminosCondiciones: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
     },
     telefono: {
       type: DataTypes.STRING(30),
@@ -62,10 +65,6 @@ module.exports = (sequelize, DataTypes) => {
 
     role: {
       type: DataTypes.STRING(50),
-      allowNull: true,
-    },
-    favoritos: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: true,
     },
    
