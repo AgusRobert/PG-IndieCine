@@ -1,3 +1,6 @@
+import { useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+
 export default function UserForm() {
     const [input, setInput] = useState({
         name: '',
@@ -8,6 +11,18 @@ export default function UserForm() {
         passwordConfirm: '',
         termsAndConditions: false,
     });
+    const [errors, setErrors] = useState({})
+
+    // Validación del username
+    // const dispacth = useDispatch();
+    // const { listOfUsers } = useSelector(state => state);
+    
+    function handleOnChange (e){
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        });
+    }
 
 
     return (
