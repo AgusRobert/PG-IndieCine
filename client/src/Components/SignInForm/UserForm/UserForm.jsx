@@ -13,14 +13,15 @@ export default function UserForm() {
     });
     const [errors, setErrors] = useState({})
 
-    // --- VALIDACIÓN DEL USERNAME ---
+    // -------- VALIDACIÓN DEL USERNAME --------
     // const dispacth = useDispatch();
     // const { listOfUsers } = useSelector(state => state);
-    const listOfUsers = []
+    const listOfUsers = [{ id: 1, name: 'user1' }, { id: 2, name: 'user2' }];
+    //FIJARNOS COMO LLEGA LA INFO A listOfUsers porque está el includes.
 
-    // --- VALIDACIÓN DEL MAIL ---
+    // -------- VALIDACIÓN DEL MAIL --------
     // const { listOfMails } = useSelector(state => state);
-    const listOfMails = []
+    const listOfMails = ['ejemplo1@gmail.com', 'ejemplo2@gmail.com']
 
     function validateForm(state) {
         const errors = {};
@@ -103,7 +104,7 @@ export default function UserForm() {
             input.termsAndConditions
         ) {
             alert("Formulario enviado correctamente");
-            // direccionamiento al home?
+            // direccionamiento al home? al login?
             // resetear el estado de input??
         } else {
             alert("Formulario no enviado");

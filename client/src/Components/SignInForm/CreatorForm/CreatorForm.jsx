@@ -24,11 +24,16 @@ export default function CreatorForm() {
     const [errors, setErrors] = useState({})
     const [personSelected, setPersonSelected] = useState(false);
 
-    // --- VALIDACIÓN DEL USERNAME ---
+    // -------- VALIDACIÓN DEL USERNAME --------
     // const dispacth = useDispatch();
     // const { listOfUsers } = useSelector(state => state);
+    const listOfUsers = [{ id: 1, name: 'user1' }, { id: 2, name: 'user2' }];
 
-    // --- TRAER LA LISTA DE PAISES ---
+    // -------- VALIDACIÓN DEL MAIL --------
+    // const { listOfMails } = useSelector(state => state);
+    const listOfMails = ['ejemplo1@gmail.com', 'ejemplo2@gmail.com']
+
+    // -------- TRAER LA LISTA DE PAISES --------
     const countries = [{ id: 01, name: 'Argentina' }, { id: 02, name: 'Bolivia' }, 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'];
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
@@ -94,7 +99,7 @@ export default function CreatorForm() {
         // idNumber
         if (!state.idNumber) {
             errors.idNumber = "Número de identificación es requerido";
-        } else if (!/^[\d.]$/i.test(state.idNumber)) {
+        } else if (!/^[\d]$/.test(state.idNumber)) {
             errors.idNumber = "Número de identificación debe contener por lo menos 8 caracteres.";
         }
         // phoneNumber
@@ -167,7 +172,7 @@ export default function CreatorForm() {
             input.phoneNumber
         ) {
             alert("Formulario enviado correctamente");
-            // direccionamiento al home?
+            // direccionamiento al home? al login?
             // resetear el estado de input??
         } else {
             alert("Formulario no enviado");
@@ -323,8 +328,9 @@ export default function CreatorForm() {
                             type="file"
                             name="idPhotoFrontside"
                             value={input.idPhotoFrontside}
+                            multiple={false}
                             onChange={handleOnChange}
-                            accept='image/png, image/jpeg, .doc, .docx. .pdf' />
+                            accept='image/png, image/jpeg, image/jpg' />
                     </div>
                     {errors.idPhotoFrontside && <span>{errors.idPhotoFrontside}</span>}
                 </div>
@@ -335,8 +341,9 @@ export default function CreatorForm() {
                             type="file"
                             name="idPhotoBackside"
                             value={input.idPhotoBackside}
+                            multiple={false}
                             onChange={handleOnChange}
-                            accept='image/png, image/jpeg, .doc, .docx. .pdf' />
+                            accept='image/png, image/jpeg, image/jpg' />
                     </div>
                     {errors.idPhotoBackside && <span>{errors.idPhotoBackside}</span>}
                 </div>
