@@ -3,16 +3,16 @@
 const { Router } = require('express');
 const express = require('express');
 const router = Router();
-const { Genres } = require('../models/Genres');
+const { Genre } = require('../models/Genre');
 
 //router.use(express.json());
 
 //POST genres
 const postGenres = async (req, res, next) => {
     try {
-        const { nameGenre } = req.body;
-        const genre = await Genres.create({
-            nameGenre
+        const { name } = req.body;
+        const genre = await Genre.create({
+            name
         });
         res.json({
             message: 'Genre created',
@@ -26,9 +26,9 @@ const postGenres = async (req, res, next) => {
 //GET all genres
 const getGenres = async (req, res, next) => {
     try{
-        const allGenres = await Genres.findAll({
-            attributes: ['nameGenre'],
-            order: [['nameGenre', 'ASC']]
+        const allGenres = await Genre.findAll({
+            attributes: ['name'],
+            order: [['name', 'ASC']]
         });
 
         res.status(200).json(allGenres);
