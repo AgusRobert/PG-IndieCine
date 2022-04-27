@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-// import { useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { signInSignOut } from "../../redux/actions";
 
 export default function SignInForm() {
 
@@ -10,8 +11,8 @@ export default function SignInForm() {
     });
     const [errors, setErrors] = useState({});
 
-    // const history = useHistory();
-    // const dispacth = useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     // const { listOfMails } = useSelector(state => state);
     const listOfMails = ['ejemplo1@gmail.com', 'ejemplo2@gmail.com', 'ejemplo3@gmail.com']
 
@@ -48,8 +49,12 @@ export default function SignInForm() {
         setErrors(validateForm(input));
         if (!Object.keys(errors).length && input.mail && input.password) {
             alert('Sesión iniciada con éxito');
-            //history.push('/');  //--> redireccionamiento al home
+            //dispacth(login(input));
+            dispatch(signInSignOut(true));
+
+            navigate('/'); //--> redireccionamiento al home
             //setear el estado global de signIn en true
+
         } else {
             alert('Por favor, revisa los datos ingresados');
         }
