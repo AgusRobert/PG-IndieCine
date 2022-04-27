@@ -5,16 +5,16 @@
 const { Router } = require('express');
 const express = require('express');
 const router = Router();
-const { Countries } = require('../models/Countries');
+const { Country } = require('../models/Country');
 
 //router.use(express.json());
 
 //POST countries
 const postCountries = async (req, res, next) => {
     try {
-        const { nameCountry } = req.body;
-        const country = await Countries.create({
-            nameCountry
+        const { name } = req.body;
+        const country = await Country.create({
+            name
         });
         res.json({
             message: 'Country created',
@@ -28,9 +28,9 @@ const postCountries = async (req, res, next) => {
 //GET all countries
 const getCountries = async (req, res, next) => {
     try{
-        const allCountries = await Countries.findAll({
-            attributes: ['nameCountry'], //Para que solo me traiga el nombre del país
-            order: [['nameCountry', 'ASC']] //para que en el llamado del select aparezcan ordenados de A a Z, aunque ya estan guardados en la tabla en orden alfabético
+        const allCountries = await Country.findAll({
+            attributes: ['name'], //Para que solo me traiga el nombre del país
+            order: [['name', 'ASC']] //para que en el llamado del select aparezcan ordenados de A a Z, aunque ya estan guardados en la tabla en orden alfabético
         });
 
         res.status(200).json(allCountries);
