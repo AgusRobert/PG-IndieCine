@@ -32,6 +32,10 @@ export default function SignInForm() {
     return (
         <div>
             <div>
+                <h2>Si desea loguearse con Google, presione el siguiente botón.</h2>
+                <button>Google</button>
+            </div>
+            <div>
                 <h2>¿Desea registrarse como Usuario o como Creador?</h2>
                 <div >
                     <div >
@@ -41,6 +45,8 @@ export default function SignInForm() {
                         <button name='creator' onClick={handleOnClick}>Creador</button>
                     </div>
                 </div>
+            </div>
+            <div>
                 {typeOfUser ? user ? <UserForm /> : <CreatorForm /> : <span>Por favor elija como registrarse.</span>}
             </div>
         </div>
