@@ -1,5 +1,18 @@
 import axios from "axios";
-import{SEARCH_PELIS,FILTER_DURATION, ORDER_DATE} from './actionstype'
+import {
+  SEARCH_PELIS,
+  FILTER_DURATION,
+  ORDER_DATE,
+  SIGN_IN_SIGN_OUT,
+} from "./actionstype";
+
+export function signInSignOut(boolean){
+    return {
+        type: SIGN_IN_SIGN_OUT,
+        payload: boolean,
+    }
+}
+
 /* export function searchPelicula_Actor(search) {
     return function (dispatch) {
         axios.get( RUTABACK +search)
@@ -136,7 +149,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
     }
 } */
 
-
 /*  export function getMoviesByGenre (payload){
     return async function(dispatch){
         try {
@@ -153,7 +165,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
 };
  */
 
-
 /* export function getMoviesByCountry (payload){
     return async function(dispatch){
         try {
@@ -169,7 +180,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
     }
 }; */
 
-
 /* export function postMovie (payload){
     return async function(dispatch){
         try {
@@ -180,7 +190,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
         }
     }
 }; */
-
 
 /*  export function getGenres (){
               return async function (dispatch){

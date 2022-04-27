@@ -1,8 +1,14 @@
-import {SEARCH_PELIS , FILTER_DURATION , ORDER_DATE } from "../actions/actionstype";
-import {DATE_DES} from './Ordercosntants'
+import {
+  SEARCH_PELIS,
+  FILTER_DURATION,
+  ORDER_DATE,
+  SIGN_IN_SIGN_OUT,
+} from "../actions/actionstype";
+import { DATE_DES } from "./Ordercosntants";
 const initialState = {
   peliculas: [],
   pelisfiltradas: [],
+  isSignIn: false,
 };
 
 function rootReducer(state = initialState, action) {
@@ -36,6 +42,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesDate,
       };
+    case SIGN_IN_SIGN_OUT: {
+      return {
+        ...state,
+        isSignIn: action.payload,
+      };
+    }
     default:
       return "hola";
   }
