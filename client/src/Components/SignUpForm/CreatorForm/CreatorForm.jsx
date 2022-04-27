@@ -1,4 +1,5 @@
 import { /*useEffect, */useState } from "react";
+import { Link } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 
 export default function CreatorForm() {
@@ -33,7 +34,8 @@ export default function CreatorForm() {
     const listOfMails = ['ejemplo1@gmail.com', 'ejemplo2@gmail.com']
 
     // -------- TRAER LA LISTA DE PAISES --------
-    const countries = [{ id: 01, name: 'Argentina' }, { id: 02, name: 'Bolivia' }, 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'];
+    // const countries = [{ id: 01, name: 'Argentina' }, { id: 02, name: 'Bolivia' }, 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'];
+    const countries = []
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
     //     dispatch(getCountries());
@@ -165,8 +167,8 @@ export default function CreatorForm() {
             input.person &&
             input.role &&
             input.idType &&
-            input.idPhotoFrontside && 
-            input.idPhotoBackside && 
+            input.idPhotoFrontside &&
+            input.idPhotoBackside &&
             input.idNumber &&
             input.phoneNumber
         ) {
@@ -325,7 +327,7 @@ export default function CreatorForm() {
                 contrario, si dejo un input file que reciba multiples archivos solo se guarda el
                 path del primer archivo en value. Y para acceder al resto habría que acceder a 
                 los demás archivos golpeando la propiedad files del input file. */}
-                <div> 
+                <div>
                     <div>
                         <label htmlFor="idPhotoFrontside">Subir foto del anverso del documento</label>
                         <input
@@ -377,7 +379,7 @@ export default function CreatorForm() {
                 <div>
                     <div>
                         <label htmlFor="mail">Términos y Condiciones</label>
-                        <Link>Link a los términos y condiciones.</Link>
+                        <Link to={'/terms'}>Link a los términos y condiciones.</Link>
                         {/* ver este link que onda, si queda así o si va un componente TyC o qué */}
                         <input
                             type="checkbox"
