@@ -52,29 +52,14 @@ Genre.belongsToMany(Film,{
   timestamps: false,
 });
 
-User.hasMany(Film,{
-  foreignKey: "autor_Id",
-  timestamps: false,
-});
-Film.belongsTo(User,{
-  timestamps: false,
-});
+User.hasMany(Film);
+Film.belongsTo(User);
 
-User.hasMany(Comment,{
-  foreignKey: "userId",
-  timestamps: false,
-});
-Comment.belongsTo(User,{
-  timestamps: false,
-});
+User.hasMany(Comment);
+Comment.belongsTo(User);
 
-Film.hasMany(Comment,{
-  foreignKey: "filmId",
-  timestamps: false,
-});
-Comment.belongsTo(Film,{
-  timestamps: false,
-});
+Film.hasMany(Comment);
+Comment.belongsTo(Film);
 
 
 
