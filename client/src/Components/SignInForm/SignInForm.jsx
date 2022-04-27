@@ -37,12 +37,12 @@ export default function SignInForm() {
 
     return (
         <div>
-            {!typeOfUser ? (
+            {/* {!typeOfUser ? ( */}
                 <div>
                     <h2>Si desea loguearse con Google, presione el siguiente botón.</h2>
                     <button onClick={handleLogInGoogle}>Google</button>
                 </div>
-            ) : (null)}
+            {/* // ) : (null)} */}
             <div>
                 <h2>¿Desea registrarse como Usuario o como Creador?</h2>
                 <div >
