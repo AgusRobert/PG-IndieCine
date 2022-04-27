@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {/* getMoviesByGenre, getGenres */} from "../actions";
+/* import {getMoviesByGenre, getGenres} from "../actions"; */
 
-export function FilterMoviesByGenre(){
+export default function FilterMoviesByGenre(){
     const dispatch = useDispatch();
     const genres = useSelector((state) => state.genres);
 
@@ -16,11 +16,11 @@ export function FilterMoviesByGenre(){
  */
     return (
         <div>
-             <select onChange = {(e) => handleChange(e)}>
+             <select /* onChange = {(e) => handleChange(e)} */>
              <option hidden={true}>Géneros</option>
-                        {genres.map((e) => (
+                        {/* {genres.map((e) => (
                             <option key ={e.id} value={e.name}>{e.name}</option>
-                        ))}
+                        ))} */}
                     </select>
                    
         </div>
