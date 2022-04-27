@@ -105,7 +105,10 @@ export default function SignInForm() {
                 </form>
             </div>
             <div>
-                Inicio con Auth0
+                <h4>O inicia con ...</h4>
+                <div>
+                Inicio con Auth0/Google
+                </div>
             </div>
         </div>
     )
