@@ -1,3 +1,4 @@
+const { urlencoded } = require("express");
 const express = require("express");
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
@@ -5,7 +6,8 @@ require("./db.js");
 const server = express();
 
 server.name = "PG-IndieCine";
-
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 server.use(morgan("dev"));
 
 server.use((req, res, next) => {
