@@ -1,5 +1,5 @@
 import {SEARCH_PELIS , FILTER_DURATION , ORDER_DATE } from "../actions/actionstype";
-
+import {DATE_DES} from './Ordercosntants'
 const initialState = {
   peliculas: [],
   pelisfiltradas: [],
