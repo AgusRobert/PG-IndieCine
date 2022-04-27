@@ -1,4 +1,5 @@
 export const SEARCH_PELIS = 'SEARCH_PELIS'
+export const FILTER_DURATION = 'FILTER_DURATION'
 
 
 
