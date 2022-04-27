@@ -1,8 +1,10 @@
 import { SEARCH_PELIS } from "../actions/actionstype";
+import { LOG_IN_LOG_OUT } from "../actions/actionstype";
 
 const initialState = {
   peliculas: [],
   pelisfiltradas: [],
+  isLogedIn: false,
 };
 
 function rootReducer(state = initialState, action) {
@@ -16,6 +18,12 @@ function rootReducer(state = initialState, action) {
           pelisfiltradas: action.payload,
         };
       }
+    case LOG_IN_LOG_OUT: {
+      return {
+        ...state,
+        isLogedIn: !state.isLogedIn,
+      };
+    }
     default:
       return "hola";
   }
