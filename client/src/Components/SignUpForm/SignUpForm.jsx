@@ -1,4 +1,6 @@
 // import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import CreatorForm from "./CreatorForm/CreatorForm";
 import UserForm from "./UserForm/UserForm";
 
@@ -41,9 +43,9 @@ export default function SignUpForm() {
             {/* {!typeOfUser ? ( */}
             <div>
                 <label>¿Ya tienes una cuenta?</label>
-                {/* <Link to={'/signin'}> */}
+                <Link to={'/signin'}>
                     <button /*onClick={handleLogInGoogle}*/>Inicia Sesión</button>
-                {/* </Link> */}
+                </Link>
             </div>
             {/* // ) : (null)} */}
             <div>
