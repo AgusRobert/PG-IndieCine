@@ -191,13 +191,15 @@ export default function UserForm() {
                     <div>
                         <label htmlFor="mail">Acepte los </label>
                         <Link to={'/terms'}>términos y condiciones</Link>
-                        {/* ver este link que onda, si queda así o si va un componente TyC o qué */}
                         <input
                             type="checkbox"
                             name="termsAndConditions"
                             onChange={handleOnCheckbox} />
                     </div>
                     {errors.termsAndConditions && <span>{errors.termsAndConditions}</span>}
+                </div>
+                <div>
+                    <button type="submit">Registrarse</button>
                 </div>
             </div>
         </form>

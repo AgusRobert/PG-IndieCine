@@ -34,8 +34,7 @@ export default function CreatorForm() {
     const listOfMails = ['ejemplo1@gmail.com', 'ejemplo2@gmail.com']
 
     // -------- TRAER LA LISTA DE PAISES --------
-    // const countries = [{ id: 01, name: 'Argentina' }, { id: 02, name: 'Bolivia' }, 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'];
-    const countries = []
+    const countries = [{ id: '01', name: 'Argentina' }, { id: '02', name: 'Bolivia' }, { id: '03', name: 'Chile' }, { id: '04', name: 'Colombia' }, { id: '05', name: 'Costa Rica' }, { id: '06', name: 'Cuba' }/*, 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'*/];
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
     //     dispatch(getCountries());
@@ -260,8 +259,8 @@ export default function CreatorForm() {
                         <label htmlFor="country">País</label>
                         <select
                             name="country"
-                            onChange={handleOnSelect}
-                            defaultValue="">
+                            onChange={handleOnSelect}>
+                            <option value="" disabled selected>Seleccione un país</option>
                             {countries.length ? (
                                 countries.map(country => (
                                     <option
@@ -281,7 +280,7 @@ export default function CreatorForm() {
                         <select
                             name="person"
                             onChange={handleOnSelect}>
-                            <option value="">Seleccione una opción</option>
+                            <option value="" disabled selected>Seleccione una opción</option>
                             <option value="natural">Persona Natural</option>
                             <option value="juridica">Persona Jurídica</option>
                         </select>
@@ -380,13 +379,15 @@ export default function CreatorForm() {
                     <div>
                         <label htmlFor="mail">Acepte los </label>
                         <Link to={'/terms'}>términos y condiciones</Link>
-                        {/* ver este link que onda, si queda así o si va un componente TyC o qué */}
                         <input
                             type="checkbox"
                             name="termsAndConditions"
                             onChange={handleOnCheckbox} />
                     </div>
                     {errors.termsAndConditions && <span>{errors.termsAndConditions}</span>}
+                </div>
+                <div>
+                    <button type="submit">Registrarse</button>
                 </div>
             </div>
         </form>
