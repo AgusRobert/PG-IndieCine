@@ -14,7 +14,7 @@ export function signInSignOut(boolean) {
     }
 }
 
-export function orderByName(payload) { //ordenar por nombre asc o desc
+export function sortName(payload) { //ordenar por nombre asc o desc
     return {
         type: ORDER_BY_NAME,
         payload
