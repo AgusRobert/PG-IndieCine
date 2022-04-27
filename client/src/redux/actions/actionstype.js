@@ -1,5 +1,4 @@
-export const SEARCH_PELIS = 'SEARCH_PELIS'
-
-
+export const SEARCH_PELIS = "SEARCH_PELIS";
+export const LOG_IN_LOG_OUT = "LOG_IN_LOG_OUT";
 
 //ACA VAN TODAS LAS ACTION TYPES
