@@ -29,11 +29,16 @@ export default function SignInForm() {
         }
     }
 
+    function handleLogInGoogle(e){
+        e.preventDefault();
+        alert('Google login');
+    }
+
     return (
         <div>
             <div>
                 <h2>Si desea loguearse con Google, presione el siguiente botón.</h2>
-                <button>Google</button>
+                <button onClick={handleLogInGoogle}>Google</button>
             </div>
             <div>
                 <h2>¿Desea registrarse como Usuario o como Creador?</h2>
