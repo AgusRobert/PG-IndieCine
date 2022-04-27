@@ -1,11 +1,5 @@
 'use strict';
-
-const { Router } = require('express');
-const express = require('express');
-const router = Router();
-const { Genre } = require('../models/Genre');
-
-//router.use(express.json());
+const { Genre } = require('../db.js');
 
 //POST genres
 const postGenres = async (req, res, next) => {

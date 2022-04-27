@@ -1,13 +1,5 @@
 'use strict';
-
-//modulos bases para el controlador de Countries (solo necesitamos el llamado de los paises a la db 'get')
-
-const { Router } = require('express');
-const express = require('express');
-const router = Router();
-const { Country } = require('../models/Country');
-
-//router.use(express.json());
+const { Country } = require('../db.js');
 
 //POST countries
 const postCountries = async (req, res, next) => {
