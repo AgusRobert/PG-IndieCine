@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export function searchPelicula_Actor(search) {
+/* export function searchPelicula_Actor(search) {
     return function (dispatch) {
-        axios.get( /* RUTABACK */ +search)
+        axios.get( RUTABACK +search)
             .then((pelis) => {
                 dispatch({
                     type: SEARCH_PELIS,
@@ -13,7 +13,7 @@ export function searchPelicula_Actor(search) {
                 console.log(error)
             })
     };
-}
+} */
 //LOGICA PENDIENTE PARA TRABAJAR CUANDO VENGA INFO DEL BACK
 
 /* export function getVideogames() { //obtener todos los videojuegos
