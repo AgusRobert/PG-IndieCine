@@ -29,8 +29,20 @@ export default function SignInForm() {
         }
     }
 
+    function handleLogInGoogle(e) {
+        e.preventDefault();
+        alert('Google login');
+        // Acá se va a disparar el login de google 
+    }
+
     return (
         <div>
+            {/* {!typeOfUser ? ( */}
+                <div>
+                    <h2>Si desea loguearse con Google, presione el siguiente botón.</h2>
+                    <button onClick={handleLogInGoogle}>Google</button>
+                </div>
+            {/* // ) : (null)} */}
             <div>
                 <h2>¿Desea registrarse como Usuario o como Creador?</h2>
                 <div >
@@ -41,7 +53,9 @@ export default function SignInForm() {
                         <button name='creator' onClick={handleOnClick}>Creador</button>
                     </div>
                 </div>
-                {typeOfUser ? user ? <UserForm /> : <CreatorForm /> : <span>Por favor elija como registrarse.</span>}
+            </div>
+            <div>
+                {typeOfUser ? user ? <UserForm /> : <CreatorForm /> : <span>Por favor elija con qué perfil desea registrarse.</span>}
             </div>
         </div>
     )
