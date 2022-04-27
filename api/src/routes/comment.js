@@ -3,6 +3,7 @@ const router = require('express').Router();
 const {getAllComents,getComment, getComentsUser, getComentsFilm, postComent, deleteComent, modifyComent} = require('../controllers/comment');
 
 router.get('/', getAllComents);
+
 router.get('/:id', getComment)
 
 router.get('/user/:id', getComentsUser);
