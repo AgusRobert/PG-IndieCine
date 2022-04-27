@@ -67,20 +67,26 @@ export default function SignInForm() {
             <div>
                 <form onSubmit={handleOnSubmit}>
                     <div>
-                        <label htmlFor="mail">Email</label>
-                        <input
-                            name="mail"
-                            type="mail"
-                            onChange={handleChange}
-                            placeholder="Ingrese su email" />
+                        <div>
+                            <label htmlFor="mail">Email</label>
+                            <input
+                                name="mail"
+                                type="mail"
+                                onChange={handleChange}
+                                placeholder="Ingrese su email" />
+                        </div>
+                        {errors.mail && <span>{errors.mail}</span>}
                     </div>
                     <div>
-                        <label htmlFor="password">Contraseña</label>
-                        <input
-                            name="password"
-                            type="password"
-                            onChange={handleChange}
-                            placeholder="Ingrese su contraseña" />
+                        <div>
+                            <label htmlFor="password">Contraseña</label>
+                            <input
+                                name="password"
+                                type="password"
+                                onChange={handleChange}
+                                placeholder="Ingrese su contraseña" />
+                            {errors.password && <span>{errors.password}</span>}
+                        </div>
                     </div>
                     <div>
                         <button>Iniciar sesión</button>
