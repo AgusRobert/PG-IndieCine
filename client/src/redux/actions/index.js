@@ -113,3 +113,78 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
         }
     }
 } */
+
+
+/*  export function getMoviesByGenre (payload){
+    return async function(dispatch){
+        try {
+            var json3 = await axios.get('traer todas las pelis');
+            var json4 = json3.data.filter(e => e.genres.includes(payload));
+                return dispatch({
+                type: FILTER_MOVIES_BY_GENRE,
+                payload:json4
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+};
+ */
+
+
+/* export function getMoviesByCountry (payload){
+    return async function(dispatch){
+        try {
+            var json3 = await axios.get('traer todas las pelis');
+            var json4 = json3.data.filter(e => e.country.includes(payload));
+                return dispatch({
+                type: FILTER_MOVIES_BY_COUNTRY,
+                payload:json4
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}; */
+
+
+/* export function postMovie (payload){
+    return async function(dispatch){
+        try {
+            var json = await axios.post("RUTA", payload);
+            return json
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}; */
+
+
+/*  export function getGenres (){
+              return async function (dispatch){
+                  try {
+                      var json = await axios.get("URL");
+                      return dispatch({
+                          type: GET_GENRES,
+                          payload: json.data
+                      })
+                  } catch (error) {
+                      console.log(error)
+                  }
+              }
+          };
+
+
+          export function getCountries (){
+            return async function (dispatch){
+                try {
+                    var json = await axios.get("URL");
+                    return dispatch({
+                        type: GET_COUNTRIES,
+                        payload: json.data
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }; */
