@@ -25,10 +25,10 @@ function rootReducer(state = initialState, action) {
       let orderMoviesDate = [...state.pelisfiltradas];
       orderMoviesDate = orderMoviesDate.sort((a, b) => {
         if (a.date < b.date) {
-          return action.payload === POB_DES ? -1 : 1;
+          return action.payload === DATE_DES ? -1 : 1;
         }
         if (a.date > b.date) {
-          return action.payload === POB_DES ? 1 : -1;
+          return action.payload === DATE_DES ? 1 : -1;
         }
         return 0;
       });
