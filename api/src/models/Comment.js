@@ -2,6 +2,7 @@ const { Model, DataTypes } = require("sequelize");
 
 class Comment extends Model{};
 
+
 module.exports = (sequelize) => {
     return Comment.init({
         id:{
@@ -13,14 +14,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        date:{
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-       
     },{
         sequelize,
         tableName:"Comment",
-        timestamps: false,
+        timestamps: true,
     });
 };
