@@ -11,11 +11,11 @@ module.exports = (sequelize) => {
         },
         name:{
             type: DataTypes.STRING(30),
-            allowNull: false,
+            allowNull: true,
         },
         surname:{
             type: DataTypes.STRING(50),
-            allowNull: false,
+            allowNull: true,
         },
         userName:{
             type: DataTypes.STRING(30),
@@ -36,35 +36,35 @@ module.exports = (sequelize) => {
         },
         people:{
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            allowNull: true,
         },
         typeOfDocument:{
             type: DataTypes.STRING(10),
-            allowNull: false,
+            allowNull: true,
         },
         numberOfDocument:{
             type: DataTypes.BIGINT,
-            allowNull: false,
+            allowNull: true,
         },
         frontDocument:{
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         reverseDocument:{
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         telephone:{
             type: DataTypes.BIGINT,
-            allowNull: false,
+            allowNull: true,
         },
         country:{
             type: DataTypes.STRING(20),
-            allowNull: false,
+            allowNull: true,
         },
         rol:{
             type: DataTypes.STRING(20),
-            allowNull: false,
+            allowNull: true,
         },
     },{
         sequelize,
