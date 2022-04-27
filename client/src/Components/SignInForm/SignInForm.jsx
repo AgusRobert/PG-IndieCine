@@ -62,6 +62,12 @@ export default function SignInForm() {
                 <Link to={'/'}>Home (link provisorio)</Link>
             </div>
             <div>
+                <label>¿Aún no tienes una cuenta?</label>
+                <Link to={'/signup'}>
+                    <button>Registrate</button>
+                </Link>
+            </div>
+            <div>
                 <h2>Formulario de inicio de sesión</h2>
             </div>
             <div>
