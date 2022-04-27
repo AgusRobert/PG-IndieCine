@@ -189,8 +189,8 @@ export default function UserForm() {
                 </div>
                 <div>
                     <div>
-                        <label htmlFor="mail">Términos y Condiciones</label>
-                        <Link to={'/terms'}>Link a los términos y condiciones.</Link>
+                        <label htmlFor="mail">Acepte los </label>
+                        <Link to={'/terms'}>términos y condiciones</Link>
                         {/* ver este link que onda, si queda así o si va un componente TyC o qué */}
                         <input
                             type="checkbox"
