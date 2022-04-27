@@ -59,7 +59,7 @@ module.exports = (sequelize) => {
         },
     },{
         sequelize,
-        tableName:"Film",
+        tableName:"film",
         timestamps: false,
     });
 };
