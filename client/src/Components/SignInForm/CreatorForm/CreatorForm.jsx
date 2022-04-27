@@ -14,9 +14,8 @@ export default function CreatorForm() {
         person: '',//-------> tipo de persona.
         role: '',
         idType: '',//-------> tipo de identificacion.
-        //id file uploaded.
-        idPhotoFrontside: '', // OJO CON ESTO    //---> id file updated.--> input type file
-        idPhotoBackside: '', // OJO CON ESTO     //---^
+        idPhotoFrontside: '',     //---> id file updated.--> input type file
+        idPhotoBackside: '',      //---^
         idNumber: '',
         phoneNumber: '',
         termsAndConditions: false,
@@ -166,8 +165,8 @@ export default function CreatorForm() {
             input.person &&
             input.role &&
             input.idType &&
-            input.idPhotoFrontside && // OJO
-            input.idPhotoBackside && // OJO
+            input.idPhotoFrontside && 
+            input.idPhotoBackside && 
             input.idNumber &&
             input.phoneNumber
         ) {
@@ -321,7 +320,12 @@ export default function CreatorForm() {
                     </div>
                     {errors.idType && <span>{errors.idType}</span>}
                 </div>
-                <div> {/* OJO */}
+                {/* decidí dejar dos input file que reciben un archivo máximo cada uno de los dos
+                para que el path de la img se guarde en el value de cada input. Porque, en caso
+                contrario, si dejo un input file que reciba multiples archivos solo se guarda el
+                path del primer archivo en value. Y para acceder al resto habría que acceder a 
+                los demás archivos golpeando la propiedad files del input file. */}
+                <div> 
                     <div>
                         <label htmlFor="idPhotoFrontside">Subir foto del anverso del documento</label>
                         <input
@@ -334,7 +338,7 @@ export default function CreatorForm() {
                     </div>
                     {errors.idPhotoFrontside && <span>{errors.idPhotoFrontside}</span>}
                 </div>
-                <div> {/* OJO */}
+                <div>
                     <div>
                         <label htmlFor="idPhotoBackside">Subir foto del reverso del documento</label>
                         <input
