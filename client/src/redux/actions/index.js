@@ -1,5 +1,5 @@
 import axios from "axios";
-import{SEARCH_PELIS,FILTER_DURATION} from './actionstype'
+import{SEARCH_PELIS,FILTER_DURATION, ORDER_DATE} from './actionstype'
 /* export function searchPelicula_Actor(search) {
     return function (dispatch) {
         axios.get( RUTABACK +search)
@@ -28,8 +28,12 @@ export function filterDuration(duration) {
           })
         };
     }
-
-
+export function sortDate(order){
+return {
+      type: ORDER_DATE,
+      payload: order
+  }
+}
 */
 
 //LOGICA PENDIENTE PARA TRABAJAR CUANDO VENGA INFO DEL BACK
