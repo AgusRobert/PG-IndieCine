@@ -1,4 +1,4 @@
-//LOGICA A LA ESPERA DEL BACK
+
 import { SEARCH_PELIS } from "../actions/actionstype";
 const initialState = { 
     peliculas:[],
@@ -7,7 +7,7 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case SEARCH_PELIS:
+        case "SEARCH_PELIS":
             if(action.payload.length===0){
               alert('No encontramos esa busqueda :(')
             } else{
@@ -16,6 +16,8 @@ function rootReducer(state = initialState, action) {
                  pelisfiltradas: action.payload,
                }
             };
+            default: 
+              return "hola"
     }
 }
 
