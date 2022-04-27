@@ -1,15 +1,23 @@
 import axios from "axios";
 import {
-  SEARCH_PELIS,
-  FILTER_DURATION,
-  ORDER_DATE,
-  SIGN_IN_SIGN_OUT,
+    SEARCH_PELIS,
+    FILTER_DURATION,
+    ORDER_DATE,
+    SIGN_IN_SIGN_OUT,
+    ORDER_BY_NAME
 } from "./actionstype";
 
-export function signInSignOut(boolean){
+export function signInSignOut(boolean) {
     return {
         type: SIGN_IN_SIGN_OUT,
         payload: boolean,
+    }
+}
+
+export function orderByName(payload) { //ordenar por nombre asc o desc
+    return {
+        type: ORDER_BY_NAME,
+        payload
     }
 }
 
@@ -69,13 +77,6 @@ return {
 export function filterCreated(payload) { //filtrar por creados
     return {
         type: "FILTER_CREATED",
-        payload
-    }
-}
-
-export function orderByName(payload) { //ordenar por nombre asc o desc
-    return {
-        type: "ORDER_BY_NAME",
         payload
     }
 }
