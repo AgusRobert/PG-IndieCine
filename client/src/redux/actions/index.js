@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import{SEARCH_PELIS,FILTER_DURATION} from './actionstype'
 /* export function searchPelicula_Actor(search) {
     return function (dispatch) {
         axios.get( RUTABACK +search)
@@ -13,7 +13,25 @@ import axios from "axios";
                 console.log(error)
             })
     };
-} */
+} 
+export function filterDuration(duration) {
+    return function (dispatch) {
+        axios.get( RUTABACK  + duration)
+        .then((movies) => {
+            dispatch({
+              type: FILTER_DURATION,
+              payload: movies.data
+            });
+          })
+          .catch((error)=>{
+             console.log(error)
+          })
+        };
+    }
+
+
+*/
+
 //LOGICA PENDIENTE PARA TRABAJAR CUANDO VENGA INFO DEL BACK
 
 /* export function getVideogames() { //obtener todos los videojuegos

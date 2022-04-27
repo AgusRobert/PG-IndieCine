@@ -1,4 +1,4 @@
-import { SEARCH_PELIS } from "../actions/actionstype";
+import { SEARCH_PELIS, FILTER_DURATION } from "../actions/actionstype";
 
 const initialState = {
   peliculas: [],
@@ -16,6 +16,12 @@ function rootReducer(state = initialState, action) {
           pelisfiltradas: action.payload,
         };
       }
+    case FILTER_DURATION:
+      return {
+        ...state,
+        pelisfiltradas: action.payload,
+      };
+
     default:
       return "hola";
   }
