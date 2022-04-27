@@ -1,4 +1,11 @@
 import axios from "axios";
+import { LOG_IN_LOG_OUT } from "./actionstype";
+
+export function logInLogOut() {
+  return {
+    type: LOG_IN_LOG_OUT,
+  };
+}
 
 /* export function searchPelicula_Actor(search) {
     return function (dispatch) {
@@ -114,7 +121,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
     }
 } */
 
-
 /*  export function getMoviesByGenre (payload){
     return async function(dispatch){
         try {
@@ -131,7 +137,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
 };
  */
 
-
 /* export function getMoviesByCountry (payload){
     return async function(dispatch){
         try {
@@ -147,7 +152,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
     }
 }; */
 
-
 /* export function postMovie (payload){
     return async function(dispatch){
         try {
@@ -158,7 +162,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
         }
     }
 }; */
-
 
 /*  export function getGenres (){
               return async function (dispatch){
