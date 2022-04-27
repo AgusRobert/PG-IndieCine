@@ -23,7 +23,7 @@ modelDefiners.forEach(model => model(sequelize));
 let capsEntries = Object.entries(sequelize.models)?.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Film, Country, Genre } = sequelize.models;
+const { User, Film, Country, Genre, Comment } = sequelize.models;
 
 User.belongsToMany(Film,{
   through: "Favorito",
@@ -51,6 +51,33 @@ Genre.belongsToMany(Film,{
   through: "FilmGenre",
   timestamps: false,
 });
+
+User.hasMany(Film,{
+  foreignKey: "autor_Id",
+  timestamps: false,
+});
+Film.belongsTo(User,{
+  timestamps: false,
+});
+
+User.hasMany(Comment,{
+  foreignKey: "userId",
+  timestamps: false,
+});
+Comment.belongsTo(User,{
+  timestamps: false,
+});
+
+Film.hasMany(Comment,{
+  foreignKey: "filmId",
+  timestamps: false,
+});
+Comment.belongsTo(Film,{
+  timestamps: false,
+});
+
+
+
 
 module.exports = {
     ...sequelize.models,

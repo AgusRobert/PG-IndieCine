@@ -13,8 +13,12 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
     "express": "^4.18.0",
+    "express-validator": "^6.14.0",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.29.3",
     "morgan": "^1.10.0",
     "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.19.0"
   },
   "devDependencies": {
