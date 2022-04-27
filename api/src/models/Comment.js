@@ -2,7 +2,6 @@ const { Model, DataTypes } = require("sequelize");
 
 class Comment extends Model{};
 
-
 module.exports = (sequelize) => {
     return Comment.init({
         id:{
