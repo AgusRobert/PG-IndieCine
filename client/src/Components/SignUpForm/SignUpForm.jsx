@@ -32,22 +32,18 @@ export default function SignUpForm() {
         }
     }
 
-    // function handleLogInGoogle(e) {
-    //     e.preventDefault();
-    //     alert('Google login');
-    //     // Acá se va a disparar el login de google 
-    // }
-
     return (
         <div>
-            {/* {!typeOfUser ? ( */}
+            <div>
+                {/* div provisorio */}
+                <Link to={'/'}>Home (link provisorio)</Link>
+            </div>
             <div>
                 <label>¿Ya tienes una cuenta?</label>
                 <Link to={'/signin'}>
-                    <button /*onClick={handleLogInGoogle}*/>Inicia Sesión</button>
+                    <button>Inicia Sesión</button>
                 </Link>
             </div>
-            {/* // ) : (null)} */}
             <div>
                 <h2>¿Desea registrarse como Usuario o como Creador?</h2>
                 <div >
