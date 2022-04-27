@@ -1,7 +1,8 @@
+// import { Link } from "react-router-dom";
 import CreatorForm from "./CreatorForm/CreatorForm";
 import UserForm from "./UserForm/UserForm";
 
-export default function SignInForm() {
+export default function SignUpForm() {
 
     const [user, setUser] = useState(false);
     const [creator, setCreator] = useState(false);
@@ -29,19 +30,21 @@ export default function SignInForm() {
         }
     }
 
-    function handleLogInGoogle(e) {
-        e.preventDefault();
-        alert('Google login');
-        // Acá se va a disparar el login de google 
-    }
+    // function handleLogInGoogle(e) {
+    //     e.preventDefault();
+    //     alert('Google login');
+    //     // Acá se va a disparar el login de google 
+    // }
 
     return (
         <div>
             {/* {!typeOfUser ? ( */}
-                <div>
-                    <h2>Si desea loguearse con Google, presione el siguiente botón.</h2>
-                    <button onClick={handleLogInGoogle}>Google</button>
-                </div>
+            <div>
+                <label>¿Ya tienes una cuenta?</label>
+                {/* <Link to={'/signin'}> */}
+                    <button /*onClick={handleLogInGoogle}*/>Inicia Sesión</button>
+                {/* </Link> */}
+            </div>
             {/* // ) : (null)} */}
             <div>
                 <h2>¿Desea registrarse como Usuario o como Creador?</h2>
