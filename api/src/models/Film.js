@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        director:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         duration:{
             type: DataTypes.STRING,
             allowNull: false,
