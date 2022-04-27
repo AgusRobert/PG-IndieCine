@@ -2,9 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const routerComments = require("./comment");
-const routerCountries = require("./Countries");
+const routerCountries = require("./countries");
 const routerFilms = require("./film");
-const routerGenres = require("./Genres");
+const routerGenres = require("./genres");
 const routerUsers = require("./user");
 
 router.use("/comments",routerComments);
