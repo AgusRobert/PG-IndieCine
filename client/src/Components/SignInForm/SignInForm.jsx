@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 export default function SignInForm() {
 
@@ -10,7 +10,7 @@ export default function SignInForm() {
     });
     const [errors, setErrors] = useState({});
 
-    const history = useHistory();
+    // const history = useHistory();
     // const dispacth = useDispatch();
     // const { listOfMails } = useSelector(state => state);
     const listOfMails = ['ejemplo1@gmail.com', 'ejemplo2@gmail.com', 'ejemplo3@gmail.com']
@@ -48,7 +48,7 @@ export default function SignInForm() {
         setErrors(validateForm(input));
         if (!Object.keys(errors).length && input.mail && input.password) {
             alert('Sesión iniciada con éxito');
-            history.push('/'); // redireccionamiento al home
+            //history.push('/');  //--> redireccionamiento al home
             //setear el estado global de signIn en true
         } else {
             alert('Por favor, revisa los datos ingresados');
