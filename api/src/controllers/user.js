@@ -1,4 +1,5 @@
 const { User, Film } = require("../db");
+const {Op} = require("sequelize");
 const bcrypt = require("bcryptjs");
 
 exports.allUsers = async (req, res) => {
@@ -59,7 +60,7 @@ exports.registerUser = async (req, res) => {
   try {
     let user = await User.findOne({
       where: {
-        userName: req.body.username,
+        username: req.body.username,
       },
     });
     if (user) {
@@ -75,19 +76,20 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
+  
   try {
     const user = await User.findOne({
       include: [ { model: Film}],
       where: {
-        email: req.body.email,
+        [Op.or]: [ { username: req.body.data}, { email: req.body.data} ],
       },
     });
     if (!user) {
-      return res.json({ message: "Invalid email or password" });
+      return res.json({ message: "Username, email o password inválidos" });
     }
     const passwordIsValid = bcrypt.compareSync(req.body.password, user.password );
     if (!passwordIsValid) {
-      return res.json({ message: "Invalid email or password" });
+      return res.json({ message: "Username, email o password inválidos" });
     }
     res.json(user);
   } catch (error) {
