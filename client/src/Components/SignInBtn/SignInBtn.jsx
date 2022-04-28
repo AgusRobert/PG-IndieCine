@@ -30,7 +30,6 @@ export default function SignInBtn() {
 
     function handleLogin() {
         loginWithRedirect();
-        // loginWithPopup();
         // navigate('/signin')
     }
 
