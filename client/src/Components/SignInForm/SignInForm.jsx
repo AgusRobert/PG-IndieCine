@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { signInSignOut } from "../../redux/actions";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function SignInForm() {
 
@@ -60,6 +61,9 @@ export default function SignInForm() {
         }
     }
 
+    // ----------- AUTH0 LOGIN AUTHENTICATION -----------------
+    const { loginWithRedirect } = useAuth0();
+
     return (
         <div>
             <div>
@@ -107,7 +111,8 @@ export default function SignInForm() {
             <div>
                 <h4>O inicia con ...</h4>
                 <div>
-                Inicio con Auth0/Google
+                    {/* Inicio con Auth0/Google */}
+                    <button onClick={loginWithRedirect}>Google</button>
                 </div>
             </div>
         </div>
