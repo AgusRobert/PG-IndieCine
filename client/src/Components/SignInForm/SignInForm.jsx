@@ -63,6 +63,10 @@ export default function SignInForm() {
 
     // ----------- AUTH0 LOGIN AUTHENTICATION -----------------
     const { loginWithRedirect } = useAuth0();
+    function handleOnLogin() {
+        loginWithRedirect();
+        dispatch(signInSignOut(true));
+    }
 
     return (
         <div>
@@ -112,7 +116,7 @@ export default function SignInForm() {
                 <h4>O inicia con ...</h4>
                 <div>
                     {/* Inicio con Auth0/Google */}
-                    <button onClick={loginWithRedirect}>Google</button>
+                    <button onClick={handleOnLogin}>Google</button>
                 </div>
             </div>
         </div>
