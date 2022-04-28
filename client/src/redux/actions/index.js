@@ -54,6 +54,12 @@ return {
       type: ORDER_DATE,
       payload: order
   }
+
+  export function sortByComment(order){
+return {
+      type: ORDER_COMMENT,
+      payload: order
+  }
 }
 */
 
