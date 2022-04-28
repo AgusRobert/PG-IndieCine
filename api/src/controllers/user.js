@@ -59,7 +59,7 @@ exports.registerUser = async (req, res) => {
   try {
     let user = await User.findOne({
       where: {
-        userName: req.body.username,
+        username: req.body.username,
       },
     });
     if (user) {
