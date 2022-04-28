@@ -22,7 +22,9 @@ export default function CreatorForm() {
     const countries = [{ id: '01', name: 'Argentina' }, { id: '02', name: 'Bolivia' }, { id: '03', name: 'Chile' }, { id: '04', name: 'Colombia' }, { id: '05', name: 'Costa Rica' }, { id: '06', name: 'Cuba' }/*, 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'*/];
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
-    //     dispatch(getCountries());
+    //     if (!countries.length) {
+    //         dispatch(getCountries());
+    //     }
     // }, []);
 
     function validateForm(state) {
