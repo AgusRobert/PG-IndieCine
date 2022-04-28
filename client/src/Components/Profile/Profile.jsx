@@ -1,3 +1,4 @@
+import { useState } from "react";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 
 export default function Profile() {
@@ -22,11 +23,11 @@ export default function Profile() {
                 {isCreatorClick ? <CreatorForm /> : (
                     <div>
                         <h4>Beneficios de convertirse en Creador.</h4>
-                        <li>
-                            <ul>Posibilidad de publicar tu contenido.</ul>
-                            <ul>Visibilidad a tu contenido.</ul>
-                            <ul>Sección donde gestionar tu contenido.</ul>
-                        </li>
+                        <ul>
+                            <li>Posibilidad de publicar tu contenido.</li>
+                            <li>Visibilidad a tu contenido.</li>
+                            <li>Sección donde gestionar tu contenido.</li>
+                        </ul>
                     </div>
 
                 )}
