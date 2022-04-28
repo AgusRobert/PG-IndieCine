@@ -3,10 +3,11 @@ import {
   FILTER_DURATION,
   ORDER_DATE,
   SIGN_IN_SIGN_OUT,
-  ORDER_BY_NAME
+  ORDER_BY_NAME,
+  ORDER_COMMENT
 } from "../actions/actionstype";
 
-import { DATE_DES, NAME_ASC } from "./Ordercosntants";
+import { DATE_DES, NAME_ASC, COM_DES } from "./Ordercosntants";
 
 const initialState = {
   peliculas: [],
@@ -44,6 +45,21 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         pelisfiltradas: orderMoviesDate,
+      };
+      case ORDER_COMMENT:
+      let orderMoviesCom = [...state.pelisfiltradas];
+      orderMoviesCom = orderMoviesCom.sort((a, b) => {
+        if (a.comments.length < b.comments.length) {
+          return action.payload === COM_DES ? -1 : 1;
+        }
+        if (a.comments.length > b.comments.length) {
+          return action.payload === COM_DES ? 1 : -1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        pelisfiltradas: orderMoviesCom,
       };
     case SIGN_IN_SIGN_OUT: {
       return {
