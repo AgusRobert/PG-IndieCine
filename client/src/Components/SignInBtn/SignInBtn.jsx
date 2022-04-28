@@ -3,7 +3,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 // import { useNavigate } from 'react-router-dom';
 // import { signInSignOut } from '../../redux/actions';
 
+// import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
+
 export default function SignInBtn() {
+
+    // const dispatch = useDispatch();
 
     // const { isSignIn } = useSelector(state => state);
     // const dispatch = useDispatch();
@@ -24,6 +29,12 @@ export default function SignInBtn() {
     //         navigate('/signin');
     //     }
     // }
+
+    // Estoy probando cómo hacer una fn que ejecute el POST de la info del usuario.
+    // useEffect(()=> {
+    //     dispatch()
+    // } , [isAuthenticated]);
+
     function handleLogout() {
         logout({ returnTo: window.location.origin });
     }
