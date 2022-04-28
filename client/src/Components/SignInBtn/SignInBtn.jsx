@@ -10,7 +10,7 @@ export default function SignInBtn() {
     // const navigate = useNavigate();
 
     // ----- Auth0 -----
-    const { logout, loginWithRedirect/*, loginWithPopup*/ } = useAuth0();
+    const { logout, loginWithRedirect } = useAuth0();
     const { user, isAuthenticated, isLoading } = useAuth0();
 
     // function handleOnSign(e) {

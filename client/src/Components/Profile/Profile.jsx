@@ -1,14 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 
 export default function Profile() {
-
-    // const [isCreatorClick, setIsCreatorClick] = useState(false);
-
-    // function handleOnClick() {
-    //     setIsCreatorClick(!isCreatorClick);
-    // }
 
     return (
         <div>
@@ -34,7 +27,6 @@ export default function Profile() {
                     </ul>
                 </div>
             </div> <br />
-            {/* <button onClick={handleOnClick}>Subir a Creador</button> */}
             <div>
                 <h4>Para cambiar a Creador, por favor complete el siguiente formulario.</h4>
                 <CreatorForm />
