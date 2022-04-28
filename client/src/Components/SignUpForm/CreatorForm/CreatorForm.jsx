@@ -128,16 +128,18 @@ export default function CreatorForm() {
     }
 
     function handleOnSelect(e) {
-        setInput((prevState) => {
-            const newInput = {
-                ...prevState,
-                [e.target.name]: e.target.value
-            }
-            setErrors(validateForm(newInput));
-            return newInput;
-        });
-        if (e.target.name === 'person') setPersonSelected(true);
-        // Esto es para el renderizado condicional del select de roles.
+        if (e.target.value) {
+            setInput((prevState) => {
+                const newInput = {
+                    ...prevState,
+                    [e.target.name]: e.target.value
+                }
+                setErrors(validateForm(newInput));
+                return newInput;
+            });
+            if (e.target.name === 'person') setPersonSelected(true);
+            // Esto es para el renderizado condicional del select de roles.
+        }
     }
 
     function handleOnCheckbox(e) {
@@ -260,7 +262,7 @@ export default function CreatorForm() {
                         <select
                             name="country"
                             onChange={handleOnSelect}>
-                            <option value="" disabled selected>Seleccione un país</option>
+                            <option value="" /*disabled selected*/>Seleccione un país</option>
                             {countries.length ? (
                                 countries.map(country => (
                                     <option
@@ -280,7 +282,7 @@ export default function CreatorForm() {
                         <select
                             name="person"
                             onChange={handleOnSelect}>
-                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="" /*disabled selected*/>Seleccione una opción</option>
                             <option value="natural">Persona Natural</option>
                             <option value="juridica">Persona Jurídica</option>
                         </select>
@@ -289,17 +291,18 @@ export default function CreatorForm() {
                 </div>
                 {personSelected ?
                     <div>
+                        <label htmlFor="role">Rol</label>
                         {
                             input.person === 'natural' ? (
                                 <select name="role" onChange={handleOnSelect}>
-                                    <option value='' disabled selected>Roles</option>
+                                    <option value='' /*disabled selected*/>Roles</option>
                                     <option value='director'>Director/a</option>
                                     <option value='productor'>Productor/a</option>
                                     <option value='montajista'>Montajista</option>
                                 </select>
                             ) : (
                                 <select name="role" onChange={handleOnSelect}>
-                                    <option value='' disabled selected>Roles</option>
+                                    <option value='' /*disabled selected*/>Roles</option>
                                     <option value='productora'>Productora</option>
                                 </select>
                             )
