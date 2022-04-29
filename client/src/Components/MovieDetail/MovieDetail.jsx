@@ -35,9 +35,9 @@ export default function MovieDetail() {
           <h3>Director:</h3>
           <p>{peli.director}</p>
           <h3>Elenco principal:</h3> 
-        {elenco.map((elenco,i) => {
+        {elenco.map((e,i) => {
             return (
-              <p>{elenco}</p>
+              <p>{e}</p>
             );
           })}
           <h2>Genero: {peli.genres}</h2>
