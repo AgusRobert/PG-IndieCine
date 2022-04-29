@@ -113,16 +113,10 @@ export function orderByRating(payload) { //ordernar por rating asc o desc
 
 export function searchPelicula_Actor(search) {
     return function (dispatch) {
-        axios.get("http://localhost:3001/films?search=" + search)
-            .then((pelis) => {
                 dispatch({
                     type: SEARCH_PELIS,
-                    payload: pelis.data
-                });
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+                    payload: search
+                });    
     };
 }
 
