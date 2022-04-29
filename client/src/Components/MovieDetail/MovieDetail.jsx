@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import Footer from "../Footer/Footer.jsx"
 import Navbar from "../Navbar/Navbar.jsx";
 import { View } from "../Reproductor/videoplayer.js";
+import { renderMovieDetails } from "../../redux/actions/index.js";
+
 export default function MovieDetail() {
   let peli = useSelector((state) => state.movieDetail);
   let { id } = useParams();
