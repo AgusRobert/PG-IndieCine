@@ -5,10 +5,6 @@ import About from "./Components/About/About";
 import Contact from "./Components/Contact/Contact";
 import TyC from "./Components/T&C/T&C";
 
-import SignUpForm from "./Components/SignUpForm/SignUpForm";
-import SignInForm from "./Components/SignInForm/SignInForm";
-
-
 
 
 import Profile from "./Components/Profile/Profile";
