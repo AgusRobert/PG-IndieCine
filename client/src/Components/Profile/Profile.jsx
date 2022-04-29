@@ -1,10 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
+import { useSelector } from "react-redux";
 
 export default function Profile() {
 
-    const {user} = useAuth0();
+    const { user } = useAuth0();
+    const { isCreator } = useSelector(state => state);
 
     return (
         <div>
@@ -33,10 +35,18 @@ export default function Profile() {
                     </ul>
                 </div>
             </div> <br />
-            <div>
-                <h4>Para cambiar a Creador, por favor complete el siguiente formulario.</h4>
-                <CreatorForm />
-            </div>
+            {isCreator ? (
+                <div>
+                    <span>Nos enorgullece decirte que ya estás disfrutando de los beneficios de ser Creador.</span>
+                    {/* <h4>Para cambiar a Creador, por favor complete el siguiente formulario.</h4>
+                    <span>Ya ha completado el formulario. Gracias!</span> */}
+                </div>
+            ) : (
+                <div>
+                    <h4>Para cambiar a Creador, por favor complete el siguiente formulario.</h4>
+                    <CreatorForm />
+                </div>
+            )}
         </div>
     )
 }
