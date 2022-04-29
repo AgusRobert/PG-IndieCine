@@ -1,6 +1,7 @@
 import { /*useEffect, */useState } from "react";
 import { Link } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch/*, useSelector*/ } from "react-redux";
+import { isCreator } from "../../../redux/actions";
 
 export default function CreatorForm() {
 
@@ -19,6 +20,7 @@ export default function CreatorForm() {
     const [personSelected, setPersonSelected] = useState(false);
 
     // -------- TRAER LA LISTA DE PAISES --------
+    const dispatch = useDispatch();
     const countries = [{ id: '01', name: 'Argentina' }, { id: '02', name: 'Bolivia' }, { id: '03', name: 'Chile' }, { id: '04', name: 'Colombia' }, { id: '05', name: 'Costa Rica' }, { id: '06', name: 'Cuba' }/*, 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'*/];
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
@@ -44,7 +46,7 @@ export default function CreatorForm() {
         // phoneNumber
         if (!state.phoneNumber) {
             errors.phoneNumber = "Número de teléfono es requerido";
-        } else if (!/^[\d.+-]$/i.test(state.phoneNumber)) {
+        } else if (!/^[\d.+-]/i.test(state.phoneNumber)) {
             errors.phoneNumber = "Número de teléfono debe ser válido.";
         }
         // idType
@@ -54,8 +56,8 @@ export default function CreatorForm() {
         // idNumber
         if (!state.idNumber) {
             errors.idNumber = "Número de identificación es requerido";
-        } else if (!/^[\d]$/.test(state.idNumber)) {
-            errors.idNumber = "Número de identificación debe contener por lo menos 8 caracteres.";
+        } else if (!/^[0-9]/.test(state.idNumber)) {
+            errors.idNumber = "Número de identificación debe ser válido.";
         }
         // termsAndConditions
         if (!state.termsAndConditions) {
@@ -116,6 +118,7 @@ export default function CreatorForm() {
         ) {
             alert("Formulario enviado correctamente");
 
+            dispatch(isCreator(true));
             // despachar la accion para updatear el usuario.
             // Si la ruta post es la misma que el usuario básico,
             // agregar el booleano 'creator' en true.
