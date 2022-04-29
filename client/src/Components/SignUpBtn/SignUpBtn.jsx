@@ -1,5 +1,16 @@
 import { useAuth0 } from "@auth0/auth0-react"
 
+import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider  } from '@mui/material/styles';
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#D892FD",
+      },
+    },
+  });
+
 export default function SignUpBtn() {
 
     // ----- Auth0 -----
@@ -12,8 +23,10 @@ export default function SignUpBtn() {
     }
 
     return (
+        <ThemeProvider theme={theme}>
         <div>
-            <button onClick={handleSignUp} >Registrarse</button>
+            <Button color="primary" onClick={handleSignUp} >Registrarse</Button>
         </div>
+        </ThemeProvider>
     )
 }

@@ -3,19 +3,20 @@ import {
     SEARCH_PELIS,
     FILTER_DURATION,
     ORDER_DATE,
-    SIGN_IN_SIGN_OUT,
+    IS_CREATOR,
     ORDER_BY_NAME,
     GET_MOVIES,
     FILTER_MOVIES_BY_COUNTRY,
     FILTER_MOVIES_BY_GENRE,
     ORDER_BY_RATING,
     GET_GENRES,
-    GET_COUNTRIES
+    GET_COUNTRIES,
+    MOVIE_DETAIL
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
     return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/films") //nos traemos los juegos
+        let json = await axios.get("http://localhost:3001/films") 
 
         try {
             return dispatch({
@@ -28,9 +29,9 @@ export function getMovies() { //obtener todos los videojuegos
     }
 }
 
-export function signInSignOut(boolean) {
+export function isCreator(boolean) {
     return {
-        type: SIGN_IN_SIGN_OUT,
+        type: IS_CREATOR,
         payload: boolean,
     }
 }
@@ -113,19 +114,26 @@ export function orderByRating(payload) { //ordernar por rating asc o desc
 
 export function searchPelicula_Actor(search) {
     return function (dispatch) {
-        axios.get("http://localhost:3001/films?search=" + search)
-            .then((pelis) => {
                 dispatch({
                     type: SEARCH_PELIS,
-                    payload: pelis.data
-                });
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+                    payload: search
+                });    
     };
 }
 
+export function renderMovieDetails(id) {
+    return async function (dispatch) {
+        try {
+            let movie = await axios.get(`http://localhost:3001/api/films/${id}`)
+            return dispatch({
+                type: MOVIE_DETAIL,
+                payload: movie.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 /* 
 export function filterDuration(duration) {
     return function (dispatch) {
