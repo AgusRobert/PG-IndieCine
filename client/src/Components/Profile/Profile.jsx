@@ -1,7 +1,10 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 
 export default function Profile() {
+
+    const {user} = useAuth0();
 
     return (
         <div>
@@ -10,11 +13,14 @@ export default function Profile() {
                 <Link to={'/'}>Home (link provisorio)</Link>
             </div>
             <div>
-                <h1>Profile</h1>
+                <h1>PROFILE</h1>
             </div>
             <div>
                 <h2>Mis datos</h2>
-                <span>Todos los datos del usuario</span>
+                <span>Todos los datos del usuario...</span>
+                <h4>{user.name}</h4>
+                <h4>{user.nickname}</h4>
+                <h4>{user.email}</h4>
             </div>
             <div>
                 <h2>¿Desea subir al siguiente nivel?</h2>
