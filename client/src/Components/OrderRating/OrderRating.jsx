@@ -14,7 +14,7 @@ export default function OrderRating (){
     return (
         <div>
             <select name="select" onChange={onSelectChange}>
-                    <option value='' disabled selected>Rating</option>
+                    <option value='' hidden={true}>Rating</option>
                     <option value={RATING_ASC}>Peor al Mejor</option>
                     <option value={RATING_DES}>Mejor al Peor</option>
             </select>
