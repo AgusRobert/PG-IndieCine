@@ -8,6 +8,7 @@ import Profile from "./Components/Profile/Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import MovieDetail from "./Components/MovieDetail/MovieDetail";
 function App() {
+  const { isAuthenticated } = useAuth0()
   return (
     <BrowserRouter>
       <div className="App">
