@@ -10,11 +10,11 @@ exports.getFilms = async(req, res) => {
     }
 };
 
-exports.postFilms = async(req, res) => {
+exports.postFilms = async(req, res, next) => {
     try{
-        const {title, genres, poster, synopsis, year, director, duration, mainActors, country, url, associateProducer, rating} = req.body
+        const {title, genres, poster, synopsis, year, director, duration, mainActors, country, url, associateProducer, rating, UserId} = req.body
         let filmCreated = await Film.create({
-            title, poster, synopsis, year, director, duration, mainActors, url, associateProducer, rating
+            title, poster, synopsis, year, director, duration, mainActors, url, associateProducer, rating,
         })
 
         if(genres){
@@ -34,7 +34,7 @@ exports.postFilms = async(req, res) => {
         res.send("Film creado exitosamente")
     }
     catch(err){
-        res.send("Ocurrió un error, intente subir el film nuevamente")
+        res.send("No se pudo crear el film")
     }
 }
 
@@ -54,3 +54,4 @@ exports.updateFilm = async (req, res) => {
         res.send("Ocurrió un error, trate de actualizar la información nuevamente")
     }
 }
+

@@ -13,10 +13,6 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(100),
             allowNull: false,
         },
-        genres:{
-            type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: false,
-        },
         poster:{
             type: DataTypes.STRING,
             allowNull: false,
@@ -39,10 +35,6 @@ module.exports = (sequelize) => {
         },
         mainActors:{
             type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: false,
-        },
-        country:{
-            type: DataTypes.STRING(20),
             allowNull: false,
         },
         url:{
