@@ -3,7 +3,7 @@ import {
     SEARCH_PELIS,
     FILTER_DURATION,
     ORDER_DATE,
-    SIGN_IN_SIGN_OUT,
+    IS_CREATOR,
     ORDER_BY_NAME,
     GET_MOVIES,
     FILTER_MOVIES_BY_COUNTRY,
@@ -28,9 +28,9 @@ export function getMovies() { //obtener todos los videojuegos
     }
 }
 
-export function signInSignOut(boolean) {
+export function isCreator(boolean) {
     return {
-        type: SIGN_IN_SIGN_OUT,
+        type: IS_CREATOR,
         payload: boolean,
     }
 }

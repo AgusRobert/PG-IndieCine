@@ -1,7 +1,7 @@
 export const SEARCH_PELIS = "SEARCH_PELIS";
 export const FILTER_DURATION = "FILTER_DURATION";
 export const ORDER_DATE = "ORDER_DATE";
-export const SIGN_IN_SIGN_OUT = "SIGN_IN_SIGN_OUT";
+export const IS_CREATOR = "IS_CREATOR";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_COMMENT = "ORDER_COMMENT";
 export const GET_MOVIES = "GET_MOVIES";
