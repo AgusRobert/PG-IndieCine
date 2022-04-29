@@ -5,12 +5,6 @@ import { Link } from "react-router-dom";
 export default function CreatorForm() {
 
     const [input, setInput] = useState({
-        name: '',
-        surname: '',
-        username: '', // Validar que no se repita
-        mail: '',
-        password: '',
-        passwordConfirm: '',
         country: '',
         person: '',//-------> tipo de persona.
         role: '',
@@ -24,60 +18,17 @@ export default function CreatorForm() {
     const [errors, setErrors] = useState({})
     const [personSelected, setPersonSelected] = useState(false);
 
-    // -------- VALIDACIÓN DEL USERNAME --------
-    // const dispacth = useDispatch();
-    // const { listOfUsers } = useSelector(state => state);
-    const listOfUsers = [{ id: 1, name: 'user1' }, { id: 2, name: 'user2' }];
-
-    // -------- VALIDACIÓN DEL MAIL --------
-    // const { listOfMails } = useSelector(state => state);
-    const listOfMails = ['ejemplo1@gmail.com', 'ejemplo2@gmail.com']
-
     // -------- TRAER LA LISTA DE PAISES --------
     const countries = [{ id: '01', name: 'Argentina' }, { id: '02', name: 'Bolivia' }, { id: '03', name: 'Chile' }, { id: '04', name: 'Colombia' }, { id: '05', name: 'Costa Rica' }, { id: '06', name: 'Cuba' }/*, 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'*/];
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
-    //     dispatch(getCountries());
+    //     if (!countries.length) {
+    //         dispatch(getCountries());
+    //     }
     // }, []);
 
     function validateForm(state) {
         const errors = {};
-        // name
-        if (!state.name) {
-            errors.name = "Nombre es requerido";
-        } else if (!/^[a-zñá-ú\s']{3,20}$/i.test(state.name)) {
-            errors.name = "Nombre debe tener al menos 3 caracteres";
-        }
-        // surname
-        if (!state.surname) {
-            errors.surname = "Apellido es requerido";
-        } else if (!/^[a-zñá-ú\s']{3,20}$/i.test(state.surname)) {
-            errors.surname = "Apellido debe tener al menos 3 caracteres";
-        }
-        // username
-        if (!state.username) {
-            errors.username = "Username es requerido";
-        } else if (!/^[a-zñá-ú'\d_@./#&+-]{6,15}$/i.test(state.username) && !listOfUsers.includes(state.username)) {
-            errors.surname = "Username debe tener al menos 6 caracteres y no puede haber espacios.";
-        }
-        // mail
-        if (!state.mail) {
-            errors.mail = "Email es requerido";
-        } else if (!/\S+@\S+\.\S+/i.test(state.mail) && !listOfMails.includes(state.mail)) {
-            errors.mail = "Email debe ser un correo válido.";
-        }
-        // password
-        if (!state.password) {
-            errors.password = "Contraseña es requerido";
-        } else if (!/^(?=.*[A-Z])(?=.[0-9])[a-zñA-ZÑ0-9!@#$%^&]{6,16}$/.test(state.password)) {
-            errors.password = "Contraseña debe tener entre 6 y 16 caracteres, al menos una mayúscula y un número. Ejemplo: Pepito123";
-        }
-        // passwordConfirm
-        if (!state.passwordConfirm) {
-            errors.passwordConfirm = "Confirmar contraseña es requerido";
-        } else if (state.password !== state.passwordConfirm) {
-            errors.passwordConfirm = "Las contraseñas no coinciden";
-        }
         // country
         if (!state.country) {
             errors.country = "Pais es requerido";
@@ -89,9 +40,7 @@ export default function CreatorForm() {
         // role
         if (!state.role) {
             errors.role = "Rol es requerido";
-        } /*else if (!/^[a-zñá-ú\s']$/i.test(state.role)) {
-            errors.role = "Rol no pueden ser números.";
-        }*/
+        }
         // idType
         if (!state.idType) {
             errors.idType = "Tipo de identificación es requerido";
@@ -155,12 +104,6 @@ export default function CreatorForm() {
         e.preventDefault();
         setErrors(validateForm(input));
         if (!Object.keys(errors).length &&
-            input.name &&
-            input.surname &&
-            input.username &&
-            input.mail &&
-            input.password &&
-            input.passwordConfirm &&
             input.termsAndConditions &&
             input.country &&
             input.person &&
@@ -172,6 +115,11 @@ export default function CreatorForm() {
             input.phoneNumber
         ) {
             alert("Formulario enviado correctamente");
+
+            // despachar la accion para updatear el usuario.
+            // Si la ruta post es la misma que el usuario básico,
+            // agregar el booleano 'creator' en true.
+
             // direccionamiento al home? al login?
             // resetear el estado de input??
         } else {
@@ -182,78 +130,6 @@ export default function CreatorForm() {
     return (
         <form onSubmit={handleOnSubmit}>
             <div>
-                <div>
-                    <div>
-                        <label htmlFor="name">Nombre</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={input.name}
-                            onChange={handleOnChange}
-                            placeholder="Ingrese su nombre" />
-                    </div>
-                    {errors.name && <span>{errors.name}</span>}
-                </div>
-                <div>
-                    <div>
-                        <label htmlFor="surname">Apellido</label>
-                        <input
-                            type="text"
-                            name="surname"
-                            value={input.surname}
-                            onChange={handleOnChange}
-                            placeholder="Ingrese su apellido" />
-                    </div>
-                    {errors.surname && <span>{errors.surname}</span>}
-                </div>
-                <div>
-                    <div>
-                        <label htmlFor="username">Username</label>
-                        <input
-                            type="text"
-                            name="username"
-                            value={input.username}
-                            onChange={handleOnChange}
-                            placeholder="Ingrese un username" />
-                    </div>
-                    {errors.username && <span>{errors.username}</span>}
-                </div>
-                <div>
-                    <div>
-                        <label htmlFor="password">Contraseña</label>
-                        <input
-                            type='password'
-                            name="password"
-                            value={input.password}
-                            onChange={handleOnChange}
-                            placeholder="Contraseña" />
-                    </div>
-                    {errors.password && <span>{errors.password}</span>}
-                </div>
-                <div>
-                    <div>
-                        <label htmlFor="passwordConfirm">Repita su contraseña</label>
-                        <input
-                            type='password'
-                            name="passwordConfirm"
-                            value={input.passwordConfirm}
-                            onChange={handleOnChange}
-                            placeholder="Contraseña" />
-                    </div>
-                    {errors.passwordConfirm && <span>{errors.passwordConfirm}</span>}
-                </div>
-                <div>
-                    <div>
-                        <label htmlFor="mail">Email</label>
-                        <input
-                            type="text"
-                            name="mail"
-                            value={input.mail}
-                            onChange={handleOnChange}
-                            placeholder="Ingrese un mail" />
-                    </div>
-                    {errors.mail && <span>{errors.mail}</span>}
-                </div>
                 <div>
                     <div>
                         <label htmlFor="country">País</label>
@@ -289,6 +165,7 @@ export default function CreatorForm() {
                 </div>
                 {personSelected ?
                     <div>
+                        <label htmlFor="role">Rol</label>
                         {
                             input.person === 'natural' ? (
                                 <select name="role" onChange={handleOnSelect}>
@@ -368,7 +245,7 @@ export default function CreatorForm() {
                     <div>
                         <label htmlFor="phoneNumber">Teléfono</label>
                         <input
-                            type="number"
+                            type="text"
                             name="phoneNumber"
                             value={input.phoneNumber}
                             onChange={handleOnChange} />
