@@ -31,14 +31,13 @@ const initialState = {
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case SEARCH_PELIS:
-      if (action.payload.length === 0) {
-        alert("No encontramos esa busqueda :(");
-      } else {
+      // let pelisbuscadas = [...state.peliculas]
+      // pelisbuscadas = pelisbuscadas.filter()
         return {
           ...state,
           pelisfiltradas: action.payload,
         };
-      };
+      ;
     case GET_MOVIES:
       return {
         ...state,
