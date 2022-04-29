@@ -3,7 +3,7 @@ import {
     SEARCH_PELIS,
     FILTER_DURATION,
     ORDER_DATE,
-    SIGN_IN_SIGN_OUT,
+    IS_CREATOR,
     ORDER_BY_NAME,
     GET_MOVIES,
     FILTER_MOVIES_BY_COUNTRY,
@@ -15,7 +15,7 @@ import {
 
 export function getMovies() { //obtener todos los videojuegos
     return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/films") //nos traemos los juegos
+        let json = await axios.get("http://localhost:3001/films") 
 
         try {
             return dispatch({
@@ -28,9 +28,9 @@ export function getMovies() { //obtener todos los videojuegos
     }
 }
 
-export function signInSignOut(boolean) {
+export function isCreator(boolean) {
     return {
-        type: SIGN_IN_SIGN_OUT,
+        type: IS_CREATOR,
         payload: boolean,
     }
 }
@@ -113,16 +113,10 @@ export function orderByRating(payload) { //ordernar por rating asc o desc
 
 export function searchPelicula_Actor(search) {
     return function (dispatch) {
-        axios.get("http://localhost:3001/films?search=" + search)
-            .then((pelis) => {
                 dispatch({
                     type: SEARCH_PELIS,
-                    payload: pelis.data
-                });
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+                    payload: search
+                });    
     };
 }
 

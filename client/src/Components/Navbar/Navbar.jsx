@@ -6,9 +6,13 @@ import SignInBtn from "../SignInBtn/SignInBtn.jsx";
 import SignUpBtn from "../SignUpBtn/SignUpBtn.jsx";
 import OrderDate from "../OrderDate/OrderDate.jsx";
 import FilterMovieByCountry from "../FilterByCountry/FilterMoviesByCountry.jsx";
-import "./Navbar.css"
 
+import { useAuth0 } from "@auth0/auth0-react";
+import ProfileBtn from "../ProfileBtn/ProfileBtn.jsx";
+
+import "./Navbar.css"
 export default function Navbar() {
+    const { isAuthenticated } = useAuth0();
     return (
         <div class="content-select">
             <OrderAZ />
@@ -17,7 +21,8 @@ export default function Navbar() {
             <FilterMoviesByGenre />
             <FilterMovieByCountry/>
             <SignInBtn />
-            <SignUpBtn />
+            {isAuthenticated && (<ProfileBtn />)}
+            {!isAuthenticated && (<SignUpBtn />)}
         </div>
     )
 }

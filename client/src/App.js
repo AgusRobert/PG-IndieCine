@@ -4,12 +4,19 @@ import Home from "./Components/Home/Home";
 import About from "./Components/About/About";
 import Contact from "./Components/Contact/Contact";
 import TyC from "./Components/T&C/T&C";
+
 import SignUpForm from "./Components/SignUpForm/SignUpForm";
 import SignInForm from "./Components/SignInForm/SignInForm";
 
 
 
+
+import Profile from "./Components/Profile/Profile";
+import { useAuth0 } from "@auth0/auth0-react";
+import MovieDetail from "./Components/MovieDetail/MovieDetail";
+
 function App() {
+  const { isAuthenticated } = useAuth0()
   return (
     <BrowserRouter>
    
@@ -17,11 +24,11 @@ function App() {
         
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/signin" element={<SignInForm />} />
-          <Route exact path="/signup" element={<SignUpForm />} />
+          {isAuthenticated && <Route path="/profile" element={<Profile />} />}
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/terms" element={<TyC />} />
+          <Route exact path="/prueba" element={<MovieDetail />} />
         </Routes>
       </div>
       

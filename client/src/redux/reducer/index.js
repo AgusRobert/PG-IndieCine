@@ -2,7 +2,7 @@ import {
   SEARCH_PELIS,
   FILTER_DURATION,
   ORDER_DATE,
-  SIGN_IN_SIGN_OUT,
+  IS_CREATOR,
   ORDER_BY_NAME,
   ORDER_COMMENT,
   GET_MOVIES,
@@ -10,40 +10,34 @@ import {
   FILTER_MOVIES_BY_GENRE,
   ORDER_BY_RATING,
   GET_GENRES,
-  GET_COUNTRIES
+  GET_COUNTRIES,
 } from "../actions/actionstype";
 
-import {
-  DATE_DES,
-  NAME_ASC,
-  COM_DES,
-  RATING_ASC
-} from "./Ordercosntants";
+import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
 
 const initialState = {
   peliculas: [],
   pelisfiltradas: [],
-  isSignIn: false,
+  isCreator: false,
   genres: [],
-  countries: []
+  countries: [],
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case SEARCH_PELIS:
-      if (action.payload.length === 0) {
-        alert("No encontramos esa busqueda :(");
-      } else {
+      // let pelisbuscadas = [...state.peliculas]
+      // pelisbuscadas = pelisbuscadas.filter()
         return {
           ...state,
           pelisfiltradas: action.payload,
         };
-      };
+
     case GET_MOVIES:
       return {
         ...state,
         peliculas: action.payload,
-          pelisfiltradas: action.payload
+        pelisfiltradas: action.payload,
       };
     case FILTER_DURATION:
       return {
@@ -80,10 +74,10 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesCom,
       };
-    case SIGN_IN_SIGN_OUT: {
+    case IS_CREATOR: {
       return {
         ...state,
-        isSignIn: action.payload,
+        isCreator: action.payload,
       };
     }
     case ORDER_BY_NAME:
@@ -119,25 +113,25 @@ function rootReducer(state = initialState, action) {
     case FILTER_MOVIES_BY_COUNTRY:
       return {
         ...state,
-        pelisfiltradas: action.payload
+        pelisfiltradas: action.payload,
       };
     case FILTER_MOVIES_BY_GENRE:
       return {
         ...state,
-        pelisfiltradas: action.payload
+        pelisfiltradas: action.payload,
       };
     case GET_GENRES:
       return {
         ...state,
-        genres: action.payload
+        genres: action.payload,
       };
     case GET_COUNTRIES:
       return {
         ...state,
-        countries: action.payload
-      }
-      default:
-        return "hola";
+        countries: action.payload,
+      };
+    default:
+      return "hola";
   }
 }
 
