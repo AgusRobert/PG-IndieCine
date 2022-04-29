@@ -1,16 +1,18 @@
 const { Router } = require("express");
 const router = Router();
 
-//Aqui tus Router -- No subir este archivo Plis! :)
+const routerComments = require("./comment");
+const routerCountries = require("./countries");
+const routerFilms = require("./film");
+const routerGenres = require("./genres");
+const routerUsers = require("./user");
+const routerUpload = require("./upload");
 
-const apiFilmsRouter = require("./film");
-const apiUsersRouter = require("./user");
-const apiComentsRouter = require("./comment");
-const apiUploadRouter = require("./upload");
-
-router.use("/films", apiFilmsRouter);
-router.use("/users", apiUsersRouter);
-router.use("/comments", apiComentsRouter);
-router.use("/upload", apiUploadRouter);
+router.use("/comments",routerComments);
+router.use("/countries",routerCountries);
+router.use("/films",routerFilms);
+router.use("/genres",routerGenres);
+router.use("/users",routerUsers);
+router.use("/upload", routerUpload);
 
 module.exports = router;

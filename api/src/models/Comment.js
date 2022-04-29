@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
         },
     },{
         sequelize,
-        tableName:"Comment",
+        tableName:"comment",
         timestamps: true,
     });
 };

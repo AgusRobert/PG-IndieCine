@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
         },
     },{
         sequelize,
-        tableName:"Country",
+        tableName:"country",
         timestamps: false,
     });
 };

@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
         },
     },{
         sequelize,
-        tableName:"Genre",
+        tableName:"genre",
         timestamps: false,
     });
 };
