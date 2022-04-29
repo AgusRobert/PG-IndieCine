@@ -15,7 +15,7 @@ import {
 
 export function getMovies() { //obtener todos los videojuegos
     return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/films") //nos traemos los juegos
+        let json = await axios.get("http://localhost:3001/films") 
 
         try {
             return dispatch({

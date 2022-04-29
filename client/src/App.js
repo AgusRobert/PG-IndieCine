@@ -6,7 +6,7 @@ import Contact from "./Components/Contact/Contact";
 import TyC from "./Components/T&C/T&C";
 import SignUpForm from "./Components/SignUpForm/SignUpForm";
 import SignInForm from "./Components/SignInForm/SignInForm";
-
+import MovieDetail from "./Components/MovieDetail/MovieDetail";
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +17,7 @@ function App() {
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
+          <Route exact path="/prueba" element={<MovieDetail />} />
           <Route exact path="/terms" element={<TyC />} />
         </Routes>
       </div>
