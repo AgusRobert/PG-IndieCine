@@ -3,19 +3,20 @@ import axios from "axios";
 import { useParams } from "react-router";
 import Footer from "../Footer/Footer.jsx"
 import Navbar from "../Navbar/Navbar.jsx";
-
+import { View } from "../reproductor/videoplayer.js";
 export default function MovieDetail() {
   const [movie, setMovie] = useState(null);
   let { id } = useParams();
   useEffect(() => {
-    axios.get("http://localhost:3001/api/films/").then((response) => {
+    axios.get(`http://localhost:3001/api/films/${id}`).then((response) => {
       setMovie(response.data);
     });
     return () => {
       setMovie(null);
     };
   }, []);
-  let peli = movie[0];
+  let peli = movie.data
+  let {url} = peli
   let elenco =peli.mainActors;
 
   return (
@@ -44,7 +45,8 @@ export default function MovieDetail() {
           <h2>Pais de origen: {peli.country}</h2>
         </div>
 
-        <div>COMPONENTE VIDEO</div>
+        <div><View
+         url={url}/></div>
         <div>
           <span>Comentarios</span>
         </div>
