@@ -1,26 +1,23 @@
 const router = require('express').Router();
-const multer = require('multer');
-const path = require('path');
 
-const {formImage, postImage} = require('../controllers/uploads');
 
-const storage = multer.diskStorage({
-    destination: path.join(__dirname, '../uploads/images')
-});
-const upload = multer({storage,
-limits: {fileSize: 1000000},
-fileFilter: (req, file, cb) => {
-    const filetypes = /jpeg|jpg|png/;
-    const mimetype = filetypes.test(file.mimetype);
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    if(mimetype && extname){
-        return cb(null, true);
-    }
-    cb("Error: Archivo no válido");
-}
-}).single('image');
+const {formImage, uploadImage, postImage, uploadVideo, 
+    postVideo, uploadFrontDoc, postFrontDoc, uploadBackDoc, postBackDoc,
+} = require('../controllers/uploads');
+
+
+// ----------------------------   RUTAS      --------------------------------------------
 
 router.get('/', formImage);
-router.post('/image', upload , postImage);
+
+router.post('/image', uploadImage , postImage);
+
+router.post('/video', uploadVideo , postVideo);
+
+router.post('/frontdoc', uploadFrontDoc, postFrontDoc);
+
+router.post('/backdoc', uploadBackDoc, postBackDoc);
+
+
 
 module.exports = router;
