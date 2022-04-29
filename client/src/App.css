@@ -1,3 +1,7 @@
+
+@import url(https://fonts.googleapis.com/css2?family=Space+Mono&display=swap);
+
+
 .App {
   text-align: center;
 }
@@ -35,4 +39,40 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+body{
+background-color: #1c0541;
+font-family: 'Space Mono', monospace;
+}
+
+h1   {color: rgba(255, 253, 253, 0.945);}
+
+
+button{
+
+  font-family: 'Space Mono', monospace;
+    position: absolute;
+	width: auto;
+	cursor: pointer;
+  	padding: 7px 10px;
+  	height: 50px;
+  	outline: 0; 
+  	border: 0;
+	border-radius: 0;
+	background: #000000;
+	color: #7b7b7b;
+	font-size: 1em;
+	color: rgb(255, 255, 255);
+
+	border:2px solid rgba(0,0,0,0.2);
+    position: relative;
+    transition: all 0.25s ease;
+  
+}
+
+button:hover{
+	background: #7b7b7b;
+	color: rgb(255, 255, 255);
 }

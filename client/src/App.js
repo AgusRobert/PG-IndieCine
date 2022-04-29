@@ -7,10 +7,14 @@ import TyC from "./Components/T&C/T&C";
 import SignUpForm from "./Components/SignUpForm/SignUpForm";
 import SignInForm from "./Components/SignInForm/SignInForm";
 
+
+
 function App() {
   return (
     <BrowserRouter>
+   
       <div className="App">
+        
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/signin" element={<SignInForm />} />
@@ -20,6 +24,7 @@ function App() {
           <Route exact path="/terms" element={<TyC />} />
         </Routes>
       </div>
+      
     </BrowserRouter>
   );
 }

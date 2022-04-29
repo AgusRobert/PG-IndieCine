@@ -6,10 +6,11 @@ import SignInBtn from "../SignInBtn/SignInBtn.jsx";
 import SignUpBtn from "../SignUpBtn/SignUpBtn.jsx";
 import OrderDate from "../OrderDate/OrderDate.jsx";
 import FilterMovieByCountry from "../FilterByCountry/FilterMoviesByCountry.jsx";
+import "./Navbar.css"
 
 export default function Navbar() {
     return (
-        <div>
+        <div class="content-select">
             <OrderAZ />
             <OrderDate/>
             <OrderRating />
