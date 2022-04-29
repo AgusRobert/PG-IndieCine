@@ -14,7 +14,7 @@ import "./Navbar.css"
 export default function Navbar() {
     const { isAuthenticated } = useAuth0();
     return (
-        <div class="content-select">
+        <div className="content-select">
             <OrderAZ />
             <OrderDate/>
             <OrderRating />

@@ -27,7 +27,7 @@ export default function Home (){
                     <Navbar/>
                     <SearchBar/>
                 </div>
-                <div class="pelis">
+                <div className="pelis">
                 {
                     allMovies ? allMovies?.map(data => {
                         return (
