@@ -5,7 +5,7 @@ import About from "./Components/About/About";
 import Contact from "./Components/Contact/Contact";
 import TyC from "./Components/T&C/T&C";
 import Profile from "./Components/Profile/Profile";
-import MovieDetail from "./Components/MovieDetail/MovieDetail";
+
 function App() {
   return (
     <BrowserRouter>
