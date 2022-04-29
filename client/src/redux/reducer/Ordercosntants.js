@@ -4,4 +4,5 @@ export const COM_ASC = 'COM_ASC'
 export const DATE_DES = 'DATE_DES'
 export const NAME_DES = 'NAME_DES'
 export const COM_DES = 'COM_DES'
-
+export const RATING_ASC = 'RATING_ASC'
+export const RATING_DES = 'RATING_DES'
