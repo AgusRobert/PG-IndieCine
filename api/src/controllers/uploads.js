@@ -2,10 +2,11 @@
 const router = require('express').Router();
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 // -------------- ---------------- MULTER PARA VIDEOS ------------------------------
 exports.uploadVideo = multer({
-    dest: path.join(__dirname, '../uploads/videos'),
+    dest: path.join(__dirname, '../public/videos'),
      limits: {fileSize: 40000000000},
     fileFilter: (req, file, cb) => {
     const filetypes = /mp4|mov/;
@@ -19,7 +20,7 @@ exports.uploadVideo = multer({
 // ------------------------- MULTER PARA PORTADAS ------------------------------
 
 exports.uploadImage = multer({
-    dest: path.join(__dirname, '../uploads/images'),
+    dest: path.join(__dirname, '../public/images'),
     limits: {fileSize: 10000000},
     fileFilter: (req, file, cb) => {
     const filetypes = /jpeg|jpg|png/;
@@ -33,7 +34,7 @@ exports.uploadImage = multer({
 // ------------------------- MULTER PARA FRONT DOCUMENT ------------------------------
 
 exports.uploadFrontDoc= multer({
-    dest:path.join(__dirname, '../uploads/documents'), 
+    dest:path.join(__dirname, '../public/documents'), 
     limits: {fileSize: 4000000},
     fileFilter: (req, file, cb) => {
     const filetypes = /jpeg|jpg|png/;
@@ -47,7 +48,7 @@ exports.uploadFrontDoc= multer({
 // ------------------------- MULTER PARA BACK DOCUMENT ------------------------------
 
 exports.uploadBackDoc= multer({
-    dest:path.join(__dirname, '../uploads/documents'), 
+    dest:path.join(__dirname, '../public/documents'), 
     limits: {fileSize: 4000000},
     fileFilter: (req, file, cb) => {
     const filetypes = /jpeg|jpg|png/;
@@ -65,17 +66,22 @@ exports.formImage = async (req, res) => {
 };
 
 exports.postImage = async (req, res) => {
-  res.send("subida de imagen");
+   
+   fs.renameSync(req.file.path, req.file.path + '.' + req.file.mimetype.split('/')[1]);
+  res.send(req.file.path + '.' + req.file.mimetype.split('/')[1]);
 };
 
 exports.postVideo = async (req, res) => {
-  res.send("subida de video");
+    fs.renameSync(req.file.path, req.file.path + '.' + req.file.mimetype.split('/')[1]);
+    res.send(req.file.path + '.' + req.file.mimetype.split('/')[1]);
 };
 
 exports.postFrontDoc = async (req, res) => {
-    res.send("subida de documento");
+    fs.renameSync(req.file.path, req.file.path + '.' + req.file.mimetype.split('/')[1]);
+    res.send(req.file.path + '.' + req.file.mimetype.split('/')[1]);
 };
 
 exports.postBackDoc = async (req, res) => {
-    res.send("subida de documento");
+    fs.renameSync(req.file.path, req.file.path + '.' + req.file.mimetype.split('/')[1]);
+    res.send(req.file.path + '.' + req.file.mimetype.split('/')[1]);
 };
