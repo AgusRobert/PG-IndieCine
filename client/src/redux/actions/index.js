@@ -4,8 +4,29 @@ import {
     FILTER_DURATION,
     ORDER_DATE,
     SIGN_IN_SIGN_OUT,
-    ORDER_BY_NAME
+    ORDER_BY_NAME,
+    GET_MOVIES,
+    FILTER_MOVIES_BY_COUNTRY,
+    FILTER_MOVIES_BY_GENRE,
+    ORDER_BY_RATING,
+    GET_GENRES,
+    GET_COUNTRIES
 } from "./actionstype";
+
+export function getMovies() { //obtener todos los videojuegos
+    return async function (dispatch) {
+        let json = await axios.get("http://localhost:3001/films") //nos traemos los juegos
+
+        try {
+            return dispatch({
+                type: GET_MOVIES,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 
 export function signInSignOut(boolean) {
     return {
@@ -21,9 +42,78 @@ export function sortName(payload) { //ordenar por nombre asc o desc
     }
 }
 
-/* export function searchPelicula_Actor(search) {
+export function getGenres() { //obtener generos
+    return async function (dispatch) {
+        let info = await axios.get("http://localhost:3001/genres");
+
+        return dispatch({
+            type: GET_GENRES,
+            payload: info.data
+        })
+    }
+}
+
+export function getMoviesByGenre(payload) {
+    return async function (dispatch) {
+        try {
+            let json3 = await axios.get('http://localhost:3001/films');
+            let json4 = json3.data.filter(e => e.genres.includes(payload));
+            return dispatch({
+                type: FILTER_MOVIES_BY_GENRE,
+                payload: json4
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+};
+
+export function getCountries() {
+    return async function (dispatch) {
+        try {
+            var json = await axios.get("http://localhost:3001/countries");
+            return dispatch({
+                type: GET_COUNTRIES,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function getMoviesByCountry(payload) {
+    return async function (dispatch) {
+        try {
+            let json3 = await axios.get('http://localhost:3001/films');
+            let json4 = json3.data.filter(e => e.country === payload);
+            return dispatch({
+                type: FILTER_MOVIES_BY_COUNTRY,
+                payload: json4
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+};
+
+export function sortDate(order) {
+    return {
+        type: ORDER_DATE,
+        payload: order
+    }
+}
+
+export function orderByRating(payload) { //ordernar por rating asc o desc
+    return {
+        type: ORDER_BY_RATING,
+        payload
+    }
+}
+
+export function searchPelicula_Actor(search) {
     return function (dispatch) {
-        axios.get( RUTABACK +search)
+        axios.get("http://localhost:3001/films?search=" + search)
             .then((pelis) => {
                 dispatch({
                     type: SEARCH_PELIS,
@@ -34,7 +124,9 @@ export function sortName(payload) { //ordenar por nombre asc o desc
                 console.log(error)
             })
     };
-} 
+}
+
+/* 
 export function filterDuration(duration) {
     return function (dispatch) {
         axios.get( RUTABACK  + duration)
@@ -49,11 +141,6 @@ export function filterDuration(duration) {
           })
         };
     }
-export function sortDate(order){
-return {
-      type: ORDER_DATE,
-      payload: order
-  }
 
   export function sortByComment(order){
 return {
@@ -87,13 +174,6 @@ export function filterCreated(payload) { //filtrar por creados
     }
 }
 
-export function orderByRating(payload) { //ordernar por rating asc o desc
-    return {
-        type: "ORDER_BY_RATING",
-        payload
-    }
-}
-
 export function getNameVideogames(payload) { //obtener videojuegos por nombre
     return async function (dispatch) {
         try {
@@ -105,17 +185,6 @@ export function getNameVideogames(payload) { //obtener videojuegos por nombre
         } catch (error) {
             console.log(error)
         }
-    }
-}
-
-export function getGenres() { //obtener generos
-    return async function (dispatch) {
-        let info = await axios.get("http://localhost:3001/genres");
-
-        return dispatch({
-            type: "GET_GENRES",
-            payload: info.data
-        })
     }
 }
 
@@ -156,37 +225,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
     }
 } */
 
-/*  export function getMoviesByGenre (payload){
-    return async function(dispatch){
-        try {
-            var json3 = await axios.get('traer todas las pelis');
-            var json4 = json3.data.filter(e => e.genres.includes(payload));
-                return dispatch({
-                type: FILTER_MOVIES_BY_GENRE,
-                payload:json4
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-};
- */
-
-/* export function getMoviesByCountry (payload){
-    return async function(dispatch){
-        try {
-            var json3 = await axios.get('traer todas las pelis');
-            var json4 = json3.data.filter(e => e.country.includes(payload));
-                return dispatch({
-                type: FILTER_MOVIES_BY_COUNTRY,
-                payload:json4
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}; */
-
 /* export function postMovie (payload){
     return async function(dispatch){
         try {
@@ -212,17 +250,4 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
               }
           };
 
-
-          export function getCountries (){
-            return async function (dispatch){
-                try {
-                    var json = await axios.get("URL");
-                    return dispatch({
-                        type: GET_COUNTRIES,
-                        payload: json.data
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            }
         }; */

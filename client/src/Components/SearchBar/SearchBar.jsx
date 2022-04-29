@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import {useDispatch} from "react-redux";
-/* import {searchPelicula_Actor} from "../../redux/actions/index" */
+import {searchPelicula_Actor} from "../../redux/actions/index"
 
 export default function SearchBar () {
     
@@ -9,7 +9,7 @@ export default function SearchBar () {
     let dispatch = useDispatch()
     function onSubmit(e){
       e.preventDefault();
-      /* dispatch (searchPelicula_Actor(search)) */
+      dispatch (searchPelicula_Actor(search))
     }
     function onInputChange(e){
         e.preventDefault()

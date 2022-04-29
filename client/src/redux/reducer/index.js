@@ -4,15 +4,28 @@ import {
   ORDER_DATE,
   SIGN_IN_SIGN_OUT,
   ORDER_BY_NAME,
-  ORDER_COMMENT
+  ORDER_COMMENT,
+  GET_MOVIES,
+  FILTER_MOVIES_BY_COUNTRY,
+  FILTER_MOVIES_BY_GENRE,
+  ORDER_BY_RATING,
+  GET_GENRES,
+  GET_COUNTRIES
 } from "../actions/actionstype";
 
-import { DATE_DES, NAME_ASC, COM_DES } from "./Ordercosntants";
+import {
+  DATE_DES,
+  NAME_ASC,
+  COM_DES,
+  RATING_ASC
+} from "./Ordercosntants";
 
 const initialState = {
   peliculas: [],
   pelisfiltradas: [],
   isSignIn: false,
+  genres: [],
+  countries: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -26,6 +39,12 @@ function rootReducer(state = initialState, action) {
           pelisfiltradas: action.payload,
         };
       };
+    case GET_MOVIES:
+      return {
+        ...state,
+        peliculas: action.payload,
+          pelisfiltradas: action.payload
+      };
     case FILTER_DURATION:
       return {
         ...state,
@@ -34,10 +53,10 @@ function rootReducer(state = initialState, action) {
     case ORDER_DATE:
       let orderMoviesDate = [...state.pelisfiltradas];
       orderMoviesDate = orderMoviesDate.sort((a, b) => {
-        if (a.date < b.date) {
+        if (a.year < b.year) {
           return action.payload === DATE_DES ? -1 : 1;
         }
-        if (a.date > b.date) {
+        if (a.year > b.year) {
           return action.payload === DATE_DES ? 1 : -1;
         }
         return 0;
@@ -46,7 +65,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesDate,
       };
-      case ORDER_COMMENT:
+    case ORDER_COMMENT:
       let orderMoviesCom = [...state.pelisfiltradas];
       orderMoviesCom = orderMoviesCom.sort((a, b) => {
         if (a.comments.length < b.comments.length) {
@@ -68,30 +87,57 @@ function rootReducer(state = initialState, action) {
       };
     }
     case ORDER_BY_NAME:
-      let sortedArr = action.payload === NAME_ASC ? state.peliculas.sort(function (a, b) { //si es ascendente
-          if (a.name > b.name) { // accede al estado videogames y le hace un sort
-              return 1; // los ordena de manera ascendente
-          }
-          if (b.name > a.name) {
-             return -1;
-          }
-          return 0
-          }) :
-          state.peliculas.sort(function (a, b) { //sort ordena por unicode, las letras tienen un valor asignado
-            if (a.name > b.name) {
-               return -1
-           }
-            if (b.name > a.name) {
-             return 1
-            }
-            return 0
-           })
-            return {
-                ...state,
-                peliculas: sortedArr
-            }
-    default:
-      return "hola";
+      let orderMoviesName = [...state.pelisfiltradas];
+      orderMoviesName = orderMoviesName.sort((a, b) => {
+        if (a.title < b.title) {
+          return action.payload === NAME_ASC ? -1 : 1;
+        }
+        if (a.title > b.title) {
+          return action.payload === NAME_ASC ? 1 : -1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        pelisfiltradas: orderMoviesName,
+      };
+    case ORDER_BY_RATING:
+      let orderMoviesRating = [...state.pelisfiltradas];
+      orderMoviesRating = orderMoviesRating.sort((a, b) => {
+        if (a.rating < b.rating) {
+          return action.payload === RATING_ASC ? -1 : 1;
+        }
+        if (a.rating > b.rating) {
+          return action.payload === RATING_ASC ? 1 : -1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        pelisfiltradas: orderMoviesRating,
+      };
+    case FILTER_MOVIES_BY_COUNTRY:
+      return {
+        ...state,
+        pelisfiltradas: action.payload
+      };
+    case FILTER_MOVIES_BY_GENRE:
+      return {
+        ...state,
+        pelisfiltradas: action.payload
+      };
+    case GET_GENRES:
+      return {
+        ...state,
+        genres: action.payload
+      };
+    case GET_COUNTRIES:
+      return {
+        ...state,
+        countries: action.payload
+      }
+      default:
+        return "hola";
   }
 }
 
