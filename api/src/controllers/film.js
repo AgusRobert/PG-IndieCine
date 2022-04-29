@@ -9,7 +9,19 @@ exports.getFilms = async(req, res) => {
         res.send("No se pudo acceder a las películas")
     }
 };
+exports.getById = async(req, res, next) => {
+    try{
+        const {id} = req.params
+        const film = await Film.findOne({
+            where: {id : id},
+        })
 
+        res.send(film)
+    }
+    catch(err){
+        next(err)
+    }
+}
 exports.postFilms = async(req, res, next) => {
     try{
         const {title, genres, poster, synopsis, year, director, duration, mainActors, country, url, associateProducer, rating, UserId} = req.body
