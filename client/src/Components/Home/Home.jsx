@@ -8,8 +8,6 @@ import Footer from "../Footer/Footer.jsx"
 import Navbar from "../Navbar/Navbar.jsx";
 import { getMovies } from "../../redux/actions/index.js";
 
-/* import Typography from '@mui/material/Typography' */
-
 export default function Home (){
 
     const dispatch = useDispatch();
