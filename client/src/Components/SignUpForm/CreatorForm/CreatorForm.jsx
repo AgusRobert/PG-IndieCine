@@ -8,11 +8,11 @@ export default function CreatorForm() {
         country: '',
         person: '',//-------> tipo de persona.
         role: '',
+        phoneNumber: '',
         idType: '',//-------> tipo de identificacion.
+        idNumber: '',
         idPhotoFrontside: '',     //---> id file updated.--> input type file
         idPhotoBackside: '',      //---^
-        idNumber: '',
-        phoneNumber: '',
         termsAndConditions: false,
     });
     const [errors, setErrors] = useState({})
@@ -41,6 +41,12 @@ export default function CreatorForm() {
         if (!state.role) {
             errors.role = "Rol es requerido";
         }
+        // phoneNumber
+        if (!state.phoneNumber) {
+            errors.phoneNumber = "Número de teléfono es requerido";
+        } else if (!/^[\d.+-]$/i.test(state.phoneNumber)) {
+            errors.phoneNumber = "Número de teléfono debe ser válido.";
+        }
         // idType
         if (!state.idType) {
             errors.idType = "Tipo de identificación es requerido";
@@ -50,12 +56,6 @@ export default function CreatorForm() {
             errors.idNumber = "Número de identificación es requerido";
         } else if (!/^[\d]$/.test(state.idNumber)) {
             errors.idNumber = "Número de identificación debe contener por lo menos 8 caracteres.";
-        }
-        // phoneNumber
-        if (!state.phoneNumber) {
-            errors.phoneNumber = "Número de teléfono es requerido";
-        } else if (!/^[\d.+-]$/i.test(state.phoneNumber)) {
-            errors.phoneNumber = "Número de teléfono debe ser válido.";
         }
         // termsAndConditions
         if (!state.termsAndConditions) {
@@ -108,11 +108,11 @@ export default function CreatorForm() {
             input.country &&
             input.person &&
             input.role &&
+            input.phoneNumber &&
             input.idType &&
-            input.idPhotoFrontside &&
-            input.idPhotoBackside &&
             input.idNumber &&
-            input.phoneNumber
+            input.idPhotoFrontside &&
+            input.idPhotoBackside
         ) {
             alert("Formulario enviado correctamente");
 
@@ -187,6 +187,17 @@ export default function CreatorForm() {
                 }
                 <div>
                     <div>
+                        <label htmlFor="phoneNumber">Teléfono</label>
+                        <input
+                            type="text"
+                            name="phoneNumber"
+                            value={input.phoneNumber}
+                            onChange={handleOnChange} />
+                    </div>
+                    {errors.phoneNumber && <span>{errors.phoneNumber}</span>}
+                </div>
+                <div>
+                    <div>
                         <label htmlFor="idType">Tipo de identificación</label>
                         <select
                             name="idType"
@@ -197,6 +208,18 @@ export default function CreatorForm() {
                         </select>
                     </div>
                     {errors.idType && <span>{errors.idType}</span>}
+                </div>
+                <div>
+                    <div>
+                        <label htmlFor="idNumber">Número de identificación</label>
+                        <input
+                            type="text"
+                            name="idNumber"
+                            value={input.idNumber}
+                            onChange={handleOnChange}
+                            placeholder="Ingrese su número de identificación" />
+                    </div>
+                    {errors.idNumber && <span>{errors.idNumber}</span>}
                 </div>
                 {/* decidí dejar dos input file que reciben un archivo máximo cada uno de los dos
                 para que el path de la img se guarde en el value de cada input. Porque, en caso
@@ -228,29 +251,6 @@ export default function CreatorForm() {
                             accept='image/png, image/jpeg, image/jpg' />
                     </div>
                     {errors.idPhotoBackside && <span>{errors.idPhotoBackside}</span>}
-                </div>
-                <div>
-                    <div>
-                        <label htmlFor="idNumber">Número de identificación</label>
-                        <input
-                            type="text"
-                            name="idNumber"
-                            value={input.idNumber}
-                            onChange={handleOnChange}
-                            placeholder="Ingrese su número de identificación" />
-                    </div>
-                    {errors.idNumber && <span>{errors.idNumber}</span>}
-                </div>
-                <div>
-                    <div>
-                        <label htmlFor="phoneNumber">Teléfono</label>
-                        <input
-                            type="text"
-                            name="phoneNumber"
-                            value={input.phoneNumber}
-                            onChange={handleOnChange} />
-                    </div>
-                    {errors.phoneNumber && <span>{errors.phoneNumber}</span>}
                 </div>
                 <div>
                     <div>
