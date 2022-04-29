@@ -11,6 +11,7 @@ import {
   ORDER_BY_RATING,
   GET_GENRES,
   GET_COUNTRIES,
+  MOVIE_DETAIL,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -21,6 +22,7 @@ const initialState = {
   isCreator: false,
   genres: [],
   countries: [],
+  movieDetail: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -28,10 +30,10 @@ function rootReducer(state = initialState, action) {
     case SEARCH_PELIS:
       // let pelisbuscadas = [...state.peliculas]
       // pelisbuscadas = pelisbuscadas.filter()
-        return {
-          ...state,
-          pelisfiltradas: action.payload,
-        };
+      return {
+        ...state,
+        pelisfiltradas: action.payload,
+      };
 
     case GET_MOVIES:
       return {
@@ -129,6 +131,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         countries: action.payload,
+      };
+    case MOVIE_DETAIL:
+      return {
+        ...state,
+        movieDetail: action.payload,
       };
     default:
       return "hola";

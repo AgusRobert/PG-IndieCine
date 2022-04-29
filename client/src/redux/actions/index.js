@@ -10,7 +10,8 @@ import {
     FILTER_MOVIES_BY_GENRE,
     ORDER_BY_RATING,
     GET_GENRES,
-    GET_COUNTRIES
+    GET_COUNTRIES,
+    MOVIE_DETAIL
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -120,6 +121,19 @@ export function searchPelicula_Actor(search) {
     };
 }
 
+export function renderMovieDetails(id) {
+    return async function (dispatch) {
+        try {
+            let movie = await axios.get(`http://localhost:3001/api/films/${id}`)
+            return dispatch({
+                type: MOVIE_DETAIL,
+                payload: movie.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 /* 
 export function filterDuration(duration) {
     return function (dispatch) {
