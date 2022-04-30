@@ -6,7 +6,8 @@ import Card from "../Card/Card.jsx"
 import SearchBar from "../SearchBar/SearchBar.jsx"
 import Footer from "../Footer/Footer.jsx"
 import Navbar from "../Navbar/Navbar.jsx";
-import { getMovies } from "../../redux/actions/index.js";
+import { getMovies, signUpFunction } from "../../redux/actions/index.js";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Home (){
 
@@ -17,6 +18,20 @@ export default function Home (){
     useEffect(()=>{
         dispatch(getMovies());
     }, [dispatch])
+
+    //----- Auth0 -----
+    const { user, isAuthenticated } = useAuth0();
+    useEffect(() => {
+        if (user) {
+            if (Object.keys(user).length) {
+                dispatch(signUpFunction({
+                    ...user,
+                    creator: false
+                }));
+            }
+        }
+    }, [isAuthenticated])
+
 
     return (
         <div>
