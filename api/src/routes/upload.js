@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 
 const {formImage, uploadImage, postImage, uploadVideo, 
-    postVideo, uploadFrontDoc, postFrontDoc, uploadBackDoc, postBackDoc,
+    postVideo, uploadDocuments, postFrontDoc, postBackDoc,
 } = require('../controllers/uploads');
 
 
@@ -10,13 +10,13 @@ const {formImage, uploadImage, postImage, uploadVideo,
 
 router.get('/', formImage);
 
-router.post('/image', uploadImage , postImage);
+router.post('/image', uploadImage, postImage);
 
-router.post('/video', uploadVideo , postVideo);
+router.post('/video', uploadVideo, postVideo);
 
-router.post('/frontdoc', uploadFrontDoc, postFrontDoc);
+router.post('/frontdoc', uploadDocuments, postFrontDoc);
 
-router.post('/backdoc', uploadBackDoc, postBackDoc);
+router.post('/backdoc', uploadDocuments, postBackDoc);
 
 
 
