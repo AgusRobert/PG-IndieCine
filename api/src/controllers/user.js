@@ -56,27 +56,45 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.registerUser = async (req, res) => {
-  console.log(req.body);
+  console.log("req.body", req.body);
   try {
     let user = await User.findOne({
       where: {
         username: req.body.username,
       },
     });
-    if (user) {
-      return res.json({ message: "El usuario ya existe" });
+    if (req.body.creator) {
+      //si 'creator' es true
+      if (!user) {
+        console.log("Usuario no encontrado");
+        return res.json({ message: "Usuario no encontrado" });
+      } else {
+        await user.update({
+          ...user,
+          ...req.body,
+        });
+        console.log("Usuario actualizado correctamente");
+        return res.json({ message: "Usuario actualizado correctamente" });
+      }
     } else {
-      req.body.password = bcrypt.hashSync(req.body.password, 10);
-      let newUser = await User.create(req.body);
-      return res.json(newUser);
+      //si 'creator' es false
+      if (user) {
+        console.log("El usuario ya existe.");
+        return res.json({ message: "El usuario ya existe" });
+      } else {
+        req.body.password = bcrypt.hashSync(req.body.password, 10);
+        let newUser = await User.create(req.body);
+        console.log("Usuario creado con éxito");
+        return res.json(newUser);
+      }
     }
   } catch (error) {
+    console.log("Ha ocurrido un error");
     return res.json({ message: "Ha ocurrido un error", error });
   }
 };
 
 exports.loginUser = async (req, res) => {
-  
   try {
     const user = await User.findOne({
       include: [ { model: Film}],

@@ -2,7 +2,6 @@ import {
   SEARCH_PELIS,
   FILTER_DURATION,
   ORDER_DATE,
-  IS_CREATOR,
   ORDER_BY_NAME,
   ORDER_COMMENT,
   GET_MOVIES,
@@ -12,6 +11,7 @@ import {
   GET_GENRES,
   GET_COUNTRIES,
   MOVIE_DETAIL,
+  SIGN_UP_USER,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -102,12 +102,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesCom,
       };
-    case IS_CREATOR: {
-      return {
-        ...state,
-        isCreator: action.payload,
-      };
-    }
     case ORDER_BY_NAME:
       let orderMoviesName = [...state.pelisfiltradas];
       orderMoviesName = orderMoviesName.sort((a, b) => {
@@ -162,6 +156,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         movieDetail: action.payload,
+      };
+    case SIGN_UP_USER:
+      return {
+        ...state,
+        isCreator: action.payload,
       };
     default:
       return "hola";

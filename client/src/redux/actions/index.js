@@ -3,7 +3,6 @@ import {
     SEARCH_PELIS,
     FILTER_DURATION,
     ORDER_DATE,
-    IS_CREATOR,
     ORDER_BY_NAME,
     GET_MOVIES,
     FILTER_MOVIES_BY_COUNTRY,
@@ -11,7 +10,8 @@ import {
     ORDER_BY_RATING,
     GET_GENRES,
     GET_COUNTRIES,
-    MOVIE_DETAIL
+    MOVIE_DETAIL,
+    SIGN_UP_USER
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -26,13 +26,6 @@ export function getMovies() { //obtener todos los videojuegos
         } catch (error) {
             console.log(error)
         }
-    }
-}
-
-export function isCreator(boolean) {
-    return {
-        type: IS_CREATOR,
-        payload: boolean,
     }
 }
 
@@ -139,6 +132,54 @@ export function renderMovieDetails(id) {
             console.log(error)
         }
     }
+}
+
+export function signUpFunction(userData) {
+  return async function (dispatch) {
+    try {
+      console.log("userData", userData);
+      let request = {
+        name: userData.given_name ? userData.given_name : null,
+        surname: userData.family_name ? userData.family_name : null,
+        username: userData.nickname,
+        email: userData.email,
+        password: userData.email,
+        creator: userData.creator,
+        country: userData.country ? userData.country : null,
+        people: userData.people
+          ? userData.people === "true"
+            ? true
+            : false
+          : null,
+        rol: userData.rol ? userData.rol : null,
+        telephone: userData.telephone ? parseInt(userData.telephone) : null,
+        typeOfDocument: userData.typeOfDocument
+          ? userData.typeOfDocument
+          : null,
+        numberOfDocument: userData.numberOfDocument
+          ? Number(userData.numberOfDocument)
+          : null,
+        frontDocument: userData.frontDocument ? userData.frontDocument : null,
+        reverseDocument: userData.reverseDocument
+          ? userData.reverseDocument
+          : null,
+      };
+      await axios.post("http://localhost:3001/users/register", request);
+      if (request.creator) {
+        return dispatch({
+          type: SIGN_UP_USER,
+          payload: true,
+        });
+      } else {
+        return dispatch({
+          type: SIGN_UP_USER,
+          payload: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 /* 
 export function filterDuration(duration) {
