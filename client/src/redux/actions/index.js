@@ -16,7 +16,7 @@ import {
 
 export function getMovies() { //obtener todos los videojuegos
     return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/films") 
+        let json = await axios.get("http://localhost:3001/films")
 
         try {
             return dispatch({
@@ -114,10 +114,10 @@ export function orderByRating(payload) { //ordernar por rating asc o desc
 
 export function searchPelicula_Actor(search) {
     return function (dispatch) {
-                dispatch({
-                    type: SEARCH_PELIS,
-                    payload: search
-                });    
+        dispatch({
+            type: SEARCH_PELIS,
+            payload: search
+        });
     };
 }
 
