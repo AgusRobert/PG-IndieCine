@@ -45,14 +45,13 @@ export default function FilterMovieByCountry(){
     const [country, setCountry] = useState('');
 
     function handleChange(e) {
-        setCountry(e.target.value) && dispatch(getMoviesByCountry(e.target.value))
+        setCountry(e.target.value)
+        dispatch(getMoviesByCountry(e.target.value))
     };
 
     useEffect(() => {
         dispatch(getCountries())
     }, [dispatch]);
-
-    let key = 1;
 
     return (
         <div sx={{ minWidth: 120 }}>
@@ -66,7 +65,7 @@ export default function FilterMovieByCountry(){
           input={<BootstrapInput />}
         >
           {countries ? countries.map((e) => (
-                    <MenuItem key ={key++} value={e.name}>{e.name}</MenuItem>
+                    <MenuItem key ={e.id} value={e.name}>{e.name}</MenuItem>
                 )) : null}
         </Select>
       </FormControl>
