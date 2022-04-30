@@ -16,7 +16,7 @@ import {
 
 export function getMovies() { //obtener todos los videojuegos
     return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/films") 
+        let json = await axios.get("http://localhost:3001/films")
 
         try {
             return dispatch({
@@ -56,11 +56,19 @@ export function postMovie (movieForm){
 export function getMoviesByGenre(payload) {
     return async function (dispatch) {
         try {
+            let filtroGenre = [];
             let json3 = await axios.get('http://localhost:3001/films');
-            let json4 = json3.data.filter(e => e.genres.includes(payload));
+            json3.data.map(peli => {
+                let genre = peli.Genres;
+                genre.forEach(obj => {
+                    if (obj.name === payload) {
+                        filtroGenre.push(peli)
+                    }
+                })
+            })
             return dispatch({
                 type: FILTER_MOVIES_BY_GENRE,
-                payload: json4
+                payload: filtroGenre
             })
         } catch (error) {
             console.log(error)
@@ -85,11 +93,19 @@ export function getCountries() {
 export function getMoviesByCountry(payload) {
     return async function (dispatch) {
         try {
+            let filtroCountry = [];
             let json3 = await axios.get('http://localhost:3001/films');
-            let json4 = json3.data.filter(e => e.country === payload);
+            json3.data.map(peli => {
+                let country = peli.Countries;
+                country.forEach(obj => {
+                    if (obj.name === payload) {
+                        filtroCountry.push(peli)
+                    }
+                })
+            })
             return dispatch({
                 type: FILTER_MOVIES_BY_COUNTRY,
-                payload: json4
+                payload: filtroCountry
             })
         } catch (error) {
             console.log(error)
@@ -113,10 +129,10 @@ export function orderByRating(payload) { //ordernar por rating asc o desc
 
 export function searchPelicula_Actor(search) {
     return function (dispatch) {
-                dispatch({
-                    type: SEARCH_PELIS,
-                    payload: search
-                });    
+        dispatch({
+            type: SEARCH_PELIS,
+            payload: search
+        });
     };
 }
 

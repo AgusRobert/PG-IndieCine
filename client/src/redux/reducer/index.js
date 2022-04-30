@@ -14,7 +14,12 @@ import {
   SIGN_UP_USER,
 } from "../actions/actionstype";
 
-import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
+import {
+  DATE_DES,
+  NAME_ASC,
+  COM_DES,
+  RATING_ASC
+} from "./Ordercosntants";
 
 const initialState = {
   peliculas: [],
@@ -65,7 +70,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         peliculas: action.payload,
-        pelisfiltradas: action.payload,
+          pelisfiltradas: action.payload,
       };
     case FILTER_DURATION:
       return {

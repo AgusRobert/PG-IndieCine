@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card.jsx"
-import SearchBar from "../SearchBar/SearchBar.jsx"
 import Footer from "../Footer/Footer.jsx"
 import Navbar from "../Navbar/Navbar.jsx";
 import { getMovies, signUpFunction } from "../../redux/actions/index.js";
@@ -40,18 +39,31 @@ export default function Home (){
             </div>
                 <div>
                     <Navbar/>
-                    <SearchBar/>
                 </div>
+                <div>
                 <div className="pelis">
                 {
                     allMovies ? allMovies?.map(data => {
+                        let nombresGen = [];
+
+                        let generos = data.Genres
+                        generos.forEach(a => {
+                            nombresGen.push(a.name)
+                        })
+
+                        let nombresCountry = [];
+
+                        let country = data.Countries
+                        country.forEach(a => {
+                            nombresCountry.push(a.name)
+                        })
                         return (
                             <div key={data.id}>
                                 <Card title={data.title}
                                 poster={data.poster}
                                 year={data.year}
-                                country={data.country}
-                                genres={"Géneros: " + data.genres?.join(", ")}
+                                country={nombresCountry}
+                                Genres={"Géneros: " + nombresGen.join(", ")}
                                 rating={"Rating: " + data.rating}
                                 key={data.id} />
                             </div> 

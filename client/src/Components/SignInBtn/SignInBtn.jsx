@@ -1,5 +1,16 @@
 import { useAuth0 } from '@auth0/auth0-react';
 
+import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider  } from '@mui/material/styles';
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#D892FD",
+      },
+    },
+  });
+
 // import { useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 
@@ -36,15 +47,19 @@ export default function SignInBtn() {
                         <h3>Welcome {user.name}!</h3>
                         {console.log(user)}
                     </div>
+                    <ThemeProvider theme={theme}>
                     <div>
-                        <button onClick={handleLogout}>Cerrar sesión</button>
+                        <Button color="primary" variant="text" onClick={handleLogout}>Cerrar sesión</Button>
                     </div>
+                    </ThemeProvider>
                 </div>
             )}
             {!isAuthenticated && (
+                <ThemeProvider theme={theme}>
                 <div>
-                    <button onClick={handleLogin}>Iniciar sesión</button>
+                    <Button color="primary" variant="text" onClick={handleLogin}>Iniciar sesión</Button>
                 </div>
+                </ThemeProvider>
             )}
         </>
     )
