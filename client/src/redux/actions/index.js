@@ -54,6 +54,12 @@ export function getGenres() { //obtener generos
     }
 }
 
+export function postMovie (movieForm){
+    return async function(dispatch){
+         await axios.post('http://localhost:3001/films', movieForm); 
+      
+    }
+}; 
 export function getMoviesByGenre(payload) {
     return async function (dispatch) {
         try {
@@ -233,16 +239,7 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
     }
 } */
 
-/* export function postMovie (payload){
-    return async function(dispatch){
-        try {
-            var json = await axios.post("RUTA", payload);
-            return json
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}; */
+
 
 /*  export function getGenres (){
               return async function (dispatch){
