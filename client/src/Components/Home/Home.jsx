@@ -40,11 +40,8 @@ export default function Home (){
                 <div>
                     <Navbar/>
                 </div>
-<<<<<<< HEAD
                 <div>
-=======
                 <div className="pelis">
->>>>>>> mirror
                 {
                     allMovies ? allMovies?.map(data => {
                         let nombresGen = [];
