@@ -23,10 +23,32 @@ export default function CreatorForm() {
 
     // -------- TRAER LA LISTA DE PAISES --------
     const dispatch = useDispatch();
-    const countries = [{ id: '01', name: 'Argentina' }, { id: '02', name: 'Bolivia' }, { id: '03', name: 'Chile' }, { id: '04', name: 'Colombia' }, { id: '05', name: 'Costa Rica' }, { id: '06', name: 'Cuba' }/*, 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'*/];
+    const countries = [
+        { id: '01', name: 'Argentina' },
+        { id: '02', name: 'Bolivia' },
+        { id: '03', name: 'Chile' },
+        { id: '04', name: 'Colombia' },
+        { id: '05', name: 'Costa Rica' },
+        { id: '06', name: 'Cuba' },
+        { id: '07', name: 'Ecuador' },
+        { id: '08', name: 'El Salvador' },
+        { id: '09', name: 'Guatemala' },
+        { id: '10', name: 'Honduras' },
+        { id: '11', name: 'México' },
+        { id: '12', name: 'Nicaragua' },
+        { id: '13', name: 'Panamá' },
+        { id: '14', name: 'Paraguay' },
+        { id: '15', name: 'Perú' },
+        { id: '16', name: 'Puerto Rico' },
+        { id: '17', name: 'República Dominicana' },
+        { id: '18', name: 'Uruguay' },
+        { id: '19', name: 'Venezuela' }
+    ];
+
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
     //     if (!countries.length) {
+    //         dispatch()
     //         dispatch(getCountries());
     //     }
     // }, []);
@@ -38,9 +60,9 @@ export default function CreatorForm() {
             errors.country = "Pais es requerido";
         }
         // people
-        // if (!state.people) {
-        //     errors.people = "Tipo de persona es requerido";
-        // }
+        if (state.people === null) {
+            errors.people = "Tipo de persona es requerido";
+        }
         // rol
         if (!state.rol) {
             errors.rol = "Rol es requerido";
@@ -121,16 +143,9 @@ export default function CreatorForm() {
             alert("Formulario enviado correctamente");
             dispatch(signUpFunction({
                 ...input,
-                // nickname: user.nickname,
-                // email: user.email,
                 ...user,
                 creator: true
             }));
-
-            // dispatch(isCreator(true));
-            // despachar la accion para updatear el usuario.
-            // Si la ruta post es la misma que el usuario básico,
-            // agregar el booleano 'creator' en true.
 
             // direccionamiento al home? al login?
             // resetear el estado de input??
