@@ -14,7 +14,11 @@ import ProfileBtn from "../ProfileBtn/ProfileBtn.jsx";
 export default function Navbar() {
     const { isAuthenticated } = useAuth0();
     return (
+<<<<<<< HEAD
         <div>
+=======
+        <div className="content-select">
+>>>>>>> mirror
             <OrderAZ />
             <OrderDate/>
             <OrderRating />

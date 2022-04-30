@@ -2,7 +2,6 @@ import {
   SEARCH_PELIS,
   FILTER_DURATION,
   ORDER_DATE,
-  IS_CREATOR,
   ORDER_BY_NAME,
   ORDER_COMMENT,
   GET_MOVIES,
@@ -12,6 +11,7 @@ import {
   GET_GENRES,
   GET_COUNTRIES,
   MOVIE_DETAIL,
+  SIGN_UP_USER,
 } from "../actions/actionstype";
 
 import {
@@ -32,13 +32,39 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+
     case SEARCH_PELIS:
-      // let pelisbuscadas = [...state.peliculas]
-      // pelisbuscadas = pelisbuscadas.filter()
-      return {
-        ...state,
-        pelisfiltradas: action.payload,
-      };
+
+      let pelisfinal = []
+      let pelisporfiltrar = state.peliculas
+
+      const filtro = (p) =>{
+        let elenco = p.mainActors
+        if(action.payload){
+          if(p.title.indexOf(action.payload) !== -1){
+            pelisfinal.push(p)
+          }
+          if(p.director.indexOf(action.payload) !== -1){
+            pelisfinal.push(p)
+          }
+          if(elenco){
+            let contador = 0;
+            elenco.map(a => {
+              if(a.indexOf(action.payload) !== -1){
+                contador++
+              }
+            })
+            if(contador > 0 ) pelisfinal.push(p)
+          }
+        }
+      }
+
+      pelisporfiltrar.forEach(peli => filtro(peli))
+        return {
+          ...state,
+          pelisfiltradas: pelisfinal,
+        };
+
 
     case GET_MOVIES:
       return {
@@ -81,12 +107,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesCom,
       };
-    case IS_CREATOR: {
-      return {
-        ...state,
-        isCreator: action.payload,
-      };
-    }
     case ORDER_BY_NAME:
       let orderMoviesName = [...state.pelisfiltradas];
       orderMoviesName = orderMoviesName.sort((a, b) => {
@@ -141,6 +161,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         movieDetail: action.payload,
+      };
+    case SIGN_UP_USER:
+      return {
+        ...state,
+        isCreator: action.payload,
       };
     default:
       return "hola";
