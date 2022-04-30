@@ -55,7 +55,8 @@ export default function OrderAZ (){
 
     function handleSort(e){
         e.preventDefault();
-        setOrdenAlfabetico(e.target.value) && dispatch(sortName(e.target.value))
+        setOrdenAlfabetico(e.target.value)
+        dispatch(sortName(e.target.value))
         /* setCurrentPage(1);
         setOrden(e.target.value); */
     }

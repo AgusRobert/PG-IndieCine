@@ -45,7 +45,8 @@ export default function FilterMoviesByGenre(){
     const [genre, setGenre] = useState('');
 
     function handleChange(e) {
-        setGenre(e.target.value) && dispatch(getMoviesByGenre(e.target.value))
+        setGenre(e.target.value)
+        dispatch(getMoviesByGenre(e.target.value))
     };
 
     useEffect(() => {

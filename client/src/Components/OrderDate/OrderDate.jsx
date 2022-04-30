@@ -45,7 +45,8 @@ export default function OrderDate() {
   
   function onSelectChange(e) {
     e.preventDefault();
-    setDate(e.target.value) && dispatch(sortDate(e.target.value));
+    setDate(e.target.value)
+    dispatch(sortDate(e.target.value));
   }
 
   return (

@@ -28,13 +28,26 @@ export default function Home (){
                 <div>
                 {
                     allMovies ? allMovies?.map(data => {
+                        let nombresGen = [];
+
+                        let generos = data.Genres
+                        generos.forEach(a => {
+                            nombresGen.push(a.name)
+                        })
+
+                        let nombresCountry = [];
+
+                        let country = data.Countries
+                        country.forEach(a => {
+                            nombresCountry.push(a.name)
+                        })
                         return (
                             <div key={data.id}>
                                 <Card title={data.title}
                                 poster={data.poster}
                                 year={data.year}
-                                country={data.country}
-                                genres={"Géneros: " + data.genres?.join(", ")}
+                                country={nombresCountry}
+                                Genres={"Géneros: " + nombresGen.join(", ")}
                                 rating={"Rating: " + data.rating}
                                 key={data.id} />
                             </div> 

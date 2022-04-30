@@ -44,7 +44,8 @@ export default function OrderRating (){
     const [rating, setRating] = useState('');
   
   function onSelectChange(e) {
-    setRating(e.target.value) && dispatch(orderByRating(e.target.value));
+    setRating(e.target.value)
+    dispatch(orderByRating(e.target.value));
   }
 
     return (
