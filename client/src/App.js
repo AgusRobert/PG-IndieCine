@@ -10,6 +10,9 @@ import TyC from "./Components/T&C/T&C";
 import Profile from "./Components/Profile/Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import MovieDetail from "./Components/MovieDetail/MovieDetail";
+import { MovieForm } from "./Components/MovieForm/MovieForm";
+import { FilmForm } from "./Components/MovieForm/FilmForm";
+
 
 function App() {
   const { isAuthenticated } = useAuth0()
@@ -25,6 +28,7 @@ function App() {
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/terms" element={<TyC />} />
           <Route exact path="/prueba" element={<MovieDetail />} />
+          <Route exact path="/add" element={<FilmForm/>}/>
         </Routes>
       </div>
       
