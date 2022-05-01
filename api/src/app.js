@@ -3,7 +3,12 @@ const express = require("express");
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
 require("./db.js");
+const path = require('path');
 const server = express();
+
+server.set('views', path.join(__dirname, 'views'));
+server.set('view engine', 'ejs');
+server.use(express.static(path.join(__dirname, 'public')));
 
 server.name = "PG-IndieCine";
 server.use(express.json());
