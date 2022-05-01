@@ -151,10 +151,9 @@ const Controls = forwardRef(
             direction="row"
             alignItems="center"
             justify="space-between"
-            style
             style={{ padding: 16 }}
           >
-            <Grid item>
+            {/* <Grid item>
               <Typography variant="h5" style={{ color: "#fff" }}>
                 Video Title
               </Typography>
@@ -168,7 +167,7 @@ const Controls = forwardRef(
               >
                 Bookmark
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
           <Grid container direction="row" alignItems="center" justify="center">
             <IconButton

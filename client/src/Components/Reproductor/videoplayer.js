@@ -17,7 +17,7 @@ import VolumeDown from "@material-ui/icons/VolumeDown";
 import VolumeMute from "@material-ui/icons/VolumeOff";
 import FullScreen from "@material-ui/icons/Fullscreen";
 import Popover from "@material-ui/core/Popover";
-/* import screenful from "screenfull"; */
+import screenfull from 'screenfull';
 import Controls from "./ComponenteVideo/ComponenteVideo";
 
 const useStyles = makeStyles((theme) => ({
@@ -160,11 +160,11 @@ function View() {
   const [bookmarks, setBookmarks] = useState([]);
   const [state, setState] = useState({
     pip: false,
-    playing: true,
+    playing: false,
     controls: false,
     light: false,
 
-    muted: true,
+    muted: false,
     played: 0,
     duration: 0,
     playbackRate: 1.0,
@@ -249,7 +249,7 @@ function View() {
   };
 
   const toggleFullScreen = () => {
-    /* screenful.toggle(playerContainerRef.current); */
+    screenfull.toggle(playerContainerRef.current);
   };
 
   const handleMouseMove = () => {
@@ -318,11 +318,11 @@ function View() {
 
   return (
     <>
-      <AppBar position="fixed">
+      {/* <AppBar position="fixed">
         <Toolbar>
           <Typography>React Video Player</Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Toolbar />
       <Container maxWidth="md">
         <div
@@ -380,7 +380,7 @@ function View() {
           />
         </div>
 
-        <Grid container style={{ marginTop: 20 }} spacing={3}>
+        {/* <Grid container style={{ marginTop: 20 }} spacing={3}>
           {bookmarks.map((bookmark, index) => (
             <Grid key={index} item>
               <Paper
@@ -401,7 +401,7 @@ function View() {
               </Paper>
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
         <canvas ref={canvasRef} />
       </Container>
     </>
