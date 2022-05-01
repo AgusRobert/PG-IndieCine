@@ -1,14 +1,14 @@
 import { useAuth0 } from "@auth0/auth0-react"
+import { Button } from "@mui/material";
+import { styled } from "@mui/system";
+import { deepPurple, grey, amber } from "@mui/material/colors";
 
-import Button from '@mui/material/Button';
-import { createTheme, ThemeProvider  } from '@mui/material/styles';
-
-const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#D892FD",
-      },
-    },
+const ButtonStyle = styled(Button)({
+    whiteSpace: "nowrap",
+    color: deepPurple[300],
+    borderBlockColor: deepPurple[200],
+    borderInlineStartColor: deepPurple[900],
+    borderInlineEndColor: deepPurple[900],
   });
 
 export default function SignUpBtn() {
@@ -23,10 +23,21 @@ export default function SignUpBtn() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
         <div>
-            <Button color="primary" onClick={handleSignUp} >Registrarse</Button>
+            <ButtonStyle 
+            onClick={handleSignUp} 
+            variant="outlined"
+            size="small"
+            disableElevation
+            sx={{
+                ":hover": {
+                  bgcolor: amber[200],
+                  color: "black",
+                  borderBlockColor: amber[900],
+                  borderInlineStartColor: amber[200],
+                  borderInlineEndColor: amber[200],
+                },
+              }}>Registrarse</ButtonStyle>
         </div>
-        </ThemeProvider>
     )
 }

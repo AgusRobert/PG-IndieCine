@@ -2,6 +2,20 @@ import React from "react";
 import { useState } from "react";
 import {useDispatch} from "react-redux";
 import {searchPelicula_Actor} from "../../redux/actions/index"
+import { AppBar, Button ,InputBase,  Toolbar } from "@mui/material";
+import { deepPurple, grey, amber } from "@mui/material/colors";
+import { styled } from "@mui/system";
+const SearchStyle = styled(InputBase)({
+    backgroundColor: amber[50],
+    borderRadius: 2,
+    width:"250px",
+    padding: 4
+  });
+  const ButtonStyle = styled(Button)({
+    color: "black",
+    borderColor: deepPurple[500],
+    backgroundColor: deepPurple[700]
+  });
 
 export default function SearchBar () {
     
@@ -15,12 +29,39 @@ export default function SearchBar () {
         e.preventDefault()
         setSearch (e.target.value)
     }
-    return <div className='search'>
+    return( 
+    
+    
         <form onSubmit={onSubmit}>
-            
-            <input  placeholder="Busca una pelicula o actor..." type="text" onChange={onInputChange} value = {search} />
-           <button type="submit" value="Search">Buscar</button> 
+           <Toolbar>
+            <SearchStyle  
+            sx={{
+                ":hover": {
+                  color: "black",
+                  borderBlockColor: amber[900],
+                  borderInlineStartColor: amber[200],
+                  borderInlineEndColor: amber[200],
+                },
+            }}  
+            size='medium'
+            id="standard-full-width"
+             label="Busca una pelicula o actor..."
+             placeholder="Busca una pelicula o actor..."
+             type="text"
+              onChange={onInputChange} value = {search} />
+           <ButtonStyle
+            sx={{
+                ":hover": {
+                  bgcolor: deepPurple[200],
+                  color: "black",
+                  borderBlockColor: deepPurple[200],
+                  borderInlineStartColor: deepPurple[900],
+                  borderInlineEndColor: deepPurple[900],
+                },
+              }} type="submit" value="Search">Buscar</ButtonStyle> 
+              </Toolbar> 
         </form>
-        
-    </div>
+     
+     
+    )
 }
