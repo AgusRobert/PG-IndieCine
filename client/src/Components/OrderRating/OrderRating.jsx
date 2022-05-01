@@ -33,7 +33,6 @@ export default function OrderRating (){
         select
         label="Valoracion"
         onChange={onSelectChange}
-        autoWidth
         variant= 'outlined'
         size='small'
         sx={{
