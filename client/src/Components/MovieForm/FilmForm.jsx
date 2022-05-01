@@ -181,7 +181,7 @@ export function FilmForm() {
                             ))}
                         </select>
                         {errores.genres && (
-                            <p p class="errores">
+                            <p class="errores">
                                 {errores.genres}
                             </p>
                         )}
@@ -218,7 +218,7 @@ export function FilmForm() {
                         required
                     />
                     {errores.director && (
-                        <p p class="errores">
+                        <p class="errores">
                             {errores.director}
                         </p>
                     )}
@@ -249,7 +249,7 @@ export function FilmForm() {
                         required
                     />
                     {errores.associateProducer && (
-                        <p p class="errores">
+                        <p class="errores">
                             {errores.associateProducer}
                         </p>
                     )}
@@ -266,7 +266,7 @@ export function FilmForm() {
                         required
                     />
                     {errores.url && (
-                        <p p class="errores">
+                        <p class="errores">
                             {errores.url}
                         </p>
                     )}
