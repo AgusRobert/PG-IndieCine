@@ -1,21 +1,70 @@
 import React from "react";
-import About from "../About/About";
-import TyC from "../T&C/T&C"
-import Contact from "../Contact/Contact"
-import { Link } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
+import {  styled } from "@mui/system";
+import {  deepPurple } from "@mui/material/colors";
 
-export default function Footer(){ //los parametros son los que quiero que aparezcan en la card
-    return (
-        <div>
-            <button>
-                <Link to="/about">Sobre nosotros</Link>
-            </button>
-            <button>
-                <Link to="/contact">Contacto</Link>
-            </button>
-            <button>
-                <Link to="/terms">Terminos y condiciones</Link>
-            </button>
-        </div>
-    )
+const StyledLink = styled(Link)({
+    marginRight: 150,
+  justifyContent:'space-between',
+  color:deepPurple[50],
+  
+  padding: 8,
+  borderRadius: '6%'
+});
+const BoxStyle = styled(Box)({
+    opacity:0.85 ,
+    backgroundColor: deepPurple[900],
+})
+const navlinks = [
+  { name: "Nosotros", href: "http://localhost:3000/about" },
+  { name: "Contacto", href: "http://localhost:3000/contact" },
+  { name: "TyC", href: "http://localhost:3000/terms" },
+];
+
+export default function Footer() {
+  //los parametros son los que quiero que aparezcan en la card
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "50vh",
+        alignContent: "space-between",
+      }}
+    >
+      <BoxStyle
+        component="footer"
+        sx={{
+          py: 1,
+          px: 1,
+          mt: "auto",
+        }}
+      >
+        <Container maxWidth="sm">
+          <div>
+            {navlinks.map((navl) => (
+              <StyledLink
+              sx={{
+                ":hover": {
+                  bgcolor: deepPurple[200],
+                  color: "black",
+                },
+              }}
+                
+                color="textPrimary"
+                variant="button"
+                underline="none"
+                href={navl.href}
+              >
+                {navl.name}
+              </StyledLink>
+            ))}
+          </div>
+        </Container>
+      </BoxStyle>
+    </Box>
+  );
 }

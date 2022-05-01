@@ -1,66 +1,91 @@
-import { useAuth0 } from '@auth0/auth0-react';
-
-import Button from '@mui/material/Button';
-import { createTheme, ThemeProvider  } from '@mui/material/styles';
-
-const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#D892FD",
-      },
-    },
-  });
-
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "@mui/material";
+import { styled } from "@mui/system";
+import { deepPurple, grey, amber } from "@mui/material/colors";
 // import { useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 
+const ButtonStyle = styled(Button)({
+  whiteSpace: "nowrap",
+  color: amber[700],
+  borderBlockColor: amber[900],
+  borderInlineStartColor: amber[200],
+  borderInlineEndColor: amber[200],
+});
 export default function SignInBtn() {
+  // const dispatch = useDispatch();
 
-    // const dispatch = useDispatch();
+  // ----- Auth0 -----
+  const { logout, loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-    // ----- Auth0 -----
-    const { logout, loginWithRedirect } = useAuth0();
-    const { user, isAuthenticated, isLoading } = useAuth0();
+  // Estoy probando cómo hacer una fn que ejecute el POST de la info del usuario.
+  // useEffect(()=> {
+  //     dispatch()
+  // } , [isAuthenticated]);
 
-    // Estoy probando cómo hacer una fn que ejecute el POST de la info del usuario.
-    // useEffect(()=> {
-    //     dispatch()
-    // } , [isAuthenticated]);
+  function handleLogout() {
+    logout({ returnTo: window.location.origin });
+  }
 
-    function handleLogout() {
-        logout({ returnTo: window.location.origin });
-    }
+  function handleLogin() {
+    loginWithRedirect();
+  }
 
-    function handleLogin() {
-        loginWithRedirect();
-    }
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
 
-    if (isLoading) {
-        return <div>Cargando...</div>
-    }
-
-    return (
-        <>
-            {isAuthenticated && (
-                <div>
-                    <div>
-                        <h3>Welcome {user.name}!</h3>
-                        {console.log(user)}
-                    </div>
-                    <ThemeProvider theme={theme}>
-                    <div>
-                        <Button color="primary" variant="text" onClick={handleLogout}>Cerrar sesión</Button>
-                    </div>
-                    </ThemeProvider>
-                </div>
-            )}
-            {!isAuthenticated && (
-                <ThemeProvider theme={theme}>
-                <div>
-                    <Button color="primary" variant="text" onClick={handleLogin}>Iniciar sesión</Button>
-                </div>
-                </ThemeProvider>
-            )}
-        </>
-    )
+  return (
+    <>
+      {isAuthenticated && (
+        <div>
+          <div>
+            <h6>Welcome {user.name}!</h6>
+            {console.log(user)}
+          </div>
+          <div>
+            <ButtonStyle
+              variant="outlined"
+              size="small"
+              disableElevation
+              onClick={handleLogout}
+              sx={{
+                ":hover": {
+                  bgcolor: deepPurple[200],
+                  color: "white",
+                  borderBlockColor: amber[200],
+                  borderInlineStartColor: amber[900],
+                  borderInlineEndColor: amber[900],
+                },
+              }}
+            >
+              Cerrar sesión
+            </ButtonStyle>
+          </div>
+        </div>
+      )}
+      {!isAuthenticated && (
+        <div>
+          <ButtonStyle
+            variant="outlined"
+            size="small"
+            disableElevation
+            onClick={handleLogin}
+            sx={{
+                ":hover": {
+                  bgcolor: deepPurple[200],
+                  color: "black",
+                  borderBlockColor: deepPurple[200],
+                  borderInlineStartColor: deepPurple[900],
+                  borderInlineEndColor: deepPurple[900],
+                },
+              }}
+          >
+            Iniciar sesión
+          </ButtonStyle>
+        </div>
+      )}
+    </>
+  );
 }

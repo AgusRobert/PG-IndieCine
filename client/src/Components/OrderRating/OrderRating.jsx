@@ -1,68 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { RATING_ASC, RATING_DES } from '../../redux/reducer/Ordercosntants';
 import { useDispatch } from "react-redux";
 import { orderByRating } from '../../redux/actions/index';
-
-import { styled } from '@mui/material/styles';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import InputBase from '@mui/material/InputBase';
+import { styled, Box } from "@mui/system";
+import { deepPurple, grey, amber } from "@mui/material/colors";
+import { InputLabel } from "@mui/material";
+import { TextField } from "@mui/material";
 
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  'label + &': {
-    marginTop: theme.spacing(1),
-  },
-  '& .MuiInputBase-input': {
-    color: "#D892FD",
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-  },
-}));
-
+const SelectStyle = styled(TextField)({
+  borderRadius: 2,
+  width: 150,
+  padding: 0
+});
+const MenuItemStyle = styled(Select)({
+  borderRadius: 2,
+  width: 95
+ 
+});
 export default function OrderRating (){
 
     let dispatch = useDispatch()
-
-    const [rating, setRating] = useState('');
   
   function onSelectChange(e) {
-    setRating(e.target.value)
     dispatch(orderByRating(e.target.value));
   }
 
     return (
-      <div sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-customized-select-label">Rating</InputLabel>
-        <Select
-          labelId="demo-customized-select-label"
-          id="demo-customized-select"
-          value={rating}
-          onChange={onSelectChange}
-          input={<BootstrapInput />}
+      <Box>
+        <SelectStyle 
+        select
+        label="Valoracion"
+        onChange={onSelectChange}
+        autoWidth
+        variant= 'outlined'
+        size='small'
+        sx={{
+          ":active": {
+            color: "black",
+            borderColor: deepPurple[600]
+          },
+          ":focused": {
+            borderColor: deepPurple[600]
+          }
+        }}
         >
-          <MenuItem value={RATING_ASC}>Peor al Mejor</MenuItem>
-          <MenuItem value={RATING_DES}>Mejor al Peor</MenuItem>
-        </Select>
-      </FormControl>
-    </div>
+      <MenuItem  disable>
+        Valoración
+      </MenuItem>
+      <MenuItem autoWidth value={RATING_ASC}>Menos a mas</MenuItem>
+      <MenuItem autoWidth value={RATING_DES}>Más a menos</MenuItem>
+    </SelectStyle>
+    </Box>
     )
 }
+
+
+

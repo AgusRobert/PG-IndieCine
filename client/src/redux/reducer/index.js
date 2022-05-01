@@ -27,7 +27,7 @@ const initialState = {
   isCreator: false,
   genres: [],
   countries: [],
-  movieDetail: [],
+  detalle: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -38,32 +38,32 @@ function rootReducer(state = initialState, action) {
       let pelisfinal = []
       let pelisporfiltrar = state.peliculas
 
-      const filtro = (p) =>{
+      const filtro = (p) => {
         let elenco = p.mainActors
-        if(action.payload){
-          if(p.title.indexOf(action.payload) !== -1){
+        if (action.payload) {
+          if (p.title.indexOf(action.payload) !== -1) {
             pelisfinal.push(p)
           }
-          if(p.director.indexOf(action.payload) !== -1){
+          if (p.director.indexOf(action.payload) !== -1) {
             pelisfinal.push(p)
           }
-          if(elenco){
+          if (elenco) {
             let contador = 0;
             elenco.map(a => {
-              if(a.indexOf(action.payload) !== -1){
+              if (a.indexOf(action.payload) !== -1) {
                 contador++
               }
             })
-            if(contador > 0 ) pelisfinal.push(p)
+            if (contador > 0) pelisfinal.push(p)
           }
         }
       }
 
       pelisporfiltrar.forEach(peli => filtro(peli))
-        return {
-          ...state,
-          pelisfiltradas: pelisfinal,
-        };
+      return {
+        ...state,
+        pelisfiltradas: pelisfinal,
+      };
 
 
     case GET_MOVIES:
@@ -158,9 +158,10 @@ function rootReducer(state = initialState, action) {
         countries: action.payload,
       };
     case MOVIE_DETAIL:
+      /* console.log(action.payload) */
       return {
         ...state,
-        movieDetail: action.payload,
+        detalle: action.payload /* Object.keys(action.payload) */
       };
     case SIGN_UP_USER:
       return {

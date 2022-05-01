@@ -149,7 +149,8 @@ export function searchPelicula_Actor(search) {
 export function renderMovieDetails(id) {
     return async function (dispatch) {
         try {
-            let movie = await axios.get(`http://localhost:3001/api/films/${id}`)
+            let movie = await axios.get(`http://localhost:3001/films/${id}`)
+            /* console.log(movie.data) */
             return dispatch({
                 type: MOVIE_DETAIL,
                 payload: movie.data
