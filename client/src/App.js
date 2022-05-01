@@ -1,10 +1,9 @@
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import About from "./Components/About/About";
 import Contact from "./Components/Contact/Contact";
 import TyC from "./Components/T&C/T&C";
-
+import { MovieForm } from "./Components/MovieForm/MovieForm";
 
 
 import Profile from "./Components/Profile/Profile";
@@ -18,7 +17,7 @@ function App() {
   return (
     <BrowserRouter>
    
-      <div className="App">
+      <div>
         
         <Routes>
           <Route exact path="/" element={<Home />} />

@@ -1,17 +1,18 @@
-
 @import url(https://fonts.googleapis.com/css2?family=Space+Mono&display=swap);
 
-.content-select{
-	max-width: 1900px;
-    position: relative;
-  display: grid;
+.content-select {
+  /* max-width: 1900px; */
+  /* position: relative; */
+  display: flex;
+  /* display: grid;
   grid-template-columns: repeat(5, 1fr);
-        grid-gap: auto;
-  right: 40%;
+        grid-gap: auto; */
+  /* right: 40%; */
   font-size: large;
+  justify-content: center;
 }
- 
-.content-select select{
+
+/* .content-select select{
 	font-family: 'Space Mono', monospace;
     left: 675px;
 	width: 100%;
@@ -34,4 +35,4 @@
 .content-select select:hover{
 	background: #7b7b7b;
 	color: rgb(255, 255, 255);
-}
+} */
