@@ -47,12 +47,22 @@ export function getGenres() { //obtener generos
     }
 }
 
-export function postMovie (movieForm){
-    return async function(dispatch){
-         await axios.post('http://localhost:3001/films', movieForm); 
-      
-    }
-}; 
+// export function postMovie (movieForm){
+//     return async function(dispatch){
+//       const respo = await axios.post('http://localhost:3001/films', movieForm); 
+//       console.log("RESPUESTA DEL BACK: ",movieForm)
+//     }
+// }; 
+
+export const postMovie = async (movieForm) => {
+  const respo = await axios.post("http://localhost:3001/films",movieForm);
+  const poster = await axios.post("http://localhost:3001/upload/image",movieForm.poster);
+  console.log("Respuesta del back: ",respo);
+  console.log("datos del formulario: ",movieForm);
+  console.log("resuesta del poster: ",poster);
+  return null;
+};
+
 export function getMoviesByGenre(payload) {
     return async function (dispatch) {
         try {

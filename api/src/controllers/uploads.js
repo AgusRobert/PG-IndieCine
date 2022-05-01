@@ -52,20 +52,16 @@ exports.formImage = async (req, res) => {
   res.render("index");
 };
 
-//requiere un campo filmId donde vendra el Id de la pelicula
 exports.postImage = async (req, res) => {
-  const { filmId } = req.body;
   const { path , mimetype } = req.file;
-  const newName = uploadService.rename(path,filmId,"cover",mimetype);
+  const newName = uploadService.rename(path,"","cover",mimetype);
   fs.renameSync(path, newName);
   res.send(newName);
 };
 
-//requiere un campo filmId donde vendra el Id de la pelicula
 exports.postVideo = async (req, res) => {
-  const { filmId } = req.body;
   const { path , mimetype } = req.file;
-  const newName = uploadService.rename(path,filmId,"video",mimetype);
+  const newName = uploadService.rename(path,"","video",mimetype);
   fs.renameSync(path, newName);
   res.send(newName);
 };
