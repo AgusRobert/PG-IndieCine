@@ -25,6 +25,8 @@ export default function OrderAZ (){
     }
 
     return (
+       
+       
         <div>
             <select onChange={e => handleSort(e)}>
                     <option value='' hidden={true}>Orden Alfabético</option>
@@ -32,5 +34,6 @@ export default function OrderAZ (){
                     <option value={NAME_DES}>Orden alfabético  de Z hasta A</option>
                 </select>
         </div>
+        
     )
 }

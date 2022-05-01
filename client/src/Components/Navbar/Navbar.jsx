@@ -10,7 +10,7 @@ import FilterMovieByCountry from "../FilterByCountry/FilterMoviesByCountry.jsx";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileBtn from "../ProfileBtn/ProfileBtn.jsx";
 
-import "./Navbar.css"
+
 export default function Navbar() {
     const { isAuthenticated } = useAuth0();
     return (

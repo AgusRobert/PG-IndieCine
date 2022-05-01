@@ -5,8 +5,6 @@ import About from "./Components/About/About";
 import Contact from "./Components/Contact/Contact";
 import TyC from "./Components/T&C/T&C";
 import { MovieForm } from "./Components/MovieForm/MovieForm";
-
-
 import Profile from "./Components/Profile/Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import MovieDetail from "./Components/MovieDetail/MovieDetail";
