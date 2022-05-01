@@ -9,12 +9,12 @@ const ButtonStyle = styled(Button)({
     borderBlockColor: deepPurple[200],
     borderInlineStartColor: deepPurple[900],
     borderInlineEndColor: deepPurple[900],
-  });
+});
 
 export default function SignUpBtn() {
 
     // ----- Auth0 -----
-    const { loginWithRedirect } = useAuth0()
+    const { loginWithRedirect, isLoading } = useAuth0()
 
     function handleSignUp() {
         loginWithRedirect({
@@ -22,22 +22,26 @@ export default function SignUpBtn() {
         })
     }
 
+    if (isLoading) {
+        return <></>;
+    }
+
     return (
         <div>
-            <ButtonStyle 
-            onClick={handleSignUp} 
-            variant="outlined"
-            size="small"
-            disableElevation
-            sx={{
-                ":hover": {
-                  bgcolor: amber[200],
-                  color: "black",
-                  borderBlockColor: amber[900],
-                  borderInlineStartColor: amber[200],
-                  borderInlineEndColor: amber[200],
-                },
-              }}>Registrarse</ButtonStyle>
+            <ButtonStyle
+                onClick={handleSignUp}
+                variant="outlined"
+                size="small"
+                disableElevation
+                sx={{
+                    ":hover": {
+                        bgcolor: amber[200],
+                        color: "black",
+                        borderBlockColor: amber[900],
+                        borderInlineStartColor: amber[200],
+                        borderInlineEndColor: amber[200],
+                    },
+                }}>Registrarse</ButtonStyle>
         </div>
     )
 }

@@ -33,7 +33,7 @@ export default function SignInBtn() {
   }
 
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return <></>;
   }
 
   return (
@@ -73,14 +73,14 @@ export default function SignInBtn() {
             disableElevation
             onClick={handleLogin}
             sx={{
-                ":hover": {
-                  bgcolor: deepPurple[200],
-                  color: "black",
-                  borderBlockColor: deepPurple[200],
-                  borderInlineStartColor: deepPurple[900],
-                  borderInlineEndColor: deepPurple[900],
-                },
-              }}
+              ":hover": {
+                bgcolor: deepPurple[200],
+                color: "black",
+                borderBlockColor: deepPurple[200],
+                borderInlineStartColor: deepPurple[900],
+                borderInlineEndColor: deepPurple[900],
+              },
+            }}
           >
             Iniciar sesión
           </ButtonStyle>
