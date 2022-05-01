@@ -34,14 +34,8 @@ Film.belongsToMany(User,{
   timestamps: false,
 });
 
-Film.belongsToMany(Country,{
-  through: "FilmCountry",
-  timestamps: false,
-});
-Country.belongsToMany(Film,{
-  through: "FilmCountry",
-  timestamps: false,
-});
+Country.hasMany(Film);
+Film.belongsTo(Country);
 
 Film.belongsToMany(Genre,{
   through: "FilmGenre",
