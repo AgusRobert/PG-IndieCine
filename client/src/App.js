@@ -23,7 +23,7 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/terms" element={<TyC />} />
-          <Route exact path="/prueba" element={<MovieDetail />} />
+          <Route exact path="/detail/:id" element={<MovieDetail />}/>
           <Route exact path="/addFilm" element={<MovieForm/>}/>
         </Routes>
       </div>
