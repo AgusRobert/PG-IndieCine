@@ -165,7 +165,7 @@ export function FilmForm() {
                             ))}
                         </select>
                         {errores.genres && (
-                            <p p class="errores">
+                            <p class="errores">
                                 {errores.genres}
                             </p>
                         )}
