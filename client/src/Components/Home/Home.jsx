@@ -33,6 +33,7 @@ export default function Home (){
                                 country={data.country}
                                 genres={"Géneros: " + data.genres?.join(", ")}
                                 rating={"Rating: " + data.rating}
+                                duration={"Duración: " + data.duration}
                                 key={data.id} />
                             </div> 
                         )

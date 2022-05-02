@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Card({title, poster, genres, rating, year, country}){ //los parametros son los que quiero que aparezcan en la card
+export default function Card({title, poster, genres, rating, year, country, duration}){ //los parametros son los que quiero que aparezcan en la card
     return (
   <div>
       <div>
@@ -11,6 +11,7 @@ export default function Card({title, poster, genres, rating, year, country}){ //
             <h5>{rating}</h5>
             <h5>{year}</h5>
             <h5>{country}</h5>
+            <h5>{duration}</h5>
             </div>
       </div>
   </div>

@@ -18,6 +18,7 @@ import SignInBtn from "../SignInBtn/SignInBtn.jsx";
 import SignUpBtn from "../SignUpBtn/SignUpBtn.jsx";
 import OrderDate from "../OrderDate/OrderDate.jsx";
 import FilterMovieByCountry from "../FilterByCountry/FilterMoviesByCountry.jsx";
+import FilterMovieByDuration from '../FilterByDuration/FilterMoviesByDuration'
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileBtn from "../ProfileBtn/ProfileBtn.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
@@ -93,6 +94,7 @@ export default function Header() {
         <OrderRating />
         <FilterMoviesByGenre />
         <FilterMovieByCountry />
+        <FilterMovieByDuration/>
         <SearchBar />
 
         {!isAuthenticated && <SignInBtn />}
