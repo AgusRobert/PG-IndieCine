@@ -4,10 +4,10 @@
 
 .App {
   text-align: center;
-  background-size: fill;
   background-image: url(./1GLOTe.png);
+  background-size: fill;
+  
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
