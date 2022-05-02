@@ -98,7 +98,7 @@ export default function Header() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <Avatar src={user.picture} alt={user.name} />
+                <AvatarStyle src={user.picture} alt={user.name} />
               </IconButton>
               <Menu
                 id="menu-appbar"
