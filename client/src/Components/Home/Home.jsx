@@ -34,22 +34,14 @@ export default function Home (){
                             nombresGen.push(a.name)
                         })
 
-                        console.log(nombresGen)
-
-                        let nombresCountry = [];
-
-                        let country = data.Countries
-                        country?.forEach(a => {
-                            nombresCountry.push(a.name)
-                        })
                         return (
                             <div key={data.id}>
                                 <Link key={data.id} to={"/detail/" + data.id}>
                                 <Card title={data.title}
                                 poster={data.poster}
                                 year={data.year}
-                                country={nombresCountry}
-                                Genres={"Géneros: " + nombresGen.join(", ")}
+                                country={data.Country.name}
+                                Genres={"Géneros: " + nombresGen?.join(", ")}
                                 rating={"Rating: " + data.rating}
                                 key={data.id} />
                                 </Link>
