@@ -45,7 +45,7 @@ export default function MovieDetail() {
               );
             })}
             <h2>Genero: {peli.Genres.map(a => a.name).join(", ")}</h2>
-            <h2>Pais de origen: {peli.Countries?.map(a => a.name)}</h2>
+            <h2>Pais de origen: {peli.Country.name}</h2>
             <h3>Productor Asociado</h3>
             <p>{peli.associateProducer}</p>
           </div>

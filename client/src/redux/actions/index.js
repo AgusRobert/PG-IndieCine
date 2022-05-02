@@ -55,12 +55,12 @@ export function getGenres() { //obtener generos
 // }; 
 
 export const postMovie = async (movieForm) => {
-  const respo = await axios.post("http://localhost:3001/films",movieForm);
-  const poster = await axios.post("http://localhost:3001/upload/image",movieForm.poster);
-  console.log("Respuesta del back: ",respo);
-  console.log("datos del formulario: ",movieForm);
-  console.log("resuesta del poster: ",poster);
-  return null;
+    const respo = await axios.post("http://localhost:3001/films", movieForm);
+    const poster = await axios.post("http://localhost:3001/upload/image", movieForm.poster);
+    console.log("Respuesta del back: ", respo);
+    console.log("datos del formulario: ", movieForm);
+    console.log("resuesta del poster: ", poster);
+    return null;
 };
 
 export function getMoviesByGenre(payload) {
@@ -103,19 +103,12 @@ export function getCountries() {
 export function getMoviesByCountry(payload) {
     return async function (dispatch) {
         try {
-            let filtroCountry = [];
             let json3 = await axios.get('http://localhost:3001/films');
-            json3.data.map(peli => {
-                let country = peli.Countries;
-                country.forEach(obj => {
-                    if (obj.name === payload) {
-                        filtroCountry.push(peli)
-                    }
-                })
-            })
+            let json4 = json3.data;
+            json4 = json4.filter(e => e.Country.name === payload)
             return dispatch({
                 type: FILTER_MOVIES_BY_COUNTRY,
-                payload: filtroCountry
+                payload: json4
             })
         } catch (error) {
             console.log(error)
@@ -162,51 +155,47 @@ export function renderMovieDetails(id) {
 }
 
 export function signUpFunction(userData) {
-  return async function (dispatch) {
-    try {
-      console.log("userData", userData);
-      let request = {
-        name: userData.given_name ? userData.given_name : null,
-        surname: userData.family_name ? userData.family_name : null,
-        username: userData.nickname,
-        email: userData.email,
-        password: userData.email,
-        creator: userData.creator,
-        country: userData.country ? userData.country : null,
-        people: userData.people
-          ? userData.people === "true"
-            ? true
-            : false
-          : null,
-        rol: userData.rol ? userData.rol : null,
-        telephone: userData.telephone ? parseInt(userData.telephone) : null,
-        typeOfDocument: userData.typeOfDocument
-          ? userData.typeOfDocument
-          : null,
-        numberOfDocument: userData.numberOfDocument
-          ? Number(userData.numberOfDocument)
-          : null,
-        frontDocument: userData.frontDocument ? userData.frontDocument : null,
-        reverseDocument: userData.reverseDocument
-          ? userData.reverseDocument
-          : null,
-      };
-      await axios.post("http://localhost:3001/users/register", request);
-      if (request.creator) {
-        return dispatch({
-          type: SIGN_UP_USER,
-          payload: true,
-        });
-      } else {
-        return dispatch({
-          type: SIGN_UP_USER,
-          payload: false,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    return async function (dispatch) {
+        try {
+            console.log("userData", userData);
+            let request = {
+                name: userData.given_name ? userData.given_name : null,
+                surname: userData.family_name ? userData.family_name : null,
+                username: userData.nickname,
+                email: userData.email,
+                password: userData.email,
+                creator: userData.creator,
+                country: userData.country ? userData.country : null,
+                people: userData.people ?
+                    userData.people === "true" ?
+                    true :
+                    false : null,
+                rol: userData.rol ? userData.rol : null,
+                telephone: userData.telephone ? parseInt(userData.telephone) : null,
+                typeOfDocument: userData.typeOfDocument ?
+                    userData.typeOfDocument : null,
+                numberOfDocument: userData.numberOfDocument ?
+                    Number(userData.numberOfDocument) : null,
+                frontDocument: userData.frontDocument ? userData.frontDocument : null,
+                reverseDocument: userData.reverseDocument ?
+                    userData.reverseDocument : null,
+            };
+            await axios.post("http://localhost:3001/users/register", request);
+            if (request.creator) {
+                return dispatch({
+                    type: SIGN_UP_USER,
+                    payload: true,
+                });
+            } else {
+                return dispatch({
+                    type: SIGN_UP_USER,
+                    payload: false,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 }
 /* 
 export function filterDuration(duration) {
