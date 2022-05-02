@@ -55,16 +55,16 @@ module.exports = (sequelize) => {
       rating: {
         type: DataTypes.REAL,
         allowNull: false,
-        validate: {
-          min: {
-            args: 0,
-            msg: "Rating must be greater than 0",
-          },
-          max: {
-            args: 5.001,
-            msg: "Rating must be equal or less than 5",
-          },
-        },
+        // validate: {
+        //   // min: {
+        //   //   args: 0,
+        //   //   msg: "Rating must be greater than 0",
+        //   // },
+        //   max: {
+        //     args: 5.5,
+        //     msg: "Rating must be equal or less than 5",
+        //   },
+        // },
       },
     },
     {

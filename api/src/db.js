@@ -26,11 +26,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { User, Film, Country, Genre, Comment } = sequelize.models;
 
 User.belongsToMany(Film,{
-  through: "Favorito",
+  through: "favorito",
   timestamps: false,
 });
 Film.belongsToMany(User,{
-  through: "Favorito",
+  through: "favorito",
   timestamps: false,
 });
 
@@ -38,11 +38,11 @@ Country.hasMany(Film);
 Film.belongsTo(Country);
 
 Film.belongsToMany(Genre,{
-  through: "FilmGenre",
+  through: "filmGenre",
   timestamps: false,
 });
 Genre.belongsToMany(Film,{
-  through: "FilmGenre",
+  through: "filmGenre",
   timestamps: false,
 });
 
