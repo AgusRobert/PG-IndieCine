@@ -22,6 +22,8 @@ export default function MovieDetail() {
 
   let elenco = peli ? peli.mainActors : [];
 
+  let key = 0;
+
   if (peli) {
     return (
       <div>
@@ -45,7 +47,7 @@ export default function MovieDetail() {
             <h3>Elenco principal:</h3>
             {elenco?.map((e, i) => {
               return (
-                <p>{e}</p>
+                <p key={key++}>{e}</p>
               );
             })}
             <h2>Genero: {peli.Genres.map(a => a.name).join(", ")}</h2>

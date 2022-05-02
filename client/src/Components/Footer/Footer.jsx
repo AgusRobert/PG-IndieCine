@@ -53,7 +53,7 @@ export default function Footer() {
                   color: "black",
                 },
               }}
-                
+                key={navl.name}
                 color="textPrimary"
                 variant="button"
                 underline="none"
