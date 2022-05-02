@@ -39,6 +39,7 @@ export default function Home (){
                                 <Link key={data.id} to={"/detail/" + data.id}>
                                 <Card title={data.title}
                                 poster={data.poster}
+                                duration={"Duración: " + data.duration}
                                 year={data.year}
                                 country={data.Country.name}
                                 Genres={"Géneros: " + nombresGen?.join(", ")}

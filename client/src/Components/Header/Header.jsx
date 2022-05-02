@@ -21,6 +21,7 @@ import FilterMovieByCountry from "../FilterByCountry/FilterMoviesByCountry.jsx";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileBtn from "../ProfileBtn/ProfileBtn.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx"
+import FilterMovieByDuration from "../FilterByDuration/FilterMoviesByDuration.jsx";
 
 const ContainerStyle = styled(Container)({
   marginLeft:50,
@@ -110,6 +111,11 @@ export default function Header() {
             <DivStyle>
             
             <FilterMovieByCountry/>
+            
+            </DivStyle>
+            <DivStyle>
+            
+            <FilterMovieByDuration/>
             
             </DivStyle>
             </Toolbar>
