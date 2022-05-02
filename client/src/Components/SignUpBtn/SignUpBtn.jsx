@@ -5,11 +5,13 @@ import { deepPurple, grey, amber } from "@mui/material/colors";
 
 const ButtonStyle = styled(Button)({
     whiteSpace: "nowrap",
-    color: deepPurple[300],
+    color: deepPurple[200],
     borderBlockColor: deepPurple[200],
     borderInlineStartColor: deepPurple[900],
     borderInlineEndColor: deepPurple[900],
+    backgroundColor:deepPurple[400]
   });
+
 
 export default function SignUpBtn() {
 
@@ -23,6 +25,7 @@ export default function SignUpBtn() {
     }
 
     return (
+       
         <div>
             <ButtonStyle 
             onClick={handleSignUp} 
@@ -39,5 +42,6 @@ export default function SignUpBtn() {
                 },
               }}>Registrarse</ButtonStyle>
         </div>
+     
     )
 }

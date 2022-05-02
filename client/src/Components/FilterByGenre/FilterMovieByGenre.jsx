@@ -1,42 +1,65 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {getMoviesByGenre, getGenres} from "../../redux/actions/index";
+import { getMoviesByGenre, getGenres } from "../../redux/actions/index";
+import { styled, Box } from "@mui/system";
+import { deepPurple, grey, amber } from "@mui/material/colors";
+import { TextField } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 
-export default function FilterMoviesByGenre(){
+const MenuItemStyle = styled(MenuItem)({
+  marginLeft: "auto",
+  color: "black",
+  backgroundColor: "#b388ff",
+});
 
-    const dispatch = useDispatch();
+const SelectStyle = styled(TextField)({
+  borderRadius: 2,
+  width: 160,
+  padding: 0,
+});
 
-    const genres = useSelector((state) => state.genres);
+export default function FilterMoviesByGenre() {
+  const dispatch = useDispatch();
 
-    function handleChange(e) {
-        dispatch(getMoviesByGenre(e.target.value))
-    };
+  const genres = useSelector((state) => state.genres);
 
-    useEffect(() => {
-        dispatch(getGenres())
-    }, [dispatch]);
+  function handleChange(e) {
+    dispatch(getMoviesByGenre(e.target.value));
+  }
 
-    let key = 1
+  useEffect(() => {
+    dispatch(getGenres());
+  }, [dispatch]);
 
-    return (
-        <div>
-             <select onChange = {(e) => handleChange(e)}>
-             <option hidden={true}>Géneros</option>
-                        {genres ? genres.map((e) => (
-                            <option key ={key++} value={e.name}>{e.name}</option>
-                        )) : null}
-                    </select>
-                   
-        </div>
-    )
+  let key = 1;
+
+  return (
+    <Box>
+      <SelectStyle
+        name="select"
+        onChange={(e) => handleChange(e)}
+        select
+        label="Generos"
+        variant="outlined"
+        size="small"
+        sx={{
+          ":active": {
+            color: "black",
+            borderColor: deepPurple[600],
+          },
+          ":focused": {
+            borderColor: deepPurple[600],
+          },
+        }}
+      >
+        {genres
+          ? genres.map((e) => (
+              <MenuItemStyle key={key++} value={e.name}>
+                {e.name}
+              </MenuItemStyle>
+            ))
+          : null}
+      </SelectStyle>
+    </Box>
+  );
 }
-
-
-
-/* 
-case FILTER_MOVIES_BY_GENRE:
-        return {
-            ...state,
-            movies: action.payload
-        }; 
- */

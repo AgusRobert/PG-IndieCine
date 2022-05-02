@@ -20,14 +20,20 @@ import OrderDate from "../OrderDate/OrderDate.jsx";
 import FilterMovieByCountry from "../FilterByCountry/FilterMoviesByCountry.jsx";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileBtn from "../ProfileBtn/ProfileBtn.jsx";
-import SearchBar from "../SearchBar/SearchBar.jsx"
+import SearchBar from "../SearchBar/SearchBar.jsx";
+import logo from './LOGO.png'
 
-const ContainerStyle = styled(Container)({
-  marginLeft:50,
+
+const ToolStyle = styled(Toolbar)({
+  marginLeft: 50,
+  position: "sticky",
+  justifyContent: "space-between",
 });
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: grey[900],
+  backgroundColor: "#b388ff",
+  position: "sticky",
+  justifyContent: "space-between",
 });
 
 const AvatarStyle = styled(Avatar)({
@@ -45,30 +51,29 @@ const MenuItemStyle = styled(MenuItem)({
   backgroundColor: grey[900],
 });
 const BoxStyle = styled(Box)({
-    marginLeft: 20,
-    paddingLeft: "9px",
-    justifyContent:"space-between"
-  });
+  marginLeft: 20,
+  paddingLeft: "9px",
+  justifyContent: "space-between",
+});
 
-  const DivStyle = styled('div')({
-    marginLeft: 40,
-    justifyContent:"space-between"
-  });
+const DivStyle = styled("div")({
+  marginLeft: 40,
+  justifyContent: "space-between",
+});
 const BoxSign = styled(Box)({
-    direction:"row",
-    justifyContent:"flex-end",
-    alignItems:"center",
-    spacing:3
-})
+  direction: "row",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  spacing: 3,
+});
 export default function Header() {
-    const { isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
 
   function handleOnClick() {
     navigate("/profile");
   }
-  
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -79,56 +84,23 @@ export default function Header() {
   };
 
   return (
-    <AppStyle position="sticky">
-      <ContainerStyle maxWidth='md'>
-        <Toolbar disableGutters>
-          <BoxStyle>
-              <Toolbar>
-            <DivStyle>
+   <Box>
+   <AppStyle position="sticky">
+      <ToolStyle>
+          <img src={logo} alt="Cindie"/>
+        <OrderAZ />
+        <OrderDate />
+        <OrderRating />
+        <FilterMoviesByGenre />
+        <FilterMovieByCountry />
+        <SearchBar />
 
-              <OrderAZ />
-            
-            </DivStyle>
-            <DivStyle>
+        {!isAuthenticated && <SignInBtn />}
 
-            <OrderDate/>
+        {!isAuthenticated && <SignUpBtn />}
 
-            </DivStyle>
-            <DivStyle>
-
-            <OrderRating />
-
-            </DivStyle>
-            <DivStyle>
-            
-            <FilterMoviesByGenre />
-            
-            </DivStyle>
-            <DivStyle>
-            
-            <FilterMovieByCountry/>
-            
-            </DivStyle>
-            </Toolbar>
-          </BoxStyle>
-          <BoxStyle>
-              
-              <SearchBar/>
-        
-          </BoxStyle>
-          <BoxSign>
-          <Toolbar>
-          <BoxStyle>
-              <Toolbar>
-             <DivStyle>
-            {!isAuthenticated && (<SignInBtn />)}
-            </DivStyle>
-            <DivStyle>
-            {!isAuthenticated && (<SignUpBtn />)}
-            </DivStyle>
-              </Toolbar>
-          </BoxStyle>
-         { isAuthenticated && <div>
+        {isAuthenticated && (
+          <>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -177,11 +149,10 @@ export default function Header() {
                 Cerrar sesion
               </MenuItemStyle>
             </Menu>
-          </div>}
-          </Toolbar>
-          </BoxSign>
-        </Toolbar>
-      </ContainerStyle>
+          </>
+        )}
+      </ToolStyle>
     </AppStyle>
+    </Box>
   );
 }

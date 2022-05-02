@@ -7,14 +7,15 @@ import { deepPurple, grey, amber } from "@mui/material/colors";
 import { styled } from "@mui/system";
 const SearchStyle = styled(InputBase)({
     backgroundColor: amber[50],
-    borderRadius: 2,
+    borderRadius: 5,
     width:"250px",
     padding: 4
   });
   const ButtonStyle = styled(Button)({
     color: "black",
     borderColor: deepPurple[500],
-    backgroundColor: deepPurple[700]
+    backgroundColor: deepPurple[700],
+    padding:8
   });
 
 export default function SearchBar () {
@@ -38,10 +39,12 @@ export default function SearchBar () {
             sx={{
                 ":hover": {
                   color: "black",
-                  borderBlockColor: amber[900],
-                  borderInlineStartColor: amber[200],
-                  borderInlineEndColor: amber[200],
+                   backgroundColor:amber[100],
                 },
+                ":focus":{
+                    color: "black",
+                    backgroundColor:amber[100],
+                }
             }}  
             size='medium'
             id="standard-full-width"

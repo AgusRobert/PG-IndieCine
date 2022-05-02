@@ -15,7 +15,7 @@ const StyledLink = styled(Link)({
 });
 const BoxStyle = styled(Box)({
     opacity:0.85 ,
-    backgroundColor: deepPurple[900],
+    backgroundColor: "#311b92",
 })
 const navlinks = [
   { name: "Nosotros", href: "http://localhost:3000/about" },
