@@ -13,17 +13,17 @@ const transporter = nodemailer.createTransport({
 
 exports.sendMail = async (req, res) => {
    const {id } = req.body;
-  //const user =  await User.findByPk(id);
+    const user =  await User.findByPk(id);
 
      await transporter.sendMail({
     from: '"Indie-Cine" <indiecine2022@gmail.com>', // sender address
-    to: req.body.email, // list of receivers
+    to: user.email, // list of receivers
     subject: "Nuevo Contenido", // Subject line
     html: `
     <div style="display:flex; flex-direction: column; justify-content: center;">
 <div>LOGO</div>
 <div>
-    <h1 style="color:rgb(57, 56, 56);">Hola, ${req.body.name} </h1>
+    <h1 style="color:rgb(57, 56, 56);">Hola, ${user.name} </h1>
     <p style="color:rgb(57, 56, 56);">
         Queremos informarte que tu nuevo trabajo ha sido agreado a nuestra plataforma.
     </p>
@@ -49,7 +49,3 @@ exports.sendMail = async (req, res) => {
   res.json(req.body);
   
 };
-
-
-
-  
