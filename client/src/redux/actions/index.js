@@ -197,22 +197,25 @@ export function signUpFunction(userData) {
         }
     };
 }
-/* 
-export function filterDuration(duration) {
-    return function (dispatch) {
-        axios.get( RUTABACK  + duration)
-        .then((movies) => {
-            dispatch({
-              type: FILTER_DURATION,
-              payload: movies.data
-            });
-          })
-          .catch((error)=>{
-             console.log(error)
-          })
-        };
-    }
 
+
+
+export function filterDuration(payload) {
+    return async function (dispatch) {
+        try {
+            let json3 = await axios.get('http://localhost:3001/films');
+            let json4 = json3.data;
+            json4 = json4.filter(e => e.duration === payload)
+            return dispatch({
+                type: FILTER_DURATION,
+                payload: json4
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+};
+/* 
   export function sortByComment(order){
 return {
       type: ORDER_COMMENT,

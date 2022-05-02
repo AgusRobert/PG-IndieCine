@@ -1,76 +1,70 @@
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {getMoviesByGenre, getGenres} from "../../redux/actions/index";
+import { getMoviesByGenre, getGenres } from "../../redux/actions/index";
+import { styled, Box } from "@mui/system";
+import { deepPurple, grey, amber } from "@mui/material/colors";
+import { TextField } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 
-import { styled } from '@mui/material/styles';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import InputBase from '@mui/material/InputBase';
 
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  'label + &': {
-    marginTop: theme.spacing(1),
-  },
-  '& .MuiInputBase-input': {
-    color: "#D892FD",
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-  },
-}));
+const MenuItemStyle = styled(MenuItem)({
+  marginLeft: "auto",
+  color: "black",
+  backgroundColor: "#b388ff",
+});
 
-export default function FilterMoviesByGenre(){
 
-    const dispatch = useDispatch();
+const SelectStyle = styled(TextField)({
+  borderRadius: 2,
+  width: 160,
+  padding: 0,
+});
 
-    const genres = useSelector((state) => state.genres);
+export default function FilterMoviesByGenre() {
+  const dispatch = useDispatch();
 
-    const [genre, setGenre] = useState('');
 
-    function handleChange(e) {
-        setGenre(e.target.value)
-        dispatch(getMoviesByGenre(e.target.value))
-    };
+  const genres = useSelector((state) => state.genres);
 
-    useEffect(() => {
-        dispatch(getGenres())
-    }, [dispatch]);
+  function handleChange(e) {
+    dispatch(getMoviesByGenre(e.target.value));
+  }
 
-    let key = 1
+  useEffect(() => {
+    dispatch(getGenres());
+  }, [dispatch]);
 
-    return (
-        <div sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-customized-select-label">Géneros</InputLabel>
-        <Select
-          labelId="demo-customized-select-label"
-          id="demo-customized-select"
-          value={genre}
-          onChange={handleChange}
-          input={<BootstrapInput />}
-        >
-          {genres ? genres.map((e) => (
-                    <MenuItem key ={key++} value={e.name}>{e.name}</MenuItem>
-                )) : null}
-        </Select>
-      </FormControl>
-    </div>
-)
+  let key = 1;
+
+  return (
+    <Box>
+      <SelectStyle
+        name="select"
+        onChange={(e) => handleChange(e)}
+        select
+        label="Generos"
+        variant="outlined"
+        size="small"
+        sx={{
+          ":active": {
+            color: "black",
+            borderColor: deepPurple[600],
+          },
+          ":focused": {
+            borderColor: deepPurple[600],
+          },
+        }}
+      >
+        {genres
+          ? genres.map((e) => (
+              <MenuItemStyle key={key++} value={e.name}>
+                {e.name}
+              </MenuItemStyle>
+            ))
+          : null}
+      </SelectStyle>
+    </Box>
+  );
 }
+

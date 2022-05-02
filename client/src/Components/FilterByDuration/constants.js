@@ -1,3 +1,3 @@
 export const Cortometrajes = 'Cortometraje'
-export const Mediometrajes = 'Mediometrajes'
-export const Largometrajes = 'Largometrajes'
+export const Mediometrajes = 'Mediometraje'
+export const Largometrajes = 'Largometraje'
