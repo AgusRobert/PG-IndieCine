@@ -1,45 +1,63 @@
 
 @import url(https://fonts.googleapis.com/css2?family=Space+Mono&display=swap);
 
+/* CARDS DE PELICULAS */
 
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300&family=Poppins:wght@300;400&display=swap");
 .App {
-  text-align: center;
-  background-image: url(./1GLOTe.png);
-  background-size: fill;
-  
-}
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+height: 100%;
+font-family: sans-serif;
+text-align: center;
+font-family: "Poppins", sans-serif;
+font-size: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.cardgrid {
+display: inline-block;
+margin: 5px 5px;
+width: 30%;
+height: auto;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+.Title{
+color:antiquewhite;
+text-shadow: inset 0 0 40px #4830d3;
+margin-top: 5%;
+text-align: center;
+
 }
 
-.App-link {
-  color: #61dafb;
+.search {
+margin-left: 2vw;
+display: flex;
+justify-content: space-between;
+margin-top: 30px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.image {
+width: 75%;
+border: 3px solid rgb(172, 168, 168);
+}
+
+.image:hover{
+cursor: pointer;
+transform: scale(1.4);  
+transition: 0.4s ease-in-out;
+box-shadow: 5px 5px 30px 10px rgb(223, 216, 216);
+}
+
+h5 {
+text-align: center;
+margin: 5px 5px;
+color: #3b30d3;
+margin-top: 50px;
+margin-bottom: 10px;
+}
+
+p,
+span {
+color: rgb(172, 168, 168);
 }
 

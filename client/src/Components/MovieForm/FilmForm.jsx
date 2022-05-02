@@ -2,7 +2,47 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGenres, getCountries } from "../../redux/actions";
 import { postMovie } from "../../redux/actions/index";
+import { styled, Box } from "@mui/system";
+import { deepPurple, grey, amber } from "@mui/material/colors";
+import { TextField, Toolbar } from "@mui/material";
+import { Button } from "@mui/material";
+import { InputBase } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+const MenuItemStyle = styled(MenuItem)({
+  marginLeft: "auto",
+  color: "white",
+  backgroundColor: "#b388ff",
+});
 
+const InputStyle = styled(InputBase)({
+    backgroundColor: amber[50],
+    borderRadius: 5,
+    width:"250px",
+    padding: 4
+  });
+
+const ButtonStyle = styled(Button)({
+    color: "white",
+    borderColor: deepPurple[500],
+    backgroundColor: deepPurple[700],
+    padding:8
+  });
+
+const LabelStyle = styled("label")({
+  color: "white",
+});
+
+const SelectStyle = styled(TextField)({
+  borderRadius: 2,
+  width: 160,
+  padding: 0,
+});
+
+const BoxStyle = styled(Box)({
+    display: 'flex',   
+    justifyContent: 'space-evenly',
+    flexDirection: 'column'
+})
 
 export function FilmForm() {
     let dispatch = useDispatch();
@@ -109,10 +149,10 @@ export function FilmForm() {
 
     return (
         <div>
-            <form >
-                <div>
-                    <label>Título</label>
-                    <input
+            <form onSubmit={()=> ("Tu película fue subida")}>
+                <BoxStyle>
+                    <LabelStyle>Título</LabelStyle>
+                    <InputStyle
                         type="text"
                         value={movieForm.title}
                         placeholder="Título de la Película"
@@ -121,10 +161,9 @@ export function FilmForm() {
                         required
                     />
                     {errores.title && <p class="errores">{errores.title}</p>}
-                </div>
-                <div>
-                    <label>Póster</label>
-                    <input
+                
+                    <LabelStyle>Póster</LabelStyle>
+                    <InputStyle
                         type="file"
                         accept="image/jpg image/png image/jpeg"
                         value={movieForm.poster}
@@ -134,10 +173,9 @@ export function FilmForm() {
                         required
                     />
                     {errores.poster && <p class="errores">{errores.poster}</p>}
-                </div>
-                <div>
-                    <label>Sinopsis</label>
-                    <input
+               
+                    <LabelStyle>Sinopsis</LabelStyle>
+                    <InputStyle
                         type="text"
                         value={movieForm.synopsis}
                         placeholder="Sinopsis"
@@ -146,8 +184,7 @@ export function FilmForm() {
                         required
                     />
                     {errores.synopsis && <p class="errores">{errores.synopsis}</p>}
-                </div>
-                <div>
+                
                     {/* <select className={s.select} name="select" id="paises"  >
                         <option value="">Choose a Country</option>
                         {paises.map((pais) => (
@@ -156,40 +193,67 @@ export function FilmForm() {
                             </option>
                         ))}
                     </select> */}
-                    <div className="content-select">
-                        <label>Géneros</label>
-                        <select name="genres"  onChange={(e) =>handleGenres(e)}>
-                            <option hidden={true}>Géneros</option>
+                    
+                        <LabelStyle>Géneros</LabelStyle>
+                        <SelectStyle
+                                name="genres"  
+                                onChange={(e) =>handleGenres(e)}
+                                select
+                                label="Generos"
+                                variant="outlined"
+                                size="small"
+                                sx={{
+                                ":active": {
+                                    color: "white",
+                                    borderColor: deepPurple[600],
+                                },
+                                ":focused": {
+                                    borderColor: deepPurple[600],
+                                },
+                                }}
+                                >
+                            <MenuItemStyle hidden={true}>Géneros</MenuItemStyle>
                             {genres?.map((e) => (
-                                <option key={e.id} value={e.name}>{e.name}</option>
+                                <MenuItemStyle key={e.id} value={e.name}>{e.name}</MenuItemStyle>
                             ))}
-                        </select>
+                        </SelectStyle>
                         {errores.genres && (
                             <p class="errores">
                                 {errores.genres}
                             </p>
                         )}
-                    </div>
-                </div>
-                <div>
-                    <div className="content-select">
-                        <label>País</label>
-                        <select name="country" onChange={(e) => handleChange(e)} >
-                            <option hidden={true}>Países</option>
+                  
+                        <LabelStyle>País</LabelStyle>
+                        <SelectStyle
+                            name="country" 
+                            onChange={(e) => handleChange(e)} 
+                            select
+                            label="Pais"
+                            variant="outlined"
+                            size="small"
+                            sx={{
+                            ":active": {
+                                color: "black",
+                                borderColor: deepPurple[600],
+                            },
+                            ":focused": {
+                                borderColor: deepPurple[600],
+                            },
+                            }}
+                            >
+                            <MenuItemStyle hidden={true}>Países</MenuItemStyle>
                             {countries?.map((e) => (
-                                <option value={e.id}>{e.name}</option>
+                                <MenuItemStyle value={e.id}>{e.name}</MenuItemStyle>
                             ))}
-                        </select>
+                        </SelectStyle>
                         {errores.genres && (
                             <p class="errores">
                                 {errores.genres}
                             </p>
                         )}
-                    </div>
-                </div>
-                <div>
-                    <label>Fecha de Estreno</label>
-                    <input
+                   
+                    <LabelStyle>Fecha de Estreno</LabelStyle>
+                    <InputStyle
                         type="date"
                         value={movieForm.year}
                         name="year"
@@ -197,19 +261,34 @@ export function FilmForm() {
                         onChange={(e) => handleChange(e)}
                         required
                     />
-                </div>
-                <div className="content-select">
-                    <label>Duración</label>
-                    <select name="duration" onChange={onSelectChange}>
-                        <option hidden={true}>Duración</option>
-                        <option value="Cortometraje">Cortometraje</option>
-                        <option value="Mediometraje">Mediometraje</option>
-                        <option value="Largometraje">Largometraje</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Dirección</label>
-                    <input
+              
+                    <LabelStyle>Duración</LabelStyle>
+                    <SelectStyle
+                       name="durationt"
+                       onChange={onSelectChange}
+                       select
+                       label="Duracion"
+                       variant="outlined"
+                       size="small"
+                        sx={{
+                        ":active": {
+                            color: "white",
+                            borderColor: deepPurple[600],
+                        },
+                        ":focused": {
+                            borderColor: deepPurple[600],
+                        },
+                        }}
+                        >
+                        <MenuItemStyle hidden={true}>Duración</MenuItemStyle>
+                        <MenuItemStyle value="Cortometraje">Cortometraje</MenuItemStyle>
+                        <MenuItemStyle value="Mediometraje">Mediometraje</MenuItemStyle>
+                        <MenuItemStyle value="Largometraje">Largometraje</MenuItemStyle>
+                    </SelectStyle>
+             
+               
+                    <LabelStyle>Dirección</LabelStyle>
+                    <InputStyle
                         type="text"
                         value={movieForm.director}
                         name="director"
@@ -222,11 +301,11 @@ export function FilmForm() {
                             {errores.director}
                         </p>
                     )}
-                </div>
+                
 
-                <div>
-                    <label>Elenco</label>
-                    <input
+               
+                    <LabelStyle>Elenco</LabelStyle>
+                    <InputStyle
                         type="text"
                         value={actor.actorname}
                         placeholder="Actores"
@@ -234,13 +313,22 @@ export function FilmForm() {
                         onChange={(e) => handleActor(e)}
                         required
                     />
-                    <button type="button" name="elenco" onClick={(e) => handleElenco(e)}>
+                    <ButtonStyle 
+          sx={{
+            ":hover": {
+              bgcolor: deepPurple[200],
+              color: "black",
+              borderBlockColor: deepPurple[200],
+              borderInlineStartColor: deepPurple[900],
+              borderInlineEndColor: deepPurple[900],
+            },
+          }} type="button" name="elenco" onClick={(e) => handleElenco(e)}>
                         Añadir
-                    </button>
-                </div>
-                <div>
-                    <label>Productora</label>
-                    <input
+                    </ButtonStyle>
+                
+               
+                    <LabelStyle>Productora</LabelStyle>
+                    <InputStyle
                         type="text"
                         value={movieForm.associateProducer}
                         name="associateProducer"
@@ -253,10 +341,9 @@ export function FilmForm() {
                             {errores.associateProducer}
                         </p>
                     )}
-                </div>
-                <div>
-                    <label>Película</label>
-                    <input
+               
+                    <LabelStyle>Película</LabelStyle>
+                    <InputStyle
                         type="file"
                         accept="video/mp4"
                         value={movieForm.url}
@@ -270,8 +357,21 @@ export function FilmForm() {
                             {errores.url}
                         </p>
                     )}
-                </div>
+                
+                <ButtonStyle 
+          sx={{
+            ":hover": {
+              bgcolor: deepPurple[200],
+              color: "black",
+              borderBlockColor: deepPurple[200],
+              borderInlineStartColor: deepPurple[900],
+              borderInlineEndColor: deepPurple[900],
+            },
+          }}
+          type="submit">Subir proyecto</ButtonStyle>
+            </BoxStyle>
             </form>
         </div>
     );
 }
+

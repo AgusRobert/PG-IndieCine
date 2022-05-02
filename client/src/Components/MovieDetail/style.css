@@ -1,0 +1,29 @@
+.logoIndex{
+    background-color: #b388ff;
+    display: flex;
+    justify-content: center;
+}
+
+.imgPoster{
+    width: 90%;
+}
+.detalles{
+    display: inline-block;
+    margin: 15px 15px;
+    width: 30%;
+    height: auto;
+    color: rgb(243, 240, 255);
+}
+
+.detalles2{
+    display: inline-block;
+    margin: 55px 15px;
+    width: 30%;
+    height: auto;
+    color: rgb(243, 240, 255);
+}
+
+h2, h3{
+    color: #b388ff;
+    font-weight: bolder;
+}

@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useSelector } from "react-redux";
+import "./style.css";
 
 export default function Profile() {
 

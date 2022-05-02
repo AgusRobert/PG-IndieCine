@@ -1,0 +1,85 @@
+.title{
+  color: #fdfdfd;
+}
+
+.contactMe {
+    height: 450px;
+    color: #fff;
+    text-align: center;
+    margin-top: 5%;
+  }
+  .contactMe .title {
+    color: #fff;
+    margin-bottom: 90px;
+    font: 60px "Stint Ultra Condensed";
+    text-transform: uppercase;
+  }
+  .contactMe .formulario .form {
+    width: 340px;
+    height: 240px;
+    background: rgba(175, 174, 174, 0.8);
+    box-shadow: 0 0 40px -10px #000;
+    margin: calc(30vh - 220px) auto;
+    padding: 0 30px;
+    font-family: "Montserrat", sans-serif;
+    position: relative;
+    padding-top: 50px;
+  }
+  .contactMe .formulario .form select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background: none;
+    outline: none;
+    resize: none;
+    border: 0;
+    font-family: "Montserrat", sans-serif;
+    transition: all 0.3s;
+    border-bottom: 2px solid #bebed2;
+    color: white;
+  }
+  .contactMe .formulario .form input:hover {
+    border-bottom: 2px solid #fdfdff;
+    font-weight: bold;
+    color: #fdfdfd;
+  }
+  .contactMe .formulario .form input::placeholder {
+    color: whitesmoke;
+  }
+  .contactMe .formulario .form p:before {
+    content: attr(type);
+    display: block;
+    margin: 28px 0 0;
+    font-size: 14px;
+    color: #ffffff;
+  }
+  .contactMe .formulario .form #button {
+    float: right;
+    padding: 8px 12px;
+    margin: 40px 0 0;
+    font-family: "Montserrat", sans-serif;
+    background: #78788c;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .contactMe .formulario .form #button:hover {
+    border: 2px solid #78788c;
+    background: 0;
+    color: #fff;
+  }
+  .contactMe .formulario .form div {
+    position: absolute;
+    bottom: -15px;
+    right: -20px;
+    background: rgba(80, 76, 76, 0.97);
+    color: #fff;
+    width: 320px;
+    padding: 8px 4px 5px 0;
+    border-radius: 2px;
+    font-size: 13px;
+    box-shadow: 10px 10px 40px -14px #000;
+  }
+  .contactMe .formulario .form span {
+    margin: 0 5px 0 15px;
+  }

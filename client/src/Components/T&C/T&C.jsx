@@ -1,10 +1,14 @@
 import React from "react";
-import Footer from "../Footer/Footer.jsx"
-import Header from '../Header/Header'
+import Footer from "../Footer/Footer.jsx";
+import { Link } from "react-router-dom";
+import logo from "../Header/LOGO.png";
+
 export default function TyC(){
     return (
         <>
-        <Header/>
+        <div className="logoIndex">
+          <Link to={'/'}><img src={logo}  alt="img not found"/></Link>
+        </div>
         <h1>Términos y condiciones</h1> <p style={{fontSize: '22px'}}>
         
 <h3>Condiciones Generales:</h3>

@@ -8,7 +8,7 @@ import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import OrderAZ from "../OrderAZ/OrderAZ.jsx";
 import OrderRating from "../OrderRating/OrderRating.jsx";
 import FilterMoviesByGenre from "../FilterByGenre/FilterMovieByGenre.jsx";
@@ -20,6 +20,7 @@ import FilterMovieByDuration from '../FilterByDuration/FilterMoviesByDuration'
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import logo from './LOGO.png'
+import "./style.css";
 
 
 const ToolStyle = styled(Toolbar)({
@@ -79,18 +80,13 @@ export default function Header() {
    <Box>
    <AppStyle position="sticky">
       <ToolStyle>
-          <img src={logo} alt="Cindie"/>
+        <Link to={'/'}><img src={logo}  alt="Cindie"/></Link>
         <OrderAZ />
         <OrderDate />
         <OrderRating />
         <FilterMoviesByGenre />
         <FilterMovieByCountry />
         <FilterMovieByDuration/>
-        <SearchBar />
-
-        {!isAuthenticated && <SignInBtn />}
-
-        {!isAuthenticated && <SignUpBtn />}
 
         {isAuthenticated && (
           <>
@@ -145,6 +141,17 @@ export default function Header() {
           </>
         )}
       </ToolStyle>
+
+      <div className="buscador">
+        <SearchBar />
+      </div>
+
+      <div className="login">
+        {!isAuthenticated && <SignInBtn />}
+
+        {!isAuthenticated && <SignUpBtn />}
+      </div>
+
     </AppStyle>
     </Box>
   );
