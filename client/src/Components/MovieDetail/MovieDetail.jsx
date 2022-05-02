@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../Footer/Footer.jsx"
 import View from "../Reproductor/videoplayer.js";
 import { renderMovieDetails } from "../../redux/actions/index";
@@ -22,9 +22,13 @@ export default function MovieDetail() {
 
   let elenco = peli ? peli.mainActors : [];
 
-  if(peli){
+  if (peli) {
     return (
       <div>
+        <div>
+          {/* div provisorio */}
+          <Link to={'/'}>Home (link provisorio)</Link>
+        </div>
         <>
           <div>
             <div>
@@ -38,8 +42,8 @@ export default function MovieDetail() {
             <p>{peli.director}</p>
             <h3>Año</h3>
             <p>{peli.year}</p>
-            <h3>Elenco principal:</h3> 
-          {elenco?.map((e,i) => {
+            <h3>Elenco principal:</h3>
+            {elenco?.map((e, i) => {
               return (
                 <p>{e}</p>
               );
@@ -49,12 +53,12 @@ export default function MovieDetail() {
             <h3>Productor Asociado</h3>
             <p>{peli.associateProducer}</p>
           </div>
-  
+
           <div>
             <View
-            ubicacion={peli.url}
+              ubicacion={peli.url}
             />
-           </div>
+          </div>
           <div>
             <span>Comentarios</span>
           </div>
@@ -65,5 +69,5 @@ export default function MovieDetail() {
       </div>
     );
   }
-  
+
 }
