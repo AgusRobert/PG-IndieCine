@@ -60,7 +60,7 @@ exports.registerUser = async (req, res) => {
   try {
     let user = await User.findOne({
       where: {
-        username: req.body.username,
+        email: req.body.email,
       },
     });
     if (req.body.creator) {
