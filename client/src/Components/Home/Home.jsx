@@ -39,7 +39,7 @@ export default function Home (){
                         let nombresCountry = [];
 
                         let country = data.Countries
-                        country.forEach(a => {
+                        country?.forEach(a => {
                             nombresCountry.push(a.name)
                         })
                         return (
