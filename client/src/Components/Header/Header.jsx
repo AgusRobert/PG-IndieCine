@@ -53,7 +53,7 @@ const MenuItemStyle = styled(MenuItem)({
 export default function Header() {
 
 
-    const { isAuthenticated , logout } = useAuth0();
+  const { user, isAuthenticated, logout } = useAuth0();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
@@ -62,8 +62,8 @@ export default function Header() {
     navigate("/profile");
   }
 
-  
-  function handleLogout (){
+
+  function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
 
@@ -77,82 +77,82 @@ export default function Header() {
   };
 
   return (
-   <Box>
-   <AppStyle position="sticky">
-      <ToolStyle>
-        <Link to={'/'}><img src={logo}  alt="Cindie"/></Link>
-        <OrderAZ />
-        <OrderDate />
-        <OrderRating />
-        <FilterMoviesByGenre />
-        <FilterMovieByCountry />
-        <FilterMovieByDuration/>
+    <Box>
+      <AppStyle position="sticky">
+        <ToolStyle>
+          <Link to={'/'}><img src={logo} alt="Cindie" /></Link>
+          <OrderAZ />
+          <OrderDate />
+          <OrderRating />
+          <FilterMoviesByGenre />
+          <FilterMovieByCountry />
+          <FilterMovieByDuration />
 
-        {isAuthenticated && (
-          <>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AvatarStyle>IC</AvatarStyle>
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItemStyle
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200],
-                    color: "black",
-                  },
-                }}
-                onClick={handleOnClick}
+          {isAuthenticated && (
+            <>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
               >
-                Profile
-              </MenuItemStyle>
-              <MenuItemStyle
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200], // theme.palette.primary.main
-                    color: "black",
-                  },
+                <Avatar src={user.picture} alt={user.name} />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
                 }}
-                onClick={handleLogout}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
               >
-                Cerrar sesion
-              </MenuItemStyle>
-            </Menu>
-          </>
-        )}
-      </ToolStyle>
+                <MenuItemStyle
+                  sx={{
+                    ":hover": {
+                      bgcolor: deepPurple[200],
+                      color: "black",
+                    },
+                  }}
+                  onClick={handleOnClick}
+                >
+                  Mi Perfil
+                </MenuItemStyle>
+                <MenuItemStyle
+                  sx={{
+                    ":hover": {
+                      bgcolor: deepPurple[200], // theme.palette.primary.main
+                      color: "black",
+                    },
+                  }}
+                  onClick={handleLogout}
+                >
+                  Cerrar sesión
+                </MenuItemStyle>
+              </Menu>
+            </>
+          )}
+        </ToolStyle>
 
-      <div className="buscador">
-        <SearchBar />
-      </div>
+        <div className="buscador">
+          <SearchBar />
+        </div>
 
-      <div className="login">
-        {!isAuthenticated && <SignInBtn />}
+        <div className="login">
+          {!isAuthenticated && <SignInBtn />}
 
-        {!isAuthenticated && <SignUpBtn />}
-      </div>
+          {!isAuthenticated && <SignUpBtn />}
+        </div>
 
-    </AppStyle>
+      </AppStyle>
     </Box>
   );
 }
