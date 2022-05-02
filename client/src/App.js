@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import About from "./Components/About/About";
@@ -8,13 +7,15 @@ import { MovieForm } from "./Components/MovieForm/MovieForm";
 import Profile from "./Components/Profile/Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import MovieDetail from "./Components/MovieDetail/MovieDetail";
+import { FilmForm } from "./Components/MovieForm/FilmForm";
+
 
 function App() {
   const { isAuthenticated } = useAuth0()
   return (
     <BrowserRouter>
    
-      <div className="App">
+      <div>
         
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/terms" element={<TyC />} />
           <Route exact path="/prueba" element={<MovieDetail />} />
+          <Route exact path="/detail/:id" element={<MovieDetail />}/>
           <Route exact path="/addFilm" element={<MovieForm/>}/>
         </Routes>
       </div>

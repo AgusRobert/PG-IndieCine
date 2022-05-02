@@ -21,7 +21,6 @@ const postCountries = async (req, res, next) => {
 const getCountries = async (req, res, next) => {
     try{
         const allCountries = await Country.findAll({
-            attributes: ['name'], //Para que solo me traiga el nombre del país
             order: [['name', 'ASC']] //para que en el llamado del select aparezcan ordenados de A a Z, aunque ya estan guardados en la tabla en orden alfabético
         });
 

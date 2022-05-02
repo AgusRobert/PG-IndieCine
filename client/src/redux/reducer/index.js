@@ -2,7 +2,6 @@ import {
   SEARCH_PELIS,
   FILTER_DURATION,
   ORDER_DATE,
-  IS_CREATOR,
   ORDER_BY_NAME,
   ORDER_COMMENT,
   GET_MOVIES,
@@ -12,9 +11,15 @@ import {
   GET_GENRES,
   GET_COUNTRIES,
   MOVIE_DETAIL,
+  SIGN_UP_USER,
 } from "../actions/actionstype";
 
-import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
+import {
+  DATE_DES,
+  NAME_ASC,
+  COM_DES,
+  RATING_ASC
+} from "./Ordercosntants";
 
 const initialState = {
   peliculas: [],
@@ -22,7 +27,7 @@ const initialState = {
   isCreator: false,
   genres: [],
   countries: [],
-  movieDetail: [],
+  detalle: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -33,39 +38,39 @@ function rootReducer(state = initialState, action) {
       let pelisfinal = []
       let pelisporfiltrar = state.peliculas
 
-      const filtro = (p) =>{
+      const filtro = (p) => {
         let elenco = p.mainActors
-        if(action.payload){
-          if(p.title.indexOf(action.payload) !== -1){
+        if (action.payload) {
+          if (p.title.indexOf(action.payload) !== -1) {
             pelisfinal.push(p)
           }
-          if(p.director.indexOf(action.payload) !== -1){
+          if (p.director.indexOf(action.payload) !== -1) {
             pelisfinal.push(p)
           }
-          if(elenco){
+          if (elenco) {
             let contador = 0;
             elenco.map(a => {
-              if(a.indexOf(action.payload) !== -1){
+              if (a.indexOf(action.payload) !== -1) {
                 contador++
               }
             })
-            if(contador > 0 ) pelisfinal.push(p)
+            if (contador > 0) pelisfinal.push(p)
           }
         }
       }
 
       pelisporfiltrar.forEach(peli => filtro(peli))
-        return {
-          ...state,
-          pelisfiltradas: pelisfinal,
-        };
+      return {
+        ...state,
+        pelisfiltradas: pelisfinal,
+      };
 
 
     case GET_MOVIES:
       return {
         ...state,
         peliculas: action.payload,
-        pelisfiltradas: action.payload,
+          pelisfiltradas: action.payload,
       };
     case FILTER_DURATION:
       return {
@@ -102,12 +107,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesCom,
       };
-    case IS_CREATOR: {
-      return {
-        ...state,
-        isCreator: action.payload,
-      };
-    }
     case ORDER_BY_NAME:
       let orderMoviesName = [...state.pelisfiltradas];
       orderMoviesName = orderMoviesName.sort((a, b) => {
@@ -159,9 +158,15 @@ function rootReducer(state = initialState, action) {
         countries: action.payload,
       };
     case MOVIE_DETAIL:
+      /* console.log(action.payload) */
       return {
         ...state,
-        movieDetail: action.payload,
+        detalle: action.payload /* Object.keys(action.payload) */
+      };
+    case SIGN_UP_USER:
+      return {
+        ...state,
+        isCreator: action.payload,
       };
     default:
       return "hola";
