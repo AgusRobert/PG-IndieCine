@@ -21,7 +21,6 @@ const postGenres = async (req, res, next) => {
 const getGenres = async (req, res, next) => {
     try{
         const allGenres = await Genre.findAll({
-            attributes: ['name'],
             order: [['name', 'ASC']]
         });
 

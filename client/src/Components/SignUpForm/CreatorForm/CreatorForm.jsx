@@ -1,30 +1,54 @@
 import { /*useEffect, */useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch/*, useSelector*/ } from "react-redux";
-import { isCreator } from "../../../redux/actions";
+import { isCreator, signUpFunction } from "../../../redux/actions";
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function CreatorForm() {
 
     const [input, setInput] = useState({
         country: '',
-        person: '',//-------> tipo de persona.
-        role: '',
-        phoneNumber: '',
-        idType: '',//-------> tipo de identificacion.
-        idNumber: '',
-        idPhotoFrontside: '',     //---> id file updated.--> input type file
-        idPhotoBackside: '',      //---^
-        termsAndConditions: false,
+        people: null,//-------> tipo de persona.
+        rol: '',
+        telephone: '',
+        typeOfDocument: '',//-------> tipo de identificacion.
+        numberOfDocument: '',
+        frontDocument: '',     //---> id file updated.--> input type file
+        reverseDocument: '',      //---^
+        // termsAndConditions: false,
     });
     const [errors, setErrors] = useState({})
     const [personSelected, setPersonSelected] = useState(false);
+    const { user } = useAuth0()
 
     // -------- TRAER LA LISTA DE PAISES --------
     const dispatch = useDispatch();
-    const countries = [{ id: '01', name: 'Argentina' }, { id: '02', name: 'Bolivia' }, { id: '03', name: 'Chile' }, { id: '04', name: 'Colombia' }, { id: '05', name: 'Costa Rica' }, { id: '06', name: 'Cuba' }/*, 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico', 'República Dominicana', 'Uruguay', 'Venezuela'*/];
+    const countries = [
+        { id: '01', name: 'Argentina' },
+        { id: '02', name: 'Bolivia' },
+        { id: '03', name: 'Chile' },
+        { id: '04', name: 'Colombia' },
+        { id: '05', name: 'Costa Rica' },
+        { id: '06', name: 'Cuba' },
+        { id: '07', name: 'Ecuador' },
+        { id: '08', name: 'El Salvador' },
+        { id: '09', name: 'Guatemala' },
+        { id: '10', name: 'Honduras' },
+        { id: '11', name: 'México' },
+        { id: '12', name: 'Nicaragua' },
+        { id: '13', name: 'Panamá' },
+        { id: '14', name: 'Paraguay' },
+        { id: '15', name: 'Perú' },
+        { id: '16', name: 'Puerto Rico' },
+        { id: '17', name: 'República Dominicana' },
+        { id: '18', name: 'Uruguay' },
+        { id: '19', name: 'Venezuela' }
+    ];
+
     // const { countries } = useSelector(state => state);
     // useEffect(() => {
     //     if (!countries.length) {
+    //         dispatch()
     //         dispatch(getCountries());
     //     }
     // }, []);
@@ -35,34 +59,34 @@ export default function CreatorForm() {
         if (!state.country) {
             errors.country = "Pais es requerido";
         }
-        // person
-        if (!state.person) {
-            errors.person = "Tipo de persona es requerido";
+        // people
+        if (state.people === null) {
+            errors.people = "Tipo de persona es requerido";
         }
-        // role
-        if (!state.role) {
-            errors.role = "Rol es requerido";
+        // rol
+        if (!state.rol) {
+            errors.rol = "Rol es requerido";
         }
-        // phoneNumber
-        if (!state.phoneNumber) {
-            errors.phoneNumber = "Número de teléfono es requerido";
-        } else if (!/^[\d.+-]/i.test(state.phoneNumber)) {
-            errors.phoneNumber = "Número de teléfono debe ser válido.";
+        // telephone
+        if (!state.telephone) {
+            errors.telephone = "Número de teléfono es requerido";
+        } else if (!/^[\d.+-]/i.test(state.telephone)) {
+            errors.telephone = "Número de teléfono debe ser válido.";
         }
-        // idType
-        if (!state.idType) {
-            errors.idType = "Tipo de identificación es requerido";
+        // typeOfDocument
+        if (!state.typeOfDocument) {
+            errors.typeOfDocument = "Tipo de identificación es requerido";
         }
-        // idNumber
-        if (!state.idNumber) {
-            errors.idNumber = "Número de identificación es requerido";
-        } else if (!/^[0-9]/.test(state.idNumber)) {
-            errors.idNumber = "Número de identificación debe ser válido.";
+        // numberOfDocument
+        if (!state.numberOfDocument) {
+            errors.numberOfDocument = "Número de identificación es requerido";
+        } else if (!/^[0-9]/.test(state.numberOfDocument)) {
+            errors.numberOfDocument = "Número de identificación debe ser válido.";
         }
         // termsAndConditions
-        if (!state.termsAndConditions) {
-            errors.termsAndConditions = "Debe aceptar los términos y condiciones.";
-        }
+        // if (!state.termsAndConditions) {
+        //     errors.termsAndConditions = "Debe aceptar los términos y condiciones.";
+        // }
 
         return errors;
     }
@@ -87,7 +111,7 @@ export default function CreatorForm() {
             setErrors(validateForm(newInput));
             return newInput;
         });
-        if (e.target.name === 'person') setPersonSelected(true);
+        if (e.target.name === 'people') setPersonSelected(true)
         // Esto es para el renderizado condicional del select de roles.
     }
 
@@ -106,27 +130,27 @@ export default function CreatorForm() {
         e.preventDefault();
         setErrors(validateForm(input));
         if (!Object.keys(errors).length &&
-            input.termsAndConditions &&
+            // input.termsAndConditions &&
             input.country &&
-            input.person &&
-            input.role &&
-            input.phoneNumber &&
-            input.idType &&
-            input.idNumber &&
-            input.idPhotoFrontside &&
-            input.idPhotoBackside
+            input.people &&
+            input.rol &&
+            input.telephone &&
+            input.typeOfDocument &&
+            input.numberOfDocument &&
+            input.frontDocument &&
+            input.reverseDocument
         ) {
             alert("Formulario enviado correctamente");
-
-            dispatch(isCreator(true));
-            // despachar la accion para updatear el usuario.
-            // Si la ruta post es la misma que el usuario básico,
-            // agregar el booleano 'creator' en true.
+            dispatch(signUpFunction({
+                ...input,
+                ...user,
+                creator: true
+            }));
 
             // direccionamiento al home? al login?
             // resetear el estado de input??
         } else {
-            alert("Formulario no enviado");
+            alert("Porfavor revise los datos ingresados");
         }
     }
 
@@ -144,7 +168,7 @@ export default function CreatorForm() {
                                 countries.map(country => (
                                     <option
                                         key={country.id}
-                                        value={country.id.toLowerCase()}>
+                                        value={country.name}>
                                         {country.name}
                                     </option>
                                 ))
@@ -155,74 +179,75 @@ export default function CreatorForm() {
                 </div>
                 <div>
                     <div>
-                        <label htmlFor="person">Persona</label>
+                        <label htmlFor="people">Persona</label>
                         <select
-                            name="person"
+                            name="people"
                             onChange={handleOnSelect}>
                             <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="natural">Persona Natural</option>
-                            <option value="juridica">Persona Jurídica</option>
+                            <option value="true">Persona Natural</option>
+                            <option value="false">Persona Jurídica</option>
                         </select>
                     </div>
-                    {errors.person && <span>{errors.person}</span>}
+                    {errors.people && <span>{errors.people}</span>}
                 </div>
                 {personSelected ?
                     <div>
-                        <label htmlFor="role">Rol</label>
+                        <label htmlFor="rol">Rol</label>
                         {
-                            input.person === 'natural' ? (
-                                <select name="role" onChange={handleOnSelect}>
+                            input.people ? (
+                                <select name="rol" onChange={handleOnSelect}>
                                     <option value='' disabled selected>Roles</option>
                                     <option value='director'>Director/a</option>
                                     <option value='productor'>Productor/a</option>
                                     <option value='montajista'>Montajista</option>
                                 </select>
                             ) : (
-                                <select name="role" onChange={handleOnSelect}>
+                                <select name="rol" onChange={handleOnSelect}>
                                     <option value='' disabled selected>Roles</option>
                                     <option value='productora'>Productora</option>
                                 </select>
                             )
                         }
-                        {errors.role && <span>{errors.role}</span>}
+                        {errors.rol && <span>{errors.rol}</span>}
                     </div>
                     : null
                 }
                 <div>
                     <div>
-                        <label htmlFor="phoneNumber">Teléfono</label>
+                        <label htmlFor="telephone">Teléfono</label>
                         <input
                             type="text"
-                            name="phoneNumber"
-                            value={input.phoneNumber}
+                            name="telephone"
+                            value={input.telephone}
                             onChange={handleOnChange} />
                     </div>
-                    {errors.phoneNumber && <span>{errors.phoneNumber}</span>}
+                    {errors.telephone && <span>{errors.telephone}</span>}
                 </div>
                 <div>
                     <div>
-                        <label htmlFor="idType">Tipo de identificación</label>
+                        <label htmlFor="typeOfDocument">Tipo de identificación</label>
                         <select
-                            name="idType"
+                            name="typeOfDocument"
                             onChange={handleOnSelect}>
+                            <option value="" disabled selected>Seleccione una opción</option>
                             <option value="dni">DNI</option>
                             <option value="pasaporte">Pasaporte</option>
                             <option value="ruc">RUC</option>
                         </select>
                     </div>
-                    {errors.idType && <span>{errors.idType}</span>}
+                    {errors.typeOfDocument && <span>{errors.typeOfDocument}</span>}
                 </div>
                 <div>
                     <div>
-                        <label htmlFor="idNumber">Número de identificación</label>
+                        <label htmlFor="numberOfDocument">Número de identificación</label>
                         <input
                             type="text"
-                            name="idNumber"
-                            value={input.idNumber}
+                            name="numberOfDocument"
+                            value={input.numberOfDocument}
                             onChange={handleOnChange}
                             placeholder="Ingrese su número de identificación" />
                     </div>
-                    {errors.idNumber && <span>{errors.idNumber}</span>}
+                    {errors.numberOfDocument && <span>{errors.numberOfDocument}</span>}
                 </div>
                 {/* decidí dejar dos input file que reciben un archivo máximo cada uno de los dos
                 para que el path de la img se guarde en el value de cada input. Porque, en caso
@@ -231,31 +256,31 @@ export default function CreatorForm() {
                 los demás archivos golpeando la propiedad files del input file. */}
                 <div>
                     <div>
-                        <label htmlFor="idPhotoFrontside">Subir foto del anverso del documento</label>
+                        <label htmlFor="frontDocument">Subir foto del anverso del documento</label>
                         <input
                             type="file"
-                            name="idPhotoFrontside"
-                            value={input.idPhotoFrontside}
+                            name="frontDocument"
+                            value={input.frontDocument}
                             multiple={false}
                             onChange={handleOnChange}
                             accept='image/png, image/jpeg, image/jpg' />
                     </div>
-                    {errors.idPhotoFrontside && <span>{errors.idPhotoFrontside}</span>}
+                    {errors.frontDocument && <span>{errors.frontDocument}</span>}
                 </div>
                 <div>
                     <div>
-                        <label htmlFor="idPhotoBackside">Subir foto del reverso del documento</label>
+                        <label htmlFor="reverseDocument">Subir foto del reverso del documento</label>
                         <input
                             type="file"
-                            name="idPhotoBackside"
-                            value={input.idPhotoBackside}
+                            name="reverseDocument"
+                            value={input.reverseDocument}
                             multiple={false}
                             onChange={handleOnChange}
                             accept='image/png, image/jpeg, image/jpg' />
                     </div>
-                    {errors.idPhotoBackside && <span>{errors.idPhotoBackside}</span>}
+                    {errors.reverseDocument && <span>{errors.reverseDocument}</span>}
                 </div>
-                <div>
+                {/* <div>
                     <div>
                         <label htmlFor="mail">Acepte los </label>
                         <Link to={'/terms'}>términos y condiciones</Link>
@@ -265,7 +290,7 @@ export default function CreatorForm() {
                             onChange={handleOnCheckbox} />
                     </div>
                     {errors.termsAndConditions && <span>{errors.termsAndConditions}</span>}
-                </div>
+                </div> */}
                 <div>
                     <button type="submit">Registrarse</button>
                 </div>

@@ -3,7 +3,6 @@ import {
     SEARCH_PELIS,
     FILTER_DURATION,
     ORDER_DATE,
-    IS_CREATOR,
     ORDER_BY_NAME,
     GET_MOVIES,
     FILTER_MOVIES_BY_COUNTRY,
@@ -11,12 +10,13 @@ import {
     ORDER_BY_RATING,
     GET_GENRES,
     GET_COUNTRIES,
-    MOVIE_DETAIL
+    MOVIE_DETAIL,
+    SIGN_UP_USER
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
     return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/films") 
+        let json = await axios.get("http://localhost:3001/films")
 
         try {
             return dispatch({
@@ -26,13 +26,6 @@ export function getMovies() { //obtener todos los videojuegos
         } catch (error) {
             console.log(error)
         }
-    }
-}
-
-export function isCreator(boolean) {
-    return {
-        type: IS_CREATOR,
-        payload: boolean,
     }
 }
 
@@ -54,20 +47,38 @@ export function getGenres() { //obtener generos
     }
 }
 
-export function postMovie (movieForm){
-    return async function(dispatch){
-         await axios.post('http://localhost:3001/films', movieForm); 
-      
-    }
-}; 
+// export function postMovie (movieForm){
+//     return async function(dispatch){
+//       const respo = await axios.post('http://localhost:3001/films', movieForm); 
+//       console.log("RESPUESTA DEL BACK: ",movieForm)
+//     }
+// }; 
+
+export const postMovie = async (movieForm) => {
+    const respo = await axios.post("http://localhost:3001/films", movieForm);
+    const poster = await axios.post("http://localhost:3001/upload/image", movieForm.poster);
+    console.log("Respuesta del back: ", respo);
+    console.log("datos del formulario: ", movieForm);
+    console.log("resuesta del poster: ", poster);
+    return null;
+};
+
 export function getMoviesByGenre(payload) {
     return async function (dispatch) {
         try {
+            let filtroGenre = [];
             let json3 = await axios.get('http://localhost:3001/films');
-            let json4 = json3.data.filter(e => e.genres.includes(payload));
+            json3.data.map(peli => {
+                let genre = peli.Genres;
+                genre.forEach(obj => {
+                    if (obj.name === payload) {
+                        filtroGenre.push(peli)
+                    }
+                })
+            })
             return dispatch({
                 type: FILTER_MOVIES_BY_GENRE,
-                payload: json4
+                payload: filtroGenre
             })
         } catch (error) {
             console.log(error)
@@ -93,7 +104,8 @@ export function getMoviesByCountry(payload) {
     return async function (dispatch) {
         try {
             let json3 = await axios.get('http://localhost:3001/films');
-            let json4 = json3.data.filter(e => e.country === payload);
+            let json4 = json3.data;
+            json4 = json4.filter(e => e.Country.name === payload)
             return dispatch({
                 type: FILTER_MOVIES_BY_COUNTRY,
                 payload: json4
@@ -120,17 +132,18 @@ export function orderByRating(payload) { //ordernar por rating asc o desc
 
 export function searchPelicula_Actor(search) {
     return function (dispatch) {
-                dispatch({
-                    type: SEARCH_PELIS,
-                    payload: search
-                });    
+        dispatch({
+            type: SEARCH_PELIS,
+            payload: search
+        });
     };
 }
 
 export function renderMovieDetails(id) {
     return async function (dispatch) {
         try {
-            let movie = await axios.get(`http://localhost:3001/api/films/${id}`)
+            let movie = await axios.get(`http://localhost:3001/films/${id}`)
+            /* console.log(movie.data) */
             return dispatch({
                 type: MOVIE_DETAIL,
                 payload: movie.data
@@ -139,6 +152,50 @@ export function renderMovieDetails(id) {
             console.log(error)
         }
     }
+}
+
+export function signUpFunction(userData) {
+    return async function (dispatch) {
+        try {
+            console.log("userData", userData);
+            let request = {
+                name: userData.given_name ? userData.given_name : null,
+                surname: userData.family_name ? userData.family_name : null,
+                username: userData.nickname,
+                email: userData.email,
+                password: userData.email,
+                creator: userData.creator,
+                country: userData.country ? userData.country : null,
+                people: userData.people ?
+                    userData.people === "true" ?
+                    true :
+                    false : null,
+                rol: userData.rol ? userData.rol : null,
+                telephone: userData.telephone ? parseInt(userData.telephone) : null,
+                typeOfDocument: userData.typeOfDocument ?
+                    userData.typeOfDocument : null,
+                numberOfDocument: userData.numberOfDocument ?
+                    Number(userData.numberOfDocument) : null,
+                frontDocument: userData.frontDocument ? userData.frontDocument : null,
+                reverseDocument: userData.reverseDocument ?
+                    userData.reverseDocument : null,
+            };
+            await axios.post("http://localhost:3001/users/register", request);
+            if (request.creator) {
+                return dispatch({
+                    type: SIGN_UP_USER,
+                    payload: true,
+                });
+            } else {
+                return dispatch({
+                    type: SIGN_UP_USER,
+                    payload: false,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 }
 /* 
 export function filterDuration(duration) {

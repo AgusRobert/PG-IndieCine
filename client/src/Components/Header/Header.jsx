@@ -67,13 +67,22 @@ const BoxSign = styled(Box)({
   spacing: 3,
 });
 export default function Header() {
-  const { isAuthenticated } = useAuth0();
+
+
+    const { isAuthenticated , logout } = useAuth0();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
 
   function handleOnClick() {
     navigate("/profile");
   }
+
+  
+  function handleLogout (){
+    logout({ returnTo: window.location.origin });
+  }
+
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -144,7 +153,7 @@ export default function Header() {
                     color: "black",
                   },
                 }}
-                onClick={handleOnClick}
+                onClick={handleLogout}
               >
                 Cerrar sesion
               </MenuItemStyle>

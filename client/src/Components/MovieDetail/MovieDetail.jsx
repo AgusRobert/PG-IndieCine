@@ -1,57 +1,69 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import Footer from "../Footer/Footer.jsx"
-import Navbar from "../Navbar/Navbar.jsx";
-import { View } from "../Reproductor/videoplayer.js";
-import { renderMovieDetails } from "../../redux/actions/index.js";
+import View from "../Reproductor/videoplayer.js";
+import { renderMovieDetails } from "../../redux/actions/index";
 
 export default function MovieDetail() {
-  let peli = useSelector((state) => state.movieDetail);
-  let { id } = useParams();
+
   let dispatch = useDispatch();
+
+  let { id } = useParams();
+
+  const [load, setLoad] = useState(false)
+
   useEffect(() => {
-    dispatch(renderMovieDetails());
+    dispatch(renderMovieDetails(id));
+    setLoad(true)
   }, []);
 
-  let {url} = peli
-  let elenco =peli.mainActors;
+  const peli = useSelector((state) => state.detalle);
 
-  return (
-    <div>
-      <>
-        <div>
-          <Navbar />
-        </div>
-        <div>
+  let elenco = peli ? peli.mainActors : [];
+
+  if(peli){
+    return (
+      <div>
+        <>
           <div>
-            <h2>{peli.title}</h2>
-            <img src={peli.poster} alt="Poster" />
+            <div>
+              <h2>{peli.title}</h2>
+              <img src={peli.poster} alt="Poster" />
+            </div>
+            <h2>Rating: {peli.rating}</h2>
+            <h3>Sinopsis:</h3>
+            <p>{peli.synopsis}</p>
+            <h3>Director:</h3>
+            <p>{peli.director}</p>
+            <h3>Año</h3>
+            <p>{peli.year}</p>
+            <h3>Elenco principal:</h3> 
+          {elenco?.map((e,i) => {
+              return (
+                <p>{e}</p>
+              );
+            })}
+            <h2>Genero: {peli.Genres.map(a => a.name).join(", ")}</h2>
+            <h2>Pais de origen: {peli.Country.name}</h2>
+            <h3>Productor Asociado</h3>
+            <p>{peli.associateProducer}</p>
           </div>
-          <h2>Rating: {peli.rating}</h2>
-          <h3>Sinopsis:</h3>
-          <p>{peli.synopsis}</p>
-          <h3>Director:</h3>
-          <p>{peli.director}</p>
-          <h3>Elenco principal:</h3> 
-        {elenco.map((e,i) => {
-            return (
-              <p>{e}</p>
-            );
-          })}
-          <h2>Genero: {peli.genres}</h2>
-          <h2>Pais de origen: {peli.country}</h2>
-        </div>
-
-        <div><View
-         url={url}/></div>
-        <div>
-          <span>Comentarios</span>
-        </div>
-        <div>
-          <Footer />
-        </div>
-      </>
-    </div>
-  );
+  
+          <div>
+            <View
+            ubicacion={peli.url}
+            />
+           </div>
+          <div>
+            <span>Comentarios</span>
+          </div>
+          <div>
+            <Footer />
+          </div>
+        </>
+      </div>
+    );
+  }
+  
 }
