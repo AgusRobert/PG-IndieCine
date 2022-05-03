@@ -43,14 +43,18 @@ exports.putUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const user = await User.findByPk(req.body.id);
+    const {email} = req.body;
+    const user = await User.findByPk(email);
     if (user) {
       await user.destroy();
+      console.log("Usuario eliminado correctamente");
       return res.json({ message: "Usuario eliminado correctamente" });
     } else {
+      console.log("Usuario no encontrado");
       return res.json({ message: "Usuario no encontrado" });
     }
   } catch (error) {
+    console.log("Ha ocurrido un error");
     res.json({ message: "Error al eliminar el usuario" });
   }
 };

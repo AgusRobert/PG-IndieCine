@@ -12,6 +12,7 @@ import {
   GET_COUNTRIES,
   MOVIE_DETAIL,
   SIGN_UP_USER,
+  DELETE_USER_INFORMATION,
 } from "../actions/actionstype";
 
 import {
@@ -167,6 +168,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         isCreator: action.payload,
+      };
+      case DELETE_USER_INFORMATION: 
+      return {
+        ...state,
+        isCreator: false,
       };
     default:
       return "hola";
