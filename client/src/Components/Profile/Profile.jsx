@@ -19,6 +19,13 @@ export default function Profile() {
         navigate('/')
     }
 
+    function handleCameBackToBasic(){
+        dispatch(cameBackToBasic({
+            ...user,
+            creator: false,
+        }))
+    }
+
     return (
         <div>
             <div>
@@ -58,6 +65,12 @@ export default function Profile() {
                     <CreatorForm />
                 </div>
             )}
+            {isCreator ? (
+                <div>
+                    <h4>Para dejar el paraíso y volver a ser un Usuario básico, presione el siguiente botón:</h4>
+                    <button onClick={handleCameBackToBasic} >Volver a básico</button>
+                </div>
+            ) : (null)}
             <div>
                 <h4>Si desea borrar su cuenta y todos sus datos de la plataforma: </h4>
                 <button onClick={handleOnDelete}>Borrar todo</button>

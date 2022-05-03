@@ -229,6 +229,34 @@ export function deleteUserInformation(email) {
         }
     }
 }
+export function handleCameBackToBasic(){
+    return async function (dispatch) {
+        try {
+            let updatedUser = {
+                name: userData.given_name ? userData.given_name : null,
+                surname: userData.family_name ? userData.family_name : null,
+                username: userData.nickname,
+                email: userData.email,
+                password: userData.email,
+                creator: userData.creator,
+                country: null,
+                people: null,
+                rol: null,
+                telephone: null,
+                typeOfDocument: null,
+                numberOfDocument: null,
+                frontDocument: null,
+                reverseDocument: null,
+            }
+            await axios.put(`http://localhost:3001/users/modif`, updatedUser);
+            return dispatch({
+                type: HANDLE_CAME_BACK_TO_BASIC,
+            })
+        } catch (error) {
+            console.log('handleCameBackToBasic', error)
+        }
+    }
+}
 /* 
   export function sortByComment(order){
 return {
