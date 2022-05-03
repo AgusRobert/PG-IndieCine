@@ -152,16 +152,24 @@ export default function Home() {
                     <Row md={6} lg={6} className="newdiv">
                         {
                             allMovies ? allMovies?.map(data => {
+
+                                let nombresGen = [];
+                                let generos = data.Genres
+                                generos.forEach(a => {
+                                 nombresGen.push(a.name)
+                                })
+
                                 return (
                                     <div className="cardgrid" key={data.id}>
                                         <Link to={`/detail/${data.id}`}>
                                             <Card title={data.title}
                                                 poster={data.poster}
                                                 year={data.year}
-                                                country={data.country}
-                                                genres={"Géneros: " + data.genres?.join(", ")}
+                                                country={data.Country.name}
+                                                genres={"Géneros: " + nombresGen.join(", ")}
                                                 rating={"Rating: " + data.rating}
-                                                key={data.id} />
+                                                key={data.id}
+                                                duration={data.duration}/>
                                         </Link>
                                     </div>
                                 )

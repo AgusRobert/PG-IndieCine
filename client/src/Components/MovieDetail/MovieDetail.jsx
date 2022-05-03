@@ -7,6 +7,8 @@ import { renderMovieDetails } from "../../redux/actions/index";
 import logo from "./LOGO.png";
 import "./style.css";
 
+import Comments from "../Comments/Comments";
+
 export default function MovieDetail() {
 
   let dispatch = useDispatch();
@@ -65,7 +67,10 @@ export default function MovieDetail() {
             />
           </div>
           <div>
-            <span>Comentarios</span>
+          <Comments
+        commentsUrl="http://localhost:3004/comments"
+        currentUserId="1"
+      />
           </div>
           <div>
             <Footer />

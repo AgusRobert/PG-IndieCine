@@ -43,7 +43,7 @@ export default function FilterMovieByCountry(){
    onChange = {(e) => handleChange(e)}
   select
   label="
-  Antigüedad"
+  País"
   variant="outlined"
   size="small"
   sx={{
