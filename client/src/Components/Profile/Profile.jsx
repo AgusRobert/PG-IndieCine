@@ -1,13 +1,23 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
+import { deleteUserInformation } from "../../redux/actions";
 
 export default function Profile() {
 
-    const { user } = useAuth0();
+    const { user, logout } = useAuth0();
     const { isCreator } = useSelector(state => state);
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
+
+    function handleOnDelete() {
+        logout({ returnTo: window.location.origin });
+        dispatch(deleteUserInformation(user.email))
+        alert('Serás redirigido al inicio')
+        navigate('/')
+    }
 
     return (
         <div>
@@ -48,6 +58,10 @@ export default function Profile() {
                     <CreatorForm />
                 </div>
             )}
+            <div>
+                <h4>Si desea borrar su cuenta y todos sus datos de la plataforma: </h4>
+                <button onClick={handleOnDelete}>Borrar todo</button>
+            </div>
         </div>
     )
 }

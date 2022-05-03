@@ -11,7 +11,8 @@ import {
     GET_GENRES,
     GET_COUNTRIES,
     MOVIE_DETAIL,
-    SIGN_UP_USER
+    SIGN_UP_USER,
+    DELETE_USER_INFORMATION
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -215,6 +216,19 @@ export function filterDuration(payload) {
         }
     }
 };
+
+export function deleteUserInformation(email) {
+    return async function (dispatch) {
+        try {
+            await axios.delete(`http://localhost:3001/users/del`, email);
+            return dispatch({
+                type: DELETE_USER_INFORMATION,
+            });
+        } catch (error) {
+            console.log('deleteUserInformation', error)
+        }
+    }
+}
 /* 
   export function sortByComment(order){
 return {
