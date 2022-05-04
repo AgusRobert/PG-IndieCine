@@ -11,7 +11,8 @@ import {
     GET_GENRES,
     GET_COUNTRIES,
     MOVIE_DETAIL,
-    SIGN_UP_USER
+    SIGN_UP_USER,
+    GET_FAV
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -215,6 +216,37 @@ export function filterDuration(payload) {
         }
     }
 };
+
+export function getFavorites(id) {
+    return async function (dispatch) {
+        try {
+            var pelisFav = await axios.get(`http://localhost:3001/users/fav/${id}`);
+            return dispatch({
+                type: GET_FAV,
+                payload: pelisFav.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+
+export function addFavFilm (payload){
+   return async function (dispatch){
+       try{
+         await axios.post('http://localhost:3001/users/addFav', payload);
+       } catch(error){console.log(error)}
+   }
+};
+
+export function deleteFavFilm (payload){
+    return async function (dispatch){
+        try{
+          await axios.delete('http://localhost:3001/favorites/del', payload)
+        } catch(error){console.log(error)}
+    }
+ };
 /* 
   export function sortByComment(order){
 return {

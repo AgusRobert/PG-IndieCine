@@ -53,10 +53,7 @@ export default function Home() {
 
     return (
         <div>
-            <div>
-                <Header />
-            </div>
-
+                <Header position= "sticky" />
             <div className="container">
                 <h2 className="Title">Estrenos:</h2>
                 <Swiper

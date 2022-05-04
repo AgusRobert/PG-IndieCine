@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const {allUsers, putUser, deleteUser, registerUser, loginUser, getUser} = require('../controllers/user');
+const {allUsers, putUser, deleteUser, registerUser, loginUser, getUser, getfavById,addFav} = require('../controllers/user');
 
 router.get('/', allUsers);
 
@@ -14,5 +14,7 @@ router.post('/register', registerUser );
 
 router.post('/login', loginUser);
 
+router.get('/fav/:id', getfavById);
 
+router.post('/addFav', addFav)
 module.exports = router;

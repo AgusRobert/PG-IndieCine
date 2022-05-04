@@ -6,7 +6,7 @@ import View from "../Reproductor/videoplayer.js";
 import { renderMovieDetails } from "../../redux/actions/index";
 import logo from "./LOGO.png";
 import "./style.css";
-
+import FavButton from "../FavButton/FavButton.jsx";
 import Comments from "../Comments/Comments";
 
 export default function MovieDetail() {
@@ -20,7 +20,7 @@ export default function MovieDetail() {
   useEffect(() => {
     dispatch(renderMovieDetails(id));
     setLoad(true)
-  }, []);
+  }, [dispatch]);
 
   const peli = useSelector((state) => state.detalle);
 
@@ -35,6 +35,7 @@ export default function MovieDetail() {
           <Link to={'/'}><img src={logo}  alt="img not found"/></Link>
         </div>
         <>
+        
           <div>
             <div className="detalles">
               <h2>{peli.title}</h2>
@@ -66,6 +67,7 @@ export default function MovieDetail() {
               ubicacion={peli.url}
             />
           </div>
+          <FavButton filmId={id}/>
           <div>
           <Comments
         commentsUrl="http://localhost:3004/comments"

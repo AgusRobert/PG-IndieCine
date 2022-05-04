@@ -114,3 +114,30 @@ exports.loginUser = async (req, res) => {
     res.json({ message: "Error al obtener el usuario", error });
   }
 };
+exports.getfavById = async (req, res) =>{
+  const{id}= req.params
+ 
+
+  
+    let user = await User.findByPk(id, {
+      include: [{ model: Film }],
+    }); console.log("user",user)
+   res.json(user.Films)
+}
+
+exports.addFav = async (req,res) =>{
+  const{email}= req.body
+  const{idPeli} = req.body
+  
+    let user = await User.findOne({
+      where:{
+        email:email
+      }
+    })  
+     console.log(user)
+    let peli = await Film.findByPk(idPeli)
+
+    user.addFilm(peli)
+   res.send('Peli agregada')
+   
+}

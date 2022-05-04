@@ -12,6 +12,7 @@ import {
   GET_COUNTRIES,
   MOVIE_DETAIL,
   SIGN_UP_USER,
+  GET_FAV
 } from "../actions/actionstype";
 
 import {
@@ -27,7 +28,8 @@ const initialState = {
   isCreator: false,
   genres: [],
   countries: [],
-  detalle: {}
+  detalle: {},
+  favorites:[]
 };
 
 function rootReducer(state = initialState, action) {
@@ -168,6 +170,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         isCreator: action.payload,
       };
+      case GET_FAV:
+        return {
+          ...state,
+          favorites: action.payload,
+        };
+        
+      
     default:
       return "hola";
   }
