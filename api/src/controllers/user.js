@@ -1,7 +1,7 @@
 const { User, Film } = require("../db");
-const {Op} = require("sequelize");
+const { Op } = require("sequelize");
 const bcrypt = require("bcryptjs");
-const usersServices = require("../service/users");
+const userServices = require("../service/user");
 
 exports.allUsers = async (req, res) => {
   try {
@@ -44,7 +44,7 @@ exports.putUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const {email} = req.body;
+    const { email } = req.body;
     const user = await User.findByPk(email);
     if (user) {
       await user.destroy();
@@ -88,13 +88,13 @@ exports.registerUser = async (req, res) => {
         return res.json({ message: "El usuario ya existe" });
       } else {
         req.body.password = bcrypt.hashSync(req.body.password, 10);
-        let newUser = await usersServices.create(req.body);
+        let newUser = await userServices.create(req.body);
         console.log("Usuario creado con éxito");
         return res.json(newUser);
       }
     }
   } catch (error) {
-    console.log("Ha ocurrido un error",error);
+    console.log("Ha ocurrido un error", error);
     return res.json({ message: "Ha ocurrido un error", error });
   }
 };
@@ -102,15 +102,18 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const user = await User.findOne({
-      include: [ { model: Film}],
+      include: [{ model: Film }],
       where: {
-        [Op.or]: [ { username: req.body.data}, { email: req.body.data} ],
+        [Op.or]: [{ username: req.body.data }, { email: req.body.data }],
       },
     });
     if (!user) {
       return res.json({ message: "Username, email o password inválidos" });
     }
-    const passwordIsValid = bcrypt.compareSync(req.body.password, user.password );
+    const passwordIsValid = bcrypt.compareSync(
+      req.body.password,
+      user.password
+    );
     if (!passwordIsValid) {
       return res.json({ message: "Username, email o password inválidos" });
     }

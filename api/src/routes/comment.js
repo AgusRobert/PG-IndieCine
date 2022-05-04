@@ -1,19 +1,26 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
-const {getAllComents,getComment, getComentsUser, getComentsFilm, postComent, deleteComent, modifyComent} = require('../controllers/comment');
+const {
+  getAllComments,
+  getComment,
+  getComentsUser,
+  getComentsFilm,
+  postComment,
+  deleteComent,
+  modifyComent,
+} = require("../controllers/comment");
 
-router.get('/', getAllComents);
+router.get("/", getAllComments);
+router.post("/", postComment);
 
-router.get('/:id', getComment)
+router.get("/:id", getComment);
 
-router.get('/user/:id', getComentsUser);
+router.get("/user/:id", getComentsUser);
 
-router.get('/film/:id', getComentsFilm);
+router.get("/film/:id", getComentsFilm);
 
-router.post('/', postComent);
+router.delete("/del", deleteComent);
 
-router.delete('/del', deleteComent);
-
-router.put('/modif', modifyComent);
+router.put("/modif", modifyComent);
 
 module.exports = router;

@@ -31,6 +31,6 @@ exports.create = async ({
     country,
     rol: "user",
     subcription: "common",
-    status: "resgister",
+    status: "registered",
   });
 };

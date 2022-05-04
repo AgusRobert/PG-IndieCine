@@ -1,47 +1,43 @@
-const {
-  Film,
-  Genre,
-  Country
-} = require("../db.js");
+const { Film, Genre, Country } = require("../db.js");
 
 exports.getFilms = async (req, res, next) => {
   try {
     const allFilms = await Film.findAll({
-      include: [{
-        model: Genre,
-        through: {
-          attributes: [],
+      include: [
+        {
+          model: Genre,
+          through: {
+            attributes: [],
+          },
         },
-      },
-      {
-        model: Country,
-      },
+        {
+          model: Country,
+        },
       ],
     });
     res.json(allFilms);
   } catch (err) {
     // res.send("No se pudo acceder a las películas");
-    next(err)
+    next(err);
   }
 };
 exports.getById = async (req, res, next) => {
   try {
-    const {
-      id
-    } = req.params;
+    const { id } = req.params;
     const film = await Film.findOne({
       where: {
-        id: id
+        id: id,
       },
-      include: [{
-        model: Genre,
-        through: {
-          attributes: [],
+      include: [
+        {
+          model: Genre,
+          through: {
+            attributes: [],
+          },
         },
-      },
-      {
-        model: Country,
-      },
+        {
+          model: Country,
+        },
       ],
     });
 
@@ -52,7 +48,6 @@ exports.getById = async (req, res, next) => {
 };
 exports.postFilms = async (req, res, next) => {
   try {
-
     const {
       title,
       genres,
@@ -68,14 +63,15 @@ exports.postFilms = async (req, res, next) => {
       rating,
       UserId,
     } = req.body;
-
+    console.log("form film:", req.body);
     const CountryFound = await Country.findOne({
       where: {
-        name: country
-      }
-    })
+        name: country,
+      },
+    });
+    console.log("CountryFound", CountryFound);
 
-    const CountryId = CountryFound.dataValues.id 
+    const CountryId = CountryFound.dataValues.id;
 
     let filmCreated = await Film.create({
       title,
@@ -89,13 +85,13 @@ exports.postFilms = async (req, res, next) => {
       associateProducer,
       rating,
       CountryId,
-
+      status: "to be checked",
     });
 
     if (genres) {
       let genresStored = await Genre.findAll({
         where: {
-          name: genres
+          name: genres,
         },
       });
       filmCreated.addGenres(genresStored);
@@ -103,7 +99,7 @@ exports.postFilms = async (req, res, next) => {
 
     res.send(filmCreated);
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
@@ -124,26 +120,29 @@ exports.updateFilm = async (req, res, next) => {
       rating,
       id,
     } = req.body;
-    await Film.update({
-      title,
-      genres,
-      poster,
-      synopsis,
-      year,
-      director,
-      duration,
-      mainActors,
-      country,
-      url,
-      associateProducer,
-      rating,
-    }, {
-      where: {
-        id: id,
+    await Film.update(
+      {
+        title,
+        genres,
+        poster,
+        synopsis,
+        year,
+        director,
+        duration,
+        mainActors,
+        country,
+        url,
+        associateProducer,
+        rating,
       },
-    });
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
     res.send("La información del film se actualizó con éxito");
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
