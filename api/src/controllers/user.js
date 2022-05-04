@@ -1,6 +1,7 @@
 const { User, Film } = require("../db");
 const {Op} = require("sequelize");
 const bcrypt = require("bcryptjs");
+const usersServices = require("../service/users");
 
 exports.allUsers = async (req, res) => {
   try {
@@ -87,13 +88,13 @@ exports.registerUser = async (req, res) => {
         return res.json({ message: "El usuario ya existe" });
       } else {
         req.body.password = bcrypt.hashSync(req.body.password, 10);
-        let newUser = await User.create(req.body);
+        let newUser = await usersServices.create(req.body);
         console.log("Usuario creado con éxito");
         return res.json(newUser);
       }
     }
   } catch (error) {
-    console.log("Ha ocurrido un error");
+    console.log("Ha ocurrido un error",error);
     return res.json({ message: "Ha ocurrido un error", error });
   }
 };

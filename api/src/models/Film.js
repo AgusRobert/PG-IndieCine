@@ -14,7 +14,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-
       poster: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -28,12 +27,8 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           min: 1800,
-          max: 2022,
+          max: (new Date())?.getFullYear(),
         },
-      },
-      director: {
-        type: DataTypes.STRING,
-        allowNull: false,
       },
       duration: {
         type: DataTypes.STRING,
@@ -43,8 +38,11 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
       },
-
       url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      director: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -55,22 +53,16 @@ module.exports = (sequelize) => {
       rating: {
         type: DataTypes.REAL,
         allowNull: false,
-        // validate: {
-        //   // min: {
-        //   //   args: 0,
-        //   //   msg: "Rating must be greater than 0",
-        //   // },
-        //   max: {
-        //     args: 5.5,
-        //     msg: "Rating must be equal or less than 5",
-        //   },
-        // },
       },
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }
     },
     {
       sequelize,
       tableName: "film",
-      timestamps: false,
+      timestamps: true,
     }
   );
 };

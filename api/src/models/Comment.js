@@ -9,8 +9,20 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        comment:{
+        body:{
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        type:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        status:{
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        numberReport:{
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
     },{

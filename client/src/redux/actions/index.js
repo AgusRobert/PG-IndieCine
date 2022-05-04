@@ -178,7 +178,7 @@ export function signUpFunction(userData) {
                 numberOfDocument: userData.numberOfDocument ?
                     Number(userData.numberOfDocument) : null,
                 frontDocument: userData.frontDocument ? userData.frontDocument : null,
-                reverseDocument: userData.reverseDocument ?
+                backDocument: userData.reverseDocument ?
                     userData.reverseDocument : null,
             };
             await axios.post("http://localhost:3001/users/register", request);
