@@ -1,26 +1,8 @@
-const { Router } = require('express');
+const { Router } = require("express");
+const { simple, subcription } = require("../controllers/payment");
 const router = Router();
 
-const PaymentController = require("../controllers/PaymentController");
-const PaymentService = require("../service/PaymentService");
-
-const PaymentInstance = new PaymentController(new PaymentService());
-
-
-router.get("/", function (req, res, next) {
-    return res.json({
-      "/payment": "generates a payment link",
-      "/subscription": "generates a subscription link"
-    });
-  });
-  
-//este funciona
-router.post("/payment", function (req, res, next) {
-    PaymentInstance.getPaymentLink(req, res);
-  });
-// este np
-router.post("/subscription", function (req, res, next) {
-    PaymentInstance.getSubscriptionLink(req, res);
-  })
+router.post("/payment", simple);
+router.post("/subscription", subcription);
 
 module.exports = router;
