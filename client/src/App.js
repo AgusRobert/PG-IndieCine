@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/terms" element={<TyC />} />
           <Route exact path="/prueba" element={<MovieDetail />} />
           <Route exact path="/detail/:id" element={<MovieDetail />}/>
-          <Route exact path="/addFilm" element={<FilmForm/>}/>
+          {isAuthenticated && <Route exact path="/addFilm" element={<FilmForm />} />}
          < Route path="*" element= {<NotFound/>} /> 
         </Routes>
       </div>
