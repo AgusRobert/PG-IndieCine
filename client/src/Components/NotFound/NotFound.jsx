@@ -24,7 +24,7 @@ export default function NotFound() {
 useEffect(()=>{
         setTimeout(() => { 
             window.location.href = "/";
-        }, 3000);
+        }, 5000);
     },[]);
   
     return (
