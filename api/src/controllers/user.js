@@ -116,13 +116,20 @@ exports.loginUser = async (req, res) => {
 };
 exports.getfavById = async (req, res) =>{
   const{id}= req.params
- 
-
+  const user = await User.findOne({
+    where:{
+      id,
+    },
+    include: Film
+  })
+  let films = user.Films;
   
-    let user = await User.findByPk(id, {
-      include: [{ model: Film }],
-    }); console.log("user",user)
-   res.json(user.Films)
+
+
+  console.log("Films de un Usuario: ",films)
+
+
+   res.json([])
 }
 
 exports.addFav = async (req,res) =>{
