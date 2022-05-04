@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
-import { deleteUserInformation } from "../../redux/actions";
+import { cameBackToBasic, deleteUserInformation } from "../../redux/actions";
 
 export default function Profile() {
 
@@ -17,6 +17,13 @@ export default function Profile() {
         dispatch(deleteUserInformation(user.email))
         alert('Serás redirigido al inicio')
         navigate('/')
+    }
+
+    function handleCameBackToBasic(){
+        dispatch(cameBackToBasic({
+            ...user,
+            creator: false,
+        }))
     }
 
     return (
@@ -58,6 +65,12 @@ export default function Profile() {
                     <CreatorForm />
                 </div>
             )}
+            {isCreator ? (
+                <div>
+                    <h4>Para dejar el paraíso y volver a ser un Usuario básico, presione el siguiente botón:</h4>
+                    <button onClick={handleCameBackToBasic} >Volver a básico</button>
+                </div>
+            ) : (null)}
             <div>
                 <h4>Si desea borrar su cuenta y todos sus datos de la plataforma: </h4>
                 <button onClick={handleOnDelete}>Borrar todo</button>

@@ -29,14 +29,17 @@ exports.getUser = async (req, res) => {
 
 exports.putUser = async (req, res) => {
   try {
-    let user = await User.findByPk(req.body.id);
+    let user = await User.findOne(req.body.email);
     if (!user) {
+      // console.log("Usuario no encontrado");
       return res.json({ message: "Usuario no encontrado" });
     } else {
       await user.update(req.body);
+      // console.log("Usuario actualizado correctamente");
       return res.json({ message: "Usuario actualizado correctamente" });
     }
   } catch (error) {
+    // console.log("Error al actualizar el usuario");
     res.json({ message: "Error al actualizar el usuario", error });
   }
 };
@@ -44,7 +47,7 @@ exports.putUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const {email} = req.body;
-    const user = await User.findByPk(email);
+    const user = await User.findOne(email);
     if (user) {
       await user.destroy();
       console.log("Usuario eliminado correctamente");

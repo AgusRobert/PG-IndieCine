@@ -13,6 +13,7 @@ import {
   MOVIE_DETAIL,
   SIGN_UP_USER,
   DELETE_USER_INFORMATION,
+  CAME_BACK_TO_BASIC,
 } from "../actions/actionstype";
 
 import {
@@ -174,6 +175,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         isCreator: false,
       };
+      case CAME_BACK_TO_BASIC: 
+      return {
+        ...state,
+        isCreator: false,
+      }
     default:
       return "hola";
   }
