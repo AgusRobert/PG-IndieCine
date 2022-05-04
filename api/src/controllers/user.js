@@ -51,7 +51,11 @@ exports.putUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne(email);
+    const user = await User.findOne({
+      where: {
+        email: email,
+      }
+    });
     if (user) {
       await user.destroy();
       console.log("Usuario eliminado correctamente");
