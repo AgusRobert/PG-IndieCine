@@ -12,7 +12,8 @@ import {
     GET_COUNTRIES,
     MOVIE_DETAIL,
     SIGN_UP_USER,
-    DELETE_USER_INFORMATION
+    DELETE_USER_INFORMATION,
+    HANDLE_CAME_BACK_TO_BASIC,
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -226,6 +227,22 @@ export function deleteUserInformation(email) {
             });
         } catch (error) {
             console.log('deleteUserInformation', error)
+        }
+    }
+}
+export function cameBackToBasic(userData){
+    return async function (dispatch) {
+        try {
+            let updatedUser = {
+                email: userData.email,
+                creator: userData.creator,
+            }
+            await axios.put(`http://localhost:3001/users/modif`, updatedUser);
+            return dispatch({
+                type: HANDLE_CAME_BACK_TO_BASIC,
+            })
+        } catch (error) {
+            console.log('handleCameBackToBasic', error)
         }
     }
 }
