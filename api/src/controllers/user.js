@@ -29,7 +29,7 @@ exports.getUser = async (req, res) => {
 
 exports.putUser = async (req, res) => {
   try {
-    let user = await User.findByPk(req.body.email);
+    let user = await User.findOne(req.body.email);
     if (!user) {
       // console.log("Usuario no encontrado");
       return res.json({ message: "Usuario no encontrado" });
@@ -47,7 +47,7 @@ exports.putUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const {email} = req.body;
-    const user = await User.findByPk(email);
+    const user = await User.findOne(email);
     if (user) {
       await user.destroy();
       console.log("Usuario eliminado correctamente");

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
-import { deleteUserInformation } from "../../redux/actions";
+import { cameBackToBasic, deleteUserInformation } from "../../redux/actions";
 
 export default function Profile() {
 

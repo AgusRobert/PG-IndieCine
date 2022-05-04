@@ -12,7 +12,8 @@ import {
     GET_COUNTRIES,
     MOVIE_DETAIL,
     SIGN_UP_USER,
-    DELETE_USER_INFORMATION
+    DELETE_USER_INFORMATION,
+    HANDLE_CAME_BACK_TO_BASIC,
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -229,7 +230,7 @@ export function deleteUserInformation(email) {
         }
     }
 }
-export function handleCameBackToBasic(){
+export function cameBackToBasic(userData){
     return async function (dispatch) {
         try {
             let updatedUser = {
