@@ -1,5 +1,5 @@
 const { User, Film } = require("../db");
-const {Op} = require("sequelize");
+const {Op, where} = require("sequelize");
 const bcrypt = require("bcryptjs");
 
 exports.allUsers = async (req, res) => {
@@ -29,7 +29,10 @@ exports.getUser = async (req, res) => {
 
 exports.putUser = async (req, res) => {
   try {
-    let user = await User.findOne(req.body.email);
+    let user = await User.findOne({
+      where: {
+        email: req.body.email,
+      },});
     if (!user) {
       // console.log("Usuario no encontrado");
       return res.json({ message: "Usuario no encontrado" });

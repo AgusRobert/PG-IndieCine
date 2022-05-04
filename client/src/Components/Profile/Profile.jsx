@@ -21,7 +21,7 @@ export default function Profile() {
 
     function handleCameBackToBasic(){
         dispatch(cameBackToBasic({
-            ...user,
+            email: user.email,
             creator: false,
         }))
     }
