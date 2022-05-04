@@ -19,7 +19,7 @@ function App() {
         
         <Routes>
           <Route exact path="/" element={<Home />} />
-          {isAuthenticated && <Route path="/profile" element={<Profile />} />}
+          {isAuthenticated && <Route exact path="/profile" element={<Profile />} />}
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/terms" element={<TyC />} />

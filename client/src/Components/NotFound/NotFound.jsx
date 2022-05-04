@@ -1,4 +1,6 @@
-import React,{useEffect} from "react";
+import React from "react";
+import {Link} from "react-router-dom";
+import Button from '@mui/material/Button';
 
 const style = {
     width: "100vw",
@@ -20,21 +22,18 @@ const style = {
     border: "0",
 };
 export default function NotFound() {
-   
-useEffect(()=>{
-        setTimeout(() => { 
-            window.location.href = "/";
-        }, 5000);
-    },[]);
-  
     return (
-        
         <div style={style}>
             <h1 style={{color: "#9974da"}}>CINDIE</h1>
             <h1> UPPPS!! ERROR 404 - NOT FOUND</h1>
             <p>
                 La página que estas buscando no existe.
             </p>
+            <Link to="/">
+            <Button variant="contained" color="primary" >
+                Seguir navegando 
+            </Button>
+            </Link>
         </div>
     );
 }
