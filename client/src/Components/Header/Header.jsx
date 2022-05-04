@@ -77,7 +77,7 @@ export default function Header() {
   };
 
   return (
-    <Box>
+  
       <AppStyle position="sticky">
         <ToolStyle>
           <Link to={'/'}><img src={logo} alt="Cindie" /></Link>
@@ -145,6 +145,6 @@ export default function Header() {
           {!isAuthenticated && <SignUpBtn />} 
         </ToolStyle>   
       </AppStyle>
-    </Box>
+   
   );
 }

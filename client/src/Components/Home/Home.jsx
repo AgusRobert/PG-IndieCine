@@ -52,7 +52,7 @@ export default function Home() {
     }, [user, isAuthenticated])
 
     return (
-        <div>
+        <>
                 <Header position= "sticky" />
             <div className="container">
                 <h2 className="Title">Estrenos:</h2>
@@ -220,6 +220,6 @@ export default function Home() {
                 <div>
                     <Footer/>
                 </div> */}
-        </div>
+        </>
     )
 }

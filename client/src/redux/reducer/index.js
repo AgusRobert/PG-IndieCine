@@ -51,14 +51,15 @@ function rootReducer(state = initialState, action) {
           }
           if (elenco) {
             let contador = 0;
-            elenco.map(a => {
+            elenco.forEach(a => {
               if (a.indexOf(action.payload) !== -1) {
                 contador++
               }
+             
             })
             if (contador > 0) pelisfinal.push(p)
-          }
-        }
+          }}
+         
       }
 
       pelisporfiltrar.forEach(peli => filtro(peli))

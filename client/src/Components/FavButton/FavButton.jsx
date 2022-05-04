@@ -45,8 +45,7 @@ export default function FavButton({ id }) {
    //    if(faved === false){
 //     dispatch(deleteFavFilm(favDispatch))
 //    }else
-//    { dispatch(addFavFilm(favDispatch));}
-   
+//    { dispatch(addFavFilm(favDispatch));} 
   }
   return (
     <IconButton onClick={handleOnClick}>

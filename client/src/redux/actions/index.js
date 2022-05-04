@@ -234,9 +234,9 @@ export function getFavorites(id) {
 
 export function addFavFilm (payload){
    return async function (dispatch){
-       try{
+    
          await axios.post('http://localhost:3001/users/addFav', payload);
-       } catch(error){console.log(error)}
+       
    }
 };
 
