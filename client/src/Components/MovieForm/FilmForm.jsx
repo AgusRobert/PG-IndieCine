@@ -66,8 +66,9 @@ export function FilmForm() {
         actor: "",
         country: "",
         associateProducer: "",
-        película: "",
+        url: "",
         poster: "",
+        rating: "",
     });
 
     useEffect(() => {
@@ -347,7 +348,7 @@ export function FilmForm() {
                         type="file"
                         accept="video/mp4"
                         value={movieForm.url}
-                        name="película"
+                        name="url"
                         placeholder="sube la película"
                         onChange={(e) => handleChange(e)}
                         required
