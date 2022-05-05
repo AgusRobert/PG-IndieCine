@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Card from "../Card/Card.jsx"
 import Footer from "../Footer/Footer.jsx"
 import Header from '../Header/Header'
-import { getMovies, signUpFunction } from "../../redux/actions/index.js";
+import { getMovies, getUserInfo, signUpFunction } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
 
 
@@ -41,14 +41,15 @@ export default function Home() {
     }, [dispatch])
 
     useEffect(() => {
-        // if (Object.keys(user)) {
-        console.log(user)
-        dispatch(signUpFunction({
-            ...user,
-            creator: false,
-
-        }))
-        // }
+        if (user) {
+            console.log(user)
+            dispatch(signUpFunction({
+                ...user,
+                creator: false,
+            }))
+            // este llamado es para que se actualice es isCreator en el store con el de la db.
+            dispatch(getUserInfo())
+        }
     }, [user, isAuthenticated])
 
     return (
@@ -153,7 +154,7 @@ export default function Home() {
                                 let nombresGen = [];
                                 let generos = data.Genres
                                 generos.forEach(a => {
-                                 nombresGen.push(a.name)
+                                    nombresGen.push(a.name)
                                 })
 
                                 return (
@@ -166,7 +167,7 @@ export default function Home() {
                                                 genres={"Géneros: " + nombresGen.join(", ")}
                                                 rating={"Rating: " + data.rating}
                                                 key={data.id}
-                                                duration={data.duration}/>
+                                                duration={data.duration} />
                                         </Link>
                                     </div>
                                 )

@@ -12,7 +12,13 @@ import {
   GET_COUNTRIES,
   MOVIE_DETAIL,
   SIGN_UP_USER,
-  GET_FAV
+
+  GET_FAV,
+
+  DELETE_USER_INFORMATION,
+  CAME_BACK_TO_BASIC,
+  GET_USER_INFO,
+
 } from "../actions/actionstype";
 
 import {
@@ -171,13 +177,30 @@ function rootReducer(state = initialState, action) {
         ...state,
         isCreator: action.payload,
       };
+
       case GET_FAV:
         return {
           ...state,
           favorites: action.payload,
         };
         
-      
+      case DELETE_USER_INFORMATION: 
+      return {
+        ...state,
+        isCreator: false,
+      };
+      case CAME_BACK_TO_BASIC: 
+      return {
+        ...state,
+        isCreator: action.payload,
+      }
+      case GET_USER_INFO:
+        let response = action.payload.creator
+        return {
+          ...state,
+          isCreator: response,
+        }
+
     default:
       return "hola";
   }

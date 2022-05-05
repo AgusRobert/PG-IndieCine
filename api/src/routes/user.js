@@ -1,9 +1,11 @@
 const router = require('express').Router();
 
 const { getFilms } = require('../controllers/film');
-const {allUsers, putUser, deleteUser, registerUser, loginUser, getUser, getFilmsById,addFav, getFavs} = require('../controllers/user');
+const {allUsers, putUser, deleteUser, registerUser, loginUser, getUser, getFilmsById,addFav, getFavs} = require('../controllers/user')
 
 router.get('/', allUsers);
+
+router.get('/byemail', getUserByEmail);
 
 router.get('/:id', getUser);
 
