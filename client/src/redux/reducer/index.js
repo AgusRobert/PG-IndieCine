@@ -48,6 +48,7 @@ function rootReducer(state = initialState, action) {
 
       const filtro = (p) => {
         let elenco = p.mainActors
+        let genres =p.genres
         if (action.payload) {
           if (p.title.indexOf(action.payload) !== -1) {
             pelisfinal.push(p)
@@ -61,11 +62,21 @@ function rootReducer(state = initialState, action) {
               if (a.indexOf(action.payload) !== -1) {
                 contador++
               }
-             
             })
             if (contador > 0) pelisfinal.push(p)
-          }}
-         
+          }
+          if (genres) {
+            let contador = 0;
+            genres.forEach(a => {
+              if (a.indexOf(action.payload) !== -1) {
+                contador++
+              }
+            })
+            if (contador > 0) pelisfinal.push(p)
+          }
+          
+        }
+        
       }
 
       pelisporfiltrar.forEach(peli => filtro(peli))
@@ -73,6 +84,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: pelisfinal,
       };
+
 
 
     case GET_MOVIES:
