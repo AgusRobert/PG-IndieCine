@@ -10,29 +10,30 @@ const CommentForm = ({
   hasCancelButton = false,
   handleCancel,
   initialText = "",
+  id
 }) => {
   const [text, setText] = useState(initialText);
   const isTextareaDisabled = text.length === 0;
 
   const dispatch = useDispatch();
 
-  const {id} = useParams()
+  /* const {id} = useParams() */
 
   const {user} = useAuth0()
 
-  /* console.log(user) */
+  console.log(user)
 
   function handleSubmit(e) {
     e.preventDefault()
     let paquete = {
       body: text,
     	type: "comment",
-	    userId: user.email,
-	    filmId: id
+	    userEmail: user.email,
+	    filmId: id,
+      commentId: null
     }
-    console.log(paquete)
     dispatch(postComment(paquete))
-    dispatch(getComments())
+    dispatch(getComments(id))
     setText("");
   }
 

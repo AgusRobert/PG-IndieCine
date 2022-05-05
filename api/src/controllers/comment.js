@@ -1,5 +1,6 @@
-const { Comment } = require("../db");
+const { Comment, User } = require("../db");
 const commentService = require("../service/comment");
+const userService = require("../service/user");
 
 exports.getAllComments = async (req, res) => {
   try {
@@ -42,14 +43,26 @@ exports.getComentsUser = async (req, res) => {
 };
 
 exports.getComentsFilm = async (req, res) => {
-  const comments = await Comment.findAll({
+  try{
+  let comments = await Comment.findAll({
     where: { FilmId: req.params.id },
   });
-  if (comments) {
-    return res.json(comments);
+  if (comments.length > 0) {
+    comments = await commentService.addUsernames(comments)
+
+    Promise.all(comments)
+    .then(response => {
+      console.log(response)
+      return res.json(response);
+    })
+    
+    /* console.log("COMENTS",comments) */
   } else {
     return res.json({ message: "No hay comentarios para esta pelicula" });
   }
+} catch(err){
+  console.log("ACA SE ROMPE",err)
+}
 };
 
 exports.deleteComent = async (req, res) => {

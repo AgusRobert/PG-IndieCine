@@ -67,7 +67,7 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.registerUser = async (req, res) => {
-  console.log("req.body", req.body);
+  /* console.log("req.body", req.body); */
   try {
     let user = await User.findOne({
       where: {

@@ -2,6 +2,8 @@ import CommentForm from "./CommentForm";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getComments } from "../../redux/actions";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useParams } from "react-router-dom";
 
 const Comment = ({
   comment,
@@ -13,6 +15,7 @@ const Comment = ({
   addComment,
   parentId = null,
   currentUserId,
+  id
 }) => {
   const isEditing =
     activeComment &&
@@ -32,15 +35,19 @@ const Comment = ({
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
 
   const dispatch = useDispatch();
+  
+  const {user} = useAuth0()
+
+  /* const {id} = useParams() */
 
   useEffect(() => {
-    dispatch(getComments());
+    dispatch(getComments(id));
   }, [dispatch]);
 
   return (
     <div key={comment.id}>
       <div>
-        <img src="/user-icon.png" /> {/* icono usuario */}
+        <img src={user?.picture}/> {/* icono usuario */}
       </div>
       <div>
         <div>

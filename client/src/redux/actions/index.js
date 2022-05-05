@@ -248,9 +248,9 @@ export function cameBackToBasic(userData) {
     }
 }
 
-export function getComments() {
+export function getComments(payload) {
     return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/comments")
+        let json = await axios.get("http://localhost:3001/comments/film/" + payload)
 
         try {
             return dispatch({

@@ -21,14 +21,12 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   
   const comments = useSelector(state => state.comments)
   const [backendComments, setBackendComments] = useState(comments);
-
-  let comentariosFiltrados = comments?.filter(data => id === data.filmId)
   
-  console.log(comentariosFiltrados)
+  console.log(comments)
 
-  const rootComments = comments?.filter(
-    (backendComment) => backendComment.parentId === null
-  );
+  /* const rootComments = comments?.filter(
+    (backendComment) => backendComment?.CommentId === null
+  ); */
   const getReplies = (commentId) =>
   comments?.filter((backendComment) => backendComment.CommentId === commentId)
       .sort(
@@ -66,18 +64,21 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   };
 
   useEffect(() => {
-    dispatch(getComments());
+    dispatch(getComments(id));
   }, [dispatch]);
 
   return (
     <div>
       <h3>Comments</h3>
       <div>Write comment</div>
-      <CommentForm submitLabel="Write" handleSubmit={addComment} />
+      <CommentForm submitLabel="Write"
+      id={id}
+      handleSubmit={addComment} />
       <div>
-        {comentariosFiltrados?.map((rootComment) => (
+        {comments?.length && comments?.map((rootComment) => (
           <Comment
             key={rootComment.id}
+            id={id}
             comment={rootComment}
             replies={getReplies(rootComment.id)}
             activeComment={activeComment}

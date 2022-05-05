@@ -34,3 +34,11 @@ exports.create = async ({
     status: "registered",
   });
 };
+
+exports.getById = async (id) => {
+  return await User.findOne({
+    where: {
+      id: id
+    }
+  })
+}
