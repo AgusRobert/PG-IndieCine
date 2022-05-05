@@ -71,25 +71,24 @@ export function FilmForm() {
     ];
     let genres = useSelector((state) => state.genres);
 
-    const [submit, setSubmit] = useState(false);
+    // const [submit, setSubmit] = useState(false);
     const [errores, setErrores] = useState({});
     const [actor, setActor] = useState({
         actorname: ""
     })
-    const [movieForm, setmovieForm] = useState({
+    const [input, setInput] = useState({
         title: "",
         poster: "",
         synopsis: "",
+        genres: [],
+        country: "",
         year: "",
         duration: "",
         director: "",
-        genres: [],
         mainActors: [],
         actor: "",
-        country: "",
         associateProducer: "",
         url: "",
-        poster: "",
         rating: "",
     });
 
@@ -106,23 +105,75 @@ export function FilmForm() {
     //     }
     // }, [errores]);
 
-    const validate = (values) => {
-        const errores = {};
+    const validate = (state) => {
+        const errors = {};
         const RegExAlfa = /^[A-Za-z]+$/;
         const RegExNum = /^[0-9]*$/;
         const RegExInt = /^[-+]?[1-9]\d*$/;
         //ACA VAN LAS VALIDACIONES POR CADA CAMPO
-        return errores;
+        
+        // title
+        if(!state.title){
+            errors.title = "El campo titulo es obligatorio";
+        } else if(!RegExAlfa.test(state.title)){
+            errors.title = "El campo titulo debe contener solo letras";
+        }
+
+        // poster
+        if(!state.poster){
+            errors.poster = "El campo poster es obligatorio";
+        }
+
+        // synopsis
+        if(!state.synopsis){
+            errors.synopsis = "El campo sinopsis es obligatorio";
+        }
+
+        // genre
+        if(!state.genres){
+            errors.genres = "El campo genero es obligatorio";
+        }
+
+        // country
+        if(!state.country){
+            errors.country = "El campo país es obligatorio";
+        }
+
+        // year
+        if(!state.year){
+            errors.year = "El campo año es obligatorio";
+        } 
+
+        // duration
+        if(!state.duration){
+            errors.duration = "El campo duración es obligatorio";
+        }
+
+        // director
+        if(!state.director){
+            errors.director = "El campo director es obligatorio";
+        }
+
+        // mainActors
+        if(!state.mainActors.length){
+            errors.mainActors = "Elenco debe tener al menos un actor";
+        }
+
+        // url
+        if(!state.url){
+            errors.url = "El campo url es obligatorio";
+        }
+
+        return errors;
     };
 
     // Función de modificación de los inputs con contenido string
-    function handleChange(e) {
-        setmovieForm({
-            ...movieForm,
+    function handleOnChange(e) {
+        setInput({
+            ...input,
             [e.target.name]: e.target.value,
         });
-
-        console.log(movieForm);
+        console.log(input);
     }
 
     // Función de modificación de los inputs que van a ser arrays
@@ -137,12 +188,12 @@ export function FilmForm() {
 
     function handleElenco(e) {
         e.preventDefault()
-        if (movieForm.mainActors.includes(actor.actorname)) {
-            console.log('movieForm mainactors', movieForm.mainActors)
+        if (input.mainActors.includes(actor.actorname)) {
+            console.log('input mainactors', input.mainActors)
             alert("El actor ya está en el elenco")
         } else {
-            movieForm.mainActors.push(actor.actorname)
-            console.log("movieForm mainactors", movieForm.mainActors)
+            input.mainActors.push(actor.actorname)
+            console.log("input mainactors", input.mainActors)
             setActor({
                 actorname: ""
             })
@@ -151,17 +202,17 @@ export function FilmForm() {
 
     //
     function onSelectChange(e) {
-        setmovieForm({
-            ...movieForm,
+        setInput({
+            ...input,
             duration: e.target.value,
         });
     }
 
     function handleGenres(e) {
-        if (!movieForm.genres.includes(e.target.value)) {
-            setmovieForm({
-                ...movieForm,
-                [e.target.name]: [...movieForm.genres, e.target.value],
+        if (!input.genres.includes(e.target.value)) {
+            setInput({
+                ...input,
+                [e.target.name]: [...input.genres, e.target.value],
             });
         } else {
             return
@@ -170,10 +221,10 @@ export function FilmForm() {
 
     function onSubmit(e) {
         e.preventDefault();
-        setErrores(validate(movieForm));
-        setSubmit(true);
-        if (Object.keys(errores).length === 0 && setSubmit) {
-            dispatch(postMovie(movieForm));
+        setErrores(validate(input));
+        // setSubmit(true);
+        if (!Object.keys(errores).length /*&& setSubmit*/) {
+            dispatch(postMovie(input));
         }
     }
 
@@ -187,38 +238,38 @@ export function FilmForm() {
                 <BoxStyle>
 
                     {/* Título */}
-                    <LabelStyle>Título</LabelStyle>
+                    <LabelStyle>Título *</LabelStyle>
                     <InputStyle
                         type="text"
-                        value={movieForm.title}
+                        value={input.title}
                         placeholder="Título de la Película"
                         name="title"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleOnChange}
                         required
                     />
                     {errores.title && <p class="errores">{errores.title}</p>}
 
                     {/* Póster */}
-                    <LabelStyle>Póster</LabelStyle>
+                    <LabelStyle>Póster *</LabelStyle>
                     <InputStyle
                         type="file"
                         accept="image/jpg image/png image/jpeg"
-                        value={movieForm.poster}
+                        value={input.poster}
                         name="poster"
                         placeholder="URL de póster"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleOnChange}
                         required
                     />
                     {errores.poster && <p class="errores">{errores.poster}</p>}
 
                     {/* Sinopsis */}
-                    <LabelStyle>Sinopsis</LabelStyle>
+                    <LabelStyle>Sinopsis *</LabelStyle>
                     <InputStyle
                         type="text"
-                        value={movieForm.synopsis}
+                        value={input.synopsis}
                         placeholder="Sinopsis"
                         name="synopsis"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleOnChange}
                         required
                     />
                     {errores.synopsis && <p class="errores">{errores.synopsis}</p>}
@@ -226,14 +277,14 @@ export function FilmForm() {
                     {/* <select className={s.select} name="select" id="paises"  >
                         <option value="">Choose a Country</option>
                         {paises.map((pais) => (
-                            <option key={pais.id} value={pais.id} onClick={handleChange}>
+                            <option key={pais.id} value={pais.id} onClick={handleOnChange}>
                                 {pais.name}
                             </option>
                         ))}
                     </select> */}
 
                     {/* Géneros */}
-                    <LabelStyle>Géneros</LabelStyle>
+                    <LabelStyle>Géneros *</LabelStyle>
                     <SelectStyle
                         name="genres"
                         onChange={(e) => handleGenres(e)}
@@ -251,7 +302,7 @@ export function FilmForm() {
                             },
                         }}
                     >
-                        <MenuItemStyle hidden={true}>Géneros</MenuItemStyle>
+                        <MenuItemStyle hidden={true}>Géneros </MenuItemStyle>
                         {genres?.map((e) => (
                             <MenuItemStyle key={e.id} value={e.name}>{e.name}</MenuItemStyle>
                         ))}
@@ -263,10 +314,10 @@ export function FilmForm() {
                     )}
 
                     {/* País */}
-                    <LabelStyle>País</LabelStyle>
+                    <LabelStyle>País *</LabelStyle>
                     <SelectStyle
                         name="country"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleOnChange}
                         select
                         label="Pais"
                         variant="outlined"
@@ -293,18 +344,18 @@ export function FilmForm() {
                     )}
 
                     {/* Fecha de Estreno */}
-                    <LabelStyle>Fecha de Estreno</LabelStyle>
+                    <LabelStyle>Fecha de Estreno *</LabelStyle>
                     <InputStyle
                         type="date"
-                        value={movieForm.year}
+                        value={input.year}
                         name="year"
                         placeholder="Año de Lanzamiento"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleOnChange}
                         required
                     />
-                    
+
                     {/* Duración */}
-                    <LabelStyle>Duración</LabelStyle>
+                    <LabelStyle>Duración *</LabelStyle>
                     <SelectStyle
                         name="durationt"
                         onChange={onSelectChange}
@@ -329,13 +380,13 @@ export function FilmForm() {
                     </SelectStyle>
 
                     {/* Dirección */}
-                    <LabelStyle>Dirección</LabelStyle>
+                    <LabelStyle>Dirección *</LabelStyle>
                     <InputStyle
                         type="text"
-                        value={movieForm.director}
+                        value={input.director}
                         name="director"
                         placeholder="Dirección"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleOnChange}
                         required
                     />
                     {errores.director && (
@@ -346,7 +397,7 @@ export function FilmForm() {
 
 
                     {/* Elenco */}
-                    <LabelStyle>Elenco</LabelStyle>
+                    <LabelStyle>Elenco *</LabelStyle>
                     <InputStyle
                         type="text"
                         value={actor.actorname}
@@ -369,13 +420,13 @@ export function FilmForm() {
                     </ButtonStyle>
 
                     {/* Productora */}
-                    <LabelStyle>Productora</LabelStyle>
+                    <LabelStyle>Productora *</LabelStyle>
                     <InputStyle
                         type="text"
-                        value={movieForm.associateProducer}
+                        value={input.associateProducer}
                         name="associateProducer"
                         placeholder="Productora"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleOnChange}
                         required
                     />
                     {errores.associateProducer && (
@@ -385,14 +436,14 @@ export function FilmForm() {
                     )}
 
                     {/* Película */}
-                    <LabelStyle>Película</LabelStyle>
+                    <LabelStyle>Película *</LabelStyle>
                     <InputStyle
                         type="file"
                         accept="video/mp4"
-                        value={movieForm.url}
+                        value={input.url}
                         name="url"
                         placeholder="sube la película"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleOnChange}
                         required
                     />
                     {errores.url && (
