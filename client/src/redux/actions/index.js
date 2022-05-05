@@ -11,7 +11,13 @@ import {
     GET_GENRES,
     GET_COUNTRIES,
     MOVIE_DETAIL,
-    SIGN_UP_USER
+    SIGN_UP_USER,
+
+    GET_FAV,
+    DELETE_USER_INFORMATION,
+    HANDLE_CAME_BACK_TO_BASIC,
+    GET_USER_INFO,
+
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -177,7 +183,7 @@ export function signUpFunction(userData) {
                 numberOfDocument: userData.numberOfDocument ?
                     Number(userData.numberOfDocument) : null,
                 frontDocument: userData.frontDocument ? userData.frontDocument : null,
-                reverseDocument: userData.reverseDocument ?
+                backDocument: userData.reverseDocument ?
                     userData.reverseDocument : null,
             };
             await axios.post("http://localhost:3001/users/register", request);
@@ -215,6 +221,86 @@ export function filterDuration(payload) {
         }
     }
 };
+
+
+export function getFavorites(id) {
+    return async function (dispatch) {
+        try {
+            var pelisFav = await axios.get(`http://localhost:3001/users/fav/${id}`);
+            return dispatch({
+                type: GET_FAV,
+                payload: pelisFav.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function deleteUserInformation(email) {
+    return async function (dispatch) {
+        try {
+            await axios.delete(`http://localhost:3001/users/del`, email);
+            return dispatch({
+                type: DELETE_USER_INFORMATION,
+            });
+        } catch (error) {
+            console.log('deleteUserInformation', error)
+
+        }
+    }
+}
+
+
+
+export function addFavFilm (payload){
+   return async function (dispatch){
+    
+         await axios.post('http://localhost:3001/users/addFav', payload);
+       
+   }
+};
+
+export function deleteFavFilm (payload){
+    return async function (dispatch){
+        try{
+          await axios.delete('http://localhost:3001/favorites/del', payload)
+        } catch(error){console.log(error)}
+    }
+ };
+
+export function getUserInfo (email){
+    return async function (dispatch) {
+        try {
+            let response = await axios.get(`http://localhost:3001/users/byemail`, email);
+            return dispatch({
+                type: GET_USER_INFO,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log('getUserInfo', error)
+        }
+    }
+}
+
+export function cameBackToBasic(userData){
+    return async function (dispatch) {
+        try {
+            let updatedUser = {
+                email: userData.email,
+                creator: userData.creator,
+            }
+            await axios.put(`http://localhost:3001/users/modif`, updatedUser);
+            return dispatch({
+                type: HANDLE_CAME_BACK_TO_BASIC,
+                payload: false,
+            })
+        } catch (error) {
+            console.log('handleCameBackToBasic', error)
+        }
+    }
+}
+
 /* 
   export function sortByComment(order){
 return {

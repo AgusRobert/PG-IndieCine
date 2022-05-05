@@ -44,7 +44,7 @@ export default function Footer() {
         }}
       >
         <Container maxWidth="sm">
-          <div>
+         
             {navlinks.map((navl) => (
               <StyledLink
               sx={{
@@ -62,7 +62,7 @@ export default function Footer() {
                 {navl.name}
               </StyledLink>
             ))}
-          </div>
+         
         </Container>
       </BoxStyle>
     </Box>

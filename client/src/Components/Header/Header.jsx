@@ -77,7 +77,7 @@ export default function Header() {
   };
 
   return (
-    <Box>
+  
       <AppStyle position="sticky">
         <ToolStyle>
           <Link to={'/'}><img src={logo} alt="Cindie" /></Link>
@@ -87,7 +87,7 @@ export default function Header() {
           <FilterMoviesByGenre />
           <FilterMovieByCountry />
           <FilterMovieByDuration />
-
+          <SearchBar />
           {isAuthenticated && (
             <>
               <IconButton
@@ -140,19 +140,11 @@ export default function Header() {
               </Menu>
             </>
           )}
-        </ToolStyle>
-
-        <div className="buscador">
-          <SearchBar />
-        </div>
-
-        <div className="login">
           {!isAuthenticated && <SignInBtn />}
 
-          {!isAuthenticated && <SignUpBtn />}
-        </div>
-
+          {!isAuthenticated && <SignUpBtn />} 
+        </ToolStyle>   
       </AppStyle>
-    </Box>
+   
   );
 }

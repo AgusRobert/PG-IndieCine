@@ -32,6 +32,7 @@ module.exports = (sequelize) => {
         email:{
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         people:{
             type: DataTypes.BOOLEAN,
@@ -49,7 +50,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        reverseDocument:{
+        backDocument:{
             type: DataTypes.STRING,
             allowNull: true,
         },
@@ -64,6 +65,14 @@ module.exports = (sequelize) => {
         rol:{
             type: DataTypes.STRING(20),
             allowNull: true,
+        },
+        subcription:{
+            type: DataTypes.STRING(20),
+            allowNull: false,
+        },
+        status:{
+            type: DataTypes.STRING(30),
+            allowNull: false,
         },
     },{
         sequelize,

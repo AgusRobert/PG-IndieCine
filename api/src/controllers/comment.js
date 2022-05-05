@@ -1,13 +1,22 @@
 const { Comment } = require("../db");
+const commentService = require("../service/comment");
 
-exports.getAllComents = async (req, res) => {
+exports.getAllComments = async (req, res) => {
   try {
-    const comments = await Comment.findAll();
-    res.json(comments);
+    res.json(await commentService.getAll());
   } catch (error) {
     res.json({ message: "Error al obtener los comentarios", error });
   }
 };
+
+exports.postComment = async (req, res) => {
+  try {
+    res.json(await commentService.create(req.body));
+  } catch (error) {
+    res.json({ message: "Error al crear el comentario", error });
+  }
+};
+
 exports.getComment = async (req, res) => {
   try {
     const comment = await Comment.findByPk(req.params.id);
@@ -40,15 +49,6 @@ exports.getComentsFilm = async (req, res) => {
     return res.json(comments);
   } else {
     return res.json({ message: "No hay comentarios para esta pelicula" });
-  }
-};
-
-exports.postComent = async (req, res) => {
-  try {
-    const comment = await Comment.create(req.body);
-    res.json(comment);
-  } catch (error) {
-    res.json({ message: "Error al crear el comentario", error });
   }
 };
 
