@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
-const {allUsers, putUser, deleteUser, registerUser, loginUser, getUser, getUserByEmail} = require('../controllers/user');
+const { getFilms } = require('../controllers/film');
+const {allUsers, putUser, deleteUser, registerUser, loginUser, getUser, getFilmsById,addFav, getFavs} = require('../controllers/user')
 
 router.get('/', allUsers);
 
@@ -16,5 +17,12 @@ router.post('/register', registerUser );
 
 router.post('/login', loginUser);
 
+// trae los films que subió el usuario
+router.get('/getFilmsBy/:id', getFilmsById);
+
+router.post('/addFav', addFav)
+
+// trae los favoritos de un usuario
+router.get('/getFavs/:id', getFavs)
 
 module.exports = router;

@@ -152,3 +152,38 @@ exports.loginUser = async (req, res) => {
     res.json({ message: "Error al obtener el usuario", error });
   }
 };
+exports.getFilmsById = async (req, res) =>{
+  const{id}= req.params
+  const user = await User.findOne({
+    where:{
+      id,
+    },
+    include: Film
+  })
+  let films = user.Films;
+  res.json(films)
+}
+
+exports.addFav = async (req,res) =>{
+  const{email}= req.body
+  const{idPeli} = req.body
+  
+    let user = await User.findOne({
+      where:{
+        email:email
+      }
+    })  
+     console.log(user)
+    let peli = await Film.findByPk(idPeli)
+
+    user.addFilm(peli)
+   res.send('Peli agregada')
+   
+}
+
+exports.getFavs = async (req, res) =>{
+  const{id}= req.params
+  const Usuario = await User.findByPk(id)
+  const favoritos = await Usuario.getFilms()
+  res.json(favoritos)
+}
