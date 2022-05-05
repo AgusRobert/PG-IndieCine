@@ -14,6 +14,7 @@ import {
   SIGN_UP_USER,
   DELETE_USER_INFORMATION,
   CAME_BACK_TO_BASIC,
+  GET_USER_INFO,
 } from "../actions/actionstype";
 
 import {
@@ -180,6 +181,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         isCreator: action.payload,
       }
+      case GET_USER_INFO:
+        let response = action.payload.creator
+        return {
+          ...state,
+          isCreator: response,
+        }
     default:
       return "hola";
   }
