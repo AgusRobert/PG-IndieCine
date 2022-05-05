@@ -233,6 +233,9 @@ export function getFavorites(id) {
             })
         } catch (error) {
             console.log(error)
+        }
+    }
+}
 
 export function deleteUserInformation(email) {
     return async function (dispatch) {
