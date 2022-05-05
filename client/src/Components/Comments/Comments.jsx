@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
+import { Link, useParams } from "react-router-dom";
 import {
   getCommentsApi,
   createComment as createCommentApi,
@@ -15,18 +16,21 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   const [activeComment, setActiveComment] = useState(null);
   
   const dispatch = useDispatch();
+
+  const {id} = useParams()
   
   const comments = useSelector(state => state.comments)
   const [backendComments, setBackendComments] = useState(comments);
-  
-  /* console.log(comments) */
 
-  const rootComments = backendComments?.filter(
+  let comentariosFiltrados = comments?.filter(data => id === data.filmId)
+  
+  console.log(comentariosFiltrados)
+
+  const rootComments = comments?.filter(
     (backendComment) => backendComment.parentId === null
   );
   const getReplies = (commentId) =>
-    backendComments
-      .filter((backendComment) => backendComment.CommentId === commentId)
+  comments?.filter((backendComment) => backendComment.CommentId === commentId)
       .sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -63,15 +67,15 @@ const Comments = ({ commentsUrl, currentUserId }) => {
 
   useEffect(() => {
     dispatch(getComments());
-  }, [dispatch, comments]);
+  }, [dispatch]);
 
   return (
-    <div className="comments">
-      <h3 className="comments-title">Comments</h3>
-      <div className="comment-form-title">Write comment</div>
+    <div>
+      <h3>Comments</h3>
+      <div>Write comment</div>
       <CommentForm submitLabel="Write" handleSubmit={addComment} />
-      <div className="comments-container">
-        {rootComments?.map((rootComment) => (
+      <div>
+        {comentariosFiltrados?.map((rootComment) => (
           <Comment
             key={rootComment.id}
             comment={rootComment}

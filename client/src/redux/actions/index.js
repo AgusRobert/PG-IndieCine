@@ -266,7 +266,7 @@ export function getComments() {
 export function postComment(payload) {
     return async function () {
         const response = await axios.post("http://localhost:3001/comments", payload);
-        console.log(response)
+
         return response
     }
 }

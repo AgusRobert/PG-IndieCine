@@ -82,10 +82,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         comments: action.payload,
       };
-      case POST_COMMENTS: //crear videojuego
-                            return {
-                                ...state
-                            }
     case FILTER_DURATION:
       return {
         ...state,
