@@ -1,18 +1,19 @@
 const { ACCESS_TOKEN } = process.env;
 const axios = require("axios");
 
-exports.toPay = async () => {
+exports.toPay = async (props) => {
+  const {name, price, description, picture_url, id, email} = props
   const url = "https://api.mercadopago.com/checkout/preferences";
   const body = {
-    payer_email: "test_user_46945293@testuser.com",
+    payer_email: email,
     items: [
       {
-        title: "Dummy Title",
-        description: "Dummy description",
-        picture_url: "http://www.myapp.com/myimage.jpg",
-        category_id: "category123",
+        title: name,
+        description: description,
+        picture_url: picture_url,
+        category_id: id,
         quantity: 1,
-        unit_price: 10,
+        unit_price: price,
       },
     ],
     back_urls: {
