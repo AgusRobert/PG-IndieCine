@@ -41,14 +41,14 @@ export default function Home() {
     }, [dispatch])
 
     useEffect(() => {
-        // if (Object.keys(user)) {
+        if (user) {
         console.log(user)
         dispatch(signUpFunction({
             ...user,
             creator: false,
 
         }))
-        // }
+        }
     }, [user, isAuthenticated])
 
     return (

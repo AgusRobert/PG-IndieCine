@@ -240,6 +240,7 @@ export function cameBackToBasic(userData){
             await axios.put(`http://localhost:3001/users/modif`, updatedUser);
             return dispatch({
                 type: HANDLE_CAME_BACK_TO_BASIC,
+                payload: false,
             })
         } catch (error) {
             console.log('handleCameBackToBasic', error)

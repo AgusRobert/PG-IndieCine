@@ -178,7 +178,7 @@ function rootReducer(state = initialState, action) {
       case CAME_BACK_TO_BASIC: 
       return {
         ...state,
-        isCreator: false,
+        isCreator: action.payload,
       }
     default:
       return "hola";
