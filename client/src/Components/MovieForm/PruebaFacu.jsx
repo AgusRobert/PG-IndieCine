@@ -4,7 +4,7 @@ import { getCountries, getGenres, postMovie } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { validate } from "./validates";
 
-export function MovieForm(){
+export function PruebaFacu(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const genres = useSelector((state) => state.genres);
