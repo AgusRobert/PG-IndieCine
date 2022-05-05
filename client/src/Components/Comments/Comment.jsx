@@ -1,4 +1,7 @@
 import CommentForm from "./CommentForm";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getComments } from "../../redux/actions";
 
 const Comment = ({
   comment,
@@ -27,6 +30,13 @@ const Comment = ({
   const canEdit = currentUserId === comment.userId && !timePassed;
   const replyId = parentId ? parentId : comment.id;
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getComments());
+  }, [dispatch]);
+
   return (
     <div key={comment.id}>
       <div>

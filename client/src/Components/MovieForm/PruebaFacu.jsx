@@ -22,7 +22,6 @@ export function MovieForm(){
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(movieForm);
     dispatch(postMovie(movieForm));
     alert("pelicula enviada\nverificar");
     setMovieForm({title: "",synopsis: "",year: 0,duration: "",director: "",genres: [],

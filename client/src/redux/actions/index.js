@@ -14,6 +14,8 @@ import {
     SIGN_UP_USER,
     DELETE_USER_INFORMATION,
     HANDLE_CAME_BACK_TO_BASIC,
+    GET_COMMENTS,
+    POST_COMMENTS
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -159,7 +161,6 @@ export function renderMovieDetails(id) {
 export function signUpFunction(userData) {
     return async function (dispatch) {
         try {
-            console.log("userData", userData);
             let request = {
                 name: userData.given_name ? userData.given_name : null,
                 surname: userData.family_name ? userData.family_name : null,
@@ -230,7 +231,7 @@ export function deleteUserInformation(email) {
         }
     }
 }
-export function cameBackToBasic(userData){
+export function cameBackToBasic(userData) {
     return async function (dispatch) {
         try {
             let updatedUser = {
@@ -246,6 +247,30 @@ export function cameBackToBasic(userData){
         }
     }
 }
+
+export function getComments() {
+    return async function (dispatch) {
+        let json = await axios.get("http://localhost:3001/comments")
+
+        try {
+            return dispatch({
+                type: GET_COMMENTS,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function postComment(payload) {
+    return async function () {
+        const response = await axios.post("http://localhost:3001/comments", payload);
+        console.log(response)
+        return response
+    }
+}
+
 /* 
   export function sortByComment(order){
 return {

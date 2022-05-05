@@ -43,7 +43,6 @@ export default function SignInBtn() {
         <div>
           <div>
             <h6>Welcome {user.name}!</h6>
-            {console.log(user)}
           </div>
           <div>
             <ButtonStyle

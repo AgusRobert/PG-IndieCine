@@ -72,9 +72,7 @@ export function FilmForm() {
 
     useEffect(() => {
         dispatch(getGenres())
-        console.log("GENRES 1", genres)
         dispatch(getCountries())
-        console.log("PAISES 1", countries)
     }, [dispatch]
     );
 
@@ -98,8 +96,6 @@ export function FilmForm() {
             ...movieForm,
             [e.target.name]: e.target.value,
         });
-
-        console.log(movieForm);
     }
 
     // Función de modificación de los inputs que van a ser arrays
@@ -109,13 +105,11 @@ export function FilmForm() {
         setActor({
             [e.target.name]: e.target.value
         })
-        console.log(actor.actorname)
     }
 
     function handleElenco(e) {
         e.preventDefault()
         movieForm.mainActors.push(actor.actorname)
-        console.log("movieForm mainactors", movieForm.mainActors)
     }
 
     //

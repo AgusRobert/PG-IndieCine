@@ -34,7 +34,6 @@ export default function Home() {
     const dispatch = useDispatch();
 
     const allMovies = useSelector(state => state.pelisfiltradas);
-    console.log(allMovies)
 
     useEffect(() => {
         dispatch(getMovies());
@@ -42,7 +41,6 @@ export default function Home() {
 
     useEffect(() => {
         // if (Object.keys(user)) {
-        console.log(user)
         dispatch(signUpFunction({
             ...user,
             creator: false,

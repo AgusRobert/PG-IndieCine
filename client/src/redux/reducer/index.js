@@ -14,6 +14,8 @@ import {
   SIGN_UP_USER,
   DELETE_USER_INFORMATION,
   CAME_BACK_TO_BASIC,
+  GET_COMMENTS,
+  POST_COMMENTS
 } from "../actions/actionstype";
 
 import {
@@ -29,7 +31,8 @@ const initialState = {
   isCreator: false,
   genres: [],
   countries: [],
-  detalle: {}
+  detalle: {},
+  comments: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -74,6 +77,15 @@ function rootReducer(state = initialState, action) {
         peliculas: action.payload,
           pelisfiltradas: action.payload,
       };
+      case GET_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload,
+      };
+      case POST_COMMENTS: //crear videojuego
+                            return {
+                                ...state
+                            }
     case FILTER_DURATION:
       return {
         ...state,
@@ -160,7 +172,6 @@ function rootReducer(state = initialState, action) {
         countries: action.payload,
       };
     case MOVIE_DETAIL:
-      /* console.log(action.payload) */
       return {
         ...state,
         detalle: action.payload /* Object.keys(action.payload) */

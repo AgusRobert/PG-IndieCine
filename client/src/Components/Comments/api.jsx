@@ -1,4 +1,23 @@
-export const getComments = async () => {
+import { getComments } from "../../redux/actions/index";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+export const getCommentsApi = async () => {
+
+  /* const dispatch = useDispatch();
+
+  let comments = useSelector(state => state.comments)
+
+  comments = comments.map(data => ({
+    data: data.id,
+  }))
+
+  console.log(comments)
+
+  useEffect(() => {
+    dispatch(getComments());
+}, [dispatch]) */
+  
     return [
       {
         id: "1",
@@ -41,8 +60,6 @@ export const getComments = async () => {
       body: text,
       parentId,
       userId: "1",
-      username: "John",
-      createdAt: new Date().toISOString(),
     };
   };
   

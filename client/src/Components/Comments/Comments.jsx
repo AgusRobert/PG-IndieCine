@@ -1,22 +1,32 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import {
-  getComments as getCommentsApi,
+  getCommentsApi,
   createComment as createCommentApi,
   updateComment as updateCommentApi,
   deleteComment as deleteCommentApi,
-} from "../../api";
+} from "./api";
+import { getComments } from "../../redux/actions";
 
 const Comments = ({ commentsUrl, currentUserId }) => {
-  const [backendComments, setBackendComments] = useState([]);
+
   const [activeComment, setActiveComment] = useState(null);
-  const rootComments = backendComments.filter(
+  
+  const dispatch = useDispatch();
+  
+  const comments = useSelector(state => state.comments)
+  const [backendComments, setBackendComments] = useState(comments);
+  
+  /* console.log(comments) */
+
+  const rootComments = backendComments?.filter(
     (backendComment) => backendComment.parentId === null
   );
   const getReplies = (commentId) =>
     backendComments
-      .filter((backendComment) => backendComment.parentId === commentId)
+      .filter((backendComment) => backendComment.CommentId === commentId)
       .sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -52,10 +62,8 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   };
 
   useEffect(() => {
-    getCommentsApi().then((data) => {
-      setBackendComments(data);
-    });
-  }, []);
+    dispatch(getComments());
+  }, [dispatch, comments]);
 
   return (
     <div className="comments">
@@ -63,7 +71,7 @@ const Comments = ({ commentsUrl, currentUserId }) => {
       <div className="comment-form-title">Write comment</div>
       <CommentForm submitLabel="Write" handleSubmit={addComment} />
       <div className="comments-container">
-        {rootComments.map((rootComment) => (
+        {rootComments?.map((rootComment) => (
           <Comment
             key={rootComment.id}
             comment={rootComment}
