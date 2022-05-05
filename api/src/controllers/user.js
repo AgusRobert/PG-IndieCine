@@ -28,12 +28,32 @@ exports.getUser = async (req, res) => {
   }
 };
 
+exports.getUserByEmail = async (req, res) => {
+  try {
+    let user = await User.findOne(
+      { where: { email: req.body.email } },
+      {
+        include: [{ model: Film }],
+      }
+    );
+
+    if (user) {
+      res.json(user);
+    } else {
+      res.json({ message: "No se encontró el usuario" });
+    }
+  } catch (error) {
+    res.json({ message: "Error al obtener el usuario", error });
+  }
+};
+
 exports.putUser = async (req, res) => {
   try {
     let user = await User.findOne({
       where: {
         email: req.body.email,
-      },});
+      },
+    });
     if (!user) {
       // console.log("Usuario no encontrado");
       return res.json({ message: "Usuario no encontrado" });
@@ -54,7 +74,7 @@ exports.deleteUser = async (req, res) => {
     const user = await User.findOne({
       where: {
         email: email,
-      }
+      },
     });
     if (user) {
       await user.destroy();

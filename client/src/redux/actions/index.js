@@ -14,6 +14,7 @@ import {
     SIGN_UP_USER,
     DELETE_USER_INFORMATION,
     HANDLE_CAME_BACK_TO_BASIC,
+    GET_USER_INFO,
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -230,6 +231,21 @@ export function deleteUserInformation(email) {
         }
     }
 }
+
+export function getUserInfo (email){
+    return async function (dispatch) {
+        try {
+            let response = await axios.get(`http://localhost:3001/users/byemail`, email);
+            return dispatch({
+                type: GET_USER_INFO,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log('getUserInfo', error)
+        }
+    }
+}
+
 export function cameBackToBasic(userData){
     return async function (dispatch) {
         try {
