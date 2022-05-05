@@ -29,7 +29,8 @@ const ButtonStyle = styled(Button)({
   });
 
 const LabelStyle = styled("label")({
-  color: "white",
+//   color: "white",
+    color: "black"
 });
 
 const SelectStyle = styled(TextField)({
@@ -46,7 +47,28 @@ const BoxStyle = styled(Box)({
 
 export function FilmForm() {
     let dispatch = useDispatch();
-    let countries = useSelector((state) => state.countries);
+    // let countries = useSelector((state) => state.countries);
+    const countries = [
+        { id: '01', name: 'Argentina' },
+        { id: '02', name: 'Bolivia' },
+        { id: '03', name: 'Chile' },
+        { id: '04', name: 'Colombia' },
+        { id: '05', name: 'Costa Rica' },
+        { id: '06', name: 'Cuba' },
+        { id: '07', name: 'Ecuador' },
+        { id: '08', name: 'El Salvador' },
+        { id: '09', name: 'Guatemala' },
+        { id: '10', name: 'Honduras' },
+        { id: '11', name: 'México' },
+        { id: '12', name: 'Nicaragua' },
+        { id: '13', name: 'Panamá' },
+        { id: '14', name: 'Paraguay' },
+        { id: '15', name: 'Perú' },
+        { id: '16', name: 'Puerto Rico' },
+        { id: '17', name: 'República Dominicana' },
+        { id: '18', name: 'Uruguay' },
+        { id: '19', name: 'Venezuela' }
+    ];
     let genres = useSelector((state) => state.genres);
 
     const [submit, setSubmit] = useState(false);
@@ -74,8 +96,8 @@ export function FilmForm() {
     useEffect(() => {
         dispatch(getGenres())
         console.log("GENRES 1", genres)
-        dispatch(getCountries())
-        console.log("PAISES 1", countries)
+        // dispatch(getCountries())
+        // console.log("PAISES 1", countries)
     }, [dispatch]
     );
 
@@ -115,8 +137,16 @@ export function FilmForm() {
 
     function handleElenco(e) {
         e.preventDefault()
-        movieForm.mainActors.push(actor.actorname)
-        console.log("movieForm mainactors", movieForm.mainActors)
+        if(movieForm.mainActors.includes(actor.actorname)){
+            console.log('movieForm mainactors', movieForm.mainActors)
+            alert("El actor ya está en el elenco")
+        } else {
+            movieForm.mainActors.push(actor.actorname)
+            console.log("movieForm mainactors", movieForm.mainActors)
+            setActor({
+                actorname: ""
+            })
+        }
     }
 
     //
@@ -149,7 +179,10 @@ export function FilmForm() {
 
 
     return (
-        <div>
+        <Box sx={{
+            backgroundColor: grey[100],
+        }}>
+            <h1>Subí tu proyecto a la red!</h1>
             <form onSubmit={()=> ("Tu película fue subida")}>
                 <BoxStyle>
                     <LabelStyle>Título</LabelStyle>
@@ -372,7 +405,7 @@ export function FilmForm() {
           type="submit">Subir proyecto</ButtonStyle>
             </BoxStyle>
             </form>
-        </div>
+        </Box>
     );
 }
 
