@@ -19,7 +19,7 @@ const Comments = ({ currentUserId, id }) => {
   /* const {id} = useParams() */
   
   const comments = useSelector(state => state.comments)
-  const [backendComments, setBackendComments] = useState(comments);
+  const [backendComments, setBackendComments] = useState([]);
   
   /* console.log(comments) */
 

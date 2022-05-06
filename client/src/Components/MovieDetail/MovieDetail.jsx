@@ -6,8 +6,11 @@ import View from "../Reproductor/videoplayer.js";
 import { renderMovieDetails } from "../../redux/actions/index";
 import logo from "./LOGO.png";
 import "./style.css";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 import Comments from "../Comments/Comments";
+import { User } from "@auth0/auth0-react";
 
 export default function MovieDetail() {
 
@@ -16,7 +19,7 @@ export default function MovieDetail() {
   let { id } = useParams();
 
   const [load, setLoad] = useState(false)
-
+  const {user} = useAuth0()
   useEffect(() => {
     dispatch(renderMovieDetails(id));
     setLoad(true)
@@ -68,7 +71,7 @@ export default function MovieDetail() {
           </div>
           <div>
           <Comments
-        currentUserId="1"
+        currentUserId={user.email}
         id={peli.id}
       />
           </div>
