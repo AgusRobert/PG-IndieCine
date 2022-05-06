@@ -19,6 +19,7 @@ import {
   CAME_BACK_TO_BASIC,
   GET_USER_INFO,
   GET_PLAN_INFO,
+  PAY_SUBSCRIPTION,
 
 } from "../actions/actionstype";
 
@@ -216,6 +217,13 @@ function rootReducer(state = initialState, action) {
           isCreator: response,
       };
       case SUBSCRIBE:
+        
+        return {
+          ... state,
+          link: action.payload.init_point
+        };
+      
+      case PAY_SUBSCRIPTION:
         
         return {
           ... state,

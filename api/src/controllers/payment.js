@@ -4,5 +4,5 @@ exports.simple = async (req, res) => {
 };
 
 exports.subcription = async(req, res) => {
-  return res.json(await paymentService.subscribe());
+  return res.json(await paymentService.subscribe(req.body));
 };

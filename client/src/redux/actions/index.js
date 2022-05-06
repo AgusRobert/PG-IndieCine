@@ -17,7 +17,8 @@ import {
     DELETE_USER_INFORMATION,
     HANDLE_CAME_BACK_TO_BASIC,
     GET_USER_INFO,
-    GET_PLAN_INFO
+    GET_PLAN_INFO,
+    PAY_SUBSCRIPTION
 
 } from "./actionstype";
 
@@ -308,6 +309,21 @@ export function subscribe (payload){
             const paymentInfo = await axios.post( "http://localhost:3001/payment/payment", payload)
             return dispatch({
                 type: SUBSCRIBE,
+                payload: paymentInfo.data
+            })
+        }
+        catch(err){
+            console.log("subscribe", err)
+        }
+    }
+}
+
+export function paySubscription (payload){
+    return async function (dispatch){
+        try{
+            const paymentInfo = await axios.post( "http://localhost:3001/payment/subscription", payload)
+            return dispatch({
+                type: PAY_SUBSCRIPTION,
                 payload: paymentInfo.data
             })
         }

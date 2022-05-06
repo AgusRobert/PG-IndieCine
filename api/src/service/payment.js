@@ -32,18 +32,19 @@ exports.toPay = async (props) => {
   )?.data;
 };
 
-exports.subscribe = async () => {
+exports.subscribe = async (props) => {
+  const {reason, transaction_amount, currency_id, payer_email} = props
   const url = "https://api.mercadopago.com/preapproval";
   const body = {
-    reason: "Suscripción de ejemplo",
+    reason: reason ,
     auto_recurring: {
       frequency: 1,
       frequency_type: "months",
-      transaction_amount: 10,
-      currency_id: "CLP",
+      transaction_amount: transaction_amount,
+      currency_id: currency_id,
     },
     back_url: "https://google.com.ar",
-    payer_email: "test_user_54987522@testuser.com",
+    payer_email: payer_email,
   };
   return (
     await axios.post(url, body, {

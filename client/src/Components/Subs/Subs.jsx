@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { getPlanInfo, subscribe } from "../../redux/actions";
+import { getPlanInfo, subscribe, paySubscription } from "../../redux/actions";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -20,39 +20,73 @@ export default function Subs() {
 
   useEffect(() => {
     dispatch(getPlanInfo())
-  }, [paymentLink])
+  }, [])
 
-  console.log("PLANEEEEEEES", plans)
+  // console.log("PLANEEEEEEES", plans)
   
   const [subscriptionData, setSubscriptionData] = useState({
     title: "",
     description: "",
     picture_url: "",
     category_id: "",
-    price: 20,
+    price: 0,
+  })
+
+  const [subscription, setSubscription] = useState({
+    reason: "",
+    transaction_amount: "",
+    currency_id: "PEN",
+    payer_email: "test_user_54987522@testuser.com",
   })
 
   useEffect(() => {
-    console.log(" SUSCRIPCIPOOOOON",subscriptionData);
+    // console.log(" SUSCRIPCIPOOOOON",subscriptionData);
   }, [subscriptionData]);
 
-  const onSubscribe = async (planId) => {
-    setSubscriptionData({
-      title: plans[planId].name,
-      description: plans[planId].description,
-      category_id: plans[planId].id,
-      price: plans[planId].price
-    }, () => {})
-    console.log({
-      title: plans[planId].name,
-      description: plans[planId].description,
-      category_id: plans[planId].id,
-      price: plans[planId].price
-    })
-    const link = await dispatch(subscribe({...subscriptionData}))
-    console.log(link.payload.init_point)
-    window.location.replace(link.payload.init_point)
+  const onSubscribe = (planId) => {
+
+
+    setSubscriptionData(() => ({
+      title: plans[planId]?.name,
+      description: plans[planId]?.description,
+      category_id: plans[planId]?.id,
+      price: plans[planId]?.price,
+      }
+    ))
+    // console.log({...subscriptionData})
+    dispatch(subscribe(subscriptionData))
+    window.location.replace(paymentLink)
   }
+
+  const onSubscribe2 = (id) => {
+
+    const plan1 = {
+      reason: "silgjsldkgjsls",
+      transaction_amount: 121,
+      currency_id: "PEN",
+      payer_email: "test_user_54987522@testuser.com"
+    }
+    // setSubscription({
+    //   reason: plans[id]?.name,
+    //   transaction_amount: plans[id]?.price,
+    // })
+    
+    dispatch(paySubscription(plan1))
+    console.log("LIIIINK", paymentLink)
+  }
+
+  // const onSubscribe = (planId) => {
+  //   setSubscriptionData({
+  //     title: plans[planId].name,
+  //     description: plans[planId].description,
+  //     category_id: plans[planId].id,
+  //     price: plans[planId].price
+  //   })
+  //   console.log("slkhglksdhgalkghs",subscriptionData.price)
+  //   dispatch(subscribe(subscriptionData))
+  //   console.log("{ogijñoseijga", paymentLink)
+  //   //window.location.replace(paymentLink)
+  // }
 
 
   return (
@@ -106,7 +140,7 @@ export default function Subs() {
 
               <CardActions>
                 <Button size="small" onClick={() => {
-                  onSubscribe(1);
+                  onSubscribe2(1);
                 }} >SUSCRÍBETE AHORA</Button>
               </CardActions>
 
