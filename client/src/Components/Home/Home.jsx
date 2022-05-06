@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Card from "../Card/Card.jsx"
+//import Card from "../Card/Card.jsx"
 import Footer from "../Footer/Footer.jsx"
 import Header from '../Header/Header'
 import { getMovies, getUserInfo, signUpFunction } from "../../redux/actions/index.js";
@@ -168,7 +168,8 @@ export default function Home() {
                                                 genres={"Géneros: " + nombresGen.join(", ")}
                                                 rating={"Rating: " + data.rating}
                                                 key={data.id}
-                                                duration={data.duration} />
+                                                duration={data.duration}
+                                                synopsis={data.synopsis} />
                                         </Link>
                                     </div>
                                 )
