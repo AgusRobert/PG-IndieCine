@@ -32,7 +32,7 @@ const Comment = ({
   const canReply = Boolean(currentUserId);
   const canEdit = currentUserId === comment.userId && !timePassed;
   const replyId = parentId ? parentId : comment.id;
-  const createdAt = new Date(comment.createdAt).toLocaleDateString();
+  const createdAt = new Date(comment.dataValues.createdAt).toLocaleDateString();
 
   const dispatch = useDispatch();
   
@@ -40,26 +40,27 @@ const Comment = ({
 
   /* const {id} = useParams() */
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(getComments(id));
-  }, [dispatch]);
+  }, [dispatch]); */
 
   return (
     <div key={comment.id}>
-      <div>
-        <img src={user?.picture}/> {/* icono usuario */}
-      </div>
+      {/* <div>
+        <img src={user?.picture}/>
+      </div> */}
       <div>
         <div>
           <div>{comment.username}</div>
           <div>{createdAt}</div>
         </div>
-        {!isEditing && <div>{comment.body}</div>}
+        {!isEditing && <div>{comment.dataValues.body}</div>}
+        {/* {console.log("BODY",comment.body)} */}
         {isEditing && (
           <CommentForm
             submitLabel="Actualizar"
             hasCancelButton
-            initialText={comment.body}
+            initialText={comment.dataValues.body}
             handleSubmit={(text) => updateComment(text, comment.id)}
             handleCancel={() => {
               setActiveComment(null);
@@ -99,7 +100,7 @@ const Comment = ({
             handleSubmit={(text) => addComment(text, replyId)}
           />
         )}
-        {replies.length > 0 && (
+        {/* {replies.length > 0 && (
           <div>
             {replies.map((reply) => (
               <Comment
@@ -116,7 +117,7 @@ const Comment = ({
               />
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

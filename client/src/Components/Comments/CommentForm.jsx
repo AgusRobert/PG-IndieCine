@@ -5,12 +5,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
 
 const CommentForm = ({
-  handleSubmit,
   submitLabel,
   hasCancelButton = false,
   handleCancel,
   initialText = "",
-  id
+  id,
+  /* backendComments */
 }) => {
   const [text, setText] = useState(initialText);
   const isTextareaDisabled = text.length === 0;
@@ -21,7 +21,7 @@ const CommentForm = ({
 
   const {user} = useAuth0()
 
-  console.log(user)
+  /* console.log(user) */
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -33,13 +33,13 @@ const CommentForm = ({
       commentId: null
     }
     dispatch(postComment(paquete))
-    dispatch(getComments(id))
+    /* dispatch(getComments(id)) */
     setText("");
   }
 
   /* useEffect(() => {
     dispatch(getComments());
-  }, []); */
+  }, [dispatch]); */
 
   /* const onSubmit = (event) => {
     event.preventDefault();

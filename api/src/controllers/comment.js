@@ -52,7 +52,6 @@ exports.getComentsFilm = async (req, res) => {
 
     Promise.all(comments)
     .then(response => {
-      console.log(response)
       return res.json(response);
     })
     

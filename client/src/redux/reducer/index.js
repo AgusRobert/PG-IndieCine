@@ -32,7 +32,7 @@ const initialState = {
   genres: [],
   countries: [],
   detalle: {},
-  comments: {}
+  comments: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -77,10 +77,14 @@ function rootReducer(state = initialState, action) {
         peliculas: action.payload,
           pelisfiltradas: action.payload,
       };
-      case GET_COMMENTS:
+    case GET_COMMENTS:
       return {
         ...state,
         comments: action.payload,
+      };
+    case POST_COMMENTS:
+      return {
+        ...state
       };
     case FILTER_DURATION:
       return {
@@ -177,18 +181,18 @@ function rootReducer(state = initialState, action) {
         ...state,
         isCreator: action.payload,
       };
-      case DELETE_USER_INFORMATION: 
+    case DELETE_USER_INFORMATION:
       return {
         ...state,
         isCreator: false,
       };
-      case CAME_BACK_TO_BASIC: 
+    case CAME_BACK_TO_BASIC:
       return {
         ...state,
         isCreator: false,
       }
-    default:
-      return "hola";
+      default:
+        return "hola";
   }
 }
 

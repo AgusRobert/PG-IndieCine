@@ -68,8 +68,8 @@ export default function MovieDetail() {
           </div>
           <div>
           <Comments
-        commentsUrl="http://localhost:3004/comments"
         currentUserId="1"
+        id={peli.id}
       />
           </div>
           <div>

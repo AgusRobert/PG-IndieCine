@@ -4,35 +4,34 @@ import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import { Link, useParams } from "react-router-dom";
 import {
-  getCommentsApi,
   createComment as createCommentApi,
   updateComment as updateCommentApi,
   deleteComment as deleteCommentApi,
 } from "./api";
 import { getComments } from "../../redux/actions";
 
-const Comments = ({ commentsUrl, currentUserId }) => {
+const Comments = ({ currentUserId, id }) => {
 
   const [activeComment, setActiveComment] = useState(null);
   
   const dispatch = useDispatch();
 
-  const {id} = useParams()
+  /* const {id} = useParams() */
   
   const comments = useSelector(state => state.comments)
   const [backendComments, setBackendComments] = useState(comments);
   
-  console.log(comments)
+  /* console.log(comments) */
 
   /* const rootComments = comments?.filter(
     (backendComment) => backendComment?.CommentId === null
   ); */
-  const getReplies = (commentId) =>
+  /* const getReplies = (commentId) =>
   comments?.filter((backendComment) => backendComment.CommentId === commentId)
       .sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      );
+      ); */
   const addComment = (text, parentId) => {
     createCommentApi(text, parentId).then((comment) => {
       setBackendComments([comment, ...backendComments]);
@@ -40,7 +39,7 @@ const Comments = ({ commentsUrl, currentUserId }) => {
     });
   };
 
-  const updateComment = (text, commentId) => {
+ /*  const updateComment = (text, commentId) => {
     updateCommentApi(text).then(() => {
       const updatedBackendComments = backendComments.map((backendComment) => {
         if (backendComment.id === commentId) {
@@ -61,10 +60,11 @@ const Comments = ({ commentsUrl, currentUserId }) => {
         setBackendComments(updatedBackendComments);
       });
     }
-  };
+  }; */
 
   useEffect(() => {
     dispatch(getComments(id));
+    setBackendComments([])
   }, [dispatch]);
 
   return (
@@ -72,20 +72,21 @@ const Comments = ({ commentsUrl, currentUserId }) => {
       <h3>Comments</h3>
       <div>Write comment</div>
       <CommentForm submitLabel="Write"
+      /* backendComments={backendComments} */
       id={id}
-      handleSubmit={addComment} />
+      />
       <div>
         {comments?.length && comments?.map((rootComment) => (
           <Comment
             key={rootComment.id}
             id={id}
             comment={rootComment}
-            replies={getReplies(rootComment.id)}
+            /* replies={getReplies(rootComment.id)} */
             activeComment={activeComment}
             setActiveComment={setActiveComment}
             addComment={addComment}
-            deleteComment={deleteComment}
-            updateComment={updateComment}
+            /* deleteComment={deleteComment}
+            updateComment={updateComment} */
             currentUserId={currentUserId}
           />
         ))}
