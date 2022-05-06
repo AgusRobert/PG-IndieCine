@@ -21,7 +21,7 @@ const CommentForm = ({
 
   const {user} = useAuth0()
 
-  console.log(user)
+  
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -30,40 +30,27 @@ const CommentForm = ({
     	type: "comment",
 	    userEmail: user.email,
 	    filmId: id,
-      commentId: null
+      CommentId: null
     }
     dispatch(postComment(paquete))
-    dispatch(getComments(id))
-    setText("");
+    setText(initialText);
   }
 
-  /* useEffect(() => {
+   useEffect(() => {
     dispatch(getComments());
-  }, []); */
+  }, []); 
 
-  /* const onSubmit = (event) => {
-    event.preventDefault();
-    handleSubmit(text);
-    setText("");
-  }; */
   return (
-    <form onSubmit={handleSubmit}>
-      <textarea
+    <form onSubmit={(e)=>handleSubmit(e)}>
+      <textarea 
+     
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button type="submit">
+      <button  disabled={isTextareaDisabled} type="submit">
         Enviar
       </button>
-      {/* {hasCancelButton && (
-        <button
-          type="button"
-          onClick={handleCancel}
-        >
-          Cancelar
-        </button>
-      )} */}
     </form>
   );
 };

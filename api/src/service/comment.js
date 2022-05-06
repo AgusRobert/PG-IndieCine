@@ -23,9 +23,13 @@ exports.create = async ({ body, type, commentId, userEmail, filmId }) => {
 };
 
 exports.addUsernames = async (comments) => {
-  return await comments.map(async (data) => {
+   
+  return await  Promise.all(comments.map(async (data) => {
+    
     return await addUsername(data, data.UserId)
-  })
+   }))
+
+  
 }
 
 const addUsername = async (comment, id) => {
