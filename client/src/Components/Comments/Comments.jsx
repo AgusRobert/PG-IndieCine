@@ -20,8 +20,8 @@ const Comments = ({ currentUserId, id }) => {
   
   const comments = useSelector(state => state.comments)
   const [backendComments, setBackendComments] = useState([]);
-  
-  /* console.log(comments) */
+  const rootComments = backendComments.filter(backendComment => backendComment.CommentId===null)
+   console.log(backendComments)
 
   /* const rootComments = comments?.filter(
     (backendComment) => backendComment?.CommentId === null
@@ -64,8 +64,8 @@ const Comments = ({ currentUserId, id }) => {
 
   useEffect(() => {
     dispatch(getComments(id));
-    setBackendComments([])
-  }, [dispatch]);
+    setBackendComments([comments])
+  }, []);
 
   return (
     <div>
@@ -76,9 +76,10 @@ const Comments = ({ currentUserId, id }) => {
       id={id}
       />
       <div>
-        {comments?.length && comments?.map((rootComment) => (
-          <Comment
-            key={rootComment.id}
+        {rootComments.map((rootComment) => (
+         <div key={rootComment.id}>
+         <Comment
+            
             id={id}
             comment={rootComment}
             /* replies={getReplies(rootComment.id)} */
@@ -89,6 +90,7 @@ const Comments = ({ currentUserId, id }) => {
             updateComment={updateComment} */
             currentUserId={currentUserId}
           />
+          </div>
         ))}
       </div>
     </div>

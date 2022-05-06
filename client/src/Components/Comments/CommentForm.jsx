@@ -30,7 +30,7 @@ const CommentForm = ({
     	type: "comment",
 	    userEmail: user.email,
 	    filmId: id,
-      commentId: null
+      CommentId: null
     }
     dispatch(postComment(paquete))
     /* dispatch(getComments(id)) */

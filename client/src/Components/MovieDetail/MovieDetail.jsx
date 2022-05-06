@@ -71,7 +71,7 @@ export default function MovieDetail() {
           </div>
           <div>
           <Comments
-        currentUserId={user.email}
+        currentUserId={user?user.email:null}
         id={peli.id}
       />
           </div>
