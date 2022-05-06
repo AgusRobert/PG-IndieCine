@@ -5,12 +5,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
 
 const CommentForm = ({
-  handleSubmit,
   submitLabel,
   hasCancelButton = false,
   handleCancel,
   initialText = "",
-  id
+  id,
+  /* backendComments */
 }) => {
   const [text, setText] = useState(initialText);
   const isTextareaDisabled = text.length === 0;
@@ -21,7 +21,7 @@ const CommentForm = ({
 
   const {user} = useAuth0()
 
-  
+  /* console.log(user) */
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -30,27 +30,40 @@ const CommentForm = ({
     	type: "comment",
 	    userEmail: user.email,
 	    filmId: id,
-      CommentId: null
+      commentId: null
     }
     dispatch(postComment(paquete))
-    setText(initialText);
+    /* dispatch(getComments(id)) */
+    setText("");
   }
 
-   useEffect(() => {
+  /* useEffect(() => {
     dispatch(getComments());
-  }, []); 
+  }, [dispatch]); */
 
+  /* const onSubmit = (event) => {
+    event.preventDefault();
+    handleSubmit(text);
+    setText("");
+  }; */
   return (
-    <form onSubmit={(e)=>handleSubmit(e)}>
-      <textarea 
-     
+    <form onSubmit={handleSubmit}>
+      <textarea
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button  disabled={isTextareaDisabled} type="submit">
+      <button type="submit">
         Enviar
       </button>
+      {/* {hasCancelButton && (
+        <button
+          type="button"
+          onClick={handleCancel}
+        >
+          Cancelar
+        </button>
+      )} */}
     </form>
   );
 };

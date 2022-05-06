@@ -49,12 +49,11 @@ exports.getComentsFilm = async (req, res) => {
   });
   if (comments.length > 0) {
     comments = await commentService.addUsernames(comments)
-    
-    // Promise.all(comments)
-    // .then(response => {
-      
-    return res.json(comments);
-    // })
+
+    Promise.all(comments)
+    .then(response => {
+      return res.json(response);
+    })
     
     /* console.log("COMENTS",comments) */
   } else {
