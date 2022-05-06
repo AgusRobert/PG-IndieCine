@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
+import { yellow100 } from "material-ui/styles/colors";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -21,7 +22,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function Cartas({title, poster, genres, rating, year, country, duration, synopsis}){ 
+export default function Cartas({title, poster, genres, rating, synopsis, year, country, duration}){ 
 
   const [expanded, setExpanded] = React.useState(false);
 
@@ -54,6 +55,7 @@ export default function Cartas({title, poster, genres, rating, year, country, du
     readOnly
   />
   {/* Estrellitas favoritos */}
+  
     <h4 style={{color:"#f1c232", textShadow: " 0 0 3px #351c75, 0 0 5px #351c75"}}>
     {title} {year}
     </h4>
@@ -67,11 +69,11 @@ export default function Cartas({title, poster, genres, rating, year, country, du
      {duration}
     </h4>
   </CardContent>
-  {/* <CardActions disableSpacing>
+  <CardActions disableSpacing>
     
     <ExpandMore
       expand={expanded}
-      onClick={handleExpandClick}
+      onMouseOver={handleExpandClick}
       aria-expanded={expanded}
       aria-label="show more"
     >
@@ -85,12 +87,9 @@ export default function Cartas({title, poster, genres, rating, year, country, du
        {synopsis} 
       </Typography>
     </CardContent>
-  </Collapse> */}
+  </Collapse>
 </Card>
 
         </> 
     )
 }
-
-
-
