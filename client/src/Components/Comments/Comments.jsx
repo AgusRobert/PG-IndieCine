@@ -13,33 +13,19 @@ import { getComments } from "../../redux/actions";
 const Comments = ({ currentUserId, id }) => {
 
   const [activeComment, setActiveComment] = useState(null);
-  
   const dispatch = useDispatch();
-
-  /* const {id} = useParams() */
-  
   const comments = useSelector(state => state.comments)
   const [backendComments, setBackendComments] = useState([]);
-  const rootComments = backendComments.filter(backendComment => backendComment.CommentId===null)
-   console.log(backendComments)
 
-  /* const rootComments = comments?.filter(
-    (backendComment) => backendComment?.CommentId === null
-  ); */
-  /* const getReplies = (commentId) =>
-  comments?.filter((backendComment) => backendComment.CommentId === commentId)
-      .sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      ); */
+  
   const addComment = (text, parentId) => {
     createCommentApi(text, parentId).then((comment) => {
       setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });
   };
-
- /*  const updateComment = (text, commentId) => {
+ console.log(backendComments)
+  const updateComment = (text, commentId) => {
     updateCommentApi(text).then(() => {
       const updatedBackendComments = backendComments.map((backendComment) => {
         if (backendComment.id === commentId) {
@@ -60,7 +46,7 @@ const Comments = ({ currentUserId, id }) => {
         setBackendComments(updatedBackendComments);
       });
     }
-  }; */
+  }; 
 
   useEffect(() => {
     dispatch(getComments(id));
@@ -69,25 +55,21 @@ const Comments = ({ currentUserId, id }) => {
 
   return (
     <div>
-      <h3>Comments</h3>
-      <div>Write comment</div>
+      <h3>Comentarios</h3>
+      <div>Danos tu opinion aqui</div>
       <CommentForm submitLabel="Write"
-      /* backendComments={backendComments} */
       id={id}
       />
       <div>
-        {rootComments.map((rootComment) => (
-         <div key={rootComment.id}>
-         <Comment
-            
-            id={id}
-            comment={rootComment}
-            /* replies={getReplies(rootComment.id)} */
+        {backendComments.length>0&& backendComments.map((backendComment) => (
+         <div key={backendComment}>
+         <Comment  
+            comment={backendComment}
             activeComment={activeComment}
             setActiveComment={setActiveComment}
             addComment={addComment}
-            /* deleteComment={deleteComment}
-            updateComment={updateComment} */
+            deleteComment={deleteComment}
+            updateComment={updateComment} 
             currentUserId={currentUserId}
           />
           </div>

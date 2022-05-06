@@ -182,6 +182,7 @@ export function signUpFunction(userData) {
                 frontDocument: userData.frontDocument ? userData.frontDocument : null,
                 backDocument: userData.reverseDocument ?
                     userData.reverseDocument : null,
+                    picture: userData.picture
             };
             await axios.post("http://localhost:3001/users/register", request);
             if (request.creator) {

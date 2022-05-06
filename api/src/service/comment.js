@@ -19,6 +19,7 @@ exports.create = async ({ body, type, commentId, userEmail, filmId }) => {
     UserId: user?.id,
     CommentId: commentId,
     FilmId: filmId,
+    picture: user?.picture
   });
 };
 
@@ -36,6 +37,7 @@ const addUsername = async (comment, id) => {
   const user = await userService.getById(id)
   return {
     ...comment,
-    username: user.username
+    username: user.username,
+    picture: user.picture
   }
 }

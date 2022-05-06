@@ -14,6 +14,7 @@ exports.create = async ({
   backDocument,
   telephone,
   country,
+  picture
 }) => {
   return await User.create({
     name,
@@ -32,6 +33,7 @@ exports.create = async ({
     rol: "user",
     subcription: "common",
     status: "registered",
+    picture
   });
 };
 
