@@ -40,7 +40,20 @@ export default function Cartas({title, poster, genres, rating, year, country, du
     alt="img not found"
   />
   <CardContent>
-  <Rating name="read-only" value= {{rating}}  readOnly />
+  {/* Estrellitas favoritos */}
+  <Rating 
+    name="half-rating-read" 
+    precision={0.5} 
+    sx=
+      {
+        {"& .MuiRating-iconFilled": 
+          {color: "#f1c232"}
+        }
+      }
+    value={rating}  
+    readOnly
+  />
+  {/* Estrellitas favoritos */}
     <h4 style={{color:"#f1c232", textShadow: " 0 0 3px #351c75, 0 0 5px #351c75"}}>
     {title} {year}
     </h4>
