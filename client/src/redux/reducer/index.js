@@ -37,7 +37,7 @@ const initialState = {
   countries: [],
   detalle: {},
   favorites:[],
-  planInfo: {},
+  plans: [],
   link: ""
 };
 
@@ -224,7 +224,7 @@ function rootReducer(state = initialState, action) {
       case GET_PLAN_INFO:
         return {
           ...state,
-          planInfo: action.payload
+          plans: action.payload
         }
 
     default:

@@ -317,10 +317,10 @@ export function subscribe (payload){
     }
 }
 
-export function getPlanInfo (id){
+export function getPlanInfo (){
     return async function (dispatch) {
         try {
-            let response = await axios.get(`http://localhost:3001/plans/${id}`);
+            let response = await axios.get(`http://localhost:3001/plans/`);
             return dispatch({
                 type: GET_PLAN_INFO,
                 payload: response.data
