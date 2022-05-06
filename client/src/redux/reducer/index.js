@@ -12,12 +12,13 @@ import {
   GET_COUNTRIES,
   MOVIE_DETAIL,
   SIGN_UP_USER,
-
+  SUBSCRIBE,
   GET_FAV,
 
   DELETE_USER_INFORMATION,
   CAME_BACK_TO_BASIC,
   GET_USER_INFO,
+  GET_PLAN_INFO,
 
 } from "../actions/actionstype";
 
@@ -35,7 +36,9 @@ const initialState = {
   genres: [],
   countries: [],
   detalle: {},
-  favorites:[]
+  favorites:[],
+  plans: [],
+  link: ""
 };
 
 function rootReducer(state = initialState, action) {
@@ -205,12 +208,23 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         isCreator: action.payload,
-      }
+      };
       case GET_USER_INFO:
         let response = action.payload.creator
         return {
           ...state,
           isCreator: response,
+      };
+      case SUBSCRIBE:
+        
+        return {
+          ... state,
+          link: action.payload.init_point
+        };
+      case GET_PLAN_INFO:
+        return {
+          ...state,
+          plans: action.payload
         }
 
     default:

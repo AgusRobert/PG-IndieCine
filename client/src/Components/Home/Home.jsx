@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer.jsx"
 import Header from '../Header/Header'
 import { getMovies, getUserInfo, signUpFunction } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
+import Cartas from "../Cartas/Cartas.jsx";
 
 
 

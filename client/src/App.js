@@ -8,6 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import MovieDetail from "./Components/MovieDetail/MovieDetail";
 import { FilmForm } from "./Components/MovieForm/FilmForm";
 import NotFound from "./Components/NotFound/NotFound";
+import Subs from "./Components/Subs/Subs";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/detail/:id" element={<MovieDetail />}/>
           {isAuthenticated && <Route exact path="/addFilm" element={<FilmForm />} />}
          < Route path="*" element= {<NotFound/>} /> 
+         < Route path="/subs" element= {<Subs/>} />
         </Routes>
       </div>
       
