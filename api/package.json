@@ -10,13 +10,10 @@
   "author": "Grupo05",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "@adminjs/express": "^4.1.0",
     "@adminjs/sequelize": "^2.1.5",
     "adminjs": "^5.10.0",
-=======
     "axios": "^0.27.2",
->>>>>>> 57a72bb38ded603d7b124b2cb77f4b5437d65713
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.7",
