@@ -12,11 +12,12 @@ import {
     GET_COUNTRIES,
     MOVIE_DETAIL,
     SIGN_UP_USER,
-
+    SUBSCRIBE,
     GET_FAV,
     DELETE_USER_INFORMATION,
     HANDLE_CAME_BACK_TO_BASIC,
     GET_USER_INFO,
+    GET_PLAN_INFO
 
 } from "./actionstype";
 
@@ -297,6 +298,35 @@ export function cameBackToBasic(userData){
             })
         } catch (error) {
             console.log('handleCameBackToBasic', error)
+        }
+    }
+}
+
+export function subscribe (payload){
+    return async function (dispatch){
+        try{
+            const paymentInfo = await axios.post( "http://localhost:3001/payment/payment", payload)
+            return dispatch({
+                type: SUBSCRIBE,
+                payload: paymentInfo.data
+            })
+        }
+        catch(err){
+            console.log("subscribe", err)
+        }
+    }
+}
+
+export function getPlanInfo (){
+    return async function (dispatch) {
+        try {
+            let response = await axios.get(`http://localhost:3001/plans/`);
+            return dispatch({
+                type: GET_PLAN_INFO,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log('getPlanInfo', error)
         }
     }
 }
