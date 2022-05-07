@@ -6,6 +6,7 @@ const style = {
     width: "100vw",
     position:"absolute",
     top: "0",
+    left: "0",
     bottom: "0",
     backgroundColor: "#24243e",
     display: "flex",
