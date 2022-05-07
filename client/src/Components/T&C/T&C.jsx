@@ -103,6 +103,7 @@ import logo from "../Header/LOGO.png";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from '@mui/material/Box';
+import Subs2 from "../Subs/Subs2.jsx";
 
 const defaultTheme = createTheme();
 
@@ -232,6 +233,8 @@ De la propiedad intelectual e Industrial.</p>
 <p style={{fontSize: '22px'}}>- Declaración expresa, clara y bajo la responsabilidad del reclamante de que la información proporcionada en la notificación es exacta y de que la utilización de los Contenidos ha sido con fines comerciales y constituye una violación de sus derechos de propiedad intelectual.</p>
 
         <Footer/>
+
+        <Subs2/>
         </>
     )
 }

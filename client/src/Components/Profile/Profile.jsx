@@ -175,6 +175,14 @@ export default function Profile() {
                     </>
                 )}
             </Container>
+
+
+            {/* {user.isCreator && <Subs3/>}
+
+            {user.pelissubidas<user.plan.movieQuantity && <Link to = '/MovieForm'><button>SUBIR PELÍCULA</button></Link> }*/}
+
+
+
         </Box>
     )
 }
