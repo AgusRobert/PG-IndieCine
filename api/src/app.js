@@ -1,4 +1,12 @@
 const { urlencoded } = require("express");
+require("./db.js");
+const app = require("express");
+
+const AdminJS = require("adminjs");
+const AdminJSExpress = require("@adminjs/express");
+const AdminJSSequelize = require("@adminjs/sequelize");
+AdminJS.registerAdapter(AdminJSSequelize);
+
 const express = require("express");
 const morgan = require("morgan");
 //libreria de fileUpload
@@ -33,6 +41,15 @@ server.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
+
+const con = require("./db.js").connect;
+
+const adminJs = new AdminJS({
+  databases: [con],
+  rootPath: "/admin",
+});
+const router = AdminJSExpress.buildRouter(adminJs);
+server.use(adminJs.options.rootPath, router);
 
 server.use("/", routes);
 

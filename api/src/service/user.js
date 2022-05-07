@@ -32,6 +32,7 @@ exports.create = async ({
     rol: "user",
     subcription: "common",
     status: "registered",
+    PlanId: 1
   });
 };
 

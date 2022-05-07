@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /* background: #181818; */
+    color: #fff;
+    line-height: 1.6;
+    font-family: 'Quicksand', sans-serif;
+    padding: 0 1.5em;
+}
+
+.container {
+    max-width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.5em;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.logo {
+    text-align: center;
+    font-size: 3em;
+}
+
+.logo span {
+    color: #B70E21;
+}
+
+.contactwrapper {
+    box-shadow: 0 0 20px 0 rgba(255, 255, 255, .3);
+}
+
+.contactwrapper > * {
+    padding: 1em;
+}
+
+.contactform {
+    background: #222222;
+}
+
+.contactform form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.contactform form label {
+    display: block;
+}
+
+.contactform form p {
+    margin: 0;
+    padding: 1em;
+}
+
+.contactform form .block {
+    grid-column: 1 / 3;
+}
+
+.contactform form button,
+.contactform form input,
+.contactform form textarea {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: 0;
+    color: #fff;
+    border-bottom: 1px solid #8208ff;
+}
+
+.contactform form button {
+    background: #8208ff;
+    border: 0;
+    text-transform: uppercase;
+    padding: 1em;
+    cursor: pointer;
+}
+
+.contactform h3 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+.contactform form button:hover,
+.contactform form button:focus {
+    background: #4a2075;
+    color: #fff;
+    transition: background-color 1s ease-out;
+    outline: 0;
+}
+
+/* CONTACT INFO */
+.contactinfo {
+    background: #000;
+}
+
+.contactinfo h4, .contactinfo ul, .contactinfo p {
+    text-align: center;
+    margin: 0 0 1rem 0;
+}
+
+/* LARGE SIZE */
+@media(min-width: 700px) {
+    body {
+        padding: 0 4em;
+    }
+    .contactwrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+    .contactwrapper > * {
+        padding: 2em;
+    }
+    .contactinfo h4,
+    .contactinfo ul,
+    .contactinfo p {
+        text-align: left;
+    }
+}
+
+.volver {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    color: #fff;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+}
+.volver button {
+    background: #8208ff;
+    font-size: 1.5em;
+    font-weight: 500;
+    padding: 1em;
+    border: 0;
+    cursor: pointer;
+    color: aliceblue;
+   
+}
+.volver button:hover {
+    background: #4a2075;
+    color: #fff;
+    transition: background-color 1s ease-out;
+    outline: 0;
+}

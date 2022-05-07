@@ -1,74 +1,85 @@
-import React from "react";
-import Footer from "../Footer/Footer.jsx"
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import logo from "../Header/LOGO.png";
-import "./style.css";
+import s from "./contact.module.css";
+import axios from "axios";
 
-const style = {
-  width: '100%',
-  maxWidth: 360,
-  bgcolor: 'background.paper',
-};
+export default function Contact() {
 
-export default function Contact(){ 
-    return (
-        <>
-          <div className="logoIndex">
-            <Link to={'/'}><img src={logo}  alt="img not found"/></Link>
-          </div>
+  const [redir, setRedir] = useState(false);
+ 
 
-          <div class="contactMe" id="contactMe">
-              <h2 class="contacto title">Contáctanos:</h2>
-              <div class="formulario">
-                <form class="form" id="form" action="#" onSubmit={() => alert("Tu mensaje ha sido enviado")}>
-                  <input type="text" id="name" placeholder="Nombre:" name="name" required />
-                  <input type="email" name="email" placeholder="Email:" required />
-                  <input type="text" name="tlf" placeholder="Número de Contacto:" required />
-                  <input type="text" placeholder="Mensaje" name="message" required />
-                  <input type="submit" id="button" value="Enviar" />
-                </form>
-              </div>
-          </div>
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const data = {
+      type: "contactAuto",
+      name: e.target.fullname.value,
+      phone: e.target.phone.value,
+      subject: e.target.affair.value,
+      email: e.target.email.value,
+      message: e.target.message.value,
+    };
+    alert("Espere por Favor");
+    await axios.post("http://localhost:3001/mail", data);
 
-
-          {/* <h1 className="contacto title">Contacto</h1> */}
-
-          {/* <List sx={style} component="nav" aria-label="mailbox folders">
-            <ListItem>
-              <ListItemText primary="mail" />
-            </ListItem>
-            <Divider />
-            <ListItem divider>
-              <ListItemText primary="mail" />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="mail" />
-            </ListItem>
-            <Divider light />
-            <ListItem>
-              <ListItemText primary="mail" />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="mail" />
-            </ListItem>
-            <Divider />
-            <ListItem divider>
-              <ListItemText primary="mail" />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="mail" />
-            </ListItem>
-            <Divider light />
-            <ListItem>
-              <ListItemText primary="mail" />
-            </ListItem>
-          </List> */}
+    data.type = "contactAdmin";
+    await axios.post("http://localhost:3001/mail", data);
+    e.target.reset();
+    e.target.boton.disable = true;
+    setRedir(true);
     
-          <Footer/>
-        </> 
-    )
+  }
+ if( !redir ){
+  return (
+    <>
+      <div className={s.content}>
+        <div className={s.logo}>
+          <Link to="/">
+            <img src={logo} style={{ cursor: "pointer" }} alt="logo" />
+          </Link>
+        </div>
+
+        <div className={[s.contactwrapper, s.animated, s.bounceInUp]}>
+          <div className={s.contactform}>
+            <h3>Contáctanos</h3>
+
+            <form onSubmit={handleSubmit}>
+              <p>
+                <label>Nombre y Apellido</label>
+                <input type="text" name="fullname" required />
+              </p>
+              <p>
+                <label>Email </label>
+                <input type="email" name="email" required />
+              </p>
+              <p>
+                <label>Teléfono</label>
+                <input type="tel" name="phone" />
+              </p>
+              <p>
+                <label>Asunto</label>
+                <input type="text" name="affair" required />
+              </p>
+              <p className={s.block}>
+                <label>Mensaje</label>
+                <textarea name="message" rows="3" required></textarea>
+              </p>
+              <p className={s.block}>
+              <button type="submit" name="boton">Enviar</button>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+ } else { 
+  return (
+  <div className={s.volver}>
+<Link to="/">
+  <button>Gracias por contactarnos</button>
+  </Link>
+  </div>
+  )
+}
 }
