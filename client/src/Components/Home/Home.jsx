@@ -35,7 +35,6 @@ export default function Home() {
     const dispatch = useDispatch();
 
     const allMovies = useSelector(state => state.pelisfiltradas);
-    console.log(allMovies)
 
     useEffect(() => {
         dispatch(getMovies());
@@ -43,7 +42,7 @@ export default function Home() {
 
     useEffect(() => {
         if (user) {
-            console.log(user)
+            /* console.log(user) */
             dispatch(signUpFunction({
                 ...user,
                 creator: false,
@@ -151,6 +150,7 @@ export default function Home() {
                     <Row md={6} lg={6} className="newdiv">
                         {
                             allMovies ? allMovies?.map(data => {
+                                console.log("HOME",data)
 
                                 let nombresGen = [];
                                 let generos = data.Genres
