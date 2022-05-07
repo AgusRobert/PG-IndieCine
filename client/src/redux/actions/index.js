@@ -60,14 +60,14 @@ export function getGenres() {
 //       console.log("RESPUESTA DEL BACK: ",movieForm)
 //     }
 // };
-export function postMovie(payload) {
-  // return async () => {
-  //   const respuesta = (await axios.post("http://localhost:3001/upload/inter",payload.port)).data;
-  //   console.log("RESPUESTA: ",respuesta);
-  //   return { type: "sads", payload };
-  // }
-  console.log("Datos llegados a la Action: ",payload);
-  return { type: "sads"};
+export function postMovie(movieForm) {
+  return async () => {
+    const response = (
+      await axios.post("http://localhost:3001/films", movieForm)
+    )?.data;
+    console.log("RESPUESTA: ", response);
+    return { type: "POST_PELI", payload: response };
+  };
 }
 
 export function getMoviesByGenre(payload) {

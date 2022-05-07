@@ -6,6 +6,7 @@ import { Box } from "@mui/system";
 import { grey } from "@mui/material/colors";
 import { validate } from "./validates";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   MenuItemStyle,
   InputStyle,
@@ -34,6 +35,8 @@ export function FilmForm() {
     associateProducer: "",
     genres: [],
     country: "",
+    film: "a",
+    port: "a",
   });
   //para la imagen de la portada
   const [multimedia, setMultimedia] = useState({ port: null, film: null });
@@ -41,6 +44,7 @@ export function FilmForm() {
   const dispatch = useDispatch();
   //paises y generos necesarios para el select
   const { countries, genres } = useSelector((state) => state);
+  const { user } = useAuth0();
   //manejo de cambios en los campos
   const handleOnChange = (e) => {
     setMovieForm({
@@ -88,29 +92,38 @@ export function FilmForm() {
   };
   //manejador de envio del formulario
   const onSubmit = async (e) => {
-    //creacion del paquete de envio para subida de la portada
-    const formPort = new FormData();
-    //creacion del paquete de envio para subida de la peliculas
-    const formFilm = new FormData();
-    //adicion de la imagen para la subida
-    formPort.append("file", multimedia.port);
-    //adicion de la pelicula para la subida
-    formFilm.append("file", multimedia.film);
-    //despacho de la subida directamente al back
-    const rPort = (
-      await axios.post("http://localhost:3001/upload/inter", formPort)
-    )?.data;
-    //despacho de la subida directamente al back
-    const rFilm = (
-      await axios.post("http://localhost:3001/upload/inter", formFilm)
-    )?.data;
-    //lectura de una respuesta y seteo de la ruta de la imagen subida
-    if (typeof rPort === "string") setMovieForm({ ...movieForm, port: rPort });
-    if (typeof rFilm === "string") setMovieForm({ ...movieForm, film: rFilm });
-    else alert("SE TE CORTO EL INTERNET ");
+    e.preventDefault();
+    const objResponse = {};
+    if (multimedia.port) {
+      //creacion del paquete de envio para subida de la portada
+      const formPort = new FormData();
+      //adicion de la imagen para la subida
+      formPort.append("file", multimedia.port);
+      //despacho de la subida directamente al back
+      const rPort = (
+        await axios.post("http://localhost:3001/upload/inter", formPort)
+      )?.data;
+      console.log("RESPUESTA IMAGEN: ", rPort);
+      //lectura de una respuesta y seteo de la ruta de la imagen subida
+      if (typeof rPort === "string") objResponse.port = rPort;
+    }
+    if (multimedia.film) {
+      //creacion del paquete de envio para subida de la peliculas
+      const formFilm = new FormData();
+      //adicion de la pelicula para la subida
+      formFilm.append("file", multimedia.film);
+      //despacho de la subida directamente al back
+      const rFilm = (
+        await axios.post("http://localhost:3001/upload/inter", formFilm)
+      )?.data;
+      console.log("RESPUESTA Pelicula: ", rFilm);
+      //lectura de una respuesta y seteo de la ruta de la imagen subida
+      if (typeof rFilm === "string") objResponse.film = rFilm;
+    }
+    alert("Funcion?");
     //despacho de la accion para guardar una pelicula
     console.log("Datos actuales: ", movieForm);
-    dispatch(postMovie(movieForm));
+    dispatch(postMovie({ ...movieForm, ...objResponse, email: user.email }));
   };
   //array de anios para las peliculas
   const anios = [];
@@ -202,10 +215,10 @@ export function FilmForm() {
 
           {/* Año*/}
           <LabelStyle>Año *</LabelStyle>
-          
+
           <SelectStyle
             name="year"
-            value={movieForm.year ? movieForm.year : "Seleccione Año"}
+            value={movieForm.year}
             onChange={(e) => handleOnChange(e)}
             select
             label="anio"
@@ -274,7 +287,7 @@ export function FilmForm() {
           </ButtonStyle>
 
           {/* Productora */}
-          <LabelStyle>Productora *</LabelStyle>
+          <LabelStyle>Productora Asociada</LabelStyle>
           <InputStyle
             type="text"
             value={movieForm.associateProducer}
@@ -290,7 +303,7 @@ export function FilmForm() {
             type="file"
             accept="video/mp4"
             name="film"
-            placeholder="Subir Película"
+            placeholder="Subir Película.mp4"
             onChange={(e) => selectMultimedia(e)}
           />
           <LabelStyle>Pelicula Link *</LabelStyle>

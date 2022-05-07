@@ -34,3 +34,7 @@ exports.create = async ({
     status: "registered",
   });
 };
+
+exports.findByEmail = async (email) => {
+  return await User.findOne({ where: { email: email } });
+};
