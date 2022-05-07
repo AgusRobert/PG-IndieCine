@@ -165,8 +165,8 @@ exports.getFilmsById = async (req, res) =>{
 }
 
 exports.addFav = async (req,res) =>{
-  const{email}= req.body
-  const{idPeli} = req.body
+  const{favDispatch}= req.body
+  const{idPeli,email}=favDispatch
   
     let user = await User.findOne({
       where:{

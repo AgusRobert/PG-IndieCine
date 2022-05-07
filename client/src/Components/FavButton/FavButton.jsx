@@ -17,7 +17,7 @@ const BoxFav =styled(Box)({
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  backgroundColor: deepPurple[600],
+  backgroundColor: grey[600],
   border: "none",
   padding:10,
   boxShadow: 24,
@@ -27,31 +27,33 @@ const BoxFav =styled(Box)({
 });
  
 
-export default function FavButton({ id }) {
+export default function FavButton({ filmId }) {
   let dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const [faved, setFaved] = useState(false); //hace un map por los id's de favoritos si está, es falso : es true
   const {user} = useAuth0()
- let email = user.email
+ 
  let favDispatch = {
-     idPeli:id,
-     email:email,
+     idPeli:filmId,
+     email:user.email,
  }
-  function handleOnClick(favDispatch) {
+  function handleOnClick(payload) {
+     console.log(payload)
     setOpen(true);
    setFaved(!faved);
-   dispatch(addFavFilm(favDispatch))
+   dispatch(addFavFilm(payload))
    //    if(faved === false){
 //     dispatch(deleteFavFilm(favDispatch))
 //    }else
 //    { dispatch(addFavFilm(favDispatch));} 
   }
   return (
-    <IconButton onClick={handleOnClick}>
+    <Box onClick={ e =>(handleOnClick({favDispatch}))}>
+    <IconButton  value={favDispatch} >
       <FavoriteIcon
         sx={{
-          color: deepPurple[300],
+          color: grey[800],
           ":hover": {
             color: amber[400],
           },
@@ -73,6 +75,6 @@ export default function FavButton({ id }) {
           </Typography>
         </BoxFav></div>
       </Modal>
-    </IconButton>
+    </IconButton></Box>
   );
 }

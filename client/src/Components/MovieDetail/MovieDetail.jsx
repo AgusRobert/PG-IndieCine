@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../Footer/Footer.jsx"
@@ -14,12 +14,12 @@ export default function MovieDetail() {
   let dispatch = useDispatch();
 
   let { id } = useParams();
-
-  const [load, setLoad] = useState(false)
+let filmId= id
+  // const [load, setLoad] = useState(false)
 
   useEffect(() => {
     dispatch(renderMovieDetails(id));
-    setLoad(true)
+    // setLoad(true)
   }, [dispatch]);
 
   const peli = useSelector((state) => state.detalle);
@@ -67,7 +67,7 @@ export default function MovieDetail() {
               ubicacion={peli.url}
             />
           </div>
-          <FavButton filmId={id}/>
+          <FavButton filmId={filmId}/>
           <div>
           <Comments
         commentsUrl="http://localhost:3004/comments"
