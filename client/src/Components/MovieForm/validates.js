@@ -27,3 +27,12 @@ export const validate = (input) => {
   // }
   return errs;
 };
+
+const validate = (values) => {
+  const errores = {};
+  const RegExAlfa = /^[A-Za-z]+$/;
+  const RegExNum = /^[0-9]*$/;
+  const RegExInt = /^[-+]?[1-9]\d*$/;
+  //ACA VAN LAS VALIDACIONES POR CADA CAMPO
+  return errores;
+};
