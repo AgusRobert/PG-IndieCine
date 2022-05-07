@@ -14,20 +14,13 @@ import {
   SIGN_UP_USER,
   SUBSCRIBE,
   GET_FAV,
-
   DELETE_USER_INFORMATION,
   CAME_BACK_TO_BASIC,
   GET_USER_INFO,
   GET_PLAN_INFO,
-
 } from "../actions/actionstype";
 
-import {
-  DATE_DES,
-  NAME_ASC,
-  COM_DES,
-  RATING_ASC
-} from "./Ordercosntants";
+import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
 
 const initialState = {
   peliculas: [],
@@ -36,65 +29,53 @@ const initialState = {
   genres: [],
   countries: [],
   detalle: {},
-  favorites:[],
+  favorites: [],
   plans: [],
-  link: ""
+  link: "",
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-
     case SEARCH_PELIS:
+      let pelisporfiltrar = state.peliculas;
 
-      let pelisfinal = []
-      let pelisporfiltrar = state.peliculas
+      const filtro = (array, genre) => {
+        let contador = false;
 
-      const filtro = (p) => {
-        let elenco = p.mainActors
-        let genres =p.genres
-        if (action.payload) {
-          if (p.title.indexOf(action.payload) !== -1) {
-            pelisfinal.push(p)
+        for (let i = 0; i < array.length; i++) {
+          if (array[i].name.toLowerCase().indexOf(genre) !== -1) {
+            contador = true;
           }
-          if (p.director.indexOf(action.payload) !== -1) {
-            pelisfinal.push(p)
-          }
-          if (elenco) {
-            let contador = 0;
-            elenco.forEach(a => {
-              if (a.indexOf(action.payload) !== -1) {
-                contador++
-              }
-            })
-            if (contador > 0) pelisfinal.push(p)
-          }
-          if (genres) {
-            let contador = 0;
-            genres.forEach(a => {
-              if (a.indexOf(action.payload) !== -1) {
-                contador++
-              }
-            })
-            if (contador > 0) pelisfinal.push(p)
-          }
-          
         }
-        
-      }
-
-      pelisporfiltrar.forEach(peli => filtro(peli))
-      return {
-        ...state,
-        pelisfiltradas: pelisfinal,
+        return contador;
       };
 
+      let peliFiltro = pelisporfiltrar.filter(data => {
+        if (
+          data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
+            -1 ||
+          data.director.toLowerCase().indexOf(action.payload.toLowerCase()) !==
+            -1 ||
+          data.mainActors
+            .join(" ")
+            .toLowerCase()
+            .indexOf(action.payload.toLowerCase()) !== -1 ||
+          filtro(data.Genres, action.payload.toLowerCase())
+        ) {
+          return data;
+        }
+      });
 
+      return {
+        ...state,
+        pelisfiltradas: peliFiltro,
+      };
 
     case GET_MOVIES:
       return {
         ...state,
         peliculas: action.payload,
-          pelisfiltradas: action.payload,
+        pelisfiltradas: action.payload,
       };
     case FILTER_DURATION:
       return {
@@ -185,7 +166,7 @@ function rootReducer(state = initialState, action) {
       /* console.log(action.payload) */
       return {
         ...state,
-        detalle: action.payload /* Object.keys(action.payload) */
+        detalle: action.payload /* Object.keys(action.payload) */,
       };
     case SIGN_UP_USER:
       return {
@@ -193,39 +174,38 @@ function rootReducer(state = initialState, action) {
         isCreator: action.payload,
       };
 
-      case GET_FAV:
-        return {
-          ...state,
-          favorites: action.payload,
-        };
-        
-      case DELETE_USER_INFORMATION: 
+    case GET_FAV:
+      return {
+        ...state,
+        favorites: action.payload,
+      };
+
+    case DELETE_USER_INFORMATION:
       return {
         ...state,
         isCreator: false,
       };
-      case CAME_BACK_TO_BASIC: 
+    case CAME_BACK_TO_BASIC:
       return {
         ...state,
         isCreator: action.payload,
       };
-      case GET_USER_INFO:
-        let response = action.payload.creator
-        return {
-          ...state,
-          isCreator: response,
+    case GET_USER_INFO:
+      let response = action.payload.creator;
+      return {
+        ...state,
+        isCreator: response,
       };
-      case SUBSCRIBE:
-        
-        return {
-          ... state,
-          link: action.payload.init_point
-        };
-      case GET_PLAN_INFO:
-        return {
-          ...state,
-          plans: action.payload
-        }
+    case SUBSCRIBE:
+      return {
+        ...state,
+        link: action.payload.init_point,
+      };
+    case GET_PLAN_INFO:
+      return {
+        ...state,
+        plans: action.payload,
+      };
 
     default:
       return "hola";
