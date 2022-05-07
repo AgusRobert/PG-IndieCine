@@ -94,11 +94,11 @@ exports.mailing = async (req, res) => {
 
     // ------------------------- MAIL DEL CONTACTO AL ADMINISTRADOR -----------------
     case "contactAdmin":
-      from = '"CINDIE" <indiecine2022@gmail.com>';
-      to = "mail.deladministrador@gmail.com"; // MAIL DEL ADMINISTRADOR
+      from = '"CONTACTO CINDIE" <indiecine2022@gmail.com>';
+      to = "cindiexavi@gmail.com"; // MAIL DEL ADMINISTRADOR
       subject = req.body.subject;
       html = `  
-      ${req.body.name}  <br> ${req.body.email} <br>${req.body.message}    
+      ${req.body.name}  <br> ${req.body.phone}  <br>  ${req.body.email} <br>${req.body.message}    
           `;
       await enviado(from, to, subject, html);
       return res.json({ message: "Email enviado" });
@@ -200,7 +200,7 @@ exports.mailing = async (req, res) => {
     case "contentAdmin":
       
       from = '"CINDIE" <indiecine2022@gmail.com>';
-      to = "mail.deladministrador@gmail.com"; // MAIL DEL ADMINISTRADOR
+      to = "cindiexavi@gmail.com"; // MAIL DEL ADMINISTRADOR
       subject = "Nuevo contenido";
       html = `  
        ${req.body}
