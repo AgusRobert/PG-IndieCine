@@ -66,6 +66,7 @@ export function postMovie(payload) {
   //   console.log("RESPUESTA: ",respuesta);
   //   return { type: "sads", payload };
   // }
+  console.log("Datos llegados a la Action: ",payload);
   return { type: "sads"};
 }
 

@@ -31,20 +31,20 @@ router.post("/frontdoc", uploadDocuments, postFrontDoc);
 router.post("/backdoc", uploadDocuments, postBackDoc);
 
 router.post("/inter", async (req, res) => {
-  const { image } = req.files;
+  const { file } = req.files;
 
   try {
     const uploadObject = await s3
       .putObject({
         ACL: "public-read",
         Bucket: BUCKET_NAME,
-        Body: image.data,
-        Key: image.name,
+        Body: file.data,
+        Key: file.name,
       })
       .promise();
-    const urlImage = `https://${BUCKET_NAME}.${ENDPOINT}/${image.name}`;
+    const urlFile = `https://${BUCKET_NAME}.${ENDPOINT}/${file.name}`;
     
-    res.json(urlImage);
+    res.json(urlFile);
   } catch (err) {
     console.log("ERROR: ", err);
     res.send(err);

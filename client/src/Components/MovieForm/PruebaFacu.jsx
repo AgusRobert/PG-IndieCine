@@ -6,7 +6,7 @@ import { validate } from "./validates";
 import axios from "axios";
 
 
-import {ButtonStyle} from "../StylesMUI/StylesMUI/ButtonStyle";
+import {ButtonStyle,sxButtonStyle} from "../StyleMUI/StyleMUI";
 
 export function PruebaFacu() {
   const [port, setPort] = useState();
@@ -57,7 +57,7 @@ export function PruebaFacu() {
           required
         />
         <ButtonStyle
-          sx={sxButton}
+          sx={sxButtonStyle}
           type="submit"
         >
           GuardarFilms
