@@ -3,12 +3,13 @@ import { /*Link,*/ useNavigate } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
-import { cameBackToBasic, deleteUserInformation } from "../../redux/actions";
+import { cameBackToBasic, deleteUserInformation, getProfileInfo, validateSubscription, updateSubscription, getUserInfo } from "../../redux/actions";
 import { Box, Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from '../Header/LOGO.png'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios"
 
 const StyledLink = styled(Link)({
     marginRight: 150,
@@ -28,7 +29,41 @@ export default function Profile() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const [upgrade, setUpgrade] = useState(false);
+    // validación de suscripción
 
+    const profileInfo = useSelector((state) => state.profileInfo) 
+    
+    const payer_email = "test_user_54987522@testuser.com"
+
+    useEffect(() => {
+        dispatch(getProfileInfo(user.email))
+        dispatch(validateSubscription(payer_email))
+    }, [])
+
+    const subsToUpdate = {
+        email: user.email,
+        subcription: profileInfo?.subcription,
+        PlanId: profileInfo?.subcription === "de Culto"? 2: 3
+    }
+    // useEffect(() =>{
+    //     dispatch(updateSubscription(subsToUpdate))
+    // }, [profileInfo.subcription])
+
+    
+   
+    console.log("PROFILE INFOOO", profileInfo)
+    
+
+    // useEffect(() => {
+    //     if(profileInfo?.subcription !== "Free"){
+    //         dispatch(updateSubscription(subsToUpdate))
+    //         console.log("suscripcion final", profileInfo )
+    //     }
+    // }, [])
+
+
+
+    //
     function handleOnDelete() {
         logout({ returnTo: window.location.origin });
         dispatch(deleteUserInformation(user.email))

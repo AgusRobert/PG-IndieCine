@@ -29,9 +29,11 @@ exports.getUser = async (req, res) => {
 };
 
 exports.getUserByEmail = async (req, res) => {
+  // res.send({msg: "datos", file: req.body.email})
+  console.log(req.params)
   try {
     let user = await User.findOne(
-      { where: { email: req.body.email } },
+      { where: { email: req.params.email } },
       {
         include: [{ model: Film }],
       }
@@ -60,7 +62,7 @@ exports.putUser = async (req, res) => {
     } else {
       await user.update(req.body);
       // console.log("Usuario actualizado correctamente");
-      return res.json({ message: "Usuario actualizado correctamente" });
+      return res.json(user);
     }
   } catch (error) {
     // console.log("Error al actualizar el usuario");

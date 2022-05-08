@@ -69,6 +69,7 @@ module.exports = (sequelize) => {
         subcription:{
             type: DataTypes.STRING(20),
             allowNull: false,
+            defaultValue: "Free"
         },
         status:{
             type: DataTypes.STRING(30),

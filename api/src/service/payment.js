@@ -43,8 +43,9 @@ exports.subscribe = async (props) => {
       transaction_amount: transaction_amount,
       currency_id: currency_id,
     },
-    back_url: "https://google.com.ar",
+    back_url: "https://8d19-179-6-206-23.ngrok.io/profile",
     payer_email: payer_email,
+    notification_url:  "https://8d19-179-6-206-23.ngrok.io/payment/notification"
   };
   return (
     await axios.post(url, body, {
@@ -55,3 +56,17 @@ exports.subscribe = async (props) => {
     })
   )?.data;
 };
+
+exports.validation = async(props) => {
+  console.log("EMAIL DE VALIDATE", props)
+  const url = `https://api.mercadopago.com/preapproval/search?payer_email=${props}`
+  const response = await axios.get(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+    },
+  })
+  return(
+    response.data
+  )
+}

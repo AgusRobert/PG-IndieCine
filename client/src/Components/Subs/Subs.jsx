@@ -16,77 +16,28 @@ export default function Subs() {
   const dispatch = useDispatch();
 
   const plans = useSelector((state) => state.plans)
-  const paymentLink = useSelector((state) => state.link)
+  const paymentLink = useSelector((state) => state.paymentLink)
 
   useEffect(() => {
     dispatch(getPlanInfo())
   }, [])
 
-  // console.log("PLANEEEEEEES", plans)
-  
-  const [subscriptionData, setSubscriptionData] = useState({
-    title: "",
-    description: "",
-    picture_url: "",
-    category_id: "",
-    price: 0,
-  })
-
-  const [subscription, setSubscription] = useState({
-    reason: "",
-    transaction_amount: "",
-    currency_id: "PEN",
-    payer_email: "test_user_54987522@testuser.com",
-  })
-
   useEffect(() => {
-    // console.log(" SUSCRIPCIPOOOOON",subscriptionData);
-  }, [subscriptionData]);
+    console.log(paymentLink)
+    if(paymentLink !== undefined){
+        window.location.replace(paymentLink)
+    }
+  }, [paymentLink])
 
-  const onSubscribe = (planId) => {
-
-
-    setSubscriptionData(() => ({
-      title: plans[planId]?.name,
-      description: plans[planId]?.description,
-      category_id: plans[planId]?.id,
-      price: plans[planId]?.price,
-      }
-    ))
-    // console.log({...subscriptionData})
-    dispatch(subscribe(subscriptionData))
-    window.location.replace(paymentLink)
-  }
-
-  const onSubscribe2 = (id) => {
-
-    const plan1 = {
-      reason: "silgjsldkgjsls",
-      transaction_amount: 121,
+  const onSubscribe = (id) => {
+    let plan = {
+      reason: plans[id]?.name,
+      transaction_amount: plans[id]?.price,
       currency_id: "PEN",
       payer_email: "test_user_54987522@testuser.com"
-    }
-    // setSubscription({
-    //   reason: plans[id]?.name,
-    //   transaction_amount: plans[id]?.price,
-    // })
-    
-    dispatch(paySubscription(plan1))
-    console.log("LIIIINK", paymentLink)
+    }  
+    dispatch(paySubscription(plan))
   }
-
-  // const onSubscribe = (planId) => {
-  //   setSubscriptionData({
-  //     title: plans[planId].name,
-  //     description: plans[planId].description,
-  //     category_id: plans[planId].id,
-  //     price: plans[planId].price
-  //   })
-  //   console.log("slkhglksdhgalkghs",subscriptionData.price)
-  //   dispatch(subscribe(subscriptionData))
-  //   console.log("{ogijñoseijga", paymentLink)
-  //   //window.location.replace(paymentLink)
-  // }
 
 
   return (
@@ -140,7 +91,7 @@ export default function Subs() {
 
               <CardActions>
                 <Button size="small" onClick={() => {
-                  onSubscribe2(1);
+                  onSubscribe(1);
                 }} >SUSCRÍBETE AHORA</Button>
               </CardActions>
 

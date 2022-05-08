@@ -5,7 +5,7 @@ const {allUsers, putUser, deleteUser, registerUser, loginUser, getUser, getFilms
 
 router.get('/', allUsers);
 
-router.get('/byemail', getUserByEmail);
+router.get('/byemail/:email', getUserByEmail);
 
 router.get('/:id', getUser);
 
