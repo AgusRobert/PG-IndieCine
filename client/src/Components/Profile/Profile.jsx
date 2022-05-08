@@ -82,6 +82,10 @@ export default function Profile() {
         setUpgrade(true)
     }
 
+    function handleUploadProject() {
+        navigate('/addFilm')
+    }
+
     return (
         <Box>
             <Container >
@@ -112,6 +116,25 @@ export default function Profile() {
                     <h4>{user.name}</h4>
                     <h4>{user.nickname}</h4>
                     <h4>{user.email}</h4>
+
+                    {isCreator && (
+                        <Container>
+                            <StyledLink
+                                sx={{
+                                    ":hover": {
+                                        bgcolor: deepPurple[200],
+                                        color: "black",
+                                    }
+                                }}
+                                color="textPrimary"
+                                variant="button"
+                                underline="none"
+                                onClick={handleUploadProject}
+                            >
+                                Subir Proyecto
+                            </StyledLink>
+                        </Container>
+                    )}
 
                     {isCreator ? (
                         <Container>

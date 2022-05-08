@@ -7,6 +7,7 @@ import Profile from "./Components/Profile/Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import MovieDetail from "./Components/MovieDetail/MovieDetail";
 import { FilmForm } from "./Components/MovieForm/FilmForm";
+import { PruebaFacu } from "./Components/MovieForm/PruebaFacu";
 import NotFound from "./Components/NotFound/NotFound";
 import Subs from "./Components/Subs/Subs";
 
@@ -24,7 +25,7 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/terms" element={<TyC />} />
-          <Route exact path="/prueba" element={<MovieDetail />} />
+          <Route exact path="/prueba" element={<PruebaFacu />} />
           <Route exact path="/detail/:id" element={<MovieDetail />}/>
           {isAuthenticated && <Route exact path="/addFilm" element={<FilmForm />} />}
          < Route path="*" element= {<NotFound/>} /> 
