@@ -47,6 +47,11 @@ const con = require("./db.js").connect;
 const adminJs = new AdminJS({
   databases: [con],
   rootPath: "/admin",
+  branding: {
+      logo: 'https://i.ibb.co/1Q0cq5V/LOGO.png',
+      favicon: 'https://i.ibb.co/1Q0cq5V/LOGO.png',
+      companyName: 'CINDIE'
+  }
 });
 const router = AdminJSExpress.buildRouter(adminJs);
 server.use(adminJs.options.rootPath, router);
