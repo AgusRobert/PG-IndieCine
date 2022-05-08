@@ -21,16 +21,20 @@ const ButtonStyle = styled(Button)({
 export default function SearchBar() {
 
   const [search, setSearch] = useState('')
+
   let dispatch = useDispatch()
+
   function onSubmit(e) {
     e.preventDefault();
-    dispatch(searchPelicula_Actor(...search))
+    dispatch(searchPelicula_Actor(search))
+    setSearch("")
   }
+
   function onInputChange(e) {
     e.preventDefault()
     setSearch(e.target.value)
-    console.log(search)
   }
+
   return (
 
 
@@ -49,10 +53,10 @@ export default function SearchBar() {
           }}
           size='medium'
           id="standard-full-width"
-          label="Busca una pelicula o actor..."
-          placeholder="Busca una pelicula o actor..."
+          label="Buscar..."
+          placeholder="Buscar..."
           type="text"
-          onChange={onInputChange} value={search} />
+          onChange={(e) => onInputChange(e)} value={search} />
         <ButtonStyle
           sx={{
             ":hover": {
