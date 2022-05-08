@@ -14,7 +14,7 @@ exports.validate = async (req, res) => {
     const { userEmail } = req.query;
 
     const validationData = await paymentService.validation(req.params.email);
-    console.log("validationData", validationData); //--> LLEGA BIEN
+    // console.log("validationData", validationData); //--> LLEGA BIEN
     if ((validationData.results[0].status = "pending")) {
       let user = await User.findOne({
         where: {
@@ -27,17 +27,16 @@ exports.validate = async (req, res) => {
         let plan = await Plans.findOne({
           where: { name: user.subcription },
         });
+        console.log("ESTE ES EL PLAN", plan); 
 
         let infoToUpdate = {
           subcription: validationData.results[2].reason,
           // Acá tira error porque hay una reason que es 'Suscripción de ejemplo'
           // y es demasiado larga para el atributo de la db.
-          // estaba puesto así...> subcription: validationData.results[2].reason,
           PlanId: plan.id,
         };
 
         await user.update(infoToUpdate);
-        // console.log("dhsdjg")
         return res.json(validationData);
       } else {
         console.log("Usuario no encontrado en validate");
