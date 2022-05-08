@@ -193,6 +193,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         isCreator: action.payload,
       };
+
       case GET_USER_INFO:
         let response = action.payload.creator
         return {
@@ -230,13 +231,6 @@ function rootReducer(state = initialState, action) {
           ...state,
           plans: action.payload
         }
-        case GET_PROFILE_INFO:
-          console.log("LPM",action.payload)
-        return{
-          ...state,
-          profileInfo: action.payload
-        }
-
 
     default:
       return "hola";
