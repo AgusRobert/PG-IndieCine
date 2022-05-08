@@ -4,31 +4,46 @@ exports.simple = async (req, res) => {
   return res.json(await paymentService.toPay(req.body));
 };
 
-exports.subcription = async(req, res) => {
+exports.subcription = async (req, res) => {
   return res.json(await paymentService.subscribe(req.body));
 };
 
-exports.validate = async(req, res) =>{
-  console.log("EMAIL AL VALIDATE", req.params.email)
-  const validationData = await paymentService.validation(req.params.email)
-  if(validationData.results[0].status = "pending"){   
-    let user = await User.findOne({
-      where: {
-        email: req.params.email,
-      },
-    });
-     validationData.results[2].reason
-    let plan = await Plans.findOne({
-      where: {name: user.subcription}
-    })
+exports.validate = async (req, res) => {
+  try {
+    // console.log("validate controller", req.query); //--> LLEGA BIEN
+    const { userEmail } = req.query;
 
-    let infoToUpdate = {
-      subcription: validationData.results[2].reason,
-      PlanId: plan.id
+    const validationData = await paymentService.validation(req.params.email);
+    // console.log("validationData", validationData); //--> LLEGA BIEN
+    if ((validationData.results[0].status = "pending")) {
+      let user = await User.findOne({
+        where: {
+          email: userEmail,
+        },
+      });
+      // console.log("user subscription", user.subcription); //--> LLEGA BIEN
+      // validationData.results[2].reason; //--> no entiendo esta linea
+      if (user) {
+        let plan = await Plans.findOne({
+          where: { name: user.subcription },
+        });
+        console.log("ESTE ES EL PLAN", plan); 
+
+        let infoToUpdate = {
+          subcription: validationData.results[2].reason,
+          // Acá tira error porque hay una reason que es 'Suscripción de ejemplo'
+          // y es demasiado larga para el atributo de la db.
+          PlanId: plan.id,
+        };
+
+        await user.update(infoToUpdate);
+        return res.json(validationData);
+      } else {
+        console.log("Usuario no encontrado en validate");
+        res.json({ msg: "No se encontró el usuario." });
+      }
     }
-
-    await user.update(infoToUpdate)
-    console.log("dhsdjg")
-  } 
-  return res.json(validationData)
-}
+  } catch (error) {
+    console.log("validate controller catch", error);
+  }
+};

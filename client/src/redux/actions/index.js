@@ -1,27 +1,27 @@
 import createPalette from "@mui/material/styles/createPalette";
 import axios from "axios";
 import {
-    SEARCH_PELIS,
-    FILTER_DURATION,
-    ORDER_DATE,
-    ORDER_BY_NAME,
-    GET_MOVIES,
-    FILTER_MOVIES_BY_COUNTRY,
-    FILTER_MOVIES_BY_GENRE,
-    ORDER_BY_RATING,
-    GET_GENRES,
-    GET_COUNTRIES,
-    MOVIE_DETAIL,
-    SIGN_UP_USER,
-    SUBSCRIBE,
-    GET_FAV,
-    DELETE_USER_INFORMATION,
-    HANDLE_CAME_BACK_TO_BASIC,
-    GET_USER_INFO,
-    GET_PLAN_INFO,
-    PAY_SUBSCRIPTION,
-    GET_PROFILE_INFO,
-    VALIDATE_SUBSCRIPTION
+  SEARCH_PELIS,
+  FILTER_DURATION,
+  ORDER_DATE,
+  ORDER_BY_NAME,
+  GET_MOVIES,
+  FILTER_MOVIES_BY_COUNTRY,
+  FILTER_MOVIES_BY_GENRE,
+  ORDER_BY_RATING,
+  GET_GENRES,
+  GET_COUNTRIES,
+  MOVIE_DETAIL,
+  SIGN_UP_USER,
+  SUBSCRIBE,
+  GET_FAV,
+  DELETE_USER_INFORMATION,
+  HANDLE_CAME_BACK_TO_BASIC,
+  GET_USER_INFO,
+  GET_PLAN_INFO,
+  PAY_SUBSCRIPTION,
+  GET_PROFILE_INFO,
+  VALIDATE_SUBSCRIPTION,
 } from "./actionstype";
 
 export function getMovies() {
@@ -71,7 +71,7 @@ export function postMovie(movieForm) {
     const response = (
       await axios.post("http://localhost:3001/films", movieForm)
     )?.data;
-    console.log("RESPUESTA: ", response);
+    console.log("postMovie response ", response);
     return { type: "POST_PELI", payload: response };
   };
 }
@@ -171,7 +171,7 @@ export function renderMovieDetails(id) {
 export function signUpFunction(userData) {
   return async function (dispatch) {
     try {
-      console.log("userData", userData);
+      console.log("signUpFunction userData", userData);
       let request = {
         name: userData.given_name ? userData.given_name : null,
         surname: userData.family_name ? userData.family_name : null,
@@ -235,6 +235,7 @@ export function filterDuration(payload) {
 export function getFavorites(id) {
   return async function (dispatch) {
     try {
+      console.log("getFavorites id", id);
       var pelisFav = await axios.get(
         `http://localhost:3001/users/getFavs/${id}`
       );
@@ -243,7 +244,7 @@ export function getFavorites(id) {
         payload: pelisFav.data,
       });
     } catch (error) {
-      console.log(error);
+      console.log("getFavourites catch", error);
     }
   };
 }
@@ -268,7 +269,7 @@ export function addFavFilm(payload) {
 }
 
 export function deleteFavFilm(payload) {
-  console.log("payload", payload);
+  console.log("deleteFavFilm payload", payload);
   return async function (dispatch) {
     try {
       await axios.delete("http://localhost:3001/users/delFav", {
@@ -280,83 +281,91 @@ export function deleteFavFilm(payload) {
   };
 }
 
-
-export function getUserInfo (email){
-    return async function (dispatch) {
-        try {
-            let response = await axios.get(`http://localhost:3001/users/byemail`, email);
-            console.log("ISCREATOR", response)
-            return dispatch({
-                type: GET_USER_INFO,
-                payload: response.data
-            })
-        } catch (error) {
-            console.log('getUserInfo', error)
-        }
+export function getUserInfo(email) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(
+        `http://localhost:3001/users/byemail`,
+        email
+      );
+      console.log("getUserInfo", response);
+      return dispatch({
+        type: GET_USER_INFO,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getUserInfo", error);
     }
   };
+}
 
-
-
-export function getProfileInfo (email){
-
-    return async function (dispatch) {
-        try {
-            let response = await axios.get(`http://localhost:3001/users/byemail/${email}`);
-            return dispatch({
-                type: GET_PROFILE_INFO,
-                payload: response.data
-            })
-        } catch (error) {
-            console.log('getUserInfo', error)
-        }
+export function getProfileInfo(email) {
+  return async function (dispatch) {
+    try {
+      // console.log("getProfileInfo", email); //--> LLEGA BIEN
+      let response = await axios.get(
+        `http://localhost:3001/users/byemail/${email}`
+      );
+      // console.log('response getProfileInfo', response.data); //--> LLEGA BIEN
+      return dispatch({
+        type: GET_PROFILE_INFO,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getUserInfo catch", error);
+    }
   };
 }
 
-
-export function validateSubscription (email){
-    return async function (dispatch) {
-        try {
-            let response = await axios.get(`http://localhost:3001/payment/validate/${email}`);   
-            return dispatch({
-                type: VALIDATE_SUBSCRIPTION,
-                payload: response.data
-            })
-        } catch (error) {
-            console.log('validateSubscription', error)
-        }
+export function validateSubscription({ email, userEmail }) {
+  return async function (dispatch) {
+    try {
+      // console.log('userEmail en validateSubscription', userEmail);
+      let response = await axios.get(
+        `http://localhost:3001/payment/validate/${email}?userEmail=${userEmail}`
+      );
+      return dispatch({
+        type: VALIDATE_SUBSCRIPTION,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("validateSubscription", error);
     }
+  };
 }
 
-export function updateSubscription (props){
-    return async function (dispatch) {
-        try {
-            let response = await axios.put(`http://localhost:3001/users/modif`, props);   
-            return dispatch({
-                type: GET_PROFILE_INFO,
-                payload: response.data
-            })
-        } catch (error) {
-            console.log('validateSubscription', error)
-        }
+export function updateSubscription(props) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.put(
+        `http://localhost:3001/users/modif`,
+        props
+      );
+      return dispatch({
+        type: GET_PROFILE_INFO,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("validateSubscription", error);
     }
+  };
 }
 
-export function cameBackToBasic(userData){
-    return async function (dispatch) {
-        try {
-            let updatedUser = {
-                email: userData.email,
-                creator: userData.creator,
-            }
-            await axios.put(`http://localhost:3001/users/modif`, updatedUser);
-            return dispatch({
-                type: HANDLE_CAME_BACK_TO_BASIC,
-                payload: false,
-            })
-        } catch (error) {
-            console.log('handleCameBackToBasic', error)
-        }
+export function cameBackToBasic(userData) {
+  return async function (dispatch) {
+    try {
+      let updatedUser = {
+        email: userData.email,
+        creator: userData.creator,
+      };
+      await axios.put(`http://localhost:3001/users/modif`, updatedUser);
+      return dispatch({
+        type: HANDLE_CAME_BACK_TO_BASIC,
+        payload: false,
+      });
+    } catch (error) {
+      console.log("handleCameBackToBasic", error);
+    }
   };
 }
 
@@ -377,36 +386,36 @@ export function subscribe(payload) {
   };
 }
 
-
-export function paySubscription (payload){
-    return async function (dispatch){
-        try{
-            const paymentInfo = await axios.post( "http://localhost:3001/payment/subscription", payload)
-            return dispatch({
-                type: PAY_SUBSCRIPTION,
-                payload: paymentInfo.data
-            })
-        }
-        catch(err){
-            console.log("subscribe", err)
-        }
+export function paySubscription(payload) {
+  return async function (dispatch) {
+    try {
+      const paymentInfo = await axios.post(
+        "http://localhost:3001/payment/subscription",
+        payload
+      );
+      return dispatch({
+        type: PAY_SUBSCRIPTION,
+        payload: paymentInfo.data,
+      });
+    } catch (err) {
+      console.log("subscribe", err);
     }
+  };
 }
 
-export function getPlanInfo (){
+export function getPlanInfo() {
   return async function (dispatch) {
     try {
       let response = await axios.get(`http://localhost:3001/plans/`);
       return dispatch({
         type: GET_PLAN_INFO,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
-      console.log('getPlanInfo', error)
+      console.log("getPlanInfo", error);
     }
-  }
-};
-
+  };
+}
 
 /* 
   export function sortByComment(order){

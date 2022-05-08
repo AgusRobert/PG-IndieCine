@@ -53,7 +53,7 @@ function rootReducer(state = initialState, action) {
         return contador;
       };
 
-      let peliFiltro = pelisporfiltrar.filter(data => {
+      let peliFiltro = pelisporfiltrar.filter((data) => {
         if (
           data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
             -1 ||
@@ -194,46 +194,45 @@ function rootReducer(state = initialState, action) {
         isCreator: action.payload,
       };
 
-      case GET_USER_INFO:
-        let response = action.payload.creator
-        return {
-          ...state,
-          isCreator: response,
+    case GET_USER_INFO:
+      let response = action.payload.creator;
+      return {
+        ...state,
+        isCreator: response,
       };
-      case GET_PROFILE_INFO:
-        return{
-          ...state,
-          profileInfo: action.payload
-        }
-      case PAY_SUBSCRIPTION:
-        
+    case GET_PROFILE_INFO:
+      // console.log('payload en el reducer', action.payload) //--> LLEGA BIEN
+      return {
+        ...state,
+        profileInfo: action.payload,
+      };
+    case PAY_SUBSCRIPTION:
+      return {
+        ...state,
+        paymentLink: action.payload.init_point,
+      };
+
+    case VALIDATE_SUBSCRIPTION:
+      let updatedSubscription = "Free";
+      if ((action.payload.results[0].status = "pending")) {
+        updatedSubscription = action.payload.results[2].reason;
         return {
-          ... state,
-          paymentLink: action.payload.init_point
+          ...state,
+          profileInfo: {
+            ...state.profileInfo,
+            subcription: updatedSubscription,
+          },
         };
+      }
 
-      case VALIDATE_SUBSCRIPTION:
-        let updatedSubscription ="Free"
-        if(action.payload.results[0].status = "pending"){
-          updatedSubscription = action.payload.results[2].reason
-          return{
-            ...state,
-            profileInfo: {
-              ...state.profileInfo,
-              subcription: updatedSubscription
-            }
-          };
-        }
-    
-
-      case GET_PLAN_INFO:
-        return {
-          ...state,
-          plans: action.payload
-        }
+    case GET_PLAN_INFO:
+      return {
+        ...state,
+        plans: action.payload,
+      };
 
     default:
-      return "hola";
+      return state;
   }
 }
 
