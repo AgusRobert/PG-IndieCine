@@ -29,9 +29,11 @@ exports.getUser = async (req, res) => {
 };
 
 exports.getUserByEmail = async (req, res) => {
+  // res.send({msg: "datos", file: req.body.email})
+  console.log(req.params)
   try {
     let user = await User.findOne(
-      { where: { email: req.body.email } },
+      { where: { email: req.params.email } },
       {
         include: [{ model: Film }],
       }
@@ -165,8 +167,8 @@ exports.getFilmsById = async (req, res) =>{
 }
 
 exports.addFav = async (req,res) =>{
-  const{email}= req.body
-  const{idPeli} = req.body
+  const{favDispatch}= req.body
+  const{idPeli,email}=favDispatch
   
     let user = await User.findOne({
       where:{
@@ -185,5 +187,24 @@ exports.getFavs = async (req, res) =>{
   const{id}= req.params
   const Usuario = await User.findByPk(id)
   const favoritos = await Usuario.getFilms()
-  res.json(favoritos)
+  console.log(favoritos)
+   res.json(favoritos)
+  
+}
+
+exports.delFav = async(req,res)=>{
+  const{payload}= req.body
+  const{favDispatch}=payload
+  const{idPeli,email}=favDispatch
+  
+    let user = await User.findOne({
+      where:{
+        email:email
+      }
+    })  
+    let peli = await Film.findByPk(idPeli)
+
+    user.removeFilm(peli)
+   res.send('Peli descartada de favoritos')
+   
 }

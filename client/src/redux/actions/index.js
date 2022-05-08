@@ -17,8 +17,8 @@ import {
     DELETE_USER_INFORMATION,
     HANDLE_CAME_BACK_TO_BASIC,
     GET_USER_INFO,
-    GET_PLAN_INFO
-
+    GET_PLAN_INFO,
+    GET_PROFILE_INFO
 } from "./actionstype";
 
 export function getMovies() { //obtener todos los videojuegos
@@ -227,7 +227,7 @@ export function filterDuration(payload) {
 export function getFavorites(id) {
     return async function (dispatch) {
         try {
-            var pelisFav = await axios.get(`http://localhost:3001/users/fav/${id}`);
+            var pelisFav = await axios.get(`http://localhost:3001/users/getFavs/${id}`);
             return dispatch({
                 type: GET_FAV,
                 payload: pelisFav.data
@@ -263,9 +263,12 @@ export function addFavFilm (payload){
 };
 
 export function deleteFavFilm (payload){
+   console.log("payload",payload)
     return async function (dispatch){
         try{
-          await axios.delete('http://localhost:3001/favorites/del', payload)
+          await axios.delete('http://localhost:3001/users/delFav', {data:{payload}})
+
+          
         } catch(error){console.log(error)}
     }
  };
@@ -276,6 +279,22 @@ export function getUserInfo (email){
             let response = await axios.get(`http://localhost:3001/users/byemail`, email);
             return dispatch({
                 type: GET_USER_INFO,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log('getUserInfo', error)
+        }
+    }
+}
+
+export function getProfileInfo (email){
+
+    return async function (dispatch) {
+        try {
+            let response = await axios.get(`http://localhost:3001/users/byemail/${email}`);
+           
+            return dispatch({
+                type: GET_PROFILE_INFO,
                 payload: response.data
             })
         } catch (error) {

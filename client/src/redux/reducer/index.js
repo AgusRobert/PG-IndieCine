@@ -14,6 +14,7 @@ import {
   SIGN_UP_USER,
   SUBSCRIBE,
   GET_FAV,
+  GET_PROFILE_INFO,
   DELETE_USER_INFORMATION,
   CAME_BACK_TO_BASIC,
   GET_USER_INFO,
@@ -32,6 +33,7 @@ const initialState = {
   favorites: [],
   plans: [],
   link: "",
+  profileInfo:{}
 };
 
 function rootReducer(state = initialState, action) {
@@ -190,22 +192,30 @@ function rootReducer(state = initialState, action) {
         ...state,
         isCreator: action.payload,
       };
-    case GET_USER_INFO:
-      let response = action.payload.creator;
-      return {
-        ...state,
-        isCreator: response,
+      case GET_USER_INFO:
+        let response = action.payload.creator
+        return {
+          ...state,
+          isCreator: response,
       };
-    case SUBSCRIBE:
-      return {
-        ...state,
-        link: action.payload.init_point,
-      };
-    case GET_PLAN_INFO:
-      return {
-        ...state,
-        plans: action.payload,
-      };
+      case SUBSCRIBE:
+        
+        return {
+          ... state,
+          link: action.payload.init_point
+        };
+      case GET_PLAN_INFO:
+        return {
+          ...state,
+          plans: action.payload
+        }
+        case GET_PROFILE_INFO:
+          console.log("LPM",action.payload)
+        return{
+          ...state,
+          profileInfo: action.payload
+        }
+
 
     default:
       return "hola";
