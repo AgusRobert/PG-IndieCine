@@ -17,6 +17,7 @@ const MenuItemStyle = styled(MenuItem)({
   marginLeft: "auto",
   color: "black",
   backgroundColor: "#b388ff",
+  
 });
 
 const SelectStyle = styled(TextField)({
@@ -24,6 +25,7 @@ const SelectStyle = styled(TextField)({
   borderColor: "white",
   width: 160,
   padding: 0,
+  backgroundColor: "#b388ff",
 });
 
 export default function CreatorForm() {
@@ -184,10 +186,28 @@ export default function CreatorForm() {
         <div>
           <div>
             <label htmlFor="country">País</label>
-            <SelectStyle name="country" onChange={handleOnSelect}>
-              <MenuItemStyle value="" disabled selected>
+            <SelectStyle name="country" onChange={handleOnSelect} select
+  label="
+  País"
+  variant="outlined"
+  size="small"
+ /*  color="white" */
+  sx={{
+    ":active": {
+      color: "black",
+      borderColor: deepPurple[600],
+    },
+    ":focused": {
+      borderColor: deepPurple[600],
+    },
+
+    
+  }}>
+             {/*  <MenuItemStyle value="" disabled selected>
                 Seleccione un país
-              </MenuItemStyle>
+              </MenuItemStyle> */}
+
+              
               {countries.length
                 ? countries.map(country => (
                     <MenuItemStyle key={country.id} value={country.name}>
@@ -202,13 +222,35 @@ export default function CreatorForm() {
         <div>
           <div>
             <label htmlFor="people">Persona</label>
-            <SelectStyle name="people" onChange={handleOnSelect}>
+            {/* <SelectStyle name="people" onChange={handleOnSelect}>
               <MenuItemStyle value="" disabled selected>
                 Seleccione una opción
               </MenuItemStyle>
               <MenuItemStyle value="true">Persona Natural</MenuItemStyle>
               <MenuItemStyle value="false">Persona Jurídica</MenuItemStyle>
-            </SelectStyle>
+            </SelectStyle> */}
+
+<Box> <SelectStyle 
+   name="people"
+  onChange={handleOnSelect}
+  select
+  label="
+  Antigüedad"
+  variant="outlined"
+  size="small"
+  sx={{
+    ":active": {
+      color: "black",
+      borderColor: deepPurple[600],
+    },
+    ":focused": {
+      borderColor: deepPurple[600],
+    },
+  }}
+  >
+      <MenuItemStyle value="true">Persona Natural</MenuItemStyle>
+      <MenuItemStyle value="false">Persona Jurídica</MenuItemStyle>
+    </SelectStyle></Box>
           </div>
           {errors.people && <span>{errors.people}</span>}
         </div>
