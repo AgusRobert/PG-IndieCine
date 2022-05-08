@@ -3,106 +3,65 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCountries, getGenres, postMovie } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { validate } from "./validates";
+import axios from "axios";
+
+
+import {ButtonStyle,sxButtonStyle} from "../StyleMUI/StyleMUI";
 
 export function PruebaFacu() {
+  const [port, setPort] = useState();
+  const [info, setInfo] = useState({ title: "" });
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const genres = useSelector((state) => state.genres);
-  const countries = useSelector((state) => state.countries);
-
-  const [errs, setErrs] = useState({
-    title: "",
-    synopsis: "",
-    year: "",
-    duration: "",
-    director: "",
-    genres: [],
-    mainActors: [],
-    actor: "",
-    country: "",
-    associateProducer: "",
-    block: true,
-  });
-  const [movieForm, setMovieForm] = useState({
-    title: "",
-    synopsis: "NI IDEA QUE SEA UNA SIPNOSIS",
-    year: 2022,
-    duration: "Largometraje",
-    director: "FaQ1499",
-    genres: ["horror"],
-    mainActors: ["Geovana", "Brenda", "Milagros", "Camila", "Tatiana"],
-    country: "Argentina",
-    associateProducer: "Productor asociado cualquiera!",
-  });
-
-  const [archivos, setArchivos] = useState(null);
-  const subirArchivos = (e) => {
-    console.log("Datos que llegan del form: ", e.target.files[0]);
-    setArchivos(e.target.files[0]);
-  };
-
-  useEffect(() => {
-    dispatch(getGenres());
-    dispatch(getCountries());
-  }, [dispatch]);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(archivos);
-    dispatch(postMovie(archivos));
-    alert("pelicula enviada\nverificar");
-    setMovieForm({
-      title: "",
-      synopsis: "NI IDEA QUE SEA UNA SIPNOSIS",
-      year: 2022,
-      duration: "Largometraje",
-      director: "FaQ1499",
-      genres: ["horror"],
-      mainActors: ["Geovana", "Brenda", "Milagros", "Camila", "Tatiana"],
-      country: "Argentina",
-      associateProducer: "Productor asociado cualquiera!",
-    });
-    navigate("/add");
-  };
 
   const handleChange = (e) => {
-    setMovieForm({
-      ...movieForm,
-      [e.target.name]: e.target.value,
-    });
-    setErrs(validate(movieForm, e.target.name));
+    setInfo({ ...info, [e.target.name]: e.target.value });
+  };
+  const selectPort = (e) => {
+    e.preventDefault();
+    setPort(e.target.files[0]);
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(postMovie({ ...info, port }));
+    const formData = new FormData();
+    formData.append("image", port);
+    const respuesta = await axios.post(
+      "http://localhost:3001/upload/inter",
+      formData
+    );
+    if (respuesta) {
+      alert("Peli posteada");
+      setInfo({ ...info, port: respuesta.data });
+    } else {
+      alert("SE TE CORTO EL INTERNET ");
+    }
+    console.log("Datos del FormData: ", respuesta.data);
+  };
   return (
     <>
-      <form onSubmit={(e) => onSubmit(e)} enctype="multipart/form-data">
-        <div>
-          <label>Título</label>
-          <input
-            type="text"
-            name="title"
-            value={movieForm.title}
-            placeholder="Título de la Película"
-            onChange={(e) => handleChange(e)}
-            required
-          />
-          {errs.title && <p class="errores">{errs.title}</p>}
-        </div>
-        <div>
-          <label>Póster</label>
-          <input
-            type="file"
-            name="poster"
-            accept="image/jpg image/png image/jpeg"
-            placeholder="URL de póster"
-            onChange={(e) => subirArchivos(e)}
-            required
-          />
-          {errs.poster && <p class="errores">{errs.poster}</p>}
-        </div>
-        <button type="submit" disabled={errs?.block}>
-          Enviar
-        </button>
+      <h1>Prueba de subida de Archivos</h1>
+      <form onSubmit={(e) => onSubmit(e)}>
+        <input
+          type="text"
+          name="title"
+          placeholder="Titulo"
+          onChange={(e) => handleChange(e)}
+          required
+        />
+        <input
+          type="file"
+          name="port"
+          placeholder="Portada"
+          onChange={(e) => selectPort(e)}
+          required
+        />
+        <ButtonStyle
+          sx={sxButtonStyle}
+          type="submit"
+        >
+          GuardarFilms
+        </ButtonStyle>
       </form>
     </>
   );

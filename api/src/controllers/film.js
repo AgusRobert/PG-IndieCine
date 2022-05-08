@@ -1,4 +1,5 @@
 const { Film, Genre, Country } = require("../db.js");
+const userService = require("../service/user");
 
 exports.getFilms = async (req, res, next) => {
   try {
@@ -21,6 +22,7 @@ exports.getFilms = async (req, res, next) => {
     next(err);
   }
 };
+
 exports.getById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -46,48 +48,46 @@ exports.getById = async (req, res, next) => {
     next(err);
   }
 };
+
 exports.postFilms = async (req, res, next) => {
   try {
     const {
       title,
-      genres,
-      poster,
       synopsis,
       year,
-      director,
       duration,
       mainActors,
-      country,
       url,
+      director,
       associateProducer,
-      rating,
-      UserId,
+      genres,
+      country,
+      film,
+      port,
+      email,
     } = req.body;
-    console.log("form film:", req.body);
     const CountryFound = await Country.findOne({
       where: {
-        name: country,
+        id: country,
       },
     });
-    console.log("CountryFound", CountryFound);
-
     const CountryId = CountryFound.dataValues.id;
-
+    const user = await userService.findByEmail(email);
     let filmCreated = await Film.create({
       title,
-      poster,
+      poster: port,
       synopsis,
-      year,
+      year: Number(year),
       director,
       duration,
       mainActors,
-      url,
+      url: film ? film : url,
       associateProducer,
-      rating,
+      rating: 5,
       CountryId,
       status: "to be checked",
+      UserId: user.id,
     });
-
     if (genres) {
       let genresStored = await Genre.findAll({
         where: {
@@ -96,7 +96,6 @@ exports.postFilms = async (req, res, next) => {
       });
       filmCreated.addGenres(genresStored);
     }
-
     res.send(filmCreated);
   } catch (err) {
     next(err);
