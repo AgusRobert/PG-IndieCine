@@ -9,6 +9,7 @@ import { color, styled } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from '../Header/LOGO.png'
 import { useState } from "react";
+import FavList from '../FavList/FavList';
 
 const StyledLink = styled(Link)({
     marginRight: 150,
@@ -133,8 +134,10 @@ export default function Profile() {
                     </Container>
                 </Container>
             </Container>
-            <Container>
-                <h2>Lista de peliculas favoritas.</h2>
+            <Container> 
+                <h2 >Mis favoritas</h2>
+                <FavList/>
+                
             </Container>
             <Container>
                 {isCreator ? (

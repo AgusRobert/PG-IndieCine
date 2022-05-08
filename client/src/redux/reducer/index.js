@@ -14,6 +14,7 @@ import {
   SIGN_UP_USER,
   SUBSCRIBE,
   GET_FAV,
+  GET_PROFILE_INFO,
 
   DELETE_USER_INFORMATION,
   CAME_BACK_TO_BASIC,
@@ -38,7 +39,8 @@ const initialState = {
   detalle: {},
   favorites:[],
   plans: [],
-  link: ""
+  link: "",
+  profileInfo:{}
 };
 
 function rootReducer(state = initialState, action) {
@@ -225,6 +227,12 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           plans: action.payload
+        }
+        case GET_PROFILE_INFO:
+          console.log("LPM",action.payload)
+        return{
+          ...state,
+          profileInfo: action.payload
         }
 
     default:
