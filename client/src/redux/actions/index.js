@@ -295,7 +295,7 @@ export function getUserInfo (email){
         }
     }
   };
-}
+
 
 
 export function getProfileInfo (email){
@@ -394,19 +394,19 @@ export function paySubscription (payload){
 }
 
 export function getPlanInfo (){
-    return async function (dispatch) {
-        try {
-            let response = await axios.get(`http://localhost:3001/plans/`);
-            return dispatch({
-                type: GET_PLAN_INFO,
-                payload: response.data
-            })
-        } catch (error) {
-            console.log('getPlanInfo', error)
-        }
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(`http://localhost:3001/plans/`);
+      return dispatch({
+        type: GET_PLAN_INFO,
+        payload: response.data
+      })
+    } catch (error) {
+      console.log('getPlanInfo', error)
     }
-  };
-}
+  }
+};
+
 
 /* 
   export function sortByComment(order){
