@@ -264,12 +264,6 @@ export function addFavFilm(payload) {
   };
 }
 
-export function addFavFilm(payload) {
-  return async function (dispatch) {
-    await axios.post("http://localhost:3001/users/addFav", payload);
-  };
-}
-
 export function deleteFavFilm(payload) {
   console.log("payload", payload);
   return async function (dispatch) {
