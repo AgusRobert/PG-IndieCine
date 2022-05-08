@@ -32,18 +32,20 @@ exports.toPay = async (props) => {
   )?.data;
 };
 
-exports.subscribe = async () => {
+exports.subscribe = async (props) => {
+  const {reason, transaction_amount, currency_id, payer_email} = props
   const url = "https://api.mercadopago.com/preapproval";
   const body = {
-    reason: "Suscripción de ejemplo",
+    reason: reason ,
     auto_recurring: {
       frequency: 1,
       frequency_type: "months",
-      transaction_amount: 10,
-      currency_id: "CLP",
+      transaction_amount: transaction_amount,
+      currency_id: currency_id,
     },
-    back_url: "https://google.com.ar",
-    payer_email: "test_user_54987522@testuser.com",
+    back_url: "https://8d19-179-6-206-23.ngrok.io/profile",
+    payer_email: payer_email,
+    notification_url:  "https://8d19-179-6-206-23.ngrok.io/payment/notification"
   };
   return (
     await axios.post(url, body, {
@@ -54,3 +56,17 @@ exports.subscribe = async () => {
     })
   )?.data;
 };
+
+exports.validation = async(props) => {
+  console.log("EMAIL DE VALIDATE", props)
+  const url = `https://api.mercadopago.com/preapproval/search?payer_email=${props}`
+  const response = await axios.get(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+    },
+  })
+  return(
+    response.data
+  )
+}

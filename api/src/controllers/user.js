@@ -62,7 +62,7 @@ exports.putUser = async (req, res) => {
     } else {
       await user.update(req.body);
       // console.log("Usuario actualizado correctamente");
-      return res.json({ message: "Usuario actualizado correctamente" });
+      return res.json(user);
     }
   } catch (error) {
     // console.log("Error al actualizar el usuario");

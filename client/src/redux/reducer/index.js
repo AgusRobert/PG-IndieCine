@@ -12,13 +12,14 @@ import {
   GET_COUNTRIES,
   MOVIE_DETAIL,
   SIGN_UP_USER,
-  SUBSCRIBE,
   GET_FAV,
-  GET_PROFILE_INFO,
   DELETE_USER_INFORMATION,
   CAME_BACK_TO_BASIC,
   GET_USER_INFO,
   GET_PLAN_INFO,
+  PAY_SUBSCRIPTION,
+  GET_PROFILE_INFO,
+  VALIDATE_SUBSCRIPTION,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -32,8 +33,8 @@ const initialState = {
   detalle: {},
   favorites: [],
   plans: [],
-  link: "",
-  profileInfo:{}
+  paymentLink: "",
+  profileInfo: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -192,30 +193,44 @@ function rootReducer(state = initialState, action) {
         ...state,
         isCreator: action.payload,
       };
+
       case GET_USER_INFO:
         let response = action.payload.creator
         return {
           ...state,
           isCreator: response,
       };
-      case SUBSCRIBE:
+      case GET_PROFILE_INFO:
+        return{
+          ...state,
+          profileInfo: action.payload
+        }
+      case PAY_SUBSCRIPTION:
         
         return {
           ... state,
-          link: action.payload.init_point
+          paymentLink: action.payload.init_point
         };
+
+      case VALIDATE_SUBSCRIPTION:
+        let updatedSubscription ="Free"
+        if(action.payload.results[0].status = "pending"){
+          updatedSubscription = action.payload.results[2].reason
+          return{
+            ...state,
+            profileInfo: {
+              ...state.profileInfo,
+              subcription: updatedSubscription
+            }
+          };
+        }
+    
+
       case GET_PLAN_INFO:
         return {
           ...state,
           plans: action.payload
         }
-        case GET_PROFILE_INFO:
-          console.log("LPM",action.payload)
-        return{
-          ...state,
-          profileInfo: action.payload
-        }
-
 
     default:
       return "hola";

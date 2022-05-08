@@ -30,7 +30,7 @@ exports.create = async ({
     telephone,
     country,
     rol: "user",
-    subcription: "common",
+    subcription: "Free",
     status: "registered",
     PlanId: 1
   });
