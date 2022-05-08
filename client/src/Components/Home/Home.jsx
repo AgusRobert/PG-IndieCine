@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Card from "../Card/Card.jsx"
+// import Card from "../Card/Card.jsx"
 import Footer from "../Footer/Footer.jsx"
 import Header from '../Header/Header'
 import { getMovies, getUserInfo, signUpFunction } from "../../redux/actions/index.js";
@@ -35,7 +35,6 @@ export default function Home() {
     const dispatch = useDispatch();
 
     const allMovies = useSelector(state => state.pelisfiltradas);
-    console.log(allMovies)
 
     useEffect(() => {
         dispatch(getMovies());
@@ -43,7 +42,7 @@ export default function Home() {
 
     useEffect(() => {
         if (user) {
-            console.log(user)
+            /* console.log(user) */
             dispatch(signUpFunction({
                 ...user,
                 creator: false,
@@ -151,6 +150,7 @@ export default function Home() {
                     <Row md={6} lg={6} className="newdiv">
                         {
                             allMovies ? allMovies?.map(data => {
+                                console.log("HOME",data)
 
                                 let nombresGen = [];
                                 let generos = data.Genres
@@ -161,14 +161,15 @@ export default function Home() {
                                 return (
                                     <div className="cardgrid" key={data.id}>
                                         <Link to={`/detail/${data.id}`}>
-                                            <Card title={data.title}
+                                            <Cartas title={data.title}
                                                 poster={data.poster}
                                                 year={data.year}
                                                 country={data.Country.name}
                                                 genres={"Géneros: " + nombresGen.join(", ")}
-                                                rating={"Rating: " + data.rating}
+                                                rating={data.rating}
                                                 key={data.id}
-                                                duration={data.duration} />
+                                                duration={data.duration}
+                                                synopsis={data.synopsis} />
                                         </Link>
                                     </div>
                                 )
