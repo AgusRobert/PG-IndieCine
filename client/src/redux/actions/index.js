@@ -292,7 +292,7 @@ export function getProfileInfo (email){
     return async function (dispatch) {
         try {
             let response = await axios.get(`http://localhost:3001/users/byemail/${email}`);
-            console.log("ya we",response.data)
+           
             return dispatch({
                 type: GET_PROFILE_INFO,
                 payload: response.data

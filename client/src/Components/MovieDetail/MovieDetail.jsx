@@ -8,7 +8,11 @@ import logo from "./LOGO.png";
 import "./style.css";
 import FavButton from "../FavButton/FavButton.jsx";
 import Comments from "../Comments/Comments";
-
+import { styled } from "@mui/system";
+const ImgFav = styled("img")({
+  height: "400px",
+  width:"auto"
+})
 export default function MovieDetail() {
 
   let dispatch = useDispatch();
@@ -39,7 +43,7 @@ let filmId= id
           <div>
             <div className="detalles">
               <h2>{peli.title}</h2>
-              <img src={peli.poster} alt="Poster" className="imgPoster" />
+              <ImgFav src={peli.poster} alt="Poster" className="imgPoster" />
             </div>
             <div className="detalles2">
               <h2>Rating: {peli.rating}</h2>

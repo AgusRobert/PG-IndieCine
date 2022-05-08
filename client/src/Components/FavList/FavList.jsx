@@ -15,6 +15,10 @@ import {
 } from "../../redux/actions";
 import { Paper } from "material-ui";
 import { Modal } from "@mui/material";
+const ImgFav = styled("img")({
+    height: "400px",
+    width:"auto"
+})
 const BoxFav =styled(Box)({
     position: "absolute",
      top: "50%",
@@ -32,7 +36,7 @@ const BoxFav =styled(Box)({
 export default function FavList() {
   const { user } = useAuth0();
   let dispatch = useDispatch();
-  const favs = useSelector((state) => state.favorites);
+  let favs = useSelector((state) => state.favorites);
   const [faves, setFaves] = useState(favs);
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -41,6 +45,10 @@ export default function FavList() {
   function handleOnClick(payload) {
     console.log(payload);
     dispatch(deleteFavFilm(payload));
+    console.log("asdasd",payload)
+    let final = payload.favDispatch
+    favs= favs.filter(P=> P.id !== final.idPeli)
+    dispatch(getFavorites(profileInfo?.id))
   }
   useEffect(() => {
     dispatch(getProfileInfo(user.email));
@@ -61,7 +69,7 @@ export default function FavList() {
             return (
                 <>
                 <Box>
-                  <img src={peli.poster} alt="Poster" />
+                  <ImgFav src={peli.poster} alt="Poster" />
                   <IconButton
                     onClick={() => {handleOnClick({ favDispatch });(handleOpen())}}
                     value={favDispatch}
@@ -73,7 +81,7 @@ export default function FavList() {
                           color: grey[800],
                         },
                       }}
-                      fontSize="medium"
+                      fontSize="large"
                     />{" "}
                   </IconButton>
                 </Box>
