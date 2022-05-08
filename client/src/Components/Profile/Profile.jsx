@@ -9,7 +9,7 @@ import { color, styled } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from "../Header/LOGO.png";
 import { useState } from "react";
-import FavList from '../FavList/FavList';
+import FavList from "../FavList/FavList";
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -80,23 +80,23 @@ export default function Profile() {
 
   return (
     <>
-      <Container>
-        <StyledLink
-          sx={{
-            ":hover": {
-              bgcolor: deepPurple[200],
-              color: "black",
-            },
-          }}
-          color="textPrimary"
-          variant="button"
-          underline="none"
-          href={`/`}
-        >
-          <img src={logo} alt="Img not found" />
-        </StyledLink>
-      </Container>
       <StyledBox>
+        <Container>
+          <StyledLink
+            sx={{
+              ":hover": {
+                bgcolor: deepPurple[200],
+                color: "black",
+              },
+            }}
+            color="textPrimary"
+            variant="button"
+            underline="none"
+            href={`/`}
+          >
+            <img src={logo} alt="Img not found" />
+          </StyledLink>
+        </Container>
         <StyledContainer sx={{}}>
           <h1>PROFILE</h1>
           <Container>
@@ -124,62 +124,63 @@ export default function Profile() {
               </Container>
             )}
 
+            {isCreator && (
+              <Container>
+                <StyledLink
+                  sx={{
+                    ":hover": {
+                      bgcolor: deepPurple[200],
+                      color: "black",
+                    },
+                  }}
+                  color="textPrimary"
+                  variant="button"
+                  underline="none"
+                  onClick={handleUploadProject}
+                >
+                  Subir Proyecto
+                </StyledLink>
+              </Container>
+            )}
 
-                    {isCreator && (
-                        <Container>
-                            <StyledLink
-                                sx={{
-                                    ":hover": {
-                                        bgcolor: deepPurple[200],
-                                        color: "black",
-                                    }
-                                }}
-                                color="textPrimary"
-                                variant="button"
-                                underline="none"
-                                onClick={handleUploadProject}
-                            >
-                                Subir Proyecto
-                            </StyledLink>
-                        </Container>
-                    )}
-
-                    {isCreator ? (
-                        <Container>
-                            <StyledLink
-                                sx={{
-                                    ":hover": {
-                                        bgcolor: deepPurple[200],
-                                        color: "black",
-                                    },
-                                }}
-                                color="textPrimary"
-                                variant="button"
-                                underline="none"
-                                onClick={handleCameBackToBasic}
-                            >Volver a básico</StyledLink>
-                        </Container>
-                    ) : (null)}
-                    <Container>
-                        <StyledLink
-                            sx={{
-                                ":hover": {
-                                    bgcolor: deepPurple[200],
-                                    color: "black",
-                                }
-                            }}
-                            color="textPrimary"
-                            variant="button"
-                            underline="none"
-                            onClick={handleOnDelete}
-                        >Borrar cuenta</StyledLink>
-                    </Container>
-                </Container>
+            {isCreator ? (
+              <Container>
+                <StyledLink
+                  sx={{
+                    ":hover": {
+                      bgcolor: deepPurple[200],
+                      color: "black",
+                    },
+                  }}
+                  color="textPrimary"
+                  variant="button"
+                  underline="none"
+                  onClick={handleCameBackToBasic}
+                >
+                  Volver a básico
+                </StyledLink>
+              </Container>
+            ) : null}
+            <Container>
+              <StyledLink
+                sx={{
+                  ":hover": {
+                    bgcolor: deepPurple[200],
+                    color: "black",
+                  },
+                }}
+                color="textPrimary"
+                variant="button"
+                underline="none"
+                onClick={handleOnDelete}
+              >
+                Borrar cuenta
+              </StyledLink>
             </Container>
-            <Container> 
-                <h2 >Mis favoritas</h2>
-                <FavList/>
-                
+
+            <Container>
+              <h2>Mis favoritas</h2>
+              <FavList />
             </Container>
 
             {isCreator ? (
