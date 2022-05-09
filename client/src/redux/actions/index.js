@@ -1,334 +1,420 @@
+import createPalette from "@mui/material/styles/createPalette";
 import axios from "axios";
 import {
-    SEARCH_PELIS,
-    FILTER_DURATION,
-    ORDER_DATE,
-    ORDER_BY_NAME,
-    GET_MOVIES,
-    FILTER_MOVIES_BY_COUNTRY,
-    FILTER_MOVIES_BY_GENRE,
-    ORDER_BY_RATING,
-    GET_GENRES,
-    GET_COUNTRIES,
-    MOVIE_DETAIL,
-    SIGN_UP_USER,
-    SUBSCRIBE,
-    GET_FAV,
-    DELETE_USER_INFORMATION,
-    HANDLE_CAME_BACK_TO_BASIC,
-    GET_USER_INFO,
-    GET_PLAN_INFO
-
+  SEARCH_PELIS,
+  FILTER_DURATION,
+  ORDER_DATE,
+  ORDER_BY_NAME,
+  GET_MOVIES,
+  FILTER_MOVIES_BY_COUNTRY,
+  FILTER_MOVIES_BY_GENRE,
+  ORDER_BY_RATING,
+  GET_GENRES,
+  GET_COUNTRIES,
+  MOVIE_DETAIL,
+  SIGN_UP_USER,
+  SUBSCRIBE,
+  GET_FAV,
+  DELETE_USER_INFORMATION,
+  HANDLE_CAME_BACK_TO_BASIC,
+  GET_USER_INFO,
+  GET_PLAN_INFO,
+  PAY_SUBSCRIPTION,
+  GET_PROFILE_INFO,
+  VALIDATE_SUBSCRIPTION,
 } from "./actionstype";
 
-export function getMovies() { //obtener todos los videojuegos
-    return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/films")
+export function getMovies() {
+  //obtener todos los videojuegos
+  return async function (dispatch) {
+    let json = await axios.get("http://localhost:3001/films");
 
-        try {
-            return dispatch({
-                type: GET_MOVIES,
-                payload: json.data
-            })
-        } catch (error) {
-            console.log(error)
-        }
+    try {
+      return dispatch({
+        type: GET_MOVIES,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
 }
 
-export function sortName(payload) { //ordenar por nombre asc o desc
-    return {
-        type: ORDER_BY_NAME,
-        payload
-    }
+export function sortName(payload) {
+  //ordenar por nombre asc o desc
+  return {
+    type: ORDER_BY_NAME,
+    payload,
+  };
 }
 
-export function getGenres() { //obtener generos
-    return async function (dispatch) {
-        let info = await axios.get("http://localhost:3001/genres");
+export function getGenres() {
+  //obtener generos
+  return async function (dispatch) {
+    let info = await axios.get("http://localhost:3001/genres");
 
-        return dispatch({
-            type: GET_GENRES,
-            payload: info.data
-        })
-    }
+    return dispatch({
+      type: GET_GENRES,
+      payload: info.data,
+    });
+  };
 }
 
 // export function postMovie (movieForm){
 //     return async function(dispatch){
-//       const respo = await axios.post('http://localhost:3001/films', movieForm); 
+//       const respo = await axios.post('http://localhost:3001/films', movieForm);
 //       console.log("RESPUESTA DEL BACK: ",movieForm)
 //     }
-// }; 
-
-export const postMovie = async (movieForm) => {
-    const respo = await axios.post("http://localhost:3001/films", movieForm);
-    const poster = await axios.post("http://localhost:3001/upload/image", movieForm.poster);
-    console.log("Respuesta del back: ", respo);
-    console.log("datos del formulario: ", movieForm);
-    console.log("resuesta del poster: ", poster);
-    return null;
-};
+// };
+export function postMovie(movieForm) {
+  return async () => {
+    const response = (
+      await axios.post("http://localhost:3001/films", movieForm)
+    )?.data;
+    console.log("postMovie response ", response);
+    return { type: "POST_PELI", payload: response };
+  };
+}
 
 export function getMoviesByGenre(payload) {
-    return async function (dispatch) {
-        try {
-            let filtroGenre = [];
-            let json3 = await axios.get('http://localhost:3001/films');
-            json3.data.map(peli => {
-                let genre = peli.Genres;
-                genre.forEach(obj => {
-                    if (obj.name === payload) {
-                        filtroGenre.push(peli)
-                    }
-                })
-            })
-            return dispatch({
-                type: FILTER_MOVIES_BY_GENRE,
-                payload: filtroGenre
-            })
-        } catch (error) {
-            console.log(error)
-        }
+  return async function (dispatch) {
+    try {
+      let filtroGenre = [];
+      let json3 = await axios.get("http://localhost:3001/films");
+      json3.data.map((peli) => {
+        let genre = peli.Genres;
+        genre.forEach((obj) => {
+          if (obj.name === payload) {
+            filtroGenre.push(peli);
+          }
+        });
+      });
+      return dispatch({
+        type: FILTER_MOVIES_BY_GENRE,
+        payload: filtroGenre,
+      });
+    } catch (error) {
+      console.log(error);
     }
-};
+  };
+}
 
 export function getCountries() {
-    return async function (dispatch) {
-        try {
-            var json = await axios.get("http://localhost:3001/countries");
-            return dispatch({
-                type: GET_COUNTRIES,
-                payload: json.data
-            })
-        } catch (error) {
-            console.log(error)
-        }
+  return async function (dispatch) {
+    try {
+      var json = await axios.get("http://localhost:3001/countries");
+      return dispatch({
+        type: GET_COUNTRIES,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
 }
 
 export function getMoviesByCountry(payload) {
-    return async function (dispatch) {
-        try {
-            let json3 = await axios.get('http://localhost:3001/films');
-            let json4 = json3.data;
-            json4 = json4.filter(e => e.Country.name === payload)
-            return dispatch({
-                type: FILTER_MOVIES_BY_COUNTRY,
-                payload: json4
-            })
-        } catch (error) {
-            console.log(error)
-        }
+  return async function (dispatch) {
+    try {
+      let json3 = await axios.get("http://localhost:3001/films");
+      let json4 = json3.data;
+      json4 = json4.filter((e) => e.Country.name === payload);
+      return dispatch({
+        type: FILTER_MOVIES_BY_COUNTRY,
+        payload: json4,
+      });
+    } catch (error) {
+      console.log(error);
     }
-};
-
-export function sortDate(order) {
-    return {
-        type: ORDER_DATE,
-        payload: order
-    }
+  };
 }
 
-export function orderByRating(payload) { //ordernar por rating asc o desc
-    return {
-        type: ORDER_BY_RATING,
-        payload
-    }
+export function sortDate(order) {
+  return {
+    type: ORDER_DATE,
+    payload: order,
+  };
+}
+
+export function orderByRating(payload) {
+  //ordernar por rating asc o desc
+  return {
+    type: ORDER_BY_RATING,
+    payload,
+  };
 }
 
 export function searchPelicula_Actor(search) {
-    return function (dispatch) {
-        dispatch({
-            type: SEARCH_PELIS,
-            payload: search
-        });
-    };
+  return function (dispatch) {
+    dispatch({
+      type: SEARCH_PELIS,
+      payload: search,
+    });
+  };
 }
 
 export function renderMovieDetails(id) {
-    return async function (dispatch) {
-        try {
-            let movie = await axios.get(`http://localhost:3001/films/${id}`)
-            /* console.log(movie.data) */
-            return dispatch({
-                type: MOVIE_DETAIL,
-                payload: movie.data
-            })
-        } catch (error) {
-            console.log(error)
-        }
+  return async function (dispatch) {
+    try {
+      let movie = await axios.get(`http://localhost:3001/films/${id}`);
+      /* console.log(movie.data) */
+      return dispatch({
+        type: MOVIE_DETAIL,
+        payload: movie.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
 }
 
 export function signUpFunction(userData) {
-    return async function (dispatch) {
-        try {
-            console.log("userData", userData);
-            let request = {
-                name: userData.given_name ? userData.given_name : null,
-                surname: userData.family_name ? userData.family_name : null,
-                username: userData.nickname,
-                email: userData.email,
-                password: userData.email,
-                creator: userData.creator,
-                country: userData.country ? userData.country : null,
-                people: userData.people ?
-                    userData.people === "true" ?
-                    true :
-                    false : null,
-                rol: userData.rol ? userData.rol : null,
-                telephone: userData.telephone ? parseInt(userData.telephone) : null,
-                typeOfDocument: userData.typeOfDocument ?
-                    userData.typeOfDocument : null,
-                numberOfDocument: userData.numberOfDocument ?
-                    Number(userData.numberOfDocument) : null,
-                frontDocument: userData.frontDocument ? userData.frontDocument : null,
-                backDocument: userData.reverseDocument ?
-                    userData.reverseDocument : null,
-            };
-            await axios.post("http://localhost:3001/users/register", request);
-            if (request.creator) {
-                return dispatch({
-                    type: SIGN_UP_USER,
-                    payload: true,
-                });
-            } else {
-                return dispatch({
-                    type: SIGN_UP_USER,
-                    payload: false,
-                });
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+  return async function (dispatch) {
+    try {
+      console.log("signUpFunction userData", userData);
+      let request = {
+        name: userData.given_name ? userData.given_name : null,
+        surname: userData.family_name ? userData.family_name : null,
+        username: userData.nickname,
+        email: userData.email,
+        password: userData.email,
+        creator: userData.creator,
+        country: userData.country ? userData.country : null,
+        people: userData.people
+          ? userData.people === "true"
+            ? true
+            : false
+          : null,
+        rol: userData.rol ? userData.rol : null,
+        telephone: userData.telephone ? parseInt(userData.telephone) : null,
+        typeOfDocument: userData.typeOfDocument
+          ? userData.typeOfDocument
+          : null,
+        numberOfDocument: userData.numberOfDocument
+          ? Number(userData.numberOfDocument)
+          : null,
+        frontDocument: userData.frontDocument ? userData.frontDocument : null,
+        backDocument: userData.reverseDocument
+          ? userData.reverseDocument
+          : null,
+      };
+      await axios.post("http://localhost:3001/users/register", request);
+      if (request.creator) {
+        return dispatch({
+          type: SIGN_UP_USER,
+          payload: true,
+        });
+      } else {
+        return dispatch({
+          type: SIGN_UP_USER,
+          payload: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
-
-
 export function filterDuration(payload) {
-    return async function (dispatch) {
-        try {
-            let json3 = await axios.get('http://localhost:3001/films');
-            let json4 = json3.data;
-            json4 = json4.filter(e => e.duration === payload)
-            return dispatch({
-                type: FILTER_DURATION,
-                payload: json4
-            })
-        } catch (error) {
-            console.log(error)
-        }
+  return async function (dispatch) {
+    try {
+      let json3 = await axios.get("http://localhost:3001/films");
+      let json4 = json3.data;
+      json4 = json4.filter((e) => e.duration === payload);
+      return dispatch({
+        type: FILTER_DURATION,
+        payload: json4,
+      });
+    } catch (error) {
+      console.log(error);
     }
-};
-
+  };
+}
 
 export function getFavorites(id) {
-    return async function (dispatch) {
-        try {
-            var pelisFav = await axios.get(`http://localhost:3001/users/fav/${id}`);
-            return dispatch({
-                type: GET_FAV,
-                payload: pelisFav.data
-            })
-        } catch (error) {
-            console.log(error)
-        }
+  return async function (dispatch) {
+    try {
+      console.log("getFavorites id", id);
+      var pelisFav = await axios.get(
+        `http://localhost:3001/users/getFavs/${id}`
+      );
+      return dispatch({
+        type: GET_FAV,
+        payload: pelisFav.data,
+      });
+    } catch (error) {
+      console.log("getFavourites catch", error);
     }
+  };
 }
 
 export function deleteUserInformation(email) {
-    return async function (dispatch) {
-        try {
-            await axios.delete(`http://localhost:3001/users/del`, email);
-            return dispatch({
-                type: DELETE_USER_INFORMATION,
-            });
-        } catch (error) {
-            console.log('deleteUserInformation', error)
-
-        }
+  return async function (dispatch) {
+    try {
+      await axios.delete(`http://localhost:3001/users/del`, email);
+      return dispatch({
+        type: DELETE_USER_INFORMATION,
+      });
+    } catch (error) {
+      console.log("deleteUserInformation", error);
     }
+  };
 }
 
-
-
-export function addFavFilm (payload){
-   return async function (dispatch){
-    
-         await axios.post('http://localhost:3001/users/addFav', payload);
-       
-   }
-};
-
-export function deleteFavFilm (payload){
-    return async function (dispatch){
-        try{
-          await axios.delete('http://localhost:3001/favorites/del', payload)
-        } catch(error){console.log(error)}
-    }
- };
-
-export function getUserInfo (email){
-    return async function (dispatch) {
-        try {
-            let response = await axios.get(`http://localhost:3001/users/byemail`, email);
-            return dispatch({
-                type: GET_USER_INFO,
-                payload: response.data
-            })
-        } catch (error) {
-            console.log('getUserInfo', error)
-        }
-    }
+export function addFavFilm(payload) {
+  return async function (dispatch) {
+    await axios.post("http://localhost:3001/users/addFav", payload);
+  };
 }
 
-export function cameBackToBasic(userData){
-    return async function (dispatch) {
-        try {
-            let updatedUser = {
-                email: userData.email,
-                creator: userData.creator,
-            }
-            await axios.put(`http://localhost:3001/users/modif`, updatedUser);
-            return dispatch({
-                type: HANDLE_CAME_BACK_TO_BASIC,
-                payload: false,
-            })
-        } catch (error) {
-            console.log('handleCameBackToBasic', error)
-        }
+export function deleteFavFilm(payload) {
+  console.log("deleteFavFilm payload", payload);
+  return async function (dispatch) {
+    try {
+      await axios.delete("http://localhost:3001/users/delFav", {
+        data: { payload },
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
 }
 
-export function subscribe (payload){
-    return async function (dispatch){
-        try{
-            const paymentInfo = await axios.post( "http://localhost:3001/payment/payment", payload)
-            return dispatch({
-                type: SUBSCRIBE,
-                payload: paymentInfo.data
-            })
-        }
-        catch(err){
-            console.log("subscribe", err)
-        }
+export function getUserInfo(email) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(
+        `http://localhost:3001/users/byemail`,
+        email
+      );
+      console.log("getUserInfo", response);
+      return dispatch({
+        type: GET_USER_INFO,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getUserInfo", error);
     }
+  };
 }
 
-export function getPlanInfo (){
-    return async function (dispatch) {
-        try {
-            let response = await axios.get(`http://localhost:3001/plans/`);
-            return dispatch({
-                type: GET_PLAN_INFO,
-                payload: response.data
-            })
-        } catch (error) {
-            console.log('getPlanInfo', error)
-        }
+export function getProfileInfo(email) {
+  return async function (dispatch) {
+    try {
+      // console.log("getProfileInfo", email); //--> LLEGA BIEN
+      let response = await axios.get(
+        `http://localhost:3001/users/byemail/${email}`
+      );
+      // console.log('response getProfileInfo', response.data); //--> LLEGA BIEN
+      return dispatch({
+        type: GET_PROFILE_INFO,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getUserInfo catch", error);
     }
+  };
+}
+
+export function validateSubscription({ email, userEmail }) {
+  return async function (dispatch) {
+    try {
+      // console.log('userEmail en validateSubscription', userEmail);
+      let response = await axios.get(
+        `http://localhost:3001/payment/validate/${email}?userEmail=${userEmail}`
+      );
+      return dispatch({
+        type: VALIDATE_SUBSCRIPTION,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("validateSubscription", error);
+    }
+  };
+}
+
+export function updateSubscription(props) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.put(
+        `http://localhost:3001/users/modif`,
+        props
+      );
+      return dispatch({
+        type: GET_PROFILE_INFO,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("validateSubscription", error);
+    }
+  };
+}
+
+export function cameBackToBasic(userData) {
+  return async function (dispatch) {
+    try {
+      let updatedUser = {
+        email: userData.email,
+        creator: userData.creator,
+      };
+      await axios.put(`http://localhost:3001/users/modif`, updatedUser);
+      return dispatch({
+        type: HANDLE_CAME_BACK_TO_BASIC,
+        payload: false,
+      });
+    } catch (error) {
+      console.log("handleCameBackToBasic", error);
+    }
+  };
+}
+
+export function subscribe(payload) {
+  return async function (dispatch) {
+    try {
+      const paymentInfo = await axios.post(
+        "http://localhost:3001/payment/payment",
+        payload
+      );
+      return dispatch({
+        type: SUBSCRIBE,
+        payload: paymentInfo.data,
+      });
+    } catch (err) {
+      console.log("subscribe", err);
+    }
+  };
+}
+
+export function paySubscription(payload) {
+  return async function (dispatch) {
+    try {
+      const paymentInfo = await axios.post(
+        "http://localhost:3001/payment/subscription",
+        payload
+      );
+      return dispatch({
+        type: PAY_SUBSCRIPTION,
+        payload: paymentInfo.data,
+      });
+    } catch (err) {
+      console.log("subscribe", err);
+    }
+  };
+}
+
+export function getPlanInfo() {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(`http://localhost:3001/plans/`);
+      return dispatch({
+        type: GET_PLAN_INFO,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getPlanInfo", error);
+    }
+  };
 }
 
 /* 
@@ -414,8 +500,6 @@ export function getDetail(payload) { //obtener detalle del videojuego(ID)
         }
     }
 } */
-
-
 
 /*  export function getGenres (){
               return async function (dispatch){

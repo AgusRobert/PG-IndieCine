@@ -29,21 +29,24 @@ exports.getUser = async (req, res) => {
 };
 
 exports.getUserByEmail = async (req, res) => {
+  // res.send({msg: "datos", file: req.body.email})
   try {
+    // console.log('getUserByEmail params', req.params); //--> LLEGA BIEN
     let user = await User.findOne(
-      { where: { email: req.body.email } },
+      { where: { email: req.params.email } },
       {
         include: [{ model: Film }],
       }
     );
 
     if (user) {
+      // console.log("Usuario encontrado con éxito en getUserByEmail"); //--> LLEGA BIEN
       res.json(user);
     } else {
-      res.json({ message: "No se encontró el usuario" });
+      res.json({ message: "No se encontró el usuario en getUserByEmail" });
     }
   } catch (error) {
-    res.json({ message: "Error al obtener el usuario", error });
+    res.json({ message: "Error al obtener el usuario en getUserByEmail", error });
   }
 };
 
@@ -60,7 +63,7 @@ exports.putUser = async (req, res) => {
     } else {
       await user.update(req.body);
       // console.log("Usuario actualizado correctamente");
-      return res.json({ message: "Usuario actualizado correctamente" });
+      return res.json(user);
     }
   } catch (error) {
     // console.log("Error al actualizar el usuario");
@@ -152,38 +155,65 @@ exports.loginUser = async (req, res) => {
     res.json({ message: "Error al obtener el usuario", error });
   }
 };
-exports.getFilmsById = async (req, res) =>{
-  const{id}= req.params
+
+exports.getFilmsById = async (req, res) => {
+  const { id } = req.params;
   const user = await User.findOne({
-    where:{
+    where: {
       id,
     },
-    include: Film
-  })
+    include: Film,
+  });
   let films = user.Films;
-  res.json(films)
-}
+  res.json(films);
+};
 
-exports.addFav = async (req,res) =>{
-  const{email}= req.body
-  const{idPeli} = req.body
-  
-    let user = await User.findOne({
-      where:{
-        email:email
-      }
-    })  
-     console.log(user)
-    let peli = await Film.findByPk(idPeli)
+exports.addFav = async (req, res) => {
+  const { favDispatch } = req.body;
+  const { idPeli, email } = favDispatch;
 
-    user.addFilm(peli)
-   res.send('Peli agregada')
-   
-}
+  let user = await User.findOne({
+    where: {
+      email: email,
+    },
+  });
+  console.log(user);
+  let peli = await Film.findByPk(idPeli);
 
-exports.getFavs = async (req, res) =>{
-  const{id}= req.params
-  const Usuario = await User.findByPk(id)
-  const favoritos = await Usuario.getFilms()
-  res.json(favoritos)
-}
+  user.addFilm(peli);
+  res.send("Peli agregada");
+};
+
+exports.getFavs = async (req, res) => {
+  try {
+    // console.log('id del user en getFavs', req.params.id) //---> NO LLEGA
+    const { id } = req.params;
+    const user = await User.findByPk(id);
+    if(user){
+      const favoritos = await user.getFilms();
+      console.log(favoritos);
+      res.json(favoritos);
+    } else {
+      console.log("Usuario no encontrado en getFavs");
+      res.json({ message: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    console.log("getFavs controller catch", error);
+  }
+};
+
+exports.delFav = async (req, res) => {
+  const { payload } = req.body;
+  const { favDispatch } = payload;
+  const { idPeli, email } = favDispatch;
+
+  let user = await User.findOne({
+    where: {
+      email: email,
+    },
+  });
+  let peli = await Film.findByPk(idPeli);
+
+  user.removeFilm(peli);
+  res.send("Peli descartada de favoritos");
+};

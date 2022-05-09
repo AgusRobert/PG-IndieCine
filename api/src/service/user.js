@@ -30,8 +30,12 @@ exports.create = async ({
     telephone,
     country,
     rol: "user",
-    subcription: "common",
+    subcription: "Free",
     status: "registered",
     PlanId: 1
   });
+};
+
+exports.findByEmail = async (email) => {
+  return await User.findOne({ where: { email: email } });
 };

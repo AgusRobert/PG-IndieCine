@@ -1,3 +1,8 @@
+
+const { urlencoded } = require("express");
+require("./db.js");
+const app = require("express");
+
 const AdminJS = require("adminjs");
 const AdminJSExpress = require("@adminjs/express");
 const AdminJSSequelize = require("@adminjs/sequelize");
@@ -5,7 +10,12 @@ AdminJS.registerAdapter(AdminJSSequelize);
 
 const express = require("express");
 const morgan = require("morgan");
+
+
+//libreria de fileUpload
+const fileUpload = require("express-fileupload");
 const routes = require("./routes/index.js");
+require("./db.js");
 const path = require("path");
 
 const server = express();
@@ -18,6 +28,12 @@ server.name = "PG-IndieCine";
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(morgan("dev"));
+//upload de archivos
+server.use(
+  fileUpload({
+    tempFileDir: "./temp",
+  })
+);
 
 server.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -50,13 +66,15 @@ const adminJsOptions = {
          {resource: Plans, options: {parent: {icon:'Product'}} },
 ],
    branding: {
-       logo: './LOGO.png',
+       logo: 'https://i.ibb.co/1Q0cq5V/LOGO.png',
+      favicon: 'https://i.ibb.co/1Q0cq5V/LOGO.png',
        companyName: 'C I N D I E',
    }
 }
 
 
 const adminJs = new AdminJS(adminJsOptions);
+
 
 const router = AdminJSExpress.buildRouter(adminJs);
 server.use(adminJs.options.rootPath, router);

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {getMoviesByCountry, getCountries} from "../../redux/actions/index";
+import { getMoviesByCountry, getCountries } from "../../redux/actions/index";
 import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
+
 const MenuItemStyle = styled(MenuItem)({
   marginLeft: "auto",
   color: "black",
@@ -17,51 +18,51 @@ const SelectStyle = styled(TextField)({
   padding: 0,
 });
 
+export default function FilterMovieByCountry() {
+  let key = 1;
+  const dispatch = useDispatch();
 
-export default function FilterMovieByCountry(){
+  const countries = useSelector(state => state.countries);
 
-   let key = 1
-    const dispatch = useDispatch();
+  const [country, setCountry] = useState("");
 
-    const countries = useSelector((state) => state.countries);
+  function handleChange(e) {
+    setCountry(e.target.value);
+    dispatch(getMoviesByCountry(e.target.value));
+  }
 
-    const [country, setCountry] = useState('');
+  useEffect(() => {
+    dispatch(getCountries());
+  }, [dispatch]);
 
-    function handleChange(e) {
-        setCountry(e.target.value)
-        dispatch(getMoviesByCountry(e.target.value))
-    };
-
-    useEffect(() => {
-        dispatch(getCountries())
-    }, [dispatch]);
-
-    return (
-        <Box>
-             <SelectStyle 
-   name="select"
-   onChange = {(e) => handleChange(e)}
-  select
-  label="
+  return (
+    <Box>
+      <SelectStyle
+        name="select"
+        onChange={e => handleChange(e)}
+        select
+        label="
   País"
-  variant="outlined"
-  size="small"
-  sx={{
-    ":active": {
-      color: "black",
-      borderColor: deepPurple[600],
-    },
-    ":focused": {
-      borderColor: deepPurple[600],
-    },
-  }}
-  >
-                        {countries ? countries.map((e) => (
-                            <MenuItemStyle key ={key++} value={e.name}>{e.name}</MenuItemStyle>
-                        )) : null}
-                    </SelectStyle>
-                   
-        </Box>
-
-    )
+        variant="outlined"
+        size="small"
+        sx={{
+          ":active": {
+            color: "black",
+            borderColor: deepPurple[600],
+          },
+          ":focused": {
+            borderColor: deepPurple[600],
+          },
+        }}
+      >
+        {countries
+          ? countries.map(e => (
+              <MenuItemStyle key={key++} value={e.name}>
+                {e.name}
+              </MenuItemStyle>
+            ))
+          : null}
+      </SelectStyle>
+    </Box>
+  );
 }

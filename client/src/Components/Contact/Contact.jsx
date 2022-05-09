@@ -11,7 +11,6 @@ export default function Contact() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    e.target.button.disable = true;
     const data = {
       type: "contactAuto",
       name: e.target.fullname.value,
@@ -26,7 +25,7 @@ export default function Contact() {
     data.type = "contactAdmin";
     await axios.post("http://localhost:3001/mail", data);
     e.target.reset();
-  
+    e.target.boton.disable = true;
     setRedir(true);
     
   }
@@ -66,7 +65,7 @@ export default function Contact() {
                 <textarea name="message" rows="3" required></textarea>
               </p>
               <p className={s.block}>
-              <button type="submit">Enviar</button>
+              <button type="submit" name="boton">Enviar</button>
               </p>
             </form>
           </div>
