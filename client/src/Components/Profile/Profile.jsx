@@ -80,7 +80,7 @@ export default function Profile() {
   function handleOnDelete() {
     logout({ returnTo: window.location.origin });
     dispatch(deleteUserInformation(user.email))
-    alert('Serás redirigido al inicio')
+    alert('La eliminación de tus datos va a ser efectiva en las próximas 24hs.')
     navigate('/')
   }
 
