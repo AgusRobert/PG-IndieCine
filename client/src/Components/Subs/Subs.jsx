@@ -33,8 +33,8 @@ export default function Subs() {
 
   const onSubscribe = (id) => {
     let plan = {
-      reason: plans[id]?.name,
-      transaction_amount: plans[id]?.price,
+      reason: plans[id-1]?.name,
+      transaction_amount: plans[id-1]?.price,
       currency_id: "ARS",
       payer_email: user?.email/* "test_user_54987522@testuser.com "*/,
     };
