@@ -1,3 +1,4 @@
+
 const { urlencoded } = require("express");
 require("./db.js");
 const app = require("express");
@@ -9,11 +10,14 @@ AdminJS.registerAdapter(AdminJSSequelize);
 
 const express = require("express");
 const morgan = require("morgan");
+
+
 //libreria de fileUpload
 const fileUpload = require("express-fileupload");
 const routes = require("./routes/index.js");
 require("./db.js");
 const path = require("path");
+
 const server = express();
 
 server.set("views", path.join(__dirname, "views"));
@@ -42,12 +46,36 @@ server.use((req, res, next) => {
   next();
 });
 
-const con = require("./db.js").connect;
+const { User, Film, Country, Genre, Comment, Plans } = require("./db.js");
+const adminJsOptions = {
+    rootPath: '/admin',
+   database:[],
+   resources: [
+       {resource: User, options: {
+        actions: {enviarMail:{
+            actionType: 'record',
+            icon:'Email',
+            component: AdminJS.bundle('./myMail.jsx'),
+            handler:async(req, res, context) =>{
+                return {record: context.record.toJSON(),}},}},
+        parent: {icon:'User'}} },
+        {resource: Film, options: {parent: {icon:'Camera'}} },
+        {resource: Country, options: { parent: {icon:'Map'}} },
+    {resource: Genre, options: {parent: {icon:'Star'}} },
+         {resource: Comment, options: {parent: {icon:'Chat'}} },
+         {resource: Plans, options: {parent: {icon:'Product'}} },
+],
+   branding: {
+       logo: 'https://i.ibb.co/1Q0cq5V/LOGO.png',
+      favicon: 'https://i.ibb.co/1Q0cq5V/LOGO.png',
+       companyName: 'C I N D I E',
+   }
+}
 
-const adminJs = new AdminJS({
-  databases: [con],
-  rootPath: "/admin",
-});
+
+const adminJs = new AdminJS(adminJsOptions);
+
+
 const router = AdminJSExpress.buildRouter(adminJs);
 server.use(adminJs.options.rootPath, router);
 

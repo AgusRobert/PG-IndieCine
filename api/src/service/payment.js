@@ -2,7 +2,7 @@ const { ACCESS_TOKEN } = process.env;
 const axios = require("axios");
 
 exports.toPay = async (props) => {
-  const {name, price, description, picture_url, id, email} = props
+  const { name, price, description, picture_url, id, email } = props;
   const url = "https://api.mercadopago.com/checkout/preferences";
   const body = {
     payer_email: email,
@@ -33,10 +33,10 @@ exports.toPay = async (props) => {
 };
 
 exports.subscribe = async (props) => {
-  const {reason, transaction_amount, currency_id, payer_email} = props
+  const { reason, transaction_amount, currency_id, payer_email } = props;
   const url = "https://api.mercadopago.com/preapproval";
   const body = {
-    reason: reason ,
+    reason: reason,
     auto_recurring: {
       frequency: 1,
       frequency_type: "months",
@@ -45,7 +45,7 @@ exports.subscribe = async (props) => {
     },
     back_url: "https://8d19-179-6-206-23.ngrok.io/profile",
     payer_email: payer_email,
-    notification_url:  "https://8d19-179-6-206-23.ngrok.io/payment/notification"
+    notification_url: "https://8d19-179-6-206-23.ngrok.io/payment/notification",
   };
   return (
     await axios.post(url, body, {
@@ -57,16 +57,18 @@ exports.subscribe = async (props) => {
   )?.data;
 };
 
-exports.validation = async(props) => {
-  console.log("EMAIL DE VALIDATE", props)
-  const url = `https://api.mercadopago.com/preapproval/search?payer_email=${props}`
-  const response = await axios.get(url, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
-    },
-  })
-  return(
-    response.data
-  )
-}
+exports.validation = async (props) => {
+  try {
+    // console.log("validation service", props); //--> LLEGA BIEN
+    const url = `https://api.mercadopago.com/preapproval/search?payer_email=${props}`;
+    const response = await axios.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("validation service catch", error);
+  }
+};

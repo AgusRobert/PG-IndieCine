@@ -57,24 +57,37 @@ export default function Profile() {
   const [upgrade, setUpgrade] = useState(false);
 
   // validación de suscripción
-
   const profileInfo = useSelector((state) => state.profileInfo)
 
 
   useEffect(() => {
+    // console.log('SE EJECUTA EL useEffect de Profile')
+    // console.log('profileInfo pre', profileInfo)
     dispatch(getProfileInfo(user.email))
     dispatch(validateSubscription(user.email))
-
   }, [])
 
   console.log("EMAIL DATOS", profileInfo)
+
+    // console.log('profileInfo post', profileInfo)
+    // Este console.log trae undefined por el delay de react-redux
+
+    dispatch(validateSubscription({email: payer_email, userEmail: user.email}))
+  }, [])
+
+  // return (
+  //   <div>
+  //     <h3>{profileInfo.name}</h3>
+  //     <h3>{profileInfo.surname}</h3>
+  //   </div>
+  // )
+
 
   const subsToUpdate = {
     email: user.email,
     subcription: profileInfo?.subcription,
     PlanId: profileInfo?.subcription === "de Culto" ? 2 : 3
   }
-
 
 
   function handleOnDelete() {
@@ -190,6 +203,7 @@ export default function Profile() {
               <h2>Mis favoritas</h2>
               <FavList />
             </Container> */}
+
 
 
           </Container>

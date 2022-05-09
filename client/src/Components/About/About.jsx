@@ -109,6 +109,7 @@ export default function About(){
         <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
+
           <Item>Daniel Sanchez</Item>
           <Item>dasmmer@gmail.com</Item>
         </Grid>
@@ -139,6 +140,7 @@ export default function About(){
         <Grid item xs={4}>
           <Item>Valentín Avalos</Item>
           <Item>valentinnavalos@gmail.com</Item>
+
         </Grid>
         <Grid item xs={4}>
           <Item>CONTÁCTANOS</Item>

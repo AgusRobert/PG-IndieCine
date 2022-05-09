@@ -76,6 +76,8 @@ exports.mailing = async (req, res) => {
 
     // ---------------------------- RESPUESTA A CONTACTO -----------------------------
     case "contact":
+      from = '"CINDIE" <indiecine2022@gmail.com>';
+      to = req.body.email;
       subject = "Respondiendo tu consulta";
         html = `
         <table style="background-color:#661c79;padding:20px;color:white; width:100%;">
@@ -105,6 +107,8 @@ exports.mailing = async (req, res) => {
 
     // ---------------------------- RESPUESTA AUTOMATICA A CREADOR -----------------------------
     case "creatorAuto":
+      from = '"CINDIE" <indiecine2022@gmail.com>';
+      to = req.body.email;
       subject = "Solicitud de Usuario Premium";
       html = `
       <table style="background-color:#661c79;padding:20px;color:white; width:100%;">
@@ -125,6 +129,8 @@ exports.mailing = async (req, res) => {
     // ---------------------------- RESPUESTA A CREADOR -----------------------------
 
     case "creator":
+      from = '"CINDIE" <indiecine2022@gmail.com>';
+      to = req.body.email;
       subject = "Ya eres Usuario Premium!";
         html = `
         <table style="background-color:#661c79;padding:20px;color:white; width:100%;">
@@ -160,6 +166,8 @@ exports.mailing = async (req, res) => {
 
     // ------------------------- RESPUESTA AUTOMATICA DE CONTENIDO -----------------
     case "contentAuto":
+      from = '"CINDIE" <indiecine2022@gmail.com>';
+      to = req.body.email;
       subject = "FORMULARIO RECIBIDO";
       html = `
       <table style="background-color:#661c79;padding:20px;color:white; width:100%;">
@@ -179,6 +187,8 @@ exports.mailing = async (req, res) => {
 
     // ---------------------------- RESPUESTA A CONTENIDO -----------------------------
     case "content":
+      from = '"CINDIE" <indiecine2022@gmail.com>';
+      to = req.body.email;
       subject = "PELÍCULA APROBADA";
       html = `
       <table style="background-color:#661c79;padding:20px;color:white; width:100%;">

@@ -10,6 +10,7 @@
   "author": "Grupo05",
   "license": "ISC",
   "dependencies": {
+    "@adminjs/design-system": "^2.2.4",
     "aws-sdk": "^2.1129.0",
     "@adminjs/express": "^4.1.0",
     "@adminjs/sequelize": "^2.1.5",
