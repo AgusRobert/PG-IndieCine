@@ -328,6 +328,23 @@ export function validateSubscription (email){
     }
 }
 
+// export function validateSubscription({ email, userEmail }) {
+//   return async function (dispatch) {
+//     try {
+//       // console.log('userEmail en validateSubscription', userEmail);
+//       let response = await axios.get(
+//         `http://localhost:3001/payment/validate/${email}?userEmail=${userEmail}`
+//       );
+//       return dispatch({
+//         type: VALIDATE_SUBSCRIPTION,
+//         payload: response.data,
+//       });
+//     } catch (error) {
+//       console.log("validateSubscription", error);
+//     }
+//   };
+// }
+
 export function updateSubscription (props){
     return async function (dispatch) {
         try {

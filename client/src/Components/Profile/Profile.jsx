@@ -60,12 +60,14 @@ export default function Profile() {
 
   const profileInfo = useSelector((state) => state.profileInfo)
 
-  const payer_email = "test_user_54987522@testuser.com"
 
   useEffect(() => {
     dispatch(getProfileInfo(user.email))
-    dispatch(validateSubscription(payer_email))
+    dispatch(validateSubscription(user.email))
+
   }, [])
+
+  console.log("EMAIL DATOS", profileInfo)
 
   const subsToUpdate = {
     email: user.email,

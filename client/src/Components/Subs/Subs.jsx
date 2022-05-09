@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +11,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 import MovieCreationIcon from '@mui/icons-material/MovieCreation';
+
 
 export default function Subs() {
 
@@ -29,13 +31,16 @@ export default function Subs() {
     }
   }, [paymentLink])
 
+  const {user} = useAuth0()
+  
   const onSubscribe = (id) => {
     let plan = {
       reason: plans[id]?.name,
       transaction_amount: plans[id]?.price,
-      currency_id: "PEN",
-      payer_email: "test_user_54987522@testuser.com"
+      currency_id: "ARS",
+      payer_email: user?.email
     }  
+
     dispatch(paySubscription(plan))
   }
 
