@@ -11,7 +11,7 @@ import logo from '../Header/LOGO.png'
 import { useEffect, useState } from "react";
 import axios from "axios"
 import FavList from '../FavList/FavList';
-import Subs2 from "../Subs/Subs2"
+import Subs from "../Subs/Subs"
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -105,6 +105,7 @@ export default function Profile() {
 
   return (
     <>
+      
       <StyledBox>
         <Container>
           <StyledLink
@@ -263,7 +264,6 @@ export default function Profile() {
           ) : (
             <>
               <h2>¿Desea subir al siguiente nivel?</h2>
-              
               <Container>
                 <h4>Beneficios de convertirse en Creador.</h4>
                 <ul>
@@ -285,6 +285,7 @@ export default function Profile() {
                 >
                   Subir de nivel
                 </StyledLink>
+                <Subs currentSub={profileInfo?.subcription}/>
                 {upgrade && <CreatorForm />}
               </Container>
             </>
@@ -292,10 +293,8 @@ export default function Profile() {
         </StyledContainer3>
       </StyledBox >
 
-     
-
-      {isCreator && <Subs2/>}
       
+
     </>
   );
 }

@@ -57,7 +57,7 @@ export default function Home() {
                 <Header position= "sticky" />
             <div className="container">
                 <h2 className="Title">Estrenos:</h2>
-                {/* {allMovies && <Swiper
+                {allMovies && <Swiper
                     navigation={true}
                     effect={"coverflow"}
                     centeredSlides={true}
@@ -86,7 +86,7 @@ export default function Home() {
               </div>
             );
           })}
-                </Swiper>} */}
+                </Swiper>}
                 </div> 
             <div>
                 <Container>
