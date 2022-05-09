@@ -73,15 +73,12 @@ export default function Profile() {
     PlanId: profileInfo?.subcription === "de Culto" ? 2 : 3
   }
 
-
-
   function handleOnDelete() {
     logout({ returnTo: window.location.origin });
     dispatch(deleteUserInformation(user.email))
     alert('Serás redirigido al inicio')
     navigate('/')
   }
-
 
   function handleCameBackToBasic() {
     dispatch(
@@ -91,7 +88,6 @@ export default function Profile() {
       })
     );
   }
-
 
   function handleUpgradeUser() {
     setUpgrade(true);
@@ -127,25 +123,6 @@ export default function Profile() {
             <h4>{user.name}</h4>
             <h4>{user.nickname}</h4>
             <h4>{user.email}</h4>
-
-            {isCreator && (
-              <Container>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={handleUploadProject}
-                >
-                  Subir Proyecto
-                </StyledLink>
-              </Container>
-            )}
 
             {isCreator && /* user.pelissubidas<plan.filmsAllowed */(
               <Container>
@@ -200,52 +177,14 @@ export default function Profile() {
                 Borrar cuenta
               </StyledLink>
             </Container>
-
-            <Container>
-              <h2>Mis favoritas</h2>
-              <FavList />
-            </Container>
-
-            {isCreator ? (
-              <Container>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={handleCameBackToBasic}
-                >
-                  Volver a básico
-                </StyledLink>
-              </Container>
-            ) : null}
-
-            <Container>
-              <StyledLink
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200],
-                    color: "black",
-                  },
-                }}
-                color="textPrimary"
-                variant="button"
-                underline="none"
-                onClick={handleOnDelete}
-              >
-                Borrar cuenta
-              </StyledLink>
-            </Container>
           </Container>
         </StyledContainer>
+
         <StyledContainer2>
           <h2>Lista de peliculas favoritas.</h2>
+          <FavList />
         </StyledContainer2>
+
         <StyledContainer3>
           {isCreator ? (
             <>
@@ -256,12 +195,11 @@ export default function Profile() {
                 <li>Proyecto 3</li>
               </ul>
 
-              
             </>
           ) : (
             <>
               <h2>¿Desea subir al siguiente nivel?</h2>
-              
+
               <Container>
                 <h4>Beneficios de convertirse en Creador.</h4>
                 <ul>
@@ -290,10 +228,10 @@ export default function Profile() {
         </StyledContainer3>
       </StyledBox >
 
-     
 
-      {isCreator && <Subs2/>}
-      
+
+      {isCreator && <Subs2 />}
+
     </>
   );
 }
