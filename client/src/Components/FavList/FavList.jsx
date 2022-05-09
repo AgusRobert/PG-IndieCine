@@ -42,8 +42,9 @@ export default function FavList() {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
-  let state  = useSelector((state) => state);
-  let profileInfo = useSelector((state) => state.profileInfo);
+  const state = useSelector((state) => state);
+  const profileInfo = useSelector((state) => state.profileInfo);
+  const { id } = useSelector((state) => state.profileInfo);
 
   function handleOnClick(payload) {
     console.log('FavList handleOnClick 1', payload);
@@ -55,12 +56,12 @@ export default function FavList() {
   }
 
   useEffect(() => {
-    console.log('state pre: ', state)
+    // console.log('state pre: ', state)
     // console.log('favs substate', favs)
     dispatch(getProfileInfo(user.email));
-    console.log('state post: ', state)
+    // console.log('state post: ', state)
     // console.log("FavList profileInfo", profileInfo);
-    // dispatch(getFavorites(profileInfo?.id));
+    id && dispatch(getFavorites(profileInfo.id));
     // console.log('profileInfo', profileInfo)
   }, []);
 

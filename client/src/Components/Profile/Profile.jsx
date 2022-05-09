@@ -67,7 +67,7 @@ export default function Profile() {
     // console.log('profileInfo post', profileInfo)
     // Este console.log trae undefined por el delay de react-redux
 
-    dispatch(validateSubscription({email: payer_email, userEmail: user.email}))
+    // dispatch(validateSubscription({email: payer_email, userEmail: user.email}))
   }, [])
 
   // return (
@@ -213,7 +213,7 @@ export default function Profile() {
 
             <Container>
               <h2>Mis favoritas</h2>
-              {/* <FavList /> */}
+              <FavList />
             </Container>
 
             {isCreator ? (
