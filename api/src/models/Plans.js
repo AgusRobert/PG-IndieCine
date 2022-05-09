@@ -24,12 +24,16 @@ module.exports = (sequelize) => {
       },
       currency: {
         type: DataTypes.STRING,
-        defaultValue: "ARS",
+        defaultValue: "PEN",
         allowNull: false,
       },
       period:{
         type: DataTypes.INTEGER,
         defaultValue: 1,
+        allowNull: false,
+      },
+      filmsAllowed:{
+        type: DataTypes.INTEGER,
         allowNull: false,
       }
     },

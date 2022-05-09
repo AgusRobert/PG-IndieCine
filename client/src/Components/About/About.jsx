@@ -109,28 +109,36 @@ export default function About(){
         <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>DANIEL SANCHEZ</Item>
+          <Item>dasmmer@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>GUSTAVO GALLESIO</Item>
+          <Item>gustavogallesio@hotmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>FACUNDO RAMOS</Item>
+          <Item>faq.ramos.14101999@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>KEYNA PAYANO</Item>
+          <Item>keynarafaelpayano@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>XAVIER CARRILLO</Item>
+          <Item>2092.rxcm@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>VALENTÍN AVALOS</Item>
+          <Item>valentinnavalos@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>AGUSTÍN IABICHELLA</Item>
+          <Item>iabichellarobert@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>GASTÓN DUBA</Item>
+          <Item>gduba90@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
           <Item>CONTÁCTANOS</Item>

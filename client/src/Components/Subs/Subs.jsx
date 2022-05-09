@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { getPlanInfo, subscribe } from "../../redux/actions";
+import { getPlanInfo, subscribe, paySubscription } from "../../redux/actions";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -16,42 +16,27 @@ export default function Subs() {
   const dispatch = useDispatch();
 
   const plans = useSelector((state) => state.plans)
-  const paymentLink = useSelector((state) => state.link)
+  const paymentLink = useSelector((state) => state.paymentLink)
 
   useEffect(() => {
     dispatch(getPlanInfo())
-  }, [paymentLink])
-
-  console.log("PLANEEEEEEES", plans)
-  
-  const [subscriptionData, setSubscriptionData] = useState({
-    title: "",
-    description: "",
-    picture_url: "",
-    category_id: "",
-    price: 20,
-  })
+  }, [])
 
   useEffect(() => {
-    console.log(" SUSCRIPCIPOOOOON",subscriptionData);
-  }, [subscriptionData]);
+    console.log(paymentLink)
+    if(paymentLink !== undefined){
+        window.location.replace(paymentLink)
+    }
+  }, [paymentLink])
 
-  const onSubscribe = async (planId) => {
-    setSubscriptionData({
-      title: plans[planId].name,
-      description: plans[planId].description,
-      category_id: plans[planId].id,
-      price: plans[planId].price
-    }, () => {})
-    console.log({
-      title: plans[planId].name,
-      description: plans[planId].description,
-      category_id: plans[planId].id,
-      price: plans[planId].price
-    })
-    const link = await dispatch(subscribe({...subscriptionData}))
-    console.log(link.payload.init_point)
-    window.location.replace(link.payload.init_point)
+  const onSubscribe = (id) => {
+    let plan = {
+      reason: plans[id]?.name,
+      transaction_amount: plans[id]?.price,
+      currency_id: "PEN",
+      payer_email: "test_user_54987522@testuser.com"
+    }  
+    dispatch(paySubscription(plan))
   }
 
 
