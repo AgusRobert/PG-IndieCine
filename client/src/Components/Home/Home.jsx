@@ -57,7 +57,7 @@ export default function Home() {
                 <Header position= "sticky" />
             <div className="container">
                 <h2 className="Title">Estrenos:</h2>
-                {allMovies && <Swiper
+                {allMovies?.length && <Swiper
                     navigation={true}
                     effect={"coverflow"}
                     centeredSlides={true}
