@@ -16,12 +16,11 @@ import SignInBtn from "../SignInBtn/SignInBtn.jsx";
 import SignUpBtn from "../SignUpBtn/SignUpBtn.jsx";
 import OrderDate from "../OrderDate/OrderDate.jsx";
 import FilterMovieByCountry from "../FilterByCountry/FilterMoviesByCountry.jsx";
-import FilterMovieByDuration from '../FilterByDuration/FilterMoviesByDuration'
+import FilterMovieByDuration from "../FilterByDuration/FilterMoviesByDuration";
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar.jsx";
-import logo from './LOGO.png'
+import logo from "./LOGO.png";
 import "./style.css";
-
 
 const ToolStyle = styled(Toolbar)({
   marginLeft: 50,
@@ -31,7 +30,7 @@ const ToolStyle = styled(Toolbar)({
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
   backgroundColor: "#b388ff",
-  position: "sticky",
+  position: "fixed",
   justifyContent: "space-between",
 });
 
@@ -51,8 +50,6 @@ const MenuItemStyle = styled(MenuItem)({
 });
 
 export default function Header() {
-
-
   const { user, isAuthenticated, logout } = useAuth0();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -62,13 +59,11 @@ export default function Header() {
     navigate("/profile");
   }
 
-
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
 
-
-  const handleMenu = (event) => {
+  const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -77,74 +72,74 @@ export default function Header() {
   };
 
   return (
-  
-      <AppStyle position="sticky">
-        <ToolStyle>
-          <Link to={'/'}><img src={logo} alt="Cindie" /></Link>
-          <OrderAZ />
-          <OrderDate />
-          <OrderRating />
-          <FilterMoviesByGenre />
-          <FilterMovieByCountry />
-          <FilterMovieByDuration />
-          <SearchBar />
-          {isAuthenticated && (
-            <>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AvatarStyle src={user.picture} alt={user.name} />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
+    <AppStyle position="sticky">
+      <ToolStyle>
+        <Link to={"/"}>
+          <img src={logo} alt="Cindie" />
+        </Link>
+        <OrderAZ />
+        <OrderDate />
+        <OrderRating />
+        <FilterMoviesByGenre />
+        <FilterMovieByCountry />
+        <FilterMovieByDuration />
+        <SearchBar />
+        {isAuthenticated && (
+          <>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AvatarStyle src={user.picture} alt={user.name} />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItemStyle
+                sx={{
+                  ":hover": {
+                    bgcolor: deepPurple[200],
+                    color: "black",
+                  },
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+                onClick={handleOnClick}
               >
-                <MenuItemStyle
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  onClick={handleOnClick}
-                >
-                  Mi Perfil
-                </MenuItemStyle>
-                <MenuItemStyle
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200], // theme.palette.primary.main
-                      color: "black",
-                    },
-                  }}
-                  onClick={handleLogout}
-                >
-                  Cerrar sesión
-                </MenuItemStyle>
-              </Menu>
-            </>
-          )}
-          {!isAuthenticated && <SignInBtn />}
+                Mi Perfil
+              </MenuItemStyle>
+              <MenuItemStyle
+                sx={{
+                  ":hover": {
+                    bgcolor: deepPurple[200], // theme.palette.primary.main
+                    color: "black",
+                  },
+                }}
+                onClick={handleLogout}
+              >
+                Cerrar sesión
+              </MenuItemStyle>
+            </Menu>
+          </>
+        )}
+        {!isAuthenticated && <SignInBtn />}
 
-          {!isAuthenticated && <SignUpBtn />} 
-        </ToolStyle>   
-      </AppStyle>
-   
+        {!isAuthenticated && <SignUpBtn />}
+      </ToolStyle>
+    </AppStyle>
   );
 }

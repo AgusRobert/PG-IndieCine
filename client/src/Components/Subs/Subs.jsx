@@ -15,8 +15,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function Subs() {
   const dispatch = useDispatch();
 
-  const plans = useSelector((state) => state.plans);
-  const paymentLink = useSelector((state) => state.paymentLink);
+  const plans = useSelector(state => state.plans);
+  const paymentLink = useSelector(state => state.paymentLink);
 
   useEffect(() => {
     dispatch(getPlanInfo());
@@ -29,14 +29,14 @@ export default function Subs() {
     }
   }, [paymentLink]);
 
-  const {user} = useAuth0()
+  const { user } = useAuth0();
 
-  const onSubscribe = (id) => {
+  const onSubscribe = id => {
     let plan = {
-      reason: plans[id-1]?.name,
-      transaction_amount: plans[id-1]?.price,
+      reason: plans[id - 1]?.name,
+      transaction_amount: plans[id - 1]?.price,
       currency_id: "ARS",
-      payer_email: user?.email/* "test_user_54987522@testuser.com "*/,
+      payer_email: user?.email /* "test_user_54987522@testuser.com "*/,
     };
     dispatch(paySubscription(plan));
   };

@@ -3,15 +3,22 @@ import { /*Link,*/ useNavigate } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
-import { cameBackToBasic, deleteUserInformation, getProfileInfo, validateSubscription, updateSubscription, getUserInfo } from "../../redux/actions";
+import {
+  cameBackToBasic,
+  deleteUserInformation,
+  getProfileInfo,
+  validateSubscription,
+  updateSubscription,
+  getUserInfo,
+} from "../../redux/actions";
 import { Box, Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
-import logo from '../Header/LOGO.png'
+import logo from "../Header/LOGO.png";
 import { useEffect, useState } from "react";
-import axios from "axios"
-import FavList from '../FavList/FavList';
-import Subs2 from "../Subs/Subs2"
+import axios from "axios";
+import FavList from "../FavList/FavList";
+import Subs from "../Subs/Subs";
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -51,21 +58,21 @@ const StyledContainer3 = styled(Container)({
 
 export default function Profile() {
   const { user, logout } = useAuth0();
-  const { isCreator } = useSelector(state => state);
+  const { isCreator } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [upgrade, setUpgrade] = useState(false);
 
   // validación de suscripción
 
-  const profileInfo = useSelector((state) => state.profileInfo)
-
-  const payer_email = "test_user_54987522@testuser.com"
+  const profileInfo = useSelector((state) => state.profileInfo);
 
   useEffect(() => {
-    dispatch(getProfileInfo(user.email))
-    dispatch(validateSubscription(payer_email))
-  }, [])
+    dispatch(getProfileInfo(user.email));
+    dispatch(validateSubscription(user.email));
+  }, []);
+
+  console.log("EMAIL DATOS", profileInfo);
 
   const subsToUpdate = {
     email: user.email,
@@ -75,9 +82,9 @@ export default function Profile() {
 
   function handleOnDelete() {
     logout({ returnTo: window.location.origin });
-    dispatch(deleteUserInformation(user.email))
-    alert('Serás redirigido al inicio')
-    navigate('/')
+    dispatch(deleteUserInformation(user.email));
+    alert("Serás redirigido al inicio");
+    navigate("/");
   }
 
   function handleCameBackToBasic() {
@@ -221,19 +228,13 @@ export default function Profile() {
                 >
                   Subir de nivel
                 </StyledLink>
+                {/* <Subs currentSub={profileInfo?.subcription} /> */}
                 {upgrade && <CreatorForm />}
               </Container>
             </>
           )}
         </StyledContainer3>
-      </StyledBox >
-
-
-
-      {isCreator && <Subs2 />}
-
+      </StyledBox>
     </>
   );
 }
-
-
