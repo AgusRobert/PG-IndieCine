@@ -202,7 +202,7 @@ function rootReducer(state = initialState, action) {
       };
       case GET_PROFILE_INFO:
         return{
-          ...state,
+          /* ...state, */
           profileInfo: action.payload
         }
       case PAY_SUBSCRIPTION:

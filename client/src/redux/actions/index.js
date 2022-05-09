@@ -295,7 +295,7 @@ export function getUserInfo (email){
         }
     }
   };
-}
+
 
 
 export function getProfileInfo (email){
@@ -406,7 +406,7 @@ export function getPlanInfo (){
         }
     }
   };
-}
+
 
 /* 
   export function sortByComment(order){

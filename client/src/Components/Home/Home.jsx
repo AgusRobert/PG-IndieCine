@@ -57,7 +57,7 @@ export default function Home() {
                 <Header position= "sticky" />
             <div className="container">
                 <h2 className="Title">Estrenos:</h2>
-                <Swiper
+                {allMovies && <Swiper
                     navigation={true}
                     effect={"coverflow"}
                     centeredSlides={true}
@@ -75,76 +75,19 @@ export default function Home() {
                     }}
                     className="mySwiper"
                 >
-                    <SwiperSlide>
-                        <img src="https://images-na.ssl-images-amazon.com/images/I/71A0Ls9QIML._RI_.jpg" alt="img not found" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="https://es.web.img3.acsta.net/r_1280_720/medias/nmedia/18/70/00/92/19103927.jpg" alt="img not found" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="https://medias.unifrance.org/medias/24/118/30232/format_page/media.jpg" alt="img not found" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="https://m.media-amazon.com/images/I/61e+5v4kM3L._AC_.jpg" alt="img not found" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="https://imagenes.gatotv.com/categorias/peliculas/posters/los_sonambulos.jpg" alt="img not found" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="https://moviehaku.com/thumbs/films/400x590/Plaga-Zombie--Zona-Mutante--Revolucion-Toxica.jpg" alt="img not found" />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img src="https://i.pinimg.com/736x/a3/08/2b/a3082ba53195867f0516469b7062871a.jpg" alt="img not found" />
-                    </SwiperSlide>
-                </Swiper>
-            </div>
-
-            {/* <div className="slider">
-                    <Swiper
-                        effect={"coverflow"}
-                        grabCursor={true}
-                        centeredSlides={true}
-                        slidesPerView={"auto"}
-                        coverflowEffect={{
-                        rotate: 50,
-                        stretch: 0,
-                        depth: 100,
-                        modifier: 1,
-                        slideShadows: true,
-                        }}
-                        pagination={true}
-                        modules={[EffectCoverflow, Pagination]}
-                        className="mySwiper"
-                    >
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-1.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-2.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-3.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-4.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-5.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-6.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-7.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-8.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                        <img className="imgSwiper" src="https://swiperjs.com/demos/images/nature-9.jpg" alt="img not found"/>
-                        </SwiperSlide>
-                    </Swiper>
-                </div> */}
+                    {allMovies?.map((m) => { 
+            return (
+              <div>
+                <SwiperSlide>
+                  <Link to={`/detail/${m.id}`}>
+                    <img src={m.poster} alt="img not found" />
+                  </Link>
+                </SwiperSlide>
+              </div>
+            );
+          })}
+                </Swiper>}
+                </div> 
             <div>
                 <Container>
                     <Row md={6} lg={6} className="newdiv">

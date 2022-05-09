@@ -11,7 +11,7 @@ import logo from '../Header/LOGO.png'
 import { useEffect, useState } from "react";
 import axios from "axios"
 import FavList from '../FavList/FavList';
-
+import Subs2 from "../Subs/Subs2"
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -147,7 +147,7 @@ export default function Profile() {
               </Container>
             )}
 
-            {isCreator && (
+            {isCreator && /* user.pelissubidas<plan.filmsAllowed */(
               <Container>
                 <StyledLink
                   sx={{
@@ -255,10 +255,13 @@ export default function Profile() {
                 <li>Proyecto 2</li>
                 <li>Proyecto 3</li>
               </ul>
+
+              
             </>
           ) : (
             <>
               <h2>¿Desea subir al siguiente nivel?</h2>
+              
               <Container>
                 <h4>Beneficios de convertirse en Creador.</h4>
                 <ul>
@@ -286,6 +289,13 @@ export default function Profile() {
           )}
         </StyledContainer3>
       </StyledBox >
+
+     
+
+      {isCreator && <Subs2/>}
+      
     </>
   );
 }
+
+
