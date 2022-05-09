@@ -212,6 +212,22 @@ function rootReducer(state = initialState, action) {
         paymentLink: action.payload.init_point,
       };
 
+
+      case VALIDATE_SUBSCRIPTION:
+        let updatedSubscription ="Free"
+        if(action.payload.results[0].status = "pending"){
+          updatedSubscription = action.payload.results[2].reason
+          return{
+            ...state,
+            profileInfo: {
+              ...state.profileInfo,
+              subcription: updatedSubscription
+            }
+          };
+        }
+    
+
+// corregir
     case VALIDATE_SUBSCRIPTION:
       let updatedSubscription = "Free";
       if ((action.payload.results[0].status = "pending")) {
@@ -224,7 +240,7 @@ function rootReducer(state = initialState, action) {
           },
         };
       }
-
+//
     case GET_PLAN_INFO:
       return {
         ...state,

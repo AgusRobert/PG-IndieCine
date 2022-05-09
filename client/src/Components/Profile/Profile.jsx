@@ -11,7 +11,7 @@ import logo from '../Header/LOGO.png'
 import { useEffect, useState } from "react";
 import axios from "axios"
 import FavList from '../FavList/FavList';
-
+import Subs from "../Subs/Subs"
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -58,12 +58,17 @@ export default function Profile() {
 
   // validación de suscripción
   const profileInfo = useSelector((state) => state.profileInfo)
-  const payer_email = "test_user_54987522@testuser.com"
+
 
   useEffect(() => {
     // console.log('SE EJECUTA EL useEffect de Profile')
     // console.log('profileInfo pre', profileInfo)
     dispatch(getProfileInfo(user.email))
+    dispatch(validateSubscription(user.email))
+  }, [])
+
+  console.log("EMAIL DATOS", profileInfo)
+
     // console.log('profileInfo post', profileInfo)
     // Este console.log trae undefined por el delay de react-redux
 
@@ -77,6 +82,7 @@ export default function Profile() {
   //   </div>
   // )
 
+
   const subsToUpdate = {
     email: user.email,
     subcription: profileInfo?.subcription,
@@ -84,11 +90,10 @@ export default function Profile() {
   }
 
 
-
   function handleOnDelete() {
     logout({ returnTo: window.location.origin });
     dispatch(deleteUserInformation(user.email))
-    alert('Serás redirigido al inicio')
+    alert('La eliminación de tus datos va a ser efectiva en las próximas 24hs.')
     navigate('/')
   }
 
@@ -113,6 +118,7 @@ export default function Profile() {
 
   return (
     <>
+      
       <StyledBox>
         <Container>
           <StyledLink
@@ -157,25 +163,6 @@ export default function Profile() {
               </Container>
             )}
 
-            {isCreator && (
-              <Container>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={handleUploadProject}
-                >
-                  Subir Proyecto
-                </StyledLink>
-              </Container>
-            )}
-
             {isCreator ? (
               <Container>
                 <StyledLink
@@ -211,50 +198,20 @@ export default function Profile() {
               </StyledLink>
             </Container>
 
-            <Container>
+
+            {/* <Container>
               <h2>Mis favoritas</h2>
-              {/* <FavList /> */}
-            </Container>
+              <FavList />
+            </Container> */}
 
-            {isCreator ? (
-              <Container>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={handleCameBackToBasic}
-                >
-                  Volver a básico
-                </StyledLink>
-              </Container>
-            ) : null}
 
-            <Container>
-              <StyledLink
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200],
-                    color: "black",
-                  },
-                }}
-                color="textPrimary"
-                variant="button"
-                underline="none"
-                onClick={handleOnDelete}
-              >
-                Borrar cuenta
-              </StyledLink>
-            </Container>
+
           </Container>
         </StyledContainer>
+
         <StyledContainer2>
           <h2>Lista de peliculas favoritas.</h2>
+          <FavList />
         </StyledContainer2>
         <StyledContainer3>
           {isCreator ? (
@@ -265,6 +222,8 @@ export default function Profile() {
                 <li>Proyecto 2</li>
                 <li>Proyecto 3</li>
               </ul>
+
+              
             </>
           ) : (
             <>
@@ -290,12 +249,18 @@ export default function Profile() {
                 >
                   Subir de nivel
                 </StyledLink>
+                <Subs currentSub={profileInfo?.subcription}/>
                 {upgrade && <CreatorForm />}
               </Container>
             </>
           )}
         </StyledContainer3>
       </StyledBox >
+
+      
+
     </>
   );
 }
+
+

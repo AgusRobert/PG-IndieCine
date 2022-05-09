@@ -10,6 +10,8 @@ import { FilmForm } from "./Components/MovieForm/FilmForm";
 import { PruebaFacu } from "./Components/MovieForm/PruebaFacu";
 import NotFound from "./Components/NotFound/NotFound";
 import Subs from "./Components/Subs/Subs";
+import Subs3 from "./Components/Subs/Subs3";
+import Subs2 from "./Components/Subs/Subs2";
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           {isAuthenticated && <Route exact path="/addFilm" element={<FilmForm />} />}
          < Route path="*" element= {<NotFound/>} /> 
          < Route path="/subs" element= {<Subs/>} />
+         < Route path="/subs3" element= {<Subs3/>} />
+         < Route path="/subs2" element= {<Subs2/>} />
         </Routes>
       </div>
       

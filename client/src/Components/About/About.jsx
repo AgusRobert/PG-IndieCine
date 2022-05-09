@@ -109,36 +109,38 @@ export default function About(){
         <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Item>DANIEL SANCHEZ</Item>
+
+          <Item>Daniel Sanchez</Item>
           <Item>dasmmer@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>GUSTAVO GALLESIO</Item>
-          <Item>gustavogallesio@hotmail.com</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>FACUNDO RAMOS</Item>
-          <Item>faq.ramos.14101999@gmail.com</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>KEYNA PAYANO</Item>
-          <Item>keynarafaelpayano@gmail.com</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>XAVIER CARRILLO</Item>
-          <Item>2092.rxcm@gmail.com</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>VALENTÍN AVALOS</Item>
-          <Item>valentinnavalos@gmail.com</Item>
-        </Grid>
-        <Grid item xs={4}>
-          <Item>AGUSTÍN IABICHELLA</Item>
+          <Item>Agustín Iabichella</Item>
           <Item>iabichellarobert@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>GASTÓN DUBA</Item>
+          <Item>Facundo Ramos</Item>
+          <Item>faq.ramos.14101999@gmail.com</Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>Gustavo Gallesio</Item>
+          <Item>gustavogallesio@hotmail.com</Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>Keyna Rafael Payano</Item>
+          <Item>keynarafaelpayano@gmail.com</Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>Gastón Duba</Item>
           <Item>gduba90@gmail.com</Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>Richard Xavier Carrillo</Item>
+          <Item>2092.rxcm@gmail.com</Item>
+        </Grid>
+        <Grid item xs={4}>
+          <Item>Valentín Avalos</Item>
+          <Item>valentinnavalos@gmail.com</Item>
+
         </Grid>
         <Grid item xs={4}>
           <Item>CONTÁCTANOS</Item>

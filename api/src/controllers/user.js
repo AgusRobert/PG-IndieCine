@@ -168,21 +168,33 @@ exports.getFilmsById = async (req, res) => {
   res.json(films);
 };
 
-exports.addFav = async (req, res) => {
-  const { favDispatch } = req.body;
-  const { idPeli, email } = favDispatch;
 
-  let user = await User.findOne({
-    where: {
-      email: email,
-    },
-  });
-  console.log(user);
-  let peli = await Film.findByPk(idPeli);
+exports.addFav = async (req,res) =>{
+  const{favDispatch}= req.body
+  const{idPeli,email}=favDispatch
+  
+    let user = await User.findOne({
+      where:{
+        email:email
+      }
+    })  
+     console.log(user)
+    let peli = await Film.findByPk(idPeli)
 
-  user.addFilm(peli);
-  res.send("Peli agregada");
-};
+    user.addFilm(peli)
+   res.send('Peli agregada')
+   
+}
+
+/*exports.getFavs = async (req, res) =>{
+  const{id}= req.params
+  const Usuario = await User.findByPk(id)
+  const favoritos = await Usuario.getFilms()
+  console.log("USUARIOOO", Usuario)
+  console.log(favoritos)
+   res.json(favoritos)
+  
+}*/
 
 exports.getFavs = async (req, res) => {
   try {
