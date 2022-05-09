@@ -55,14 +55,14 @@ export default function FavList() {
   }
 
   useEffect(() => {
-    console.log('state pre: ', state)
     // console.log('favs substate', favs)
     dispatch(getProfileInfo(user.email));
-    console.log('state post: ', state)
     // console.log("FavList profileInfo", profileInfo);
-    // dispatch(getFavorites(profileInfo?.id));
+    dispatch(getFavorites(profileInfo?.id));
     // console.log('profileInfo', profileInfo)
   }, []);
+
+  console.log("ID", profileInfo?.id)
 
   return (
     <Box>

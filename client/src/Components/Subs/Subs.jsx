@@ -34,15 +34,20 @@ export default function Subs(currentSub) {
   }, [paymentLink])
 
   const {user} = useAuth0()
+
+  console.log("EMAILLLLLLL", user?.email)
+
+  console.log("PLANES", plans)
   
   const onSubscribe = (id) => {
+
+    console.log("PLAN ID", plans)
     let plan = {
-      reason: plans[id]?.name,
-      transaction_amount: plans[id]?.price,
+      reason: plans[id-1]?.name,
+      transaction_amount: plans[id-1]?.price,
       currency_id: "ARS",
       payer_email: user?.email
-    }  
-
+    } 
     dispatch(paySubscription(plan))
   }
 
@@ -72,6 +77,7 @@ export default function Subs(currentSub) {
                   >
                     <MovieCreationIcon />
                     Plan "{esteplan.name}"
+                    {console.log("ESTE PLAN", esteplan.name)}
                   </h3>
                   <h2
                     style={{

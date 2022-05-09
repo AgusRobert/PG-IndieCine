@@ -204,10 +204,10 @@ export default function Profile() {
               </StyledLink>
             </Container>
 
-            <Container>
+            {/* <Container>
               <h2>Mis favoritas</h2>
               <FavList />
-            </Container>
+            </Container> */}
 
             {isCreator ? (
               <Container>

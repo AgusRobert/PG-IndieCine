@@ -187,6 +187,7 @@ exports.getFavs = async (req, res) =>{
   const{id}= req.params
   const Usuario = await User.findByPk(id)
   const favoritos = await Usuario.getFilms()
+  console.log("USUARIOOO", Usuario)
   console.log(favoritos)
    res.json(favoritos)
   
