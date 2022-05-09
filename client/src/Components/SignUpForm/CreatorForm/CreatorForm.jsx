@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch /*, useSelector*/ } from "react-redux";
 import { isCreator, signUpFunction } from "../../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
@@ -28,6 +29,7 @@ const SelectStyle = styled(TextField)({
 });
 
 export default function CreatorForm() {
+  const [documents, setDocuments] = useState({ back: null, front: null });
   const [input, setInput] = useState({
     country: "",
     people: null, //-------> tipo de persona.
@@ -35,8 +37,6 @@ export default function CreatorForm() {
     telephone: "",
     typeOfDocument: "", //-------> tipo de identificacion.
     numberOfDocument: "",
-    frontDocument: "", //---> id file updated.--> input type file
-    reverseDocument: "", //---^
     // termsAndConditions: false,
   });
   const [errors, setErrors] = useState({});
@@ -137,6 +137,10 @@ export default function CreatorForm() {
     // Esto es para el renderizado condicional del select de roles.
   }
 
+  const handleSelectFiles = (e) => {
+    setDocuments({ ...documents, [e.target.name]: e.target.files[0] });
+  };
+
   function handleOnCheckbox(e) {
     setInput((prevState) => {
       const newInput = {
@@ -148,27 +152,43 @@ export default function CreatorForm() {
     });
   }
 
-  function handleOnSubmit(e) {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     setErrors(validateForm(input));
     if (
       !Object.keys(errors).length &&
-      // input.termsAndConditions &&
       input.country &&
       input.people &&
       input.rol &&
       input.telephone &&
       input.typeOfDocument &&
-      input.numberOfDocument &&
-      input.frontDocument &&
-      input.reverseDocument
+      input.numberOfDocument
     ) {
-      alert("Formulario enviado correctamente");
+      const responses = { front: "", back: "" };
+      console.log("Dtos antes de enviar:", documents);
+      if (documents?.front) {
+        const formDocFront = new FormData();
+        formDocFront.append("file", documents.front);
+        responses.front = (
+          await axios.post("http://localhost:3001/upload/inter", formDocFront)
+        )?.data;
+        console.log("Respuesta FRONT: ", responses.front);
+      }
+      if (documents?.back) {
+        const formDocBack = new FormData();
+        //adicion de la imagen para la subida
+        formDocBack.append("file", documents.back);
+        responses.back = (
+          await axios.post("http://localhost:3001/upload/inter", formDocBack)
+        )?.data;
+        console.log("Respuesta BACK: ", responses.back);
+      }
       dispatch(
         signUpFunction({
           ...input,
           ...user,
           creator: true,
+          ...responses,
         })
       );
 
@@ -177,10 +197,10 @@ export default function CreatorForm() {
     } else {
       alert("Porfavor revise los datos ingresados");
     }
-  }
+  };
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form onSubmit={(e) => handleOnSubmit(e)}>
       <BoxStyle>
         <div>
           <div>
@@ -317,11 +337,11 @@ export default function CreatorForm() {
                 }}
               >
                 <MenuItemStyle value="" disabled selected>
-                Seleccione una opción
-              </MenuItemStyle>
-              <MenuItemStyle value="dni">DNI</MenuItemStyle>
-              <MenuItemStyle value="pasaporte">Pasaporte</MenuItemStyle>
-              <MenuItemStyle value="ruc">RUC</MenuItemStyle>
+                  Seleccione una opción
+                </MenuItemStyle>
+                <MenuItemStyle value="dni">DNI</MenuItemStyle>
+                <MenuItemStyle value="pasaporte">Pasaporte</MenuItemStyle>
+                <MenuItemStyle value="ruc">RUC</MenuItemStyle>
               </SelectStyle>
             </Box>
             {/*    <SelectStyle name="typeOfDocument" onChange={handleOnSelect}>
@@ -361,14 +381,13 @@ export default function CreatorForm() {
             </label>
             <input
               type="file"
-              name="frontDocument"
-              value={input.frontDocument}
+              name="front"
               multiple={false}
-              onChange={handleOnChange}
+              onChange={(e) => handleSelectFiles(e)}
+              required
               accept="image/png, image/jpeg, image/jpg"
             />
           </div>
-          {errors.frontDocument && <span>{errors.frontDocument}</span>}
         </div>
         <div>
           <div>
@@ -377,14 +396,13 @@ export default function CreatorForm() {
             </label>
             <input
               type="file"
-              name="reverseDocument"
-              value={input.reverseDocument}
+              name="back"
               multiple={false}
-              onChange={handleOnChange}
               accept="image/png, image/jpeg, image/jpg"
+              required
+              onChange={(e) => handleSelectFiles(e)}
             />
           </div>
-          {errors.reverseDocument && <span>{errors.reverseDocument}</span>}
         </div>
         {/* <div>
                     <div>

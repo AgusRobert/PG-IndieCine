@@ -80,7 +80,7 @@ export default function Profile() {
   function handleOnDelete() {
     logout({ returnTo: window.location.origin });
     dispatch(deleteUserInformation(user.email))
-    alert('Serás redirigido al inicio')
+    alert('La eliminación de tus datos va a ser efectiva en las próximas 24hs.')
     navigate('/')
   }
 
@@ -150,25 +150,6 @@ export default function Profile() {
               </Container>
             )}
 
-            {isCreator && /* user.pelissubidas<plan.filmsAllowed */(
-              <Container>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={handleUploadProject}
-                >
-                  Subir Proyecto
-                </StyledLink>
-              </Container>
-            )}
-
             {isCreator ? (
               <Container>
                 <StyledLink
@@ -203,51 +184,20 @@ export default function Profile() {
                 Borrar cuenta
               </StyledLink>
             </Container>
+
 
             {/* <Container>
               <h2>Mis favoritas</h2>
               <FavList />
             </Container> */}
 
-            {isCreator ? (
-              <Container>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={handleCameBackToBasic}
-                >
-                  Volver a básico
-                </StyledLink>
-              </Container>
-            ) : null}
 
-            <Container>
-              <StyledLink
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200],
-                    color: "black",
-                  },
-                }}
-                color="textPrimary"
-                variant="button"
-                underline="none"
-                onClick={handleOnDelete}
-              >
-                Borrar cuenta
-              </StyledLink>
-            </Container>
           </Container>
         </StyledContainer>
+
         <StyledContainer2>
           <h2>Lista de peliculas favoritas.</h2>
+          <FavList />
         </StyledContainer2>
         <StyledContainer3>
           {isCreator ? (
