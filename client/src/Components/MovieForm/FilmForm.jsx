@@ -43,10 +43,10 @@ export function FilmForm() {
   //constantes necesaria para el despacho de peticiones
   const dispatch = useDispatch();
   //paises y generos necesarios para el select
-  const { countries, genres } = useSelector((state) => state);
+  const { countries, genres } = useSelector(state => state);
   const { user } = useAuth0();
   //manejo de cambios en los campos
-  const handleOnChange = (e) => {
+  const handleOnChange = e => {
     setMovieForm({
       ...movieForm,
       [e.target.name]: e.target.value,
@@ -59,18 +59,32 @@ export function FilmForm() {
     );
   };
   //manejo de selecciones
-  const selectMultimedia = (e) => {
+  const selectMultimedia = e => {
     e.preventDefault();
     setMultimedia({ ...multimedia, [e.target.name]: e.target.files[0] });
   };
   //manejo de seleccion de generos
-  const handleGenres = (e) => {
+  const handleGenres = e => {
     if (!movieForm?.genres?.includes(e.target.value))
       setMovieForm({
         ...movieForm,
         [e.target.name]: [...movieForm.genres, e.target.value],
       });
   };
+
+  function handleDeleteGenre(e) {
+    setMovieForm({
+      ...movieForm,
+      genres: movieForm.genres.filter(data => data !== e),
+    });
+  }
+
+  function handleDeleteActors(e) {
+    setMovieForm({
+      ...movieForm,
+      mainActors: movieForm.mainActors.filter(data => data !== e),
+    });
+  }
 
   useEffect(() => {
     //Obtencion de los paises
@@ -79,19 +93,20 @@ export function FilmForm() {
     !genres?.length && dispatch(getGenres());
   }, [countries?.length, genres?.length, dispatch]);
   //agregado de un actor a los personajes
-  const handleElenco = (e) => {
+  const handleElenco = e => {
     e.preventDefault();
     //comprobacion de un nombre no existente o nulo
-    if (
-      !actor.trim() == "" &&
-      !movieForm.mainActors.includes(actor.toLowerCase())
-    )
+    let comparacion = movieForm.mainActors.map(p => {
+      return p.toLowerCase();
+    });
+    console.log("COMPARACION", comparacion);
+    if (!actor.trim() == "" && !comparacion.includes(actor.toLowerCase()))
       movieForm.mainActors.push(actor.trim());
     else alert("Actor Invalido");
     setActor("");
   };
   //manejador de envio del formulario
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
     const objResponse = {};
     console.log("DATOS FRONT: ", multimedia);
@@ -137,7 +152,7 @@ export function FilmForm() {
       }}
     >
       <h1>Subí tu proyecto a la red!</h1>
-      <form onSubmit={(e) => onSubmit(e)}>
+      <form onSubmit={e => onSubmit(e)}>
         <BoxStyle>
           {/* Título */}
           <LabelStyle>Título</LabelStyle>
@@ -146,7 +161,7 @@ export function FilmForm() {
             value={movieForm.title}
             placeholder="Título de la Película"
             name="title"
-            onChange={(e) => handleOnChange(e)}
+            onChange={e => handleOnChange(e)}
             required
           />
           {errores?.title && <p class="errores">{errores.title}</p>}
@@ -158,7 +173,7 @@ export function FilmForm() {
             accept="image/jpg image/png image/jpeg"
             name="port"
             placeholder="Portada de la Pelicula"
-            onChange={(e) => selectMultimedia(e)}
+            onChange={e => selectMultimedia(e)}
             required
           />
 
@@ -169,7 +184,7 @@ export function FilmForm() {
             value={movieForm.synopsis}
             placeholder="Sinopsis"
             name="synopsis"
-            onChange={(e) => handleOnChange(e)}
+            onChange={e => handleOnChange(e)}
             required
           />
           {errores?.synopsis && <p class="errores">{errores.synopsis}</p>}
@@ -178,7 +193,7 @@ export function FilmForm() {
           <LabelStyle>Géneros *</LabelStyle>
           <SelectStyle
             name="genres"
-            onChange={(e) => handleGenres(e)}
+            onChange={e => handleGenres(e)}
             select
             label="Generos"
             variant="outlined"
@@ -186,7 +201,7 @@ export function FilmForm() {
             sx={sxSelectStyle}
           >
             <MenuItemStyle hidden={true}>Géneros</MenuItemStyle>
-            {genres?.map((genre) => (
+            {genres?.map(genre => (
               <MenuItemStyle key={genre.id} value={genre.name}>
                 {genre.name}
               </MenuItemStyle>
@@ -198,7 +213,7 @@ export function FilmForm() {
           <LabelStyle>País *</LabelStyle>
           <SelectStyle
             name="country"
-            onChange={(e) => handleOnChange(e)}
+            onChange={e => handleOnChange(e)}
             select
             label="Pais"
             variant="outlined"
@@ -206,7 +221,7 @@ export function FilmForm() {
             sx={sxSelectStyle}
           >
             <MenuItemStyle hidden={true}>Países</MenuItemStyle>
-            {countries?.map((country) => (
+            {countries?.map(country => (
               <MenuItemStyle key={country.id} value={country.id}>
                 {country.name}
               </MenuItemStyle>
@@ -220,14 +235,14 @@ export function FilmForm() {
           <SelectStyle
             name="year"
             value={movieForm.year}
-            onChange={(e) => handleOnChange(e)}
+            onChange={e => handleOnChange(e)}
             select
             label="año"
             variant="outlined"
             size="small"
             sx={sxSelectStyle}
           >
-            {años?.map((anio) => (
+            {años?.map(anio => (
               <MenuItemStyle key={anio} value={anio}>
                 {anio}
               </MenuItemStyle>
@@ -238,7 +253,7 @@ export function FilmForm() {
           <LabelStyle>Duración *</LabelStyle>
           <SelectStyle
             name="duration"
-            onChange={(e) => handleOnChange(e)}
+            onChange={e => handleOnChange(e)}
             select
             label="Duracion"
             variant="outlined"
@@ -264,7 +279,7 @@ export function FilmForm() {
             value={movieForm.director}
             name="director"
             placeholder="Dirección"
-            onChange={(e) => handleOnChange(e)}
+            onChange={e => handleOnChange(e)}
             required
           />
           {errores?.director && <p class="errores">{errores.director}</p>}
@@ -276,13 +291,13 @@ export function FilmForm() {
             value={actor}
             placeholder="Actores"
             name="actor"
-            onChange={(e) => setActor(e.target.value)}
+            onChange={e => setActor(e.target.value)}
           />
           <ButtonStyle
             sx={sxButtonStyle}
             type="button"
             name="elenco"
-            onClick={(e) => handleElenco(e)}
+            onClick={e => handleElenco(e)}
           >
             Añadir
           </ButtonStyle>
@@ -294,7 +309,7 @@ export function FilmForm() {
             value={movieForm.associateProducer}
             name="associateProducer"
             placeholder="Productora"
-            onChange={(e) => handleOnChange(e)}
+            onChange={e => handleOnChange(e)}
             // required
           />
 
@@ -305,7 +320,7 @@ export function FilmForm() {
             accept="video/mp4"
             name="film"
             placeholder="Subir Película.mp4"
-            onChange={(e) => selectMultimedia(e)}
+            onChange={e => selectMultimedia(e)}
           />
           <LabelStyle>Pelicula Link *</LabelStyle>
           <InputStyle
@@ -313,7 +328,7 @@ export function FilmForm() {
             value={movieForm.url}
             name="url"
             placeholder="URL de la Pelicula"
-            onChange={(e) => handleOnChange(e)}
+            onChange={e => handleOnChange(e)}
             required
           />
           {errores?.url && <p class="errores">{errores.url}</p>}
@@ -326,6 +341,22 @@ export function FilmForm() {
           </ButtonStyle>
         </BoxStyle>
       </form>
+      <div>
+        {movieForm.genres.map(data => (
+          <div>
+            <button key={data.id} onClick={() => handleDeleteGenre(data)}>
+              {data}
+            </button>
+          </div>
+        ))}
+        {movieForm.mainActors.map(data => (
+          <div>
+            <button key={data} onClick={() => handleDeleteActors(data)}>
+              {data}
+            </button>
+          </div>
+        ))}
+      </div>
     </Box>
   );
 }
