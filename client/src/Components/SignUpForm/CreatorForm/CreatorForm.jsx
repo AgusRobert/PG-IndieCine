@@ -1,7 +1,6 @@
 import { /*useEffect, */ useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch /*, useSelector*/ } from "react-redux";
-import { isCreator, signUpFunction } from "../../../redux/actions";
+import { useDispatch } from "react-redux";
+import { signUpFunction, updateUser } from "../../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 
@@ -31,12 +30,12 @@ const SelectStyle = styled(TextField)({
 export default function CreatorForm() {
   const [documents, setDocuments] = useState({ back: null, front: null });
   const [input, setInput] = useState({
-    country: "",
+    country: null,
     people: null, //-------> tipo de persona.
-    rol: "",
-    telephone: "",
-    typeOfDocument: "", //-------> tipo de identificacion.
-    numberOfDocument: "",
+    rol: null,
+    telephone: null,
+    typeOfDocument: null, //-------> tipo de identificacion.
+    numberOfDocument: null,
     // termsAndConditions: false,
   });
   const [errors, setErrors] = useState({});
@@ -164,36 +163,43 @@ export default function CreatorForm() {
       input.typeOfDocument &&
       input.numberOfDocument
     ) {
-      const responses = { front: "", back: "" };
-      console.log("Dtos antes de enviar:", documents);
+      const responses = {};
+      console.log("Datos antes de enviar:", documents);
       if (documents?.front) {
         const formDocFront = new FormData();
         formDocFront.append("file", documents.front);
-        responses.front = (
+        const rFront = (
           await axios.post("http://localhost:3001/upload/inter", formDocFront)
         )?.data;
-        console.log("Respuesta FRONT: ", responses.front);
+        if (typeof rFront === "string") responses.frontDocument = rFront;
+        // console.log("Respuesta FRONT: ", responses.front);
       }
       if (documents?.back) {
         const formDocBack = new FormData();
         //adicion de la imagen para la subida
         formDocBack.append("file", documents.back);
-        responses.back = (
+        console.log("documents.Back", documents.back);
+        console.log("formDocBack", formDocBack);
+        const rBack = (
           await axios.post("http://localhost:3001/upload/inter", formDocBack)
         )?.data;
-        console.log("Respuesta BACK: ", responses.back);
+        if (typeof rBack === "string") responses.backDocument = rBack;
+        // console.log("Respuesta BACK: ", responses.back);
       }
+      console.log("response", responses);
       dispatch(
-        signUpFunction({
+        updateUser({
           ...input,
-          ...user,
-          creator: true,
+          // ...user,
+          email: user.email,
           ...responses,
+          // creator: false,
+          status: "pending",
         })
       );
-
-      // direccionamiento al home? al login?
-      // resetear el estado de input??
+      alert(
+        "Solicitud enviada correctamente, en breve nos comunicaremos con usted."
+      );
     } else {
       alert("Porfavor revise los datos ingresados");
     }
@@ -202,6 +208,7 @@ export default function CreatorForm() {
   return (
     <form onSubmit={(e) => handleOnSubmit(e)}>
       <BoxStyle>
+        {/* País */}
         <div>
           <div>
             <label htmlFor="country">País</label>
@@ -209,8 +216,7 @@ export default function CreatorForm() {
               name="country"
               onChange={handleOnSelect}
               select
-              label="
-  País"
+              label="País"
               variant="outlined"
               size="small"
               /*  color="white" */
@@ -224,7 +230,7 @@ export default function CreatorForm() {
                 },
               }}
             >
-              {/*  <MenuItemStyle value="" disabled selected>
+              {/* <MenuItemStyle value="" disabled selected>
                 Seleccione un país
               </MenuItemStyle> */}
 
@@ -239,6 +245,8 @@ export default function CreatorForm() {
           </div>
           {errors.country && <span>{errors.country}</span>}
         </div>
+
+        {/* Persona */}
         <div>
           <div>
             <label htmlFor="people">Persona</label>
@@ -251,13 +259,12 @@ export default function CreatorForm() {
             </SelectStyle> */}
 
             <Box>
-              {" "}
+              {/* {" "} */}
               <SelectStyle
                 name="people"
                 onChange={handleOnSelect}
                 select
-                label="
-  Tipo de Persona"
+                // label="Tipo de Persona"
                 variant="outlined"
                 size="small"
                 sx={{
@@ -277,29 +284,59 @@ export default function CreatorForm() {
           </div>
           {errors.people && <span>{errors.people}</span>}
         </div>
+
+        {/* Roles */}
         {personSelected ? (
           <div>
             <label htmlFor="rol">Rol</label>
-            {input.people ? (
-              <SelectStyle name="rol" onChange={handleOnSelect}>
-                <MenuItemStyle value="" disabled selected>
-                  Roles
-                </MenuItemStyle>
-                <MenuItemStyle value="director">Director/a</MenuItemStyle>
-                <MenuItemStyle value="productor">Productor/a</MenuItemStyle>
-                <MenuItemStyle value="montajista">Montajista</MenuItemStyle>
-              </SelectStyle>
-            ) : (
-              <SelectStyle name="rol" onChange={handleOnSelect}>
-                <MenuItemStyle value="" disabled selected>
-                  Roles
-                </MenuItemStyle>
-                <MenuItemStyle value="productora">Productora</MenuItemStyle>
-              </SelectStyle>
-            )}
+            <Box>
+              {input.people === "true" ? (
+                <SelectStyle
+                  name="rol"
+                  onChange={handleOnSelect}
+                  select
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    ":active": {
+                      color: "black",
+                      borderColor: deepPurple[600],
+                    },
+                    ":focused": {
+                      borderColor: deepPurple[600],
+                    },
+                  }}
+                >
+                  <MenuItemStyle value="director">Director/a</MenuItemStyle>
+                  <MenuItemStyle value="productor">Productor/a</MenuItemStyle>
+                  <MenuItemStyle value="montajista">Montajista</MenuItemStyle>
+                </SelectStyle>
+              ) : (
+                <SelectStyle
+                  name="rol"
+                  onChange={handleOnSelect}
+                  select
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    ":active": {
+                      color: "black",
+                      borderColor: deepPurple[600],
+                    },
+                    ":focused": {
+                      borderColor: deepPurple[600],
+                    },
+                  }}
+                >
+                  <MenuItemStyle value="productora">Productora</MenuItemStyle>
+                </SelectStyle>
+              )}
+            </Box>
             {errors.rol && <span>{errors.rol}</span>}
           </div>
         ) : null}
+
+        {/* Teléfono */}
         <div>
           <div>
             <label htmlFor="telephone">Teléfono</label>
@@ -312,10 +349,11 @@ export default function CreatorForm() {
           </div>
           {errors.telephone && <span>{errors.telephone}</span>}
         </div>
+
+        {/* Tipo de documento */}
         <div>
           <div>
             <label htmlFor="typeOfDocument">Tipo de identificación</label>
-
             <Box>
               {" "}
               <SelectStyle
@@ -356,6 +394,8 @@ export default function CreatorForm() {
           </div>
           {errors.typeOfDocument && <span>{errors.typeOfDocument}</span>}
         </div>
+
+        {/* Número de identificación */}
         <div>
           <div>
             <label htmlFor="numberOfDocument">Número de identificación</label>
@@ -369,11 +409,8 @@ export default function CreatorForm() {
           </div>
           {errors.numberOfDocument && <span>{errors.numberOfDocument}</span>}
         </div>
-        {/* decidí dejar dos input file que reciben un archivo máximo cada uno de los dos
-                para que el path de la img se guarde en el value de cada input. Porque, en caso
-                contrario, si dejo un input file que reciba multiples archivos solo se guarda el
-                path del primer archivo en value. Y para acceder al resto habría que acceder a 
-                los demás archivos golpeando la propiedad files del input file. */}
+
+        {/* Foto del frente del documento */}
         <div>
           <div>
             <label htmlFor="frontDocument">
@@ -389,6 +426,8 @@ export default function CreatorForm() {
             />
           </div>
         </div>
+
+        {/* Foto del reverso del documento */}
         <div>
           <div>
             <label htmlFor="reverseDocument">

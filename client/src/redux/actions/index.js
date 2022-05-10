@@ -12,12 +12,12 @@ import {
   GET_GENRES,
   GET_COUNTRIES,
   MOVIE_DETAIL,
-  SIGN_UP_USER,
+  // SIGN_UP_USER,
   SUBSCRIBE,
   GET_FAV,
   DELETE_USER_INFORMATION,
-  HANDLE_CAME_BACK_TO_BASIC,
-  GET_USER_INFO,
+  // HANDLE_CAME_BACK_TO_BASIC,
+  // GET_USER_INFO,
   GET_PLAN_INFO,
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
@@ -172,46 +172,62 @@ export function signUpFunction(userData) {
   return async function (dispatch) {
     try {
       console.log("userData", userData);
-      let request = {
-        name: userData.given_name ? userData.given_name : null,
-        surname: userData.family_name ? userData.family_name : null,
-        username: userData.nickname,
-        email: userData.email,
-        password: userData.email,
-        creator: userData.creator,
-        country: userData.country ? userData.country : null,
-        people: userData.people
-          ? userData.people === "true"
-            ? true
-            : false
-          : null,
-        rol: userData.rol ? userData.rol : null,
-        telephone: userData.telephone ? parseInt(userData.telephone) : null,
-        typeOfDocument: userData.typeOfDocument
-          ? userData.typeOfDocument
-          : null,
-        numberOfDocument: userData.numberOfDocument
-          ? Number(userData.numberOfDocument)
-          : null,
-        frontDocument: userData.frontDocument ? userData.frontDocument : null,
-        backDocument: userData.reverseDocument
-          ? userData.reverseDocument
-          : null,
-      };
-      await axios.post("http://localhost:3001/users/register", request);
-      if (request.creator) {
-        return dispatch({
-          type: SIGN_UP_USER,
-          payload: true,
-        });
-      } else {
-        return dispatch({
-          type: SIGN_UP_USER,
-          payload: false,
-        });
-      }
+
+      // let request = {
+      // name: userData.given_name ? userData.given_name : null,
+      // surname: userData.family_name ? userData.family_name : null,
+      // username: userData.nickname,
+      // email: userData.email,
+      // password: userData.email,
+      // creator: userData.creator,
+      //ver misma situación que status
+      // country: userData.country ? userData.country : null,
+      // people: userData.people
+      // ? userData.people === "true"
+      // ? true
+      // : false
+      // : null,
+      // rol: userData.rol ? userData.rol : null,
+      // telephone: userData.telephone ? parseInt(userData.telephone) : null,
+      // typeOfDocument: userData.typeOfDocument
+      // ? userData.typeOfDocument
+      // : null,
+      // numberOfDocument: userData.numberOfDocument
+      // ? Number(userData.numberOfDocument)
+      // : null,
+      // frontDocument: userData.frontDocument ? userData.frontDocument : null,
+      // backDocument: userData.reverseDocument
+      // ? userData.reverseDocument
+      // : null,
+      // status: userData.status ? userData.status: null,
+      //no puede ser null, si no tiene. No se envía.
+      //porque esto se ejecuta siempre y si le envio null voy a pisar el status actual
+      //cuando se monta el Home
+      // };
+      await axios.post("http://localhost:3001/users/register", userData);
+      // if (request.creator) {
+      //   return dispatch({
+      //     type: SIGN_UP_USER,
+      //     payload: true,
+      //   });
+      // } else {
+      // return dispatch({
+      //   type: SIGN_UP_USER,
+      //   payload: false,
+      // });
+      // }
     } catch (error) {
       console.log(error);
+    }
+  };
+}
+
+export function updateUser(userData) {
+  return async function () {
+    try {
+      await axios.put("http://localhost:3001/users/modif", userData);
+    } catch (error) {
+      console.log("updateUserInformation action", error);
     }
   };
 }
@@ -251,10 +267,14 @@ export function getFavorites(id) {
 export function deleteUserInformation(email) {
   return async function (dispatch) {
     try {
-      await axios.delete(`http://localhost:3001/users/del`, email);
-      return dispatch({
-        type: DELETE_USER_INFORMATION,
+      await axios.delete(`http://localhost:3001/users/del`, {
+        data:{
+          email: email
+        }
       });
+      // return dispatch({
+      //   type: DELETE_USER_INFORMATION,
+      // });
     } catch (error) {
       console.log("deleteUserInformation", error);
     }
@@ -280,23 +300,23 @@ export function deleteFavFilm(payload) {
   };
 }
 
-export function getUserInfo(email) {
-  return async function (dispatch) {
-    try {
-      let response = await axios.get(
-        `http://localhost:3001/users/byemail`,
-        email
-      );
-      console.log("ISCREATOR", response);
-      return dispatch({
-        type: GET_USER_INFO,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log("getUserInfo", error);
-    }
-  };
-}
+// export function getUserInfo(email) {
+//   return async function (dispatch) {
+//     try {
+//       let response = await axios.get(
+//         `http://localhost:3001/users/byemail`,
+//         email
+//       );
+//       console.log("ISCREATOR", response);
+//       return dispatch({
+//         type: GET_USER_INFO,
+//         payload: response.data,
+//       });
+//     } catch (error) {
+//       console.log("getUserInfo", error);
+//     }
+//   };
+// }
 
 export function getProfileInfo(email) {
   return async function (dispatch) {
@@ -347,23 +367,23 @@ export function updateSubscription(props) {
   };
 }
 
-export function cameBackToBasic(userData) {
-  return async function (dispatch) {
-    try {
-      let updatedUser = {
-        email: userData.email,
-        creator: userData.creator,
-      };
-      await axios.put(`http://localhost:3001/users/modif`, updatedUser);
-      return dispatch({
-        type: HANDLE_CAME_BACK_TO_BASIC,
-        payload: false,
-      });
-    } catch (error) {
-      console.log("handleCameBackToBasic", error);
-    }
-  };
-}
+// export function cameBackToBasic(userData) {
+//   return async function (dispatch) {
+//     try {
+//       let updatedUser = {
+//         email: userData.email,
+//         creator: userData.creator,
+//       };
+//       await axios.put(`http://localhost:3001/users/modif`, updatedUser);
+//       return dispatch({
+//         type: HANDLE_CAME_BACK_TO_BASIC,
+//         payload: false,
+//       });
+//     } catch (error) {
+//       console.log("handleCameBackToBasic", error);
+//     }
+//   };
+// }
 
 export function subscribe(payload) {
   return async function (dispatch) {

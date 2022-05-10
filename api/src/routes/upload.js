@@ -1,5 +1,4 @@
 const router = require("express").Router();
-
 const {
   formImage,
   uploadImage,
@@ -32,7 +31,6 @@ router.post("/backdoc", uploadDocuments, postBackDoc);
 
 router.post("/inter", async (req, res) => {
   const { file } = req.files;
-
   try {
     const uploadObject = await s3
       .putObject({
@@ -43,15 +41,12 @@ router.post("/inter", async (req, res) => {
       })
       .promise();
     const urlFile = `https://${BUCKET_NAME}.${ENDPOINT}/${file.name}`;
-    
+
     res.json(urlFile);
   } catch (err) {
     console.log("ERROR: ", err);
     res.send(err);
   }
-  
-  // console.log("DATOS QUE LLEGARON AL BACK: \n",req.body);
-  // res.send({msg:"pase"});
 });
 router.get("/inters", async (req, res) => {});
 router.get("/inter/:id", async (req, res) => {});

@@ -11,11 +11,11 @@ import {
   GET_GENRES,
   GET_COUNTRIES,
   MOVIE_DETAIL,
-  SIGN_UP_USER,
+  // SIGN_UP_USER,
   GET_FAV,
-  DELETE_USER_INFORMATION,
-  CAME_BACK_TO_BASIC,
-  GET_USER_INFO,
+  // DELETE_USER_INFORMATION,
+  // CAME_BACK_TO_BASIC,
+  // GET_USER_INFO,
   GET_PLAN_INFO,
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
@@ -27,7 +27,7 @@ import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
 const initialState = {
   peliculas: [],
   pelisfiltradas: [],
-  isCreator: false,
+  // isCreator: false,
   genres: [],
   countries: [],
   detalle: {},
@@ -80,11 +80,13 @@ function rootReducer(state = initialState, action) {
         peliculas: action.payload,
         pelisfiltradas: action.payload,
       };
+
     case FILTER_DURATION:
       return {
         ...state,
         pelisfiltradas: action.payload,
       };
+
     case ORDER_DATE:
       let orderMoviesDate = [...state.pelisfiltradas];
       orderMoviesDate = orderMoviesDate.sort((a, b) => {
@@ -100,6 +102,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesDate,
       };
+
     case ORDER_COMMENT:
       let orderMoviesCom = [...state.pelisfiltradas];
       orderMoviesCom = orderMoviesCom.sort((a, b) => {
@@ -115,6 +118,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesCom,
       };
+
     case ORDER_BY_NAME:
       let orderMoviesName = [...state.pelisfiltradas];
       orderMoviesName = orderMoviesName.sort((a, b) => {
@@ -130,6 +134,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesName,
       };
+
     case ORDER_BY_RATING:
       let orderMoviesRating = [...state.pelisfiltradas];
       orderMoviesRating = orderMoviesRating.sort((a, b) => {
@@ -145,37 +150,43 @@ function rootReducer(state = initialState, action) {
         ...state,
         pelisfiltradas: orderMoviesRating,
       };
+
     case FILTER_MOVIES_BY_COUNTRY:
       return {
         ...state,
         pelisfiltradas: action.payload,
       };
+
     case FILTER_MOVIES_BY_GENRE:
       return {
         ...state,
         pelisfiltradas: action.payload,
       };
+
     case GET_GENRES:
       return {
         ...state,
         genres: action.payload,
       };
+
     case GET_COUNTRIES:
       return {
         ...state,
         countries: action.payload,
       };
+
     case MOVIE_DETAIL:
       /* console.log(action.payload) */
       return {
         ...state,
         detalle: action.payload /* Object.keys(action.payload) */,
       };
-    case SIGN_UP_USER:
-      return {
-        ...state,
-        isCreator: action.payload,
-      };
+
+    // case SIGN_UP_USER:
+    //   return {
+    //     ...state,
+    //     isCreator: action.payload,
+    //   };
 
     case GET_FAV:
       return {
@@ -183,34 +194,37 @@ function rootReducer(state = initialState, action) {
         favorites: action.payload,
       };
 
-    case DELETE_USER_INFORMATION:
+    // case DELETE_USER_INFORMATION:
+    //   return {
+    //     ...state,
+    //     isCreator: false,
+    //   };
+
+    // case CAME_BACK_TO_BASIC:
+      // return {
+      //   ...state,
+      //   isCreator: action.payload,
+      // };
+
+    // case GET_USER_INFO:
+    //   let response = action.payload.creator;
+    //   return {
+    //     ...state,
+    //     isCreator: response,
+    //   };
+
+    case GET_PROFILE_INFO:
       return {
-        ...state,
-        isCreator: false,
-      };
-    case CAME_BACK_TO_BASIC:
-      return {
-        ...state,
-        isCreator: action.payload,
+        /* ...state, */
+        profileInfo: action.payload,
       };
 
-      case GET_USER_INFO:
-        let response = action.payload.creator
-        return {
-          ...state,
-          isCreator: response,
-      };
-      case GET_PROFILE_INFO:
-        return{
-          /* ...state, */
-          profileInfo: action.payload
-        }
-      case PAY_SUBSCRIPTION:
-        
-        return {
-          ... state,
-          paymentLink: action.payload.init_point
-        };
+      // case GET_USER_INFO:
+      //   let response = action.payload.creator
+      //   return {
+      //     ...state,
+      //     isCreator: response,
+      // };
 
       case VALIDATE_SUBSCRIPTION:
         let updatedSubscription ="Free"
@@ -233,7 +247,7 @@ function rootReducer(state = initialState, action) {
         }
 
     default:
-      return "hola";
+      return state;
   }
 }
 
