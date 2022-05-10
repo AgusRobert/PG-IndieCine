@@ -163,35 +163,40 @@ export default function CreatorForm() {
       input.typeOfDocument &&
       input.numberOfDocument
     ) {
-      const responses = { front: "", back: "" };
-      // console.log("Datos antes de enviar:", documents);
+      const responses = {};
+      console.log("Datos antes de enviar:", documents);
       if (documents?.front) {
         const formDocFront = new FormData();
         formDocFront.append("file", documents.front);
-        responses.front = (
+        const rFront = (
           await axios.post("http://localhost:3001/upload/inter", formDocFront)
         )?.data;
+        if(typeof rFront === 'string') responses.front = rFront;
         // console.log("Respuesta FRONT: ", responses.front);
       }
       if (documents?.back) {
         const formDocBack = new FormData();
         //adicion de la imagen para la subida
         formDocBack.append("file", documents.back);
-        responses.back = (
+        console.log("documents.Back", documents.back);
+        console.log("formDocBack", formDocBack);
+        const rBack = (
           await axios.post("http://localhost:3001/upload/inter", formDocBack)
         )?.data;
+        if(typeof rBack === 'string') responses.back = rBack;
         // console.log("Respuesta BACK: ", responses.back);
       }
-      dispatch(
-        updateUser({
-          ...input,
-          // ...user,
-          email: user.email,
-          ...responses,
-          // creator: false,
-          status: 'pending',
-        })
-      );
+      console.log('response', responses)
+      // dispatch(
+      //   updateUser({
+      //     ...input,
+      //     // ...user,
+      //     email: user.email,
+      //     ...responses,
+      //     // creator: false,
+      //     status: 'pending',
+      //   })
+      // );
       alert("Solicitud enviada correctamente, en breve nos comunicaremos con usted.");
     } else {
       alert("Porfavor revise los datos ingresados");

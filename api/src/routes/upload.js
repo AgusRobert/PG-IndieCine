@@ -31,24 +31,29 @@ router.post("/frontdoc", uploadDocuments, postFrontDoc);
 router.post("/backdoc", uploadDocuments, postBackDoc);
 
 router.post("/inter", async (req, res) => {
-  const { file } = req.files;
+  // const { file } = req.files;
+  console.log('req.file', req.file)
+  console.log('req.params', req.params)
+  console.log('req.query', req.query)
+  console.log('req.body', req.body)
 
-  try {
-    const uploadObject = await s3
-      .putObject({
-        ACL: "public-read",
-        Bucket: BUCKET_NAME,
-        Body: file.data,
-        Key: file.name,
-      })
-      .promise();
-    const urlFile = `https://${BUCKET_NAME}.${ENDPOINT}/${file.name}`;
+  // try {
+  //   const uploadObject = await s3
+  //     .putObject({
+  //       ACL: "public-read",
+  //       Bucket: BUCKET_NAME,
+  //       Body: file.data,
+  //       Key: file.name,
+  //     })
+  //     .promise();
+  //   const urlFile = `https://${BUCKET_NAME}.${ENDPOINT}/${file.name}`;
     
-    res.json(urlFile);
-  } catch (err) {
-    console.log("ERROR: ", err);
-    res.send(err);
-  }
+  //   res.json(urlFile);
+  // } catch (err) {
+  //   console.log("ERROR: ", err);
+  //   res.send(err);
+  // }
+  res.json([])
   
   // console.log("DATOS QUE LLEGARON AL BACK: \n",req.body);
   // res.send({msg:"pase"});

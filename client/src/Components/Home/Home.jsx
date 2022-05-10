@@ -33,7 +33,7 @@ export default function Home() {
     const { user, isAuthenticated } = useAuth0()
 
     const dispatch = useDispatch();
-    const { profileInfo } = useSelector(state => state);
+    // const { profileInfo } = useSelector(state => state);
     const allMovies = useSelector(state => state.pelisfiltradas);
 
     useEffect(() => {
