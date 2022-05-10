@@ -171,7 +171,7 @@ export default function CreatorForm() {
         const rFront = (
           await axios.post("http://localhost:3001/upload/inter", formDocFront)
         )?.data;
-        if(typeof rFront === 'string') responses.front = rFront;
+        if (typeof rFront === 'string') responses.front = rFront;
         // console.log("Respuesta FRONT: ", responses.front);
       }
       if (documents?.back) {
@@ -183,7 +183,7 @@ export default function CreatorForm() {
         const rBack = (
           await axios.post("http://localhost:3001/upload/inter", formDocBack)
         )?.data;
-        if(typeof rBack === 'string') responses.back = rBack;
+        if (typeof rBack === 'string') responses.back = rBack;
         // console.log("Respuesta BACK: ", responses.back);
       }
       console.log('response', responses)
@@ -229,7 +229,7 @@ export default function CreatorForm() {
                 },
               }}
             >
-              {/*  <MenuItemStyle value="" disabled selected>
+              {/* <MenuItemStyle value="" disabled selected>
                 Seleccione un país
               </MenuItemStyle> */}
 
@@ -291,19 +291,43 @@ export default function CreatorForm() {
             <Box>
 
               {input.people === 'true' ? (
-                <SelectStyle name="rol" onChange={handleOnSelect}>
-                  <MenuItemStyle value="" disabled selected>
-                    Roles
-                  </MenuItemStyle>
+                <SelectStyle
+                  name="rol"
+                  onChange={handleOnSelect}
+                  select
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    ":active": {
+                      color: "black",
+                      borderColor: deepPurple[600],
+                    },
+                    ":focused": {
+                      borderColor: deepPurple[600],
+                    },
+                  }}
+                >
                   <MenuItemStyle value="director">Director/a</MenuItemStyle>
                   <MenuItemStyle value="productor">Productor/a</MenuItemStyle>
                   <MenuItemStyle value="montajista">Montajista</MenuItemStyle>
                 </SelectStyle>
               ) : (
-                <SelectStyle name="rol" onChange={handleOnSelect}>
-                  <MenuItemStyle value="" disabled selected>
-                    Roles
-                  </MenuItemStyle>
+                <SelectStyle
+                  name="rol"
+                  onChange={handleOnSelect}
+                  select
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    ":active": {
+                      color: "black",
+                      borderColor: deepPurple[600],
+                    },
+                    ":focused": {
+                      borderColor: deepPurple[600],
+                    },
+                  }}
+                >
                   <MenuItemStyle value="productora">Productora</MenuItemStyle>
                 </SelectStyle>
               )}

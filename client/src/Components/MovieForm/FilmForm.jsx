@@ -120,14 +120,14 @@ export function FilmForm() {
       //lectura de una respuesta y seteo de la ruta de la imagen subida
       if (typeof rFilm === "string") objResponse.film = rFilm;
     }
-    alert("Funcion?");
+    alert("Pelicula agregada correctamente.");
     //despacho de la accion para guardar una pelicula
     console.log("Datos actuales: ", movieForm);
     dispatch(postMovie({ ...movieForm, ...objResponse, email: user.email }));
   };
-  //array de anios para las peliculas
-  const anios = [];
-  for (let i = 2022; i > 1950; i--) anios.push(`${i}`);
+  //array de años para las peliculas
+  const años = [];
+  for (let i = 2022; i > 1950; i--) años.push(`${i}`);
 
   return (
     <Box
@@ -221,12 +221,12 @@ export function FilmForm() {
             value={movieForm.year}
             onChange={(e) => handleOnChange(e)}
             select
-            label="anio"
+            label="año"
             variant="outlined"
             size="small"
             sx={sxSelectStyle}
           >
-            {anios?.map((anio) => (
+            {años?.map((anio) => (
               <MenuItemStyle key={anio} value={anio}>
                 {anio}
               </MenuItemStyle>
@@ -294,7 +294,7 @@ export function FilmForm() {
             name="associateProducer"
             placeholder="Productora"
             onChange={(e) => handleOnChange(e)}
-            required
+            // required
           />
 
           {/* Película Campo para subir una pelicula*/}
