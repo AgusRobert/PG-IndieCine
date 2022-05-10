@@ -340,7 +340,7 @@ export function validateSubscription(email) {
       let response = await axios.get(
         `http://localhost:3001/payment/validate/${email}`
       );
-      return dispatch({
+      dispatch({
         type: VALIDATE_SUBSCRIPTION,
         payload: response.data,
       });

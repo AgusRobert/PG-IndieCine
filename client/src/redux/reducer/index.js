@@ -53,7 +53,7 @@ function rootReducer(state = initialState, action) {
         return contador;
       };
 
-      let peliFiltro = pelisporfiltrar.filter(data => {
+      let peliFiltro = pelisporfiltrar.filter((data) => {
         if (
           data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
             -1 ||
@@ -201,10 +201,10 @@ function rootReducer(state = initialState, action) {
     //   };
 
     // case CAME_BACK_TO_BASIC:
-      // return {
-      //   ...state,
-      //   isCreator: action.payload,
-      // };
+    // return {
+    //   ...state,
+    //   isCreator: action.payload,
+    // };
 
     // case GET_USER_INFO:
     //   let response = action.payload.creator;
@@ -219,32 +219,32 @@ function rootReducer(state = initialState, action) {
         profileInfo: action.payload,
       };
 
-      // case GET_USER_INFO:
-      //   let response = action.payload.creator
-      //   return {
-      //     ...state,
-      //     isCreator: response,
-      // };
+    // case GET_USER_INFO:
+    //   let response = action.payload.creator
+    //   return {
+    //     ...state,
+    //     isCreator: response,
+    // };
 
-      case VALIDATE_SUBSCRIPTION:
-        let updatedSubscription ="Free"
-        if(action.payload.results[0].status = "pending"){
-          updatedSubscription = action.payload.results[2].reason
-          return{
-            ...state,
-            profileInfo: {
-              ...state.profileInfo,
-              subcription: updatedSubscription
-            }
-          };
-        }
-    
-
-      case GET_PLAN_INFO:
+    case VALIDATE_SUBSCRIPTION:
+      let updatedSubscription = "Free";
+      if ((action.payload.results[0].status = "pending")) {
+        updatedSubscription = action.payload.results[2].reason;
+        // console.log('updatedSubscription', updatedSubscription);
         return {
           ...state,
-          plans: action.payload
-        }
+          profileInfo: {
+            ...state.profileInfo,
+            subcription: updatedSubscription,
+          },
+        };
+      }
+
+    case GET_PLAN_INFO:
+      return {
+        ...state,
+        plans: action.payload,
+      };
 
     default:
       return state;
