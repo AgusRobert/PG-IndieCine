@@ -11,6 +11,7 @@ import {
   updateSubscription,
   getUserInfo,
   updateUser,
+  getMovies
 } from "../../redux/actions";
 import { Box, Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
@@ -20,6 +21,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import FavList from "../FavList/FavList";
 import Subs from "../Subs/Subs";
+import Swal from 'sweetalert2'
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -68,6 +70,15 @@ export default function Profile() {
 
   const profileInfo = useSelector((state) => state.profileInfo);
 
+  const allMovies = useSelector(state => state.pelisfiltradas);
+
+
+    useEffect(() => {
+        dispatch(getMovies());
+    }, [dispatch])
+
+  const pelisdeluser= allMovies.filter(peli=>peli.UserId===profileInfo.id)
+
   console.log("USEEEEEEER", user)
   console.log("USEREMAIL", user.email)
 
@@ -87,7 +98,8 @@ export default function Profile() {
   function handleOnDelete() {
     logout({ returnTo: window.location.origin });
     dispatch(deleteUserInformation(user.email));
-    alert("Serás redirigido al inicio");
+    /* alert("Serás redirigido al inicio"); */
+    Swal.fire("Serás redirigido al inicio")
     navigate("/");
   }
 
@@ -199,14 +211,23 @@ export default function Profile() {
         </StyledContainer2>
 
         <StyledContainer3>
-          {profileInfo?.status === 'creator approved' && (
+          {/* profileInfo?.status === 'creator approved' &&  */(
             <>
               <h2>Mis Proyectos</h2>
               <ul>
+              {pelisdeluser.map(peli=>{
+
+                return(<li><Link to={`/detail/${peli.id}`}>
+                  {peli.title}
+                </Link></li>)
+               
+              })}
+               </ul>
+              {/* <ul>
                 <li>Proyecto 1</li>
                 <li>Proyecto 2</li>
                 <li>Proyecto 3</li>
-              </ul>
+              </ul> */}
 
             </>
           ) } 
