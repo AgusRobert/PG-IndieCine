@@ -2,20 +2,23 @@ export const validate = (input) => {
   const RegExAlfa = /^[A-Za-z]+$/;
   const RegExNum = /^[0-9]*$/;
   const RegExInt = /^[-+]?[1-9]\d*$/;
-  let errs = {block: false};
-  for(const p in input){
-    console.log("TIPO: ",typeof(input[p])," | valor: ",input[p]);
-    if(typeof(input[p]) === "string"){
-      if(input[p] === ""){
-        errs[p] = `${p} no puede estar vacio`;
-        errs.block = true;
-      };
-    }
-    if(Array.isArray(input[p]))
-      if(input.length < 1){
-        errs.block = true;
-        errs[p] = `${p} debe completarse`;
+  let errs = { block: false };
+  const especiales = ["associateProducer"];
+  for (const p in input) {
+    if (!especiales.includes(p)) {
+      if (typeof input[p] === "string") {
+        if (input[p] === "") {
+          errs[p] = `${p} no puede estar vacio`;
+          errs.block = true;
+        }
       }
+      if (Array.isArray(input[p])) {
+        if (input.length < 1) {
+          errs.block = true;
+          errs[p] = `${p} debe completarse`;
+        }
+      }
+    }
   }
   return errs;
 };
@@ -50,7 +53,7 @@ export const validate = (input) => {
 //   // year
 //   if(!state.year){
 //       errors.year = "El campo año es obligatorio";
-//   } 
+//   }
 
 //   // duration
 //   if(!state.duration){
