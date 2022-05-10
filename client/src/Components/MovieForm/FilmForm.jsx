@@ -94,6 +94,7 @@ export function FilmForm() {
   const onSubmit = async (e) => {
     e.preventDefault();
     const objResponse = {};
+    console.log("DATOS FRONT: ", multimedia);
     if (multimedia.port) {
       //creacion del paquete de envio para subida de la portada
       const formPort = new FormData();
