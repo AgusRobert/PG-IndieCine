@@ -171,7 +171,7 @@ export default function CreatorForm() {
         const rFront = (
           await axios.post("http://localhost:3001/upload/inter", formDocFront)
         )?.data;
-        if (typeof rFront === 'string') responses.front = rFront;
+        if (typeof rFront === "string") responses.frontDocument = rFront;
         // console.log("Respuesta FRONT: ", responses.front);
       }
       if (documents?.back) {
@@ -183,21 +183,23 @@ export default function CreatorForm() {
         const rBack = (
           await axios.post("http://localhost:3001/upload/inter", formDocBack)
         )?.data;
-        if (typeof rBack === 'string') responses.back = rBack;
+        if (typeof rBack === "string") responses.backDocument = rBack;
         // console.log("Respuesta BACK: ", responses.back);
       }
-      console.log('response', responses)
-      // dispatch(
-      //   updateUser({
-      //     ...input,
-      //     // ...user,
-      //     email: user.email,
-      //     ...responses,
-      //     // creator: false,
-      //     status: 'pending',
-      //   })
-      // );
-      alert("Solicitud enviada correctamente, en breve nos comunicaremos con usted.");
+      console.log("response", responses);
+      dispatch(
+        updateUser({
+          ...input,
+          // ...user,
+          email: user.email,
+          ...responses,
+          // creator: false,
+          status: "pending",
+        })
+      );
+      alert(
+        "Solicitud enviada correctamente, en breve nos comunicaremos con usted."
+      );
     } else {
       alert("Porfavor revise los datos ingresados");
     }
@@ -206,7 +208,6 @@ export default function CreatorForm() {
   return (
     <form onSubmit={(e) => handleOnSubmit(e)}>
       <BoxStyle>
-
         {/* País */}
         <div>
           <div>
@@ -235,10 +236,10 @@ export default function CreatorForm() {
 
               {countries.length
                 ? countries.map((country) => (
-                  <MenuItemStyle key={country.id} value={country.name}>
-                    {country.name}
-                  </MenuItemStyle>
-                ))
+                    <MenuItemStyle key={country.id} value={country.name}>
+                      {country.name}
+                    </MenuItemStyle>
+                  ))
                 : null}
             </SelectStyle>
           </div>
@@ -289,8 +290,7 @@ export default function CreatorForm() {
           <div>
             <label htmlFor="rol">Rol</label>
             <Box>
-
-              {input.people === 'true' ? (
+              {input.people === "true" ? (
                 <SelectStyle
                   name="rol"
                   onChange={handleOnSelect}
