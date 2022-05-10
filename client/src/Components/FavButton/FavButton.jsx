@@ -41,7 +41,7 @@ export default function FavButton({ filmId }) {
  
  let favDispatch = {
      idPeli:filmId,
-     email:user.email,
+     email:user?.email,
  }
   function handleOnClick(payload) {
      console.log(payload)

@@ -33,7 +33,7 @@ const BoxFav =styled(Box)({
      color: "black",
      p: 4,
    });
-export default function FavList() {
+export default function FavList(userId) {
   const { user } = useAuth0();
   let dispatch = useDispatch();
   let favs = useSelector((state) => state.favorites);
@@ -42,19 +42,19 @@ export default function FavList() {
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
   const profileInfo = useSelector((state) => state.profileInfo);
+
+  console.log("USERIDDD", userId)
+  let idFavs = userId?.userId
+  console.log("IDFAVSSS", idFavs)
+
+  useEffect(()=>{
+    dispatch(getFavorites(idFavs))
+  }, [])
+ 
   function handleOnClick(payload) {
-    console.log(payload);
     dispatch(deleteFavFilm(payload));
-    console.log("asdasd",payload)
-    let final = payload.favDispatch
-    favs= favs.filter(P=> P.id !== final.idPeli)
-    dispatch(getFavorites(profileInfo?.id))
   }
-  useEffect(() => {
-    dispatch(getProfileInfo(user.email));
-    
-    dispatch(getFavorites(profileInfo?.id));
-  }, []);
+
   console.log("DATOS",profileInfo);
  
   return (
