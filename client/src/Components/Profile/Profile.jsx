@@ -68,12 +68,15 @@ export default function Profile() {
 
   const profileInfo = useSelector((state) => state.profileInfo);
 
-  useEffect(() => {
-    dispatch(getProfileInfo(user.email));
-    dispatch(validateSubscription(user.email));
-  }, []);
+  console.log("USEEEEEEER", user)
+  console.log("USEREMAIL", user.email)
 
-  // console.log("EMAIL DATOS", profileInfo);
+  useEffect(() => {
+    if(user?.email !== undefined){
+      dispatch(getProfileInfo(user?.email));
+      dispatch(validateSubscription(user?.email));
+    }
+  }, []);
 
   const subsToUpdate = {
     email: user.email,
@@ -192,7 +195,7 @@ export default function Profile() {
 
         <StyledContainer2>
           <h2>Lista de peliculas favoritas.</h2>
-          {/* <FavList /> */}
+          {profileInfo?.id && <FavList userId= {profileInfo?.id}/>}
         </StyledContainer2>
 
         <StyledContainer3>
