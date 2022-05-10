@@ -15,6 +15,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding: 1.5em;
+    padding-top: 100px;
 }
 
 ul {
@@ -33,10 +34,12 @@ ul {
 
 .contactwrapper {
     box-shadow: 0 0 20px 0 rgba(255, 255, 255, .3);
+    padding-top: 100px;
 }
 
 .contactwrapper > * {
     padding: 1em;
+    padding-top: 100px;
 }
 
 .contactform {
@@ -46,6 +49,7 @@ ul {
 .contactform form {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  
 }
 
 .contactform form label {
