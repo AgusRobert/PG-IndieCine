@@ -12,7 +12,7 @@ import Chip from "@mui/material/Chip";
 import MovieCreationIcon from "@mui/icons-material/MovieCreation";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export default function Subs() {
+export default function Subs(currentSub) {
   const dispatch = useDispatch();
 
   const plans = useSelector(state => state.plans);
@@ -43,184 +43,78 @@ export default function Subs() {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 }} position={"relative"} left={100}>
         <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Card
-              raised={true}
-              sx={{ maxWidth: 345, backgroundColor: "#000000" }}
-              elevation={24}
-            >
-              <CardContent>
-                <h2
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: "0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
+          {plans?.map(esteplan => {
+            return (
+              <Grid item xs={4}>
+                <Card
+                  raised={true}
+                  sx={{ maxWidth: 345, backgroundColor: "#000000" }}
+                  elevation={24}
                 >
-                  <MovieCreationIcon />
-                  Plan "Under"
-                </h2>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  Sé Usuario Creador y sube tu contenido a CINDIE
-                </h3>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  SUSCRIPCIÓN POR 3 MESES
-                </h3>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  Precio $300/mes
-                  <br />
-                </h3>
-              </CardContent>
+                  <CardContent>
+                    <h3
+                      style={{
+                        color: "#f3f6f4",
+                        textShadow: "0 0 3px #351c75, 0 0 5px #351c75",
+                        textAlign: "center",
+                      }}
+                    >
+                      <MovieCreationIcon />
+                      Plan "{esteplan.name}"
+                      {console.log("ESTE PLAN", esteplan.name)}
+                    </h3>
+                    <h2
+                      style={{
+                        color: "#f3f6f4",
+                        textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
+                        textAlign: "center",
+                      }}
+                    >
+                      Sé Usuario Creador y sube tu contenido a CINDIE
+                      {esteplan.description}
+                    </h2>
+                    <h3
+                      style={{
+                        color: "#f3f6f4",
+                        textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
+                        textAlign: "center",
+                      }}
+                    >
+                      SUSCRIPCIÓN POR {esteplan.period} MESES
+                    </h3>
+                    <h3
+                      style={{
+                        color: "#f3f6f4",
+                        textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
+                        textAlign: "center",
+                      }}
+                    >
+                      Precio ${esteplan.price}
+                      {esteplan.currency}/mes
+                      <br />
+                    </h3>
+                  </CardContent>
 
-              <CardActions>
-                {/* <Button size="large">SUSCRÍBETE AHORA</Button> */}
-                <Chip
-                  label="Clickable Link"
-                  component="a"
-                  href="#basic-chip"
-                  clickable
-                />
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={4}>
-            <Card
-              raised={true}
-              sx={{ maxWidth: 345, backgroundColor: "#000000" }}
-              elevation={24}
-            >
-              <CardContent>
-                <h2
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  <MovieCreationIcon />
-                  Plan "De Culto"
-                </h2>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  Sé Usuario Creador y sube tu contenido a CINDIE
-                </h3>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  SUSCRIPCIÓN POR 6 MESES
-                </h3>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  Precio $200/mes
-                  <br />
-                </h3>
-              </CardContent>
-
-              <CardActions>
-                <Button
-                  size="small"
-                  onClick={() => {
-                    onSubscribe(1);
-                  }}
-                >
-                  SUSCRÍBETE AHORA
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={4}>
-            <Card
-              raised={true}
-              sx={{ maxWidth: 345, backgroundColor: "#000000" }}
-              elevation={24}
-            >
-              <CardContent>
-                <h2
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  <MovieCreationIcon />
-                  Plan "De Autor"
-                </h2>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  Sé Usuario Creador y sube tu contenido a CINDIE
-                </h3>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  SUSCRIPCIÓN POR 12 MESES
-                </h3>
-                <h3
-                  style={{
-                    color: "#f3f6f4",
-                    textShadow: " 0 0 3px #351c75, 0 0 5px #351c75",
-                    textAlign: "center",
-                  }}
-                >
-                  Precio $150/mes
-                  <br />
-                </h3>
-              </CardContent>
-
-              <CardActions>
-                <Button
-                  size="small"
-                  onClick={() => {
-                    onSubscribe(2);
-                  }}
-                >
-                  SUSCRÍBETE AHORA
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
+                  <CardActions>
+                    {currentSub?.currentSub === esteplan.name ? (
+                      <h3> Éste es tu plan actual</h3>
+                    ) : (
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          onSubscribe(esteplan.id);
+                        }}
+                      >
+                        MEJORA TU PLAN
+                      </Button>
+                    )}
+                  </CardActions>
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
       </Box>
     </>
