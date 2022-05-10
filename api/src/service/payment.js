@@ -58,7 +58,7 @@ exports.subscribe = async (props) => {
 };
 
 exports.validation = async(props) => {
-  console.log("EMAIL DE VALIDATE", props)
+  // console.log("EMAIL DE VALIDATE", props)
   const url = `https://api.mercadopago.com/preapproval/search?payer_email=${props}`
   const response = await axios.get(url, {
     headers: {

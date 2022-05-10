@@ -4,12 +4,13 @@ import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import {
-  cameBackToBasic,
+  // cameBackToBasic,
   deleteUserInformation,
   getProfileInfo,
   validateSubscription,
   updateSubscription,
   getUserInfo,
+  updateUser,
 } from "../../redux/actions";
 import { Box, Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
@@ -58,7 +59,7 @@ const StyledContainer3 = styled(Container)({
 
 export default function Profile() {
   const { user, logout } = useAuth0();
-  const { isCreator } = useSelector((state) => state);
+  // const { isCreator } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [upgrade, setUpgrade] = useState(false);
@@ -72,7 +73,7 @@ export default function Profile() {
     dispatch(validateSubscription(user.email));
   }, []);
 
-  console.log("EMAIL DATOS", profileInfo);
+  // console.log("EMAIL DATOS", profileInfo);
 
   const subsToUpdate = {
     email: user.email,
@@ -88,12 +89,13 @@ export default function Profile() {
   }
 
   function handleCameBackToBasic() {
-    dispatch(
-      cameBackToBasic({
-        email: user.email,
-        creator: false,
-      })
-    );
+    // dispatch(
+    //   cameBackToBasic({
+    //     email: user.email,
+    //     creator: false,
+    //   })
+    // );
+    dispatch(updateUser({email: user.email, creator: false}))
   }
 
   function handleUpgradeUser() {
@@ -131,7 +133,7 @@ export default function Profile() {
             <h4>{user.nickname}</h4>
             <h4>{user.email}</h4>
 
-            {isCreator && /* user.pelissubidas<plan.filmsAllowed */(
+            {profileInfo?.status === 'creator approved' && /* user.pelissubidas<plan.filmsAllowed */(
               <Container>
                 <StyledLink
                   sx={{
@@ -150,7 +152,7 @@ export default function Profile() {
               </Container>
             )}
 
-            {isCreator ? (
+            {profileInfo?.status === 'creator approved' ? (
               <Container>
                 <StyledLink
                   sx={{
@@ -168,6 +170,7 @@ export default function Profile() {
                 </StyledLink>
               </Container>
             ) : null}
+            
             <Container>
               <StyledLink
                 sx={{
@@ -189,11 +192,11 @@ export default function Profile() {
 
         <StyledContainer2>
           <h2>Lista de peliculas favoritas.</h2>
-          <FavList />
+          {/* <FavList /> */}
         </StyledContainer2>
 
         <StyledContainer3>
-          {isCreator ? (
+          {profileInfo?.status === 'creator approved' && (
             <>
               <h2>Mis Proyectos</h2>
               <ul>
@@ -203,7 +206,8 @@ export default function Profile() {
               </ul>
 
             </>
-          ) : (
+          ) } 
+          {profileInfo?.status === 'registered' && (
             <>
               <h2>¿Desea subir al siguiente nivel?</h2>
 
@@ -231,6 +235,11 @@ export default function Profile() {
                 {/* <Subs currentSub={profileInfo?.subcription} /> */}
                 {upgrade && <CreatorForm />}
               </Container>
+            </>
+          )}
+          {profileInfo?.status === 'pending' && (
+            <>
+              <h2>En los próximos minutos se definirá su situación.</h2>
             </>
           )}
         </StyledContainer3>

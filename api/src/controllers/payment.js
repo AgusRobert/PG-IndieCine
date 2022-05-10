@@ -10,10 +10,10 @@ exports.subcription = async (req, res) => {
 
 exports.validate = async (req, res) => {
   try {
-    console.log("EMAIL AL VALIDATE", req.params.email);
+    // console.log("EMAIL AL VALIDATE", req.params.email);
     const validationData = await paymentService.validation(req.params.email);
 
-    console.log("validationData", validationData);
+    // console.log("validationData", validationData);
 
     let testResult = validationData.results?.pop();
 
@@ -38,6 +38,6 @@ exports.validate = async (req, res) => {
     }
     return res.json(validationData);
   } catch (error) {
-    res.json(error);
+    res.json('validate controller catch', error);
   }
 };

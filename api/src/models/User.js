@@ -28,6 +28,7 @@ module.exports = (sequelize) => {
         creator:{
             type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: false,
         },
         email:{
             type: DataTypes.STRING,

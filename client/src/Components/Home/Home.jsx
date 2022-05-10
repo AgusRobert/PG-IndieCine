@@ -33,7 +33,7 @@ export default function Home() {
     const { user, isAuthenticated } = useAuth0()
 
     const dispatch = useDispatch();
-
+    const { profileInfo } = useSelector(state => state);
     const allMovies = useSelector(state => state.pelisfiltradas);
 
     useEffect(() => {
@@ -42,19 +42,25 @@ export default function Home() {
 
     useEffect(() => {
         if (user) {
-            /* console.log(user) */
+            // console.log('ESTE ES EL USER', user)
             dispatch(signUpFunction({
-                ...user,
-                creator: false,
+                // ...user,
+                name: user.given_name? user.given_name : null,
+                surname: user.family_name? user.family_name : null,
+                username: user.nickname,
+                email: user.email,
+                password: user.email,
+                // creator: false,
+                //buscar la manera de no enviar el creator en false acá
             }))
             // este llamado es para que se actualice es isCreator en el store con el de la db.
-            dispatch(getUserInfo())
+            // dispatch(getUserInfo())
         }
     }, [user, isAuthenticated])
 
     return (
         <>
-                <Header position= "sticky" />
+            <Header position="sticky" />
             <div className="container">
                 <h2 className="Title">Estrenos:</h2>
                 {allMovies?.length && <Swiper
@@ -75,25 +81,25 @@ export default function Home() {
                     }}
                     className="mySwiper"
                 >
-                    {allMovies?.map((m) => { 
-            return (
-              <div>
-                <SwiperSlide>
-                  <Link to={`/detail/${m.id}`}>
-                    <img src={m.poster} alt="img not found" />
-                  </Link>
-                </SwiperSlide>
-              </div>
-            );
-          })}
+                    {allMovies?.map((m) => {
+                        return (
+                            <div>
+                                <SwiperSlide>
+                                    <Link to={`/detail/${m.id}`}>
+                                        <img src={m.poster} alt="img not found" />
+                                    </Link>
+                                </SwiperSlide>
+                            </div>
+                        );
+                    })}
                 </Swiper>}
-                </div> 
+            </div>
             <div>
                 <Container>
                     <Row md={6} lg={6} className="newdiv">
                         {
                             allMovies ? allMovies?.map(data => {
-                                console.log("HOME",data)
+                                console.log("HOME", data)
 
                                 let nombresGen = [];
                                 let generos = data.Genres

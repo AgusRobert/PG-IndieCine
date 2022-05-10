@@ -73,6 +73,7 @@ exports.putUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const { email } = req.body;
+    console.log('email en deleteUser', email)
     const user = await User.findOne({
       where: {
         email: email,
@@ -87,7 +88,7 @@ exports.deleteUser = async (req, res) => {
       return res.json({ message: "Usuario no encontrado" });
     }
   } catch (error) {
-    console.log("Ha ocurrido un error");
+    console.log("Ha ocurrido un error en deleteUser", error);
     res.json({ message: "Error al eliminar el usuario" });
   }
 };
@@ -100,20 +101,20 @@ exports.registerUser = async (req, res) => {
         email: req.body.email,
       },
     });
-    if (req.body.creator) {
+    // if (req.body.creator) {
       //si 'creator' es true
-      if (!user) {
-        console.log("Usuario no encontrado");
-        return res.json({ message: "Usuario no encontrado" });
-      } else {
-        await user.update({
-          ...user,
-          ...req.body,
-        });
-        console.log("Usuario actualizado correctamente");
-        return res.json({ message: "Usuario actualizado correctamente" });
-      }
-    } else {
+      // if (!user) {
+        // console.log("Usuario no encontrado");
+        // return res.json({ message: "Usuario no encontrado" });
+      // } else {
+        // await user.update({
+          // ...user,
+          // ...req.body,
+        // });
+        // console.log("Usuario actualizado correctamente");
+        // return res.json({ message: "Usuario actualizado correctamente" });
+      // }
+    // } else {
       //si 'creator' es false
       if (user) {
         console.log("El usuario ya existe.");
@@ -124,7 +125,7 @@ exports.registerUser = async (req, res) => {
         console.log("Usuario creado con éxito");
         return res.json(newUser);
       }
-    }
+    // }
   } catch (error) {
     console.log("Ha ocurrido un error", error);
     return res.json({ message: "Ha ocurrido un error", error });
@@ -154,6 +155,7 @@ exports.loginUser = async (req, res) => {
     res.json({ message: "Error al obtener el usuario", error });
   }
 };
+
 exports.getFilmsById = async (req, res) =>{
   const{id}= req.params
   const user = await User.findOne({
