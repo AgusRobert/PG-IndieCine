@@ -3,10 +3,10 @@ const morgan = require("morgan");
 //importacion de manejo de rutas
 const routes = require("./routes/index");
 //importacion de manejo de permisos
+const { adminJs, routerAdmin } = require("./middelware/admin");
 const { permissions } = require("./middelware/permission");
 const { catching } = require("./middelware/catching");
 const { uploadMUltimedia } = require("./middelware/upload");
-const { adminJs, routerAdmin } = require("./middelware/admin");
 
 //creacion del servidor
 const server = express();
@@ -20,10 +20,10 @@ server.use(express.json());
 server.use(morgan("dev"));
 //middelware de permisos
 server.use(permissions);
-//middelware para subida de archivos multimedia
-server.use(uploadMUltimedia);
 //middelware para el manejo de adminJs
 server.use(adminJs.options.rootPath, routerAdmin);
+//middelware para subida de archivos multimedia
+server.use(uploadMUltimedia);
 //middelware para el manejo de rutas
 server.use("/", routes);
 //middelware para manejo de errores
