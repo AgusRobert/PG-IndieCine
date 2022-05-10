@@ -20,7 +20,7 @@ import {
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
   VALIDATE_SUBSCRIPTION,
-  DELETE_FAV
+  DELETE_FAV,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -202,10 +202,10 @@ function rootReducer(state = initialState, action) {
     //   };
 
     // case CAME_BACK_TO_BASIC:
-      // return {
-      //   ...state,
-      //   isCreator: action.payload,
-      // };
+    // return {
+    //   ...state,
+    //   isCreator: action.payload,
+    // };
 
     // case GET_USER_INFO:
     //   let response = action.payload.creator;
@@ -215,47 +215,51 @@ function rootReducer(state = initialState, action) {
     //   };
 
     case GET_PROFILE_INFO:
-      console.log("QUE LLEGA AL REDUCER", action.payload)
+      console.log("QUE LLEGA AL REDUCER", action.payload);
       return {
         ...state,
         profileInfo: action.payload,
       };
 
-      // case GET_USER_INFO:
-      //   let response = action.payload.creator
-      //   return {
-      //     ...state,
-      //     isCreator: response,
-      // };
+    // case GET_USER_INFO:
+    //   let response = action.payload.creator
+    //   return {
+    //     ...state,
+    //     isCreator: response,
+    // };
 
-      case VALIDATE_SUBSCRIPTION:
-        let updatedSubscription ="Free"
-        if(action.payload.results[0].status = "pending"){
-          updatedSubscription = action.payload.results[2].reason
-          return{
-            ...state,
-            profileInfo: {
-              ...state.profileInfo,
-              subcription: updatedSubscription
-            }
-          };
-        }
-    
-
-      case GET_PLAN_INFO:
+    case VALIDATE_SUBSCRIPTION:
+      let updatedSubscription = "Free";
+      if ((action.payload.results[0].status = "pending")) {
+        updatedSubscription = action.payload.results[2].reason;
         return {
           ...state,
-          plans: action.payload
-        }
-      
-        case DELETE_FAV:
+          profileInfo: {
+            ...state.profileInfo,
+            subcription: updatedSubscription,
+          },
+        };
+      }
 
-        let deletedFavs = state.favorites.filter(p => p.id !== action.payload)
-        console.log("DELETED FAVS", deletedFavs)
-        return{
-          ...state,
-          favorites: deletedFavs
-        }
+    case GET_PLAN_INFO:
+      return {
+        ...state,
+        plans: action.payload,
+      };
+
+    case DELETE_FAV:
+      let deletedFavs = state.favorites.filter(p => p.id !== action.payload);
+      console.log("DELETED FAVS", deletedFavs);
+      return {
+        ...state,
+        favorites: deletedFavs,
+      };
+
+    case PAY_SUBSCRIPTION:
+      return {
+        ...state,
+        paymentLink: action.payload.init_point,
+      };
 
     default:
       return state;
