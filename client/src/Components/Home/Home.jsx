@@ -10,7 +10,6 @@ import { Container, Row } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
 
 
-
 // Import Swiper styles
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -45,8 +44,8 @@ export default function Home() {
             // console.log('ESTE ES EL USER', user)
             dispatch(signUpFunction({
                 // ...user,
-                name: user.given_name? user.given_name : null,
-                surname: user.family_name? user.family_name : null,
+                name: user.given_name ? user.given_name : null,
+                surname: user.family_name ? user.family_name : null,
                 username: user.nickname,
                 email: user.email,
                 password: user.email,

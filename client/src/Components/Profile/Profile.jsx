@@ -14,7 +14,7 @@ import {
 } from "../../redux/actions";
 import { /*Box,*/ Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
-import { Modal , Box } from '@material-ui/core';
+import { Modal, Box } from '@material-ui/core';
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from "../Header/LOGO.png";
 import { useEffect, useState } from "react";
@@ -84,11 +84,11 @@ export default function Profile() {
 
   const profileInfo = useSelector((state) => state.profileInfo);
 
-  console.log("USEEEEEEER", user)
-  console.log("USEREMAIL", user.email)
+  console.log("User en Profile", user)
+  // console.log("UserEmail en Profile", user.email)
 
   useEffect(() => {
-    if(user?.email !== undefined){
+    if (user?.email !== undefined) {
       dispatch(getProfileInfo(user.email));
       dispatch(validateSubscription(user.email));
       profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
@@ -107,7 +107,7 @@ export default function Profile() {
     dispatch(deleteUserInformation(user.email));
   }
 
-  function handleFillForm(payload) {
+  const handleFillForm = (payload) => {
     setFillForm(payload);
   }
 
@@ -124,14 +124,14 @@ export default function Profile() {
   //   navigate("/");
   // }
 
-  function handleCameBackToBasic() {
+  const handleCameBackToBasic = () => {
     // dispatch(
     //   cameBackToBasic({email: user.email,creator: false})
     // );
     dispatch(updateUser({ email: user.email, creator: false }))
   }
 
-  function handleUpgradeBtn() {
+  const handleUpgradeBtn = () => {
     setUpgradeBtn(true);
   }
 
@@ -199,7 +199,7 @@ export default function Profile() {
                 </StyledLink>
               </Container>
             ) : null}
-            
+
             <Container>
               <StyledLink
                 sx={{
@@ -216,23 +216,23 @@ export default function Profile() {
               >
                 Borrar cuenta
               </StyledLink>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <BoxFav>
-                La eliminación será efectiva en las próximas horas.
-              </BoxFav>
-            </Modal>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <BoxFav>
+                  La eliminación será efectiva en las próximas horas.
+                </BoxFav>
+              </Modal>
             </Container>
           </Container>
         </StyledContainer>
 
         <StyledContainer2>
           <h2>Lista de peliculas favoritas.</h2>
-          {profileInfo?.id && <FavList userId= {profileInfo?.id}/>}
+          {profileInfo?.id && <FavList userId={profileInfo?.id} />}
         </StyledContainer2>
 
         <StyledContainer3>

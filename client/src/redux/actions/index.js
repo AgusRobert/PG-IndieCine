@@ -82,9 +82,9 @@ export function getMoviesByGenre(payload) {
     try {
       let filtroGenre = [];
       let json3 = await axios.get("http://localhost:3001/films");
-      json3.data.map(peli => {
+      json3.data.map((peli) => {
         let genre = peli.Genres;
-        genre.forEach(obj => {
+        genre.forEach((obj) => {
           if (obj.name === payload) {
             filtroGenre.push(peli);
           }

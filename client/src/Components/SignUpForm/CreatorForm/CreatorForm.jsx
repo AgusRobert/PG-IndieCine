@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCountries, updateUser } from "../../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-
 import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
@@ -213,10 +212,10 @@ export default function CreatorForm({ fillFormFn }) {
 
               {countries.length
                 ? countries.map((country) => (
-                    <MenuItemStyle key={country.id} value={country.name}>
-                      {country.name}
-                    </MenuItemStyle>
-                  ))
+                  <MenuItemStyle key={country.id} value={country.name}>
+                    {country.name}
+                  </MenuItemStyle>
+                ))
                 : null}
             </SelectStyle>
           </div>

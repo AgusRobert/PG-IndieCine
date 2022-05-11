@@ -282,7 +282,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case DELETE_FAV:
-      let deletedFavs = state.favorites.filter(p => p.id !== action.payload);
+      let deletedFavs = state.favorites.filter((p) => p.id !== action.payload);
       console.log("DELETED FAVS", deletedFavs);
       return {
         ...state,
