@@ -7,6 +7,7 @@ import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
+import Swal from 'sweetalert2'
 
 const BoxStyle = styled(Box)({
   padding: "20px",
@@ -45,7 +46,7 @@ export default function CreatorForm({ fillFormFn }) {
   const dispatch = useDispatch();
   const { countries } = useSelector(state => state);
   useEffect(() => {
-    countries.length && dispatch(getCountries());
+    !countries.length && dispatch(getCountries());
   }, [])
 
   function validateForm(state) {
@@ -171,13 +172,12 @@ export default function CreatorForm({ fillFormFn }) {
           status: "pending",
         })
       );
-      alert(
-        "Solicitud enviada correctamente, en breve nos comunicaremos con usted."
-      );
-
-      fillFormFn(true);
+      Swal.fire("Solicitud enviada correctamente, en breve nos comunicaremos con usted.");
     } else {
-      alert("Porfavor revise los datos ingresados");
+      Swal.fire({
+        icon: 'error',
+        title: "Porfavor revise los datos ingresados",
+      });
     }
   };
 

@@ -112,7 +112,7 @@ export default function Home() {
                                     <Row md={6} lg={6} className="newdiv">
                                         {
                                             allMovies ? allMovies?.map(data => {
-                                                console.log("HOME", data)
+                                                // console.log("HOME", data)
 
                                                 let nombresGen = [];
                                                 let generos = data.Genres

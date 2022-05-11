@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { /*Link,*/ useNavigate } from "react-router-dom";
+import { Link as Ruta, useNavigate } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
@@ -11,6 +11,8 @@ import {
   updateSubscription,
   getUserInfo,
   updateUser,
+  getMovies,
+  getPlanInfo
 } from "../../redux/actions";
 import { /*Box,*/ Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
@@ -21,6 +23,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import FavList from "../FavList/FavList";
 import Subs from "../Subs/Subs";
+import Swal from 'sweetalert2'
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -75,7 +78,6 @@ const BoxFav = styled(Box)({
 
 export default function Profile() {
   const { user, logout } = useAuth0();
-  // const { isCreator } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [upgradeBtn, setUpgradeBtn] = useState(false);
@@ -83,9 +85,22 @@ export default function Profile() {
   // validación de suscripción
 
   const profileInfo = useSelector((state) => state.profileInfo);
+  const plans = useSelector((state) => state.plans);
+  const allMovies = useSelector(state => state.pelisfiltradas);
 
-  console.log("User en Profile", user)
-  // console.log("UserEmail en Profile", user.email)
+  const plandeluser = plans.filter(p => p.name === profileInfo?.subcription)
+
+  const limitedeluser = plandeluser.map(e => e.filmsAllowed)
+
+  useEffect(() => {
+    dispatch(getMovies());
+  }, [dispatch])
+
+  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id)
+
+  useEffect(() => {
+    dispatch(getPlanInfo());
+  }, []);
 
   useEffect(() => {
     if (user?.email !== undefined) {
@@ -93,7 +108,7 @@ export default function Profile() {
       dispatch(validateSubscription(user.email));
       profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
     }
-  }, [fillForm]);
+  }, [fillForm, dispatch]);
 
   // Config del modal
   const [open, setOpen] = useState(false);
@@ -128,7 +143,8 @@ export default function Profile() {
     // dispatch(
     //   cameBackToBasic({email: user.email,creator: false})
     // );
-    dispatch(updateUser({ email: user.email, creator: false }))
+    dispatch(updateUser({ email: user.email, creator: false, status: "registered" }));
+    alert('Se ha cancelado la suscripción');
   }
 
   const handleUpgradeBtn = () => {
@@ -162,7 +178,7 @@ export default function Profile() {
             <h4>{user.nickname}</h4>
             <h4>{user.email}</h4>
 
-            {profileInfo?.status === 'creator approved' && /* user.pelissubidas<plan.filmsAllowed */(
+            {profileInfo?.status === 'creator approved' && pelisdeluser.length < limitedeluser[0] ?
               <Container>
                 <StyledLink
                   sx={{
@@ -179,7 +195,8 @@ export default function Profile() {
                   Subir Proyecto
                 </StyledLink>
               </Container>
-            )}
+              : <h1>LLEGASTE AL LÍMITE DE SUBIDAS DE TU PLAN</h1>
+            }
 
             {profileInfo?.status === 'creator approved' ? (
               <Container>
@@ -240,13 +257,21 @@ export default function Profile() {
             <>
               <h2>Mis Proyectos</h2>
               <ul>
-                <li>Proyecto 1</li>
-                <li>Proyecto 2</li>
-                <li>Proyecto 3</li>
-              </ul>
+                {pelisdeluser.map(peli => {
 
+                  return (<div>
+                    <li>
+                      <Ruta to={`/detail/${peli.id}`}>
+                        <button>{peli.title}</button>
+                      </Ruta>
+                    </li>
+                  </div>)
+
+                })}
+              </ul>
             </>
           )}
+
           {profileInfo?.status === 'registered' && fillForm === false && (
             <>
               <h2>¿Desea subir al siguiente nivel?</h2>

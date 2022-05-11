@@ -111,6 +111,7 @@ export function getCountries() {
   return async function (dispatch) {
     try {
       var json = await axios.get("http://localhost:3001/countries");
+      console.log('response action', json.data)
       return dispatch({
         type: GET_COUNTRIES,
         payload: json.data,

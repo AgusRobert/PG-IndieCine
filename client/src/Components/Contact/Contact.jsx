@@ -4,6 +4,7 @@ import logo from "../Header/LOGO.png";
 import s from "./contact.module.css";
 import Footer from "../Footer/Footer";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export default function Contact() {
   const [redir, setRedir] = useState(false);
@@ -18,7 +19,8 @@ export default function Contact() {
       email: e.target.email.value,
       message: e.target.message.value,
     };
-    alert("Espere por Favor");
+    /* alert("Espere por Favor"); */
+    Swal.fire("Espere por Favor")
     await axios.post("http://localhost:3001/mail", data);
 
     data.type = "contactAdmin";

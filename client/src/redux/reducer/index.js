@@ -205,6 +205,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_COUNTRIES:
+      console.log('payload de countries', action.payload)
       return {
         ...state,
         countries: action.payload,

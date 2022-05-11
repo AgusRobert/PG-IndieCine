@@ -28,6 +28,7 @@ export default function MovieDetail() {
   }, [dispatch]);
 
   const peli = useSelector(state => state.detalle);
+  console.log("LAPELI", peli)
 
   let elenco = peli ? peli.mainActors : [];
 
