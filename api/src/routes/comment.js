@@ -11,6 +11,7 @@ const {
 } = require("../controllers/comment");
 
 router.get("/", getAllComments);
+
 router.post("/", postComment);
 
 router.get("/:id", getComment);

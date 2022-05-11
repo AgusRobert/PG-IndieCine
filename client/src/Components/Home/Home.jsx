@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // import Card from "../Card/Card.jsx"
-import Footer from "../Footer/Footer.jsx";
-import Header from "../Header/Header";
-import { getMovies, signUpFunction } from "../../redux/actions/index.js";
+import Footer from "../Footer/Footer.jsx"
+import Header from '../Header/Header'
+import { getMovies, getProfileInfo, getUserInfo, signUpFunction, updateUser } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
 
@@ -34,31 +34,53 @@ SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
 
-  const dispatch = useDispatch();
-  // const { profileInfo } = useSelector(state => state);
-  const allMovies = useSelector((state) => state.pelisfiltradas);
+    const dispatch = useDispatch();
+    const allMovies = useSelector(state => state.pelisfiltradas);
+    const { profileInfo } = useSelector(state => state);
 
-  useEffect(() => {
-    dispatch(getMovies());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(getMovies());
+        if (user?.email !== undefined) {
+            dispatch(getProfileInfo(user?.email))
+        }
+    }, [dispatch])
 
-  useEffect(() => {
-    if (user) {
-      // console.log('ESTE ES EL USER', user)
-      dispatch(
-        signUpFunction({
-          // ...user,
-          name: user.given_name ? user.given_name : null,
-          surname: user.family_name ? user.family_name : null,
-          username: user.nickname,
-          email: user.email,
-          password: user.email,
-          // creator: false,
-          //buscar la manera de no enviar el creator en false acá
-        })
-      );
+    useEffect(() => {
+        if (user) {
+            dispatch(signUpFunction({
+                // ...user,
+                name: user.given_name ? user.given_name : null,
+                surname: user.family_name ? user.family_name : null,
+                username: user.nickname,
+                email: user.email,
+                password: user.email,
+                image: user.picture ? user.picture : "https://149348893.v2.pressablecdn.com/wp-content/uploads/2019/03/no-image-available.png",
+            }))
+            // La idea acá era para actualizar la imagen del usuario en la base de datos
+            // por si el usuario cambia de imagen en Auth0
+            // if (profileInfo?.image !== user.picture) {
+            //     dispatch(updateUser({
+            //         email: user.email,
+            //         image: user.picture,
+            //     }))
+            // }
+        }
+    }, [user, isAuthenticated])
+
+    if (allMovies[0] === 'No films') {
+        return (
+            <>
+                <Header position="sticky" />
+                <div className="container">
+                    <div>
+                        <h1>No se ha podido encontrar la búsqueda.</h1>
+                    </div>
+                </div>
+                <Footer />
+            </>
+        )
     }
-  }, [user, isAuthenticated]);
+ 
 
   if (allMovies[0] === "No films") {
     return (
