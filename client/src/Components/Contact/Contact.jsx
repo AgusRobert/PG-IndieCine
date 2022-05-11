@@ -4,14 +4,11 @@ import logo from "../Header/LOGO.png";
 import s from "./contact.module.css";
 import Footer from "../Footer/Footer";
 import axios from "axios";
-<<<<<<< HEAD
 import Typography from "@material-ui/core/Typography";
 import { AppBar } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { Box } from "@mui/system";
-=======
 import Swal from 'sweetalert2'
->>>>>>> 0e4a94ba0a23a6309e858ff7e2eff889496be7d1
 
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
