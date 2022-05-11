@@ -30,7 +30,7 @@ exports.getUser = async (req, res) => {
 
 exports.getUserByEmail = async (req, res) => {
   // res.send({msg: "datos", file: req.body.email})
-  console.log(req.params)
+  // console.log(req.params);
   try {
     let user = await User.findOne(
       { where: { email: req.params.email } },
@@ -73,7 +73,7 @@ exports.putUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log('email en deleteUser', email)
+    // console.log("email en deleteUser", email);
     const user = await User.findOne({
       where: {
         email: email,
@@ -94,7 +94,7 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.registerUser = async (req, res) => {
-  console.log("req.body", req.body);
+  // console.log("req.body", req.body);
   try {
     let user = await User.findOne({
       where: {
@@ -102,29 +102,29 @@ exports.registerUser = async (req, res) => {
       },
     });
     // if (req.body.creator) {
-      //si 'creator' es true
-      // if (!user) {
-        // console.log("Usuario no encontrado");
-        // return res.json({ message: "Usuario no encontrado" });
-      // } else {
-        // await user.update({
-          // ...user,
-          // ...req.body,
-        // });
-        // console.log("Usuario actualizado correctamente");
-        // return res.json({ message: "Usuario actualizado correctamente" });
-      // }
+    //si 'creator' es true
+    // if (!user) {
+    // console.log("Usuario no encontrado");
+    // return res.json({ message: "Usuario no encontrado" });
     // } else {
-      //si 'creator' es false
-      if (user) {
-        console.log("El usuario ya existe.");
-        return res.json({ message: "El usuario ya existe" });
-      } else {
-        req.body.password = bcrypt.hashSync(req.body.password, 10);
-        let newUser = await userServices.create(req.body);
-        console.log("Usuario creado con éxito");
-        return res.json(newUser);
-      }
+    // await user.update({
+    // ...user,
+    // ...req.body,
+    // });
+    // console.log("Usuario actualizado correctamente");
+    // return res.json({ message: "Usuario actualizado correctamente" });
+    // }
+    // } else {
+    //si 'creator' es false
+    if (user) {
+      console.log("El usuario ya existe.");
+      return res.json({ message: "El usuario ya existe" });
+    } else {
+      req.body.password = bcrypt.hashSync(req.body.password, 10);
+      let newUser = await userServices.create(req.body);
+      console.log("Usuario creado con éxito");
+      return res.json(newUser);
+    }
     // }
   } catch (error) {
     console.log("Ha ocurrido un error", error);
@@ -156,57 +156,54 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-exports.getFilmsById = async (req, res) =>{
-  const{id}= req.params
+exports.getFilmsById = async (req, res) => {
+  const { id } = req.params;
   const user = await User.findOne({
-    where:{
+    where: {
       id,
     },
-    include: Film
-  })
+    include: Film,
+  });
   let films = user.Films;
-  res.json(films)
-}
+  res.json(films);
+};
 
-exports.addFav = async (req,res) =>{
-  const{favDispatch}= req.body
-  const{idPeli,email}=favDispatch
-  
-    let user = await User.findOne({
-      where:{
-        email:email
-      }
-    })  
-     console.log(user)
-    let peli = await Film.findByPk(idPeli)
+exports.addFav = async (req, res) => {
+  const { favDispatch } = req.body;
+  const { idPeli, email } = favDispatch;
 
-    user.addFilm(peli)
-   res.send('Peli agregada')
-   
-}
+  let user = await User.findOne({
+    where: {
+      email: email,
+    },
+  });
+  console.log(user);
+  let peli = await Film.findByPk(idPeli);
 
-exports.getFavs = async (req, res) =>{
-  const{id}= req.params
-  const Usuario = await User.findByPk(id)
-  const favoritos = await Usuario.getFilms()
-  console.log(favoritos)
-   res.json(favoritos)
-  
-}
+  user.addFilm(peli);
+  res.send("Peli agregada");
+};
 
-exports.delFav = async(req,res)=>{
-  const{payload}= req.body
-  const{favDispatch}=payload
-  const{idPeli,email}=favDispatch
-  
-    let user = await User.findOne({
-      where:{
-        email:email
-      }
-    })  
-    let peli = await Film.findByPk(idPeli)
+exports.getFavs = async (req, res) => {
+  const { id } = req.params;
+  const Usuario = await User.findByPk(id);
+  const favoritos = await Usuario.getFilms();
+  // console.log(favoritos)
+  res.json(favoritos);
+};
 
-    user.removeFilm(peli)
-   res.send('Peli descartada de favoritos')
-   
-}
+exports.delFav = async (req, res) => {
+  const { payload } = req.body;
+  const { favDispatch } = payload;
+  const { idPeli, email } = favDispatch;
+
+  let user = await User.findOne({
+    where: {
+      email: email,
+    },
+  });
+  let peli = await Film.findByPk(idPeli);
+
+  user.removeFilm(peli);
+  res.send("Peli descartada de favoritos");
+};

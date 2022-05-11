@@ -87,18 +87,25 @@ export function getMoviesByGenre(payload) {
     try {
       let filtroGenre = [];
       let json3 = await axios.get("http://localhost:3001/films");
-      json3.data.map(peli => {
+      json3.data.map((peli) => {
         let genre = peli.Genres;
-        genre.forEach(obj => {
+        genre.forEach((obj) => {
           if (obj.name === payload) {
             filtroGenre.push(peli);
           }
         });
       });
-      return dispatch({
-        type: FILTER_MOVIES_BY_GENRE,
-        payload: filtroGenre,
-      });
+      if (filtroGenre.length) {
+        return dispatch({
+          type: FILTER_MOVIES_BY_GENRE,
+          payload: filtroGenre,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_MOVIES_BY_GENRE,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -109,6 +116,7 @@ export function getCountries() {
   return async function (dispatch) {
     try {
       var json = await axios.get("http://localhost:3001/countries");
+      console.log('response action', json.data)
       return dispatch({
         type: GET_COUNTRIES,
         payload: json.data,
@@ -124,11 +132,18 @@ export function getMoviesByCountry(payload) {
     try {
       let json3 = await axios.get("http://localhost:3001/films");
       let json4 = json3.data;
-      json4 = json4.filter(e => e.Country.name === payload);
-      return dispatch({
-        type: FILTER_MOVIES_BY_COUNTRY,
-        payload: json4,
-      });
+      json4 = json4.filter((e) => e.Country.name === payload);
+      if (json4.length) {
+        return dispatch({
+          type: FILTER_MOVIES_BY_COUNTRY,
+          payload: json4,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_MOVIES_BY_COUNTRY,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -243,11 +258,18 @@ export function filterDuration(payload) {
     try {
       let json3 = await axios.get("http://localhost:3001/films");
       let json4 = json3.data;
-      json4 = json4.filter(e => e.duration === payload);
-      return dispatch({
-        type: FILTER_DURATION,
-        payload: json4,
-      });
+      json4 = json4.filter((e) => e.duration === payload);
+      if (json4.length) {
+        return dispatch({
+          type: FILTER_DURATION,
+          payload: json4,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_DURATION,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -357,7 +379,7 @@ export function validateSubscription(email) {
       let response = await axios.get(
         `http://localhost:3001/payment/validate/${email}`
       );
-      return dispatch({
+      dispatch({
         type: VALIDATE_SUBSCRIPTION,
         payload: response.data,
       });
