@@ -102,6 +102,9 @@ exports.mailing = async (req, res) => {
           `;
       await enviado(from, to, subject, html);
       return res.json({ message: "Email enviado" });
+  
+
+      // ------------------------- C R E A D O R -------------------------------
 
     // ---------------------------- RESPUESTA AUTOMATICA A CREADOR -----------------------------
     case "creatorAuto":
@@ -147,6 +150,36 @@ exports.mailing = async (req, res) => {
       await enviado(from, to, subject, html);
       return res.json({ message: "Email enviado" });
 
+    // ------------------------- MAIL DE RECHAZO A CREADOR   --------------------------------------
+
+    case "creatorRechazo":
+      subject = "Rechazo de Usuario Premium";
+        html = `
+        <table style="background-color:#661c79;padding:20px;color:white; width:100%;">
+      <tr style="text-align:center;">
+      <h1 style="font-size:46px;font-family:Arial,sans-serif;">Hola ${req.body.name}</h1>
+      </tr>
+      <tr>
+      <p style="font-size:26px;font-family:Arial,sans-serif;">
+      Lamentablemente, tu solicitud de Usuario Premium fue rechazada.
+      </p>
+      </tr>
+      <tr>
+      <p style="font-size:26px;font-family:Arial,sans-serif;">
+      Nuestro equipo no ha podido verificar tu identidad, por lo que no podemos aprobar tu solicitud.
+      </p>
+      </tr>
+      <tr>
+      <p style="font-size:26px;font-family:Arial,sans-serif;">
+        Por favor, contacta con nosotros para más información.
+      </p>
+      </tr>
+      </table>
+        `;
+      await enviado(from, to, subject, html);
+      return res.json({ message: "Email enviado" });
+
+
     // ---------------------------- MAIL del CREADOR AL ADMINISTRDOR-----------------------------
     case "creadorAdmin":
       from = '"CINDIE" <indiecine2022@gmail.com>';
@@ -158,6 +191,8 @@ exports.mailing = async (req, res) => {
       await enviado(from, to, subject, html);
       return res.json({ message: "Email enviado" });
 
+      // --------------------------   FILM -------------------------------------------
+
     // ------------------------- RESPUESTA AUTOMATICA DE CONTENIDO -----------------
     case "contentAuto":
       subject = "FORMULARIO RECIBIDO";
@@ -168,7 +203,7 @@ exports.mailing = async (req, res) => {
       </tr>
       <tr>
       <p style="font-size:26px;font-family:Arial,sans-serif;">
-      Gracias por compartir tu material con nosotros, en breve será evaluado para
+      Gracias por compartir tu trabajo con nosotros, en breve será evaluado para
        asegurarnos de que cumple con las normas y condiciones de nuestro sitio antes de ser publicado.
       </p>
       </tr>
@@ -178,7 +213,7 @@ exports.mailing = async (req, res) => {
       return res.json({ message: "Email enviado" });
 
     // ---------------------------- RESPUESTA A CONTENIDO -----------------------------
-    case "content":
+    case "filmAprobado":
       subject = "PELÍCULA APROBADA";
       html = `
       <table style="background-color:#661c79;padding:20px;color:white; width:100%;">
@@ -187,14 +222,46 @@ exports.mailing = async (req, res) => {
       </tr>
       <tr>
       <p style="font-size:26px;font-family:Arial,sans-serif;">
-      Felicitaciones! Tu material fue aprobado por nuestro equipo y &nbsp;ya se encuentra disponible para todos los 
-      seguidores de nuestra plataforma.<br>Gracias por compartir tu material con nosotros.
+      Felicitaciones! 
+      </p>
+      </tr>
+      <tr>
+      <p style="font-size:26px;font-family:Arial,sans-serif;">
+      Tu material - ${req.body.film} - fue aprobado por nuestro equipo y ya se encuentra disponible para todos los 
+      seguidores de nuestra plataforma.
+      </p>
+      </tr>
+      <tr>
+      <p style="font-size:26px;font-family:Arial,sans-serif;">
+      Gracias por contribuir a CINDIE con tu trabajo. Esperamos sigas subiendo material de calidad.
       </p>
       </tr>
       </table>
       `;
     await enviado(from, to, subject, html);
     return res.json({ message: "Email enviado" });
+
+    case "filmRechazado":
+      subject = "Rechazo de nuevo Contenido";
+        html = `
+        <table style="background-color:#661c79;padding:20px;color:white; width:100%;">
+      <tr style="text-align:center;">
+      <h1 style="font-size:26px;font-family:Arial,sans-serif;">Hola,  ${req.body.name}</h1>
+      </tr>
+      <tr>
+      <p style="font-size:26px;font-family:Arial,sans-serif;">
+      Lamentablemente, tu solicitud para subir a nuestra plataforma el contendio  - ${req.body.film} - fue rechazada.
+      </p>
+      </tr>
+      <tr>
+      <p style="font-size:26px;font-family:Arial,sans-serif;">
+        Por favor, contacta con nosotros para más información.
+      </p>
+      </tr>
+      </table>
+        `;
+      await enviado(from, to, subject, html);
+      return res.json({ message: "Email enviado" });
 
     // ---------------------------- MAIL DEL CONTENIDO AL ADMINISTRADOR -----------------------------
     case "contentAdmin":
@@ -211,8 +278,6 @@ exports.mailing = async (req, res) => {
     // --------------------------------------NOVEDADES ----------------------------------------------
     case "news":
       const film = await Film.findAll(); //logica de filtrado se necesita fecha en modelo
-
-      const users = await User.findAll();
 
       users.forEach(async (user) => {
         await transporter.sendMail({

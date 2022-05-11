@@ -18,7 +18,7 @@ const adminJs = new AdminJS({
           enviarMail: {
             actionType: "record",
             icon: "Email",
-            component: AdminJS.bundle("../myMail.jsx"),
+            component: AdminJS.bundle("../components/mailCreador.jsx"),
             handler: async (req, res, context) => {
               return { record: context.record.toJSON() };
             },
@@ -27,7 +27,21 @@ const adminJs = new AdminJS({
         parent: { icon: "User" },
       },
     },
-    { resource: Film, options: { parent: { icon: "Camera" } } },
+    { resource: Film, 
+      options: { 
+        actions: {
+         enviarMail: {
+          actionType: "record",
+          icon: "Email",
+          component: AdminJS.bundle("../components/mailFilm.jsx"),
+          handler: async (req, res, context) => {
+            return { record: context.record.toJSON() };
+          },
+        },
+      },
+      parent: { icon: "Camera" }
+     } 
+    },
     { resource: Country, options: { parent: { icon: "Map" } } },
     { resource: Genre, options: { parent: { icon: "Star" } } },
     { resource: Comment, options: { parent: { icon: "Chat" } } },
