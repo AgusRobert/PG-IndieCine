@@ -22,7 +22,7 @@ import {
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
   VALIDATE_SUBSCRIPTION,
-  DELETE_FAV
+  DELETE_FAV,
 } from "./actionstype";
 
 export function getMovies() {
@@ -269,9 +269,9 @@ export function deleteUserInformation(email) {
   return async function (dispatch) {
     try {
       await axios.delete(`http://localhost:3001/users/del`, {
-        data:{
-          email: email
-        }
+        data: {
+          email: email,
+        },
       });
       // return dispatch({
       //   type: DELETE_USER_INFORMATION,
@@ -291,27 +291,25 @@ export function addFavFilm(payload) {
 export function deleteFavFilm(payload) {
   return async function (dispatch) {
     try {
-
-      console.log("SOY PAYLOAD EN ACTIONS", payload)
+      console.log("SOY PAYLOAD EN ACTIONS", payload);
       let response = await axios.delete("http://localhost:3001/users/delFav", {
         data: { payload },
       });
 
       let toPayload = {
         msg: response,
-        id: payload.favDispatch.idPeli
-      }
+        id: payload.favDispatch.idPeli,
+      };
 
       return dispatch({
         type: DELETE_FAV,
-        payload: toPayload.id
-      })
+        payload: toPayload.id,
+      });
     } catch (error) {
       console.log(error);
     }
   };
 }
-
 
 // export function getUserInfo(email) {
 //   return async function (dispatch) {
@@ -334,7 +332,7 @@ export function deleteFavFilm(payload) {
 export function getProfileInfo(email) {
   return async function (dispatch) {
     try {
-      console.log("EMAILL EN ACTIONS", email)
+      console.log("EMAILL EN ACTIONS", email);
       let response = await axios.get(
         `http://localhost:3001/users/byemail/${email}`
       );
