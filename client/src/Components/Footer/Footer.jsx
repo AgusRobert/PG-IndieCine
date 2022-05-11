@@ -16,6 +16,7 @@ const StyledLink = styled(Link)({
 const BoxStyle = styled(Box)({
     opacity:0.85 ,
     backgroundColor: "#311b92",
+  
 })
 const navlinks = [
   { name: "Nosotros", href: "http://localhost:3000/about" },
@@ -33,6 +34,7 @@ export default function Footer() {
         flexDirection: "column",
         minHeight: "50vh",
         alignContent: "space-between",
+        width:"100%"
       }}
     >
       <BoxStyle
@@ -42,6 +44,7 @@ export default function Footer() {
           px: 1,
           mt: "auto",
         }}
+
       >
         <Container maxWidth="sm">
          

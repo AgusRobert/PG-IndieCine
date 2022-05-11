@@ -32,6 +32,8 @@ const AppStyle = styled(AppBar)({
   backgroundColor: "#b388ff",
   position: "fixed",
   justifyContent: "space-between",
+  display: 'flex',
+  flexWrap: 'wrap',
 });
 
 const AvatarStyle = styled(Avatar)({

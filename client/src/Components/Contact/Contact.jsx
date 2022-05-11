@@ -4,8 +4,22 @@ import logo from "../Header/LOGO.png";
 import s from "./contact.module.css";
 import Footer from "../Footer/Footer";
 import axios from "axios";
+import Typography from "@material-ui/core/Typography";
+import { AppBar } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import { Box } from "@mui/system";
 import Swal from 'sweetalert2'
 
+const AppStyle = styled(AppBar)({
+  opacity: 0.85,
+  backgroundColor: "#b388ff",
+  position: "fixed",
+  justifyContent: "space-between",
+  alignItems: "center"
+});
+const BoxS = styled(Box)({
+  paddingTop: 200
+});
 export default function Contact() {
   const [redir, setRedir] = useState(false);
 
@@ -32,13 +46,11 @@ export default function Contact() {
   if (!redir) {
     return (
       <>
+       <AppStyle>
+         <Link to={'/'}><img src={logo}  alt="img not found"/></Link>
+       </AppStyle>
+       <BoxS></BoxS>
         <div className={s.content}>
-          <div className={s.logo}>
-            <Link to="/">
-              <img src={logo} style={{ cursor: "pointer" }} alt="logo" />
-            </Link>
-          </div>
-
           <div className={[s.contactwrapper, s.animated, s.bounceInUp]}>
             <div className={s.contactform}>
               <h3>Contáctanos</h3>
