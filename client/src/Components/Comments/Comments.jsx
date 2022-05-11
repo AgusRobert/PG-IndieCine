@@ -5,8 +5,7 @@ import Comment from "./Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { getComments } from "../../redux/actions";
 
-const Comments = ({filmId, userId}) => {
-
+const Comments = ({ filmId, userId, username, image }) => {
   // useEffect(() => {
   //   getCommentsApi().then((data) => {
   //     setBackendComments(data);
@@ -40,24 +39,25 @@ const Comments = ({filmId, userId}) => {
     userId: userId,
     filmId: filmId,
     formType: "postear",
+    username,
+    image,
   }
-
   return (
     <div>
       <h3>Comentarios</h3>
-      <CommentForm info={infoPost}/>
-      {allComments? allComments?.map(p => <Comment comment={p} id={p.id}/>) : "0"} 
+      <CommentForm info={infoPost} />
+      {allComments ? allComments?.map(p => <Comment comment={p} id={p.id} userId={userId}/*usernameComment={username} imageComment={image}*/ />) : "0"}
     </div>
 
-      /* <CommentForm filmId= {filmId} userId={userId} /> 
-       <div>
-        <Comment
-          currentUserId={currentUserId}
-        />
-        {/* {rootComments.map((rootComment) => (
-        ))}
-      </div> */
-    
+    /* <CommentForm filmId= {filmId} userId={userId} /> 
+     <div>
+      <Comment
+        currentUserId={currentUserId}
+      />
+      {/* {rootComments.map((rootComment) => (
+      ))}
+    </div> */
+
   );
 };
 

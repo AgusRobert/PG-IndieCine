@@ -4,7 +4,7 @@ exports.getAll = async () => {
   return await Comment.findAll();
 };
 
-exports.create = async ({ body, type, commentId, userId, filmId }) => {
+exports.create = async ({ body, type, commentId, userId, filmId , username, image}) => {
   try{
     return await Comment.create({
       body,
@@ -13,6 +13,8 @@ exports.create = async ({ body, type, commentId, userId, filmId }) => {
       numberReport: 0,
       UserId: userId,
       FilmId: filmId,
+      username,
+      image
     });
 
   }

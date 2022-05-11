@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 
-const Comment = ({comment, id}) => {
+const Comment = ({ comment, id, userId }) => {
 
   const dispatch = useDispatch()
   const [aux, setAux] = useState(false)
-  const handleEdit = () =>{
+  const handleEdit = () => {
     setAux(!aux)
   }
   /* const isReplying =
@@ -29,20 +29,27 @@ const Comment = ({comment, id}) => {
     id: id,
   }
 
-  const closeForm = (payload) =>{
+  const closeForm = (payload) => {
     setAux(payload)
   }
-  
-  const handleDelete = () =>{
+
+  const handleDelete = () => {
     dispatch(deleteComment(id))
   }
 
   return (
     <div>
+      <img src={comment.image} alt={comment.username} />
+      <div>
+        <h4>{comment.username}</h4></div>
       <div>{comment.body}</div>
-      <button onClick={handleEdit}>{aux? "Cerrar" : "Editar"}</button>
-      {aux && <CommentForm info={infoUpdate} closeFn = {closeForm} />}
-      <button onClick={handleDelete}>X</button>
+      {comment.UserId === userId &&
+        <button onClick={handleEdit}>{aux ? "Cerrar" : "Editar"}</button>
+      }
+      {aux && <CommentForm info={infoUpdate} closeFn={closeForm} />}
+      {comment.UserId === userId &&
+        <button onClick={handleDelete}>X</button>
+      }
     </div>
     // <div key={comment.id}>
     //   <div>
