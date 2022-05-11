@@ -84,10 +84,15 @@ export default function Profile() {
 
   const profileInfo = useSelector((state) => state.profileInfo);
 
+  console.log("USEEEEEEER", user)
+  console.log("USEREMAIL", user.email)
+
   useEffect(() => {
-    dispatch(getProfileInfo(user.email));
-    dispatch(validateSubscription(user.email));
-    profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
+    if(user?.email !== undefined){
+      dispatch(getProfileInfo(user.email));
+      dispatch(validateSubscription(user.email));
+      profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
+    }
   }, [fillForm]);
 
   // Config del modal
@@ -96,12 +101,10 @@ export default function Profile() {
     setOpen(false)
     navigate("/");
   };
-  const handleOpen = () => setOpen(true);
   const handleOnClick = () => {
     setOpen(true)
     logout({ returnTo: window.location.origin });
     dispatch(deleteUserInformation(user.email));
-    
   }
 
   function handleFillForm(payload) {
@@ -229,7 +232,7 @@ export default function Profile() {
 
         <StyledContainer2>
           <h2>Lista de peliculas favoritas.</h2>
-          {/* <FavList /> */}
+          {profileInfo?.id && <FavList userId= {profileInfo?.id}/>}
         </StyledContainer2>
 
         <StyledContainer3>

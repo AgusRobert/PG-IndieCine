@@ -20,6 +20,7 @@ import {
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
   VALIDATE_SUBSCRIPTION,
+  DELETE_FAV,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -248,8 +249,9 @@ function rootReducer(state = initialState, action) {
     //   };
 
     case GET_PROFILE_INFO:
+      console.log("QUE LLEGA AL REDUCER", action.payload);
       return {
-        /* ...state, */
+        ...state,
         profileInfo: action.payload,
       };
 
@@ -264,7 +266,6 @@ function rootReducer(state = initialState, action) {
       let updatedSubscription = "Free";
       if ((action.payload.results[0].status = "pending")) {
         updatedSubscription = action.payload.results[2].reason;
-        // console.log('updatedSubscription', updatedSubscription);
         return {
           ...state,
           profileInfo: {
@@ -278,6 +279,20 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         plans: action.payload,
+      };
+
+    case DELETE_FAV:
+      let deletedFavs = state.favorites.filter(p => p.id !== action.payload);
+      console.log("DELETED FAVS", deletedFavs);
+      return {
+        ...state,
+        favorites: deletedFavs,
+      };
+
+    case PAY_SUBSCRIPTION:
+      return {
+        ...state,
+        paymentLink: action.payload.init_point,
       };
 
     default:

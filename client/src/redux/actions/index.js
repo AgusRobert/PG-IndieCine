@@ -22,6 +22,7 @@ import {
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
   VALIDATE_SUBSCRIPTION,
+  DELETE_FAV,
 } from "./actionstype";
 
 export function getMovies() {
@@ -309,11 +310,21 @@ export function addFavFilm(payload) {
 }
 
 export function deleteFavFilm(payload) {
-  console.log("payload", payload);
   return async function (dispatch) {
     try {
-      await axios.delete("http://localhost:3001/users/delFav", {
+      console.log("SOY PAYLOAD EN ACTIONS", payload);
+      let response = await axios.delete("http://localhost:3001/users/delFav", {
         data: { payload },
+      });
+
+      let toPayload = {
+        msg: response,
+        id: payload.favDispatch.idPeli,
+      };
+
+      return dispatch({
+        type: DELETE_FAV,
+        payload: toPayload.id,
       });
     } catch (error) {
       console.log(error);
@@ -342,6 +353,7 @@ export function deleteFavFilm(payload) {
 export function getProfileInfo(email) {
   return async function (dispatch) {
     try {
+      console.log("EMAILL EN ACTIONS", email);
       let response = await axios.get(
         `http://localhost:3001/users/byemail/${email}`
       );
