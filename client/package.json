@@ -28,6 +28,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "screenfull": "^6.0.1",
+    "sweetalert2": "^11.4.13",
     "swiper": "^8.1.4",
     "web-vitals": "^2.1.4"
   },
@@ -56,4 +57,3 @@
     ]
   }
 }
-

@@ -23,8 +23,9 @@ export default function Subs(currentSub) {
   }, []);
 
   useEffect(() => {
-    console.log(paymentLink);
-    if (paymentLink !== undefined) {
+    console.log("LO QUE SEA", paymentLink);
+    if (paymentLink !== "") {
+      console.log("ya no soy un array vacio", paymentLink);
       window.location.replace(paymentLink);
     }
   }, [paymentLink]);
@@ -36,9 +37,10 @@ export default function Subs(currentSub) {
       reason: plans[id - 1]?.name,
       transaction_amount: plans[id - 1]?.price,
       currency_id: "ARS",
-      payer_email: user?.email /* "test_user_54987522@testuser.com "*/,
+      payer_email: user?.email,
     };
     dispatch(paySubscription(plan));
+    console.log("ONSUBSCRIBE");
   };
 
   return (
