@@ -7,6 +7,7 @@ import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import { AppBar } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import { Box } from "@mui/system";
 
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
@@ -14,6 +15,9 @@ const AppStyle = styled(AppBar)({
   position: "fixed",
   justifyContent: "space-between",
   alignItems: "center"
+});
+const BoxS = styled(Box)({
+  paddingTop: 200
 });
 export default function Contact() {
   const [redir, setRedir] = useState(false);
@@ -39,9 +43,11 @@ export default function Contact() {
   }
   if (!redir) {
     return (
-      <> <AppStyle>
+      <>
+       <AppStyle>
          <Link to={'/'}><img src={logo}  alt="img not found"/></Link>
        </AppStyle>
+       <BoxS></BoxS>
         <div className={s.content}>
           <div className={[s.contactwrapper, s.animated, s.bounceInUp]}>
             <div className={s.contactform}>

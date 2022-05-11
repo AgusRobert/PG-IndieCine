@@ -35,15 +35,18 @@ ul {
 .contactwrapper {
     box-shadow: 0 0 20px 0 rgba(255, 255, 255, .3);
     padding-top: 100px;
+    border-radius: 20%;
 }
 
 .contactwrapper > * {
     padding: 1em;
     padding-top: 100px;
+    border-radius: 20%;
 }
 
 .contactform {
     background: #222222;
+    border-radius: 2%;
 }
 
 .contactform form {
