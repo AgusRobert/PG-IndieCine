@@ -68,13 +68,7 @@ exports.deleteComent = async (req, res) => {
 
 exports.modifyComent = async (req, res) => {
   try {
-    const comment = await Comment.findByPk(req.body.id);
-    if (comment) {
-      await comment.update(req.body);
-      return res.json({ message: "Comentario actualizado correctamente" });
-    } else {
-      return res.json({ message: "Comentario no encontrado" });
-    }
+    res.json(await commentService.update(req.body));
   } catch (error) {
     res.json({ message: "Error al actualizar el comentario", error });
   }

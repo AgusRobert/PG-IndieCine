@@ -15,3 +15,14 @@ exports.create = async ({ body, type, commentId, userId, filmId }) => {
     FilmId: filmId,
   });
 };
+
+exports.update = async (payload) => {
+  const comment = await Comment.findByPk(payload.id);
+  if (comment) {
+    const commentUpdated = await Comment.update(payload);
+    console.log("Comentario actualizado correctamente.");
+    return commentUpdated;
+  } else {
+    return { message: "Comentario no encontrado" };
+  }
+};

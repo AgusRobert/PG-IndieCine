@@ -23,7 +23,9 @@ export const GET_PROFILE_INFO = "GET_PROFILE_INFO";
 export const VALIDATE_SUBSCRIPTION = "VALIDATE_SUBSCRIPTION";
 export const DELETE_FAV = "DELETE_FAV";
 //comentarios
+export const GET_COMMENTS = "GET_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
+export const UPDATE_COMMENT = "UPDATE_COMMENT";
 
 
 

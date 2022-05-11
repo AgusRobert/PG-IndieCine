@@ -25,6 +25,8 @@ import {
   DELETE_FAV,
   //comentarios
   ADD_COMMENT,
+  UPDATE_COMMENT,
+  GET_COMMENTS,
 } from "./actionstype";
 
 export function getMovies() {
@@ -449,6 +451,20 @@ export function getPlanInfo() {
 
 //comments
 
+export function getComments(){
+  return async function(dispatch){
+    try{
+      let response = await axios.get("http://localhost:3001/comments");
+      return dispatch({
+        type: GET_COMMENTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getComments", error);
+    }
+  }
+}
+
 export function addComment(payload) {
   return async function (dispatch) {
     try {
@@ -459,6 +475,24 @@ export function addComment(payload) {
       });
     } catch (error) {
       console.log("AddComment", error);
+    }
+  };
+}
+
+//      {}
+// El payload debe tener el id del comentario y 
+// lo que se quiere modificar:
+//    - body
+export function updateComment(payload) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.put(`http://localhost:3001/comments/modif`, payload);
+      return dispatch({
+        type: UPDATE_COMMENT,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("updateComment", error);
     }
   };
 }
