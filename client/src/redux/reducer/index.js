@@ -22,7 +22,9 @@ import {
   VALIDATE_SUBSCRIPTION,
   DELETE_FAV,
   // comments
-  ADD_COMMENT
+  ADD_COMMENT,
+  UPDATE_COMMENT,
+  GET_COMMENTS,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -57,12 +59,12 @@ function rootReducer(state = initialState, action) {
         return contador;
       };
 
-      let peliFiltro = pelisporfiltrar.filter(data => {
+      let peliFiltro = pelisporfiltrar.filter((data) => {
         if (
           data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
-          -1 ||
+            -1 ||
           data.director.toLowerCase().indexOf(action.payload.toLowerCase()) !==
-          -1 ||
+            -1 ||
           data.mainActors
             .join(" ")
             .toLowerCase()
@@ -251,7 +253,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case DELETE_FAV:
-      let deletedFavs = state.favorites.filter(p => p.id !== action.payload);
+      let deletedFavs = state.favorites.filter((p) => p.id !== action.payload);
       console.log("DELETED FAVS", deletedFavs);
       return {
         ...state,
@@ -265,10 +267,28 @@ function rootReducer(state = initialState, action) {
       };
 
     // comments y en estado inicial
+    case GET_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload,
+      }
+
     case ADD_COMMENT:
       return {
         ...state,
-        comments: [...state.comments, action.payload]
+        comments: [...state.comments, action.payload],
+      };
+
+    case UPDATE_COMMENT:
+      let updatedComments = state.comments.map((comment) => {
+        if (comment.id === action.payload.id) {
+          return action.payload;
+        }
+        return comment;
+      });
+      return {
+        ...state,
+        comments: updatedComments,
       };
 
     default:
