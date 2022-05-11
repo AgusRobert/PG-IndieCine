@@ -1,9 +1,8 @@
-import { /*useEffect, */ useState } from "react";
-import { useDispatch } from "react-redux";
-import { signUpFunction, updateUser } from "../../../redux/actions";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCountries, updateUser } from "../../../redux/actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-
 import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
@@ -28,7 +27,7 @@ const SelectStyle = styled(TextField)({
   backgroundColor: "#b388ff",
 });
 
-export default function CreatorForm() {
+export default function CreatorForm({ fillFormFn }) {
   const [documents, setDocuments] = useState({ back: null, front: null });
   const [input, setInput] = useState({
     country: null,
@@ -45,35 +44,10 @@ export default function CreatorForm() {
 
   // -------- TRAER LA LISTA DE PAISES --------
   const dispatch = useDispatch();
-  const countries = [
-    { id: "01", name: "Argentina" },
-    { id: "02", name: "Bolivia" },
-    { id: "03", name: "Chile" },
-    { id: "04", name: "Colombia" },
-    { id: "05", name: "Costa Rica" },
-    { id: "06", name: "Cuba" },
-    { id: "07", name: "Ecuador" },
-    { id: "08", name: "El Salvador" },
-    { id: "09", name: "Guatemala" },
-    { id: "10", name: "Honduras" },
-    { id: "11", name: "México" },
-    { id: "12", name: "Nicaragua" },
-    { id: "13", name: "Panamá" },
-    { id: "14", name: "Paraguay" },
-    { id: "15", name: "Perú" },
-    { id: "16", name: "Puerto Rico" },
-    { id: "17", name: "República Dominicana" },
-    { id: "18", name: "Uruguay" },
-    { id: "19", name: "Venezuela" },
-  ];
-
-  // const { countries } = useSelector(state => state);
-  // useEffect(() => {
-  //     if (!countries.length) {
-  //         dispatch()
-  //         dispatch(getCountries());
-  //     }
-  // }, []);
+  const { countries } = useSelector(state => state);
+  useEffect(() => {
+    !countries.length && dispatch(getCountries());
+  }, [])
 
   function validateForm(state) {
     const errors = {};
@@ -242,10 +216,10 @@ export default function CreatorForm() {
 
               {countries.length
                 ? countries.map((country) => (
-                    <MenuItemStyle key={country.id} value={country.name}>
-                      {country.name}
-                    </MenuItemStyle>
-                  ))
+                  <MenuItemStyle key={country.id} value={country.name}>
+                    {country.name}
+                  </MenuItemStyle>
+                ))
                 : null}
             </SelectStyle>
           </div>
