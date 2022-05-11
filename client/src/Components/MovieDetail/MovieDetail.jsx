@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../Footer/Footer.jsx";
 import View from "../Reproductor/videoplayer.js";
-import { renderMovieDetails } from "../../redux/actions/index";
+import { getProfileInfo, renderMovieDetails } from "../../redux/actions/index";
 import logo from "./LOGO.png";
 import "./style.css";
 import FavButton from "../FavButton/FavButton.jsx";
 import Comments from "../Comments/Comments";
 import { styled } from "@mui/system";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const ImgFav = styled("img")({
   height: "400px",
   width: "auto",
@@ -20,12 +22,16 @@ export default function MovieDetail() {
   let filmId = id;
   // const [load, setLoad] = useState(false)
 
+  const{user} = useAuth0()
+
   useEffect(() => {
     dispatch(renderMovieDetails(id));
+    dispatch(getProfileInfo(user?.email))
     // setLoad(true)
   }, [dispatch]);
 
   const peli = useSelector(state => state.detalle);
+  const profileInfo = useSelector( state => state.profileInfo)
   console.log("LAPELI", peli)
 
   let elenco = peli ? peli.mainActors : [];
@@ -71,8 +77,7 @@ export default function MovieDetail() {
           <FavButton filmId={filmId} />
           <div>
             <Comments
-              commentsUrl="http://localhost:3004/comments"
-              currentUserId="1"
+              userId = {profileInfo?.id} filmId={Number(filmId)}
             />
           </div>
           <div>

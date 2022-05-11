@@ -25,6 +25,7 @@ import {
   ADD_COMMENT,
   UPDATE_COMMENT,
   GET_COMMENTS,
+  DELETE_COMMENT,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -290,7 +291,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         comments: updatedComments,
       };
-
+    case DELETE_COMMENT:
+      let filteredComments = state.comments.filter( c => c.id !== action.payload)
+      return{
+        ...state,
+        comments: filteredComments
+      }
     default:
       return state;
   }

@@ -2,14 +2,25 @@
 import { useState, useEffect } from "react";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
+import { useDispatch, useSelector } from "react-redux";
+import { getComments } from "../../redux/actions";
 
-const Comments = (filmId, userId) => {
+const Comments = ({filmId, userId}) => {
 
   // useEffect(() => {
   //   getCommentsApi().then((data) => {
   //     setBackendComments(data);
   //   });
   // }, []);
+
+  const dispatch = useDispatch()
+  const allComments = useSelector(state => state.comments)
+
+  useEffect(() => {
+    dispatch(getComments(filmId))
+  }, [dispatch])
+
+  console.log("ALL COMMENTS", allComments)
 
 
   // autho -> email -> profileinfo -> userId
@@ -25,11 +36,19 @@ const Comments = (filmId, userId) => {
   //   FilmId: filmId,
   // });
 
+  const infoPost = {
+    userId: userId,
+    filmId: filmId,
+    formType: "postear",
+  }
+
   return (
     <div>
-      <h3>Comments lsdglsdkgjslkjslj</h3>
-      <div>Write comment skglksdñsksñ</div>
-      </div>
+      <h3>Comentarios</h3>
+      <CommentForm info={infoPost}/>
+      {allComments? allComments?.map(p => <Comment comment={p} id={p.id}/>) : "0"} 
+    </div>
+
       /* <CommentForm filmId= {filmId} userId={userId} /> 
        <div>
         <Comment

@@ -27,6 +27,7 @@ import {
   ADD_COMMENT,
   UPDATE_COMMENT,
   GET_COMMENTS,
+  DELETE_COMMENT
 } from "./actionstype";
 
 export function getMovies() {
@@ -451,10 +452,10 @@ export function getPlanInfo() {
 
 //comments
 
-export function getComments(){
+export function getComments(payload){
   return async function(dispatch){
     try{
-      let response = await axios.get("http://localhost:3001/comments");
+      let response = await axios.get(`http://localhost:3001/comments/film/${payload}`);
       return dispatch({
         type: GET_COMMENTS,
         payload: response.data,
@@ -468,7 +469,7 @@ export function getComments(){
 export function addComment(payload) {
   return async function (dispatch) {
     try {
-      let response = await axios.post(`http://localhost:3001/comments/`);
+      let response = await axios.post(`http://localhost:3001/comments/`, payload);
       return dispatch({
         type: ADD_COMMENT,
         payload: response.data,
@@ -497,6 +498,21 @@ export function updateComment(payload) {
   };
 }
 
+export function deleteComment(id) {
+  console.log("iddd", id)
+  return async function(dispatch) {
+    try{
+      let response = axios.delete("http://localhost:3001/comments/del", {data: {id}})
+      return dispatch({
+        type: DELETE_COMMENT,
+        payload: id
+      });
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+}
 /* 
   export function sortByComment(order){
 return {
