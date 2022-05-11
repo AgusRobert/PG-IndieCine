@@ -152,7 +152,6 @@ export default function Home() {
                   )}
                 </Row>
                 <Footer />
-      
               </ContainerS>
            
           </>
