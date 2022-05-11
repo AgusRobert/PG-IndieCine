@@ -29,7 +29,7 @@ export default function About(){
 
 import React from "react";
 import Footer from "../Footer/Footer.jsx"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../Header/LOGO.png";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -37,13 +37,19 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-
+import { AppBar } from "@mui/material";
+import { amber, grey } from "@mui/material/colors";
+import EmailIcon from '@mui/icons-material/Email';
+import IconButton from "@material-ui/core/IconButton";
+import deco from './deco.png'
+import deco2 from './deco2.png'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "black"/* theme.palette.mode === 'dark' ? '#1A2027' : '#fff' */,
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'center',
   color: "#f1c232",
+  borderRadius:6
 }))
 
 const defaultTheme = createTheme();
@@ -71,16 +77,58 @@ const style = {
   maxWidth: 360,
   bgcolor: 'background.paper',
 };
+const AppStyle = styled(AppBar)({
+  opacity: 0.85,
+  backgroundColor: "#b388ff",
+  position: "fixed",
+  justifyContent: "space-between",
+  alignItems: "center"
+});
+const BoxStyle = styled(Box)({
 
+  paddingTop:150,
+  justifyContent: "space-evenly",
+  alignItems: "center",
+  paddingBottom:0,
+  alignContent:"center",
+  justifyItems:"flex-end"
+});
+const Titulo = styled(Typography)({
+ color:"white",
+ fontSize:"45px"
+  
+});
+const PaperStyle = styled(Paper)({
+  display:"flex",
+  maxWidth:"inline-block",
+   padding:25,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: grey[900]
+  
+});
+const ImgStyle = styled("img")({
+  maxHeight:200,
+  width:"auto"
+})
 export default function About(){
-    return (
+    let navigate = useNavigate()
+  function handleonClick(){
+     navigate('/contact')
+  }
+  
+  
+  return (
        <>
-       <div className="logoIndex">
+       <AppStyle>
          <Link to={'/'}><img src={logo}  alt="img not found"/></Link>
-       </div>
+       </AppStyle>
     
-<div>
-<Box
+<BoxStyle> 
+  <Box style={{display:"flex", justifyContent:"space-between"}}>
+    
+    <ImgStyle src={deco2} alt="deco"/>
+   <Box
       height={100}
       width={500}
       display="flex"
@@ -90,54 +138,74 @@ export default function About(){
       color="white"
       fontSize={24}
       position={"relative"}
-      left={400}
+      left={0}
       top={50}
+      borderRadius={5}
     >
-        <ThemeProvider theme={defaultTheme}>
-      <div className="App" style={{ backgroundColor: "#f1c232"}}>
-        <WhiteText varient="h3" text="Sobre Nosotros" />
-      </div>
-    </ThemeProvider> 
+       <Titulo variant="bold">SOBRE NOSOTROS</Titulo>  
     </Box>
-    </div>
-       <h1>.</h1>
-       <p style={{fontSize: '22px'}}>Somos un grupo de compañeros de estudio de distintos puntos de Latinoamérica que decidimos desarrollar esta Web como proyecto final de nuestra carrera de Full Stack-Developers.
-       <p> CINDIE nace de una necesidad que sentimos por una plataforma que haga posible el acceso a material audiovisual independiente latinoamericano. El enfoque de la página está en el archivado y almacenado de proyectos de productoras o individuos pertenecientes a las artes audiovisuales y en brindarle a los usuarios la oportunidad de hacer donaciones a los artistas.</p>
-        <p>  Con CINDIE nos proponemos ofrecer un amplio catálogo de largometrajes de ficción, documentales y cortometrajes realizados por artistas latinoamericanos. Nuestro objetivo a futuro es que nuestro catálogo contenga una amplia variedad de películas de todos los géneros y nacionalidades, tanto de autores consagrados como de nuevos talentos del cine independiente. </p>
-        </p>
+   <ImgStyle src={deco} alt="deco"/>
+      </Box>
+      <BoxStyle>
+        <PaperStyle>
+       <Typography style={{color:"white",fontSize: '22px', display: "inline-block", whiteSpace: "pre-line",maxWidth:"550px"}}>Somos un grupo de compañeros de estudio de distintos puntos de Latinoamérica que decidimos desarrollar esta Web como proyecto final de nuestra carrera de Full Stack-Developers.</Typography>
+        <Typography style={{color:"white",fontSize: '22px',display: "inline-block", whiteSpace: "pre-line",maxWidth:"550px"}}> Con CINDIE nos proponemos ofrecer un amplio catálogo de largometrajes de ficción, documentales y cortometrajes realizados por artistas latinoamericanos. Nuestro objetivo a futuro es que nuestro catálogo contenga una amplia variedad de películas de todos los géneros y nacionalidades, tanto de autores consagrados como de nuevos talentos del cine independiente. </Typography>
+        </PaperStyle>
+       </BoxStyle>
 
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ paddingTop:15,flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+        <Item>Key</Item>
+          <Item>keynarafaelp@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>Valen</Item>
+          <Item>valentinnavalos@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>Agus</Item>
+          <Item>iabichellarobert@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>Xavi</Item>
+          <Item>2092.rxcm@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+        <Item>Facu</Item>
+          <Item>faq.ramos.14101999@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>Gus</Item>
+          <Item>gustavogallesio@hotmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>Dani</Item>
+          <Item>dasmmer@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>email de cada uno</Item>
+          <Item>Ton</Item>
+          <Item>gduba90@gmail.com</Item>
         </Grid>
         <Grid item xs={4}>
-          <Item>CONTÁCTANOS</Item>
+          <Item>CONTÁCTANOS 
+          <IconButton onClick={ () =>{handleonClick()}} >
+      <EmailIcon
+        sx={{
+          color: grey[800],
+          ":hover": {
+            color: amber[400],
+          },
+        }}
+        fontSize="large"
+      />
+      </IconButton>
+          </Item>
+         
         </Grid>
       </Grid>
     </Box>
-      
+    </BoxStyle>
        <Footer/>
        </> 
     )
