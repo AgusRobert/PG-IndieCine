@@ -89,10 +89,17 @@ export function getMoviesByGenre(payload) {
           }
         });
       });
-      return dispatch({
-        type: FILTER_MOVIES_BY_GENRE,
-        payload: filtroGenre,
-      });
+      if (filtroGenre.length) {
+        return dispatch({
+          type: FILTER_MOVIES_BY_GENRE,
+          payload: filtroGenre,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_MOVIES_BY_GENRE,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -118,11 +125,18 @@ export function getMoviesByCountry(payload) {
     try {
       let json3 = await axios.get("http://localhost:3001/films");
       let json4 = json3.data;
-      json4 = json4.filter(e => e.Country.name === payload);
-      return dispatch({
-        type: FILTER_MOVIES_BY_COUNTRY,
-        payload: json4,
-      });
+      json4 = json4.filter((e) => e.Country.name === payload);
+      if (json4.length) {
+        return dispatch({
+          type: FILTER_MOVIES_BY_COUNTRY,
+          payload: json4,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_MOVIES_BY_COUNTRY,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -237,11 +251,18 @@ export function filterDuration(payload) {
     try {
       let json3 = await axios.get("http://localhost:3001/films");
       let json4 = json3.data;
-      json4 = json4.filter(e => e.duration === payload);
-      return dispatch({
-        type: FILTER_DURATION,
-        payload: json4,
-      });
+      json4 = json4.filter((e) => e.duration === payload);
+      if (json4.length) {
+        return dispatch({
+          type: FILTER_DURATION,
+          payload: json4,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_DURATION,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -268,9 +289,9 @@ export function deleteUserInformation(email) {
   return async function (dispatch) {
     try {
       await axios.delete(`http://localhost:3001/users/del`, {
-        data:{
-          email: email
-        }
+        data: {
+          email: email,
+        },
       });
       // return dispatch({
       //   type: DELETE_USER_INFORMATION,

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // import Card from "../Card/Card.jsx"
 import Footer from "../Footer/Footer.jsx"
 import Header from '../Header/Header'
-import { getMovies, getUserInfo, signUpFunction } from "../../redux/actions/index.js";
+import { getMovies, signUpFunction } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
 
@@ -53,92 +53,113 @@ export default function Home() {
                 // creator: false,
                 //buscar la manera de no enviar el creator en false acá
             }))
-            // este llamado es para que se actualice es isCreator en el store con el de la db.
-            // dispatch(getUserInfo())
         }
     }, [user, isAuthenticated])
+
+    if (allMovies[0] === 'No films') {
+        return (
+            <>
+                <Header position="sticky" />
+                <div className="container">
+                    <div>
+                        <h1>No se ha podido encontrar la búsqueda.</h1>
+                    </div>
+                </div>
+                <Footer />
+            </>
+        )
+    }
 
     return (
         <>
             <Header position="sticky" />
             <div className="container">
-                <h2 className="Title">Estrenos:</h2>
-                {allMovies?.length && <Swiper
-                    navigation={true}
-                    effect={"coverflow"}
-                    centeredSlides={true}
-                    slidesPerView={window.innerWidth < 768 ? 1 : "auto"}
-                    loop={true}
-                    coverflowEffect={{
-                        rotate: 50,
-                        stretch: 0,
-                        depth: 100,
-                        modifier: 1,
-                        slideShadows: true
-                    }}
-                    pagination={{
-                        clickable: true
-                    }}
-                    className="mySwiper"
-                >
-                    {allMovies?.map((m) => {
-                        return (
+                {
+                    allMovies.length && allMovies[0] !== 'No films' ? (
+                        <>
+                            <h2 className="Title">Estrenos:</h2>
+                            <Swiper
+                                navigation={true}
+                                effect={"coverflow"}
+                                centeredSlides={true}
+                                slidesPerView={window.innerWidth < 768 ? 1 : "auto"}
+                                loop={true}
+                                coverflowEffect={{
+                                    rotate: 50,
+                                    stretch: 0,
+                                    depth: 100,
+                                    modifier: 1,
+                                    slideShadows: true
+                                }}
+                                pagination={{
+                                    clickable: true
+                                }}
+                                className="mySwiper"
+                            >
+                                {allMovies?.map((m) => {
+                                    return (
+                                        <div>
+                                            <SwiperSlide>
+                                                <Link to={`/detail/${m.id}`}>
+                                                    <img src={m.poster} alt="img not found" />
+                                                </Link>
+                                            </SwiperSlide>
+                                        </div>
+                                    );
+                                })}
+                            </Swiper>
                             <div>
-                                <SwiperSlide>
-                                    <Link to={`/detail/${m.id}`}>
-                                        <img src={m.poster} alt="img not found" />
-                                    </Link>
-                                </SwiperSlide>
+                                <Container>
+                                    <Row md={6} lg={6} className="newdiv">
+                                        {
+                                            allMovies ? allMovies?.map(data => {
+                                                console.log("HOME", data)
+
+                                                let nombresGen = [];
+                                                let generos = data.Genres
+                                                generos.forEach(a => {
+                                                    nombresGen.push(a.name)
+                                                })
+
+                                                return (
+                                                    <div className="cardgrid" key={data.id}>
+                                                        <Link to={`/detail/${data.id}`}>
+                                                            <Cartas title={data.title}
+                                                                poster={data.poster}
+                                                                year={data.year}
+                                                                country={data.Country.name}
+                                                                genres={"Géneros: " + nombresGen.join(", ")}
+                                                                rating={data.rating}
+                                                                key={data.id}
+                                                                duration={data.duration}
+                                                                synopsis={data.synopsis} />
+                                                        </Link>
+                                                    </div>
+                                                )
+                                            }) :
+                                                <img src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif" alt="not found" />
+                                        }
+                                    </Row>
+                                </Container>
                             </div>
-                        );
-                    })}
-                </Swiper>}
+                        </>
+                    ) : (
+                        <div>
+                            <h2>Cargando...</h2>
+                        </div>
+                    )
+                }
             </div>
             <div>
-                <Container>
-                    <Row md={6} lg={6} className="newdiv">
-                        {
-                            allMovies ? allMovies?.map(data => {
-                                console.log("HOME", data)
-
-                                let nombresGen = [];
-                                let generos = data.Genres
-                                generos.forEach(a => {
-                                    nombresGen.push(a.name)
-                                })
-
-                                return (
-                                    <div className="cardgrid" key={data.id}>
-                                        <Link to={`/detail/${data.id}`}>
-                                            <Cartas title={data.title}
-                                                poster={data.poster}
-                                                year={data.year}
-                                                country={data.Country.name}
-                                                genres={"Géneros: " + nombresGen.join(", ")}
-                                                rating={data.rating}
-                                                key={data.id}
-                                                duration={data.duration}
-                                                synopsis={data.synopsis} />
-                                        </Link>
-                                    </div>
-                                )
-                            }) :
-                                <img src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif" alt="not found" />
-                        }
-                    </Row>
-                    <div>
-                        <Footer />
-                    </div>
-                </Container>
-                {/* <div>
+                <Footer />
+            </div>
+            {/* <div>
                         <a href="#" class="scroll-top" title="Ir arriba">
                             <i class="fa fa-angle-up"><b>^</b></i>
                         </a>
                     </div> */}
-            </div>
-            {/* <div>
-                    <Footer/>
-                </div> */}
+
+            {/* </div> */}
 
 
             {/* <div className="pelis">

@@ -12,8 +12,9 @@ import {
   getUserInfo,
   updateUser,
 } from "../../redux/actions";
-import { Box, Container, Link } from "@mui/material";
+import { /*Box,*/ Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
+import { Modal , Box } from '@material-ui/core';
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from "../Header/LOGO.png";
 import { useEffect, useState } from "react";
@@ -57,13 +58,28 @@ const StyledContainer3 = styled(Container)({
   gridColumn: "1/4",
 });
 
+const BoxFav = styled(Box)({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  backgroundColor: grey[700],
+  border: "none",
+  padding: 10,
+  boxShadow: 24,
+  borderRadius: 5,
+  color: "black",
+  p: 4,
+});
+
 export default function Profile() {
   const { user, logout } = useAuth0();
   // const { isCreator } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [upgrade, setUpgrade] = useState(false);
-
+  const [upgradeBtn, setUpgradeBtn] = useState(false);
+  const [fillForm, setFillForm] = useState(false);
   // validación de suscripción
 
   const profileInfo = useSelector((state) => state.profileInfo);
@@ -71,9 +87,26 @@ export default function Profile() {
   useEffect(() => {
     dispatch(getProfileInfo(user.email));
     dispatch(validateSubscription(user.email));
-  }, []);
+    profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
+  }, [fillForm]);
 
-  // console.log("EMAIL DATOS", profileInfo);
+  // Config del modal
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false)
+    navigate("/");
+  };
+  const handleOpen = () => setOpen(true);
+  const handleOnClick = () => {
+    setOpen(true)
+    logout({ returnTo: window.location.origin });
+    dispatch(deleteUserInformation(user.email));
+    
+  }
+
+  function handleFillForm(payload) {
+    setFillForm(payload);
+  }
 
   const subsToUpdate = {
     email: user.email,
@@ -81,29 +114,22 @@ export default function Profile() {
     PlanId: profileInfo?.subcription === "de Culto" ? 2 : 3
   }
 
-  function handleOnDelete() {
-    logout({ returnTo: window.location.origin });
-    dispatch(deleteUserInformation(user.email));
-    alert("Serás redirigido al inicio");
-    navigate("/");
-  }
+  // function handleOnDelete() {
+  //   logout({ returnTo: window.location.origin });
+  //   dispatch(deleteUserInformation(user.email));
+  //   alert("La eliminación será efectiva en las próximas horas.");
+  //   navigate("/");
+  // }
 
   function handleCameBackToBasic() {
     // dispatch(
-    //   cameBackToBasic({
-    //     email: user.email,
-    //     creator: false,
-    //   })
+    //   cameBackToBasic({email: user.email,creator: false})
     // );
-    dispatch(updateUser({email: user.email, creator: false}))
+    dispatch(updateUser({ email: user.email, creator: false }))
   }
 
-  function handleUpgradeUser() {
-    setUpgrade(true);
-  }
-
-  function handleUploadProject() {
-    navigate("/addFilm");
+  function handleUpgradeBtn() {
+    setUpgradeBtn(true);
   }
 
   return (
@@ -145,7 +171,7 @@ export default function Profile() {
                   color="textPrimary"
                   variant="button"
                   underline="none"
-                  onClick={handleUploadProject}
+                  onClick={() => navigate("/addFilm")}
                 >
                   Subir Proyecto
                 </StyledLink>
@@ -182,10 +208,21 @@ export default function Profile() {
                 color="textPrimary"
                 variant="button"
                 underline="none"
-                onClick={handleOnDelete}
+                // onClick={handleOnDelete}
+                onClick={handleOnClick}
               >
                 Borrar cuenta
               </StyledLink>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <BoxFav>
+                La eliminación será efectiva en las próximas horas.
+              </BoxFav>
+            </Modal>
             </Container>
           </Container>
         </StyledContainer>
@@ -206,8 +243,8 @@ export default function Profile() {
               </ul>
 
             </>
-          ) } 
-          {profileInfo?.status === 'registered' && (
+          )}
+          {profileInfo?.status === 'registered' && fillForm === false && (
             <>
               <h2>¿Desea subir al siguiente nivel?</h2>
 
@@ -228,12 +265,14 @@ export default function Profile() {
                   color="textPrimary"
                   variant="button"
                   underline="none"
-                  onClick={handleUpgradeUser}
+                  onClick={handleUpgradeBtn}
                 >
                   Subir de nivel
                 </StyledLink>
                 {/* <Subs currentSub={profileInfo?.subcription} /> */}
-                {upgrade && <CreatorForm />}
+                {upgradeBtn && fillForm === false && <CreatorForm
+                  fillFormFn={handleFillForm}
+                />}
               </Container>
             </>
           )}

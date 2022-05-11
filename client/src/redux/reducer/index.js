@@ -68,22 +68,22 @@ function rootReducer(state = initialState, action) {
           return data;
         }
       });
-
-      return {
-        ...state,
-        pelisfiltradas: peliFiltro,
-      };
+      if (peliFiltro.length) {
+        return {
+          ...state,
+          pelisfiltradas: peliFiltro,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
 
     case GET_MOVIES:
       return {
         ...state,
         peliculas: action.payload,
-        pelisfiltradas: action.payload,
-      };
-
-    case FILTER_DURATION:
-      return {
-        ...state,
         pelisfiltradas: action.payload,
       };
 
@@ -98,10 +98,17 @@ function rootReducer(state = initialState, action) {
         }
         return 0;
       });
-      return {
-        ...state,
-        pelisfiltradas: orderMoviesDate,
-      };
+      if (orderMoviesDate.length) {
+        return {
+          ...state,
+          pelisfiltradas: orderMoviesDate,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
 
     case ORDER_COMMENT:
       let orderMoviesCom = [...state.pelisfiltradas];
@@ -114,10 +121,17 @@ function rootReducer(state = initialState, action) {
         }
         return 0;
       });
-      return {
-        ...state,
-        pelisfiltradas: orderMoviesCom,
-      };
+      if (orderMoviesCom.length) {
+        return {
+          ...state,
+          pelisfiltradas: orderMoviesCom,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
 
     case ORDER_BY_NAME:
       let orderMoviesName = [...state.pelisfiltradas];
@@ -130,10 +144,17 @@ function rootReducer(state = initialState, action) {
         }
         return 0;
       });
-      return {
-        ...state,
-        pelisfiltradas: orderMoviesName,
-      };
+      if (orderMoviesName.length) {
+        return {
+          ...state,
+          pelisfiltradas: orderMoviesName,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
 
     case ORDER_BY_RATING:
       let orderMoviesRating = [...state.pelisfiltradas];
@@ -146,9 +167,22 @@ function rootReducer(state = initialState, action) {
         }
         return 0;
       });
+      if (orderMoviesRating.length) {
+        return {
+          ...state,
+          pelisfiltradas: orderMoviesRating,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
+
+    case FILTER_DURATION:
       return {
         ...state,
-        pelisfiltradas: orderMoviesRating,
+        pelisfiltradas: action.payload,
       };
 
     case FILTER_MOVIES_BY_COUNTRY:
