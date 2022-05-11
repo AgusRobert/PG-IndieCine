@@ -8,7 +8,7 @@ import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const BoxStyle = styled(Box)({
   padding: "20px",
@@ -166,28 +166,30 @@ export default function CreatorForm() {
     ) {
       const responses = {};
       console.log("Datos antes de enviar:", documents);
-      if (documents?.front) {
-        const formDocFront = new FormData();
-        formDocFront.append("file", documents.front);
-        const rFront = (
-          await axios.post("http://localhost:3001/upload/inter", formDocFront)
-        )?.data;
-        if (typeof rFront === "string") responses.frontDocument = rFront;
-        // console.log("Respuesta FRONT: ", responses.front);
-      }
-      if (documents?.back) {
+      if (documents?.back && user?.email) {
         const formDocBack = new FormData();
         //adicion de la imagen para la subida
+        formDocBack.append("email", user.email);
+        formDocBack.append("tipo", "docBack");
+        formDocBack.append("extra", "");
         formDocBack.append("file", documents.back);
-        console.log("documents.Back", documents.back);
-        console.log("formDocBack", formDocBack);
         const rBack = (
           await axios.post("http://localhost:3001/upload/inter", formDocBack)
         )?.data;
         if (typeof rBack === "string") responses.backDocument = rBack;
         // console.log("Respuesta BACK: ", responses.back);
       }
-      console.log("response", responses);
+      if (documents?.front && user?.email) {
+        const formDocFront = new FormData();
+        formDocFront.append("email", user.email);
+        formDocFront.append("tipo", "docFront");
+        formDocFront.append("extra", "");
+        formDocFront.append("file", documents.front);
+        const rFront = (
+          await axios.post("http://localhost:3001/upload/inter", formDocFront)
+        )?.data;
+        if (typeof rFront === "string") responses.frontDocument = rFront;
+      }
       dispatch(
         updateUser({
           ...input,
@@ -198,14 +200,12 @@ export default function CreatorForm() {
           status: "pending",
         })
       );
-     /*  alert(
+      Swal.fire(
         "Solicitud enviada correctamente, en breve nos comunicaremos con usted."
-      ) */
-      Swal.fire("Solicitud enviada correctamente, en breve nos comunicaremos con usted.");
+      );
     } else {
-      /* alert("Porfavor revise los datos ingresados") */
       Swal.fire({
-        icon: 'error',
+        icon: "error",
         title: "Porfavor revise los datos ingresados",
       });
     }

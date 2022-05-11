@@ -10,6 +10,8 @@ const {
   postBackDoc,
 } = require("../controllers/uploads");
 
+const { uploadFile } = require("../controllers/upload");
+
 //configuraciones de aws
 const { ENDPOINT, BUCKET_NAME } = process.env;
 const AWS = require("aws-sdk");
@@ -29,25 +31,8 @@ router.post("/frontdoc", uploadDocuments, postFrontDoc);
 
 router.post("/backdoc", uploadDocuments, postBackDoc);
 
-router.post("/inter", async (req, res) => {
-  const { file } = req.files;
-  try {
-    const uploadObject = await s3
-      .putObject({
-        ACL: "public-read",
-        Bucket: BUCKET_NAME,
-        Body: file.data,
-        Key: file.name,
-      })
-      .promise();
-    const urlFile = `https://${BUCKET_NAME}.${ENDPOINT}/${file.name}`;
+router.post("/inter", uploadFile);
 
-    res.json(urlFile);
-  } catch (err) {
-    console.log("ERROR: ", err);
-    res.send(err);
-  }
-});
 router.get("/inters", async (req, res) => {});
 router.get("/inter/:id", async (req, res) => {});
 router.delete("/inter/:id", async (req, res) => {

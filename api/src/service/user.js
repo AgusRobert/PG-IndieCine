@@ -37,5 +37,6 @@ exports.create = async ({
 };
 
 exports.findByEmail = async (email) => {
+  console.log("DATOS: ",email)
   return await User.findOne({ where: { email: email } });
 };
