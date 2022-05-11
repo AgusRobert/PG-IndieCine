@@ -200,7 +200,7 @@ export default function Profile() {
               </Container>
             ) : null}
 
-            <Container>
+            {/* <Container>
               <StyledLink
                 sx={{
                   ":hover": {
@@ -226,7 +226,7 @@ export default function Profile() {
                   La eliminación será efectiva en las próximas horas.
                 </BoxFav>
               </Modal>
-            </Container>
+            </Container> */}
           </Container>
         </StyledContainer>
 
