@@ -11,7 +11,6 @@
     "@mui/base": "~5.0.0-alpha.78",
     "@mui/icons-material": "~5.6.2",
     "@mui/material": "~5.6.3",
-    "@mui/styles": "~5.7.0",
     "@mui/system": "~5.6.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
