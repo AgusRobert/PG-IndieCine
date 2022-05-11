@@ -21,6 +21,8 @@ import {
   GET_PROFILE_INFO,
   VALIDATE_SUBSCRIPTION,
   DELETE_FAV,
+  // comments
+  ADD_COMMENT
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -36,6 +38,7 @@ const initialState = {
   plans: [],
   paymentLink: "",
   profileInfo: {},
+  comments: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -57,9 +60,9 @@ function rootReducer(state = initialState, action) {
       let peliFiltro = pelisporfiltrar.filter(data => {
         if (
           data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
-            -1 ||
+          -1 ||
           data.director.toLowerCase().indexOf(action.payload.toLowerCase()) !==
-            -1 ||
+          -1 ||
           data.mainActors
             .join(" ")
             .toLowerCase()
@@ -259,6 +262,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         paymentLink: action.payload.init_point,
+      };
+
+    // comments y en estado inicial
+    case ADD_COMMENT:
+      return {
+        ...state,
+        comments: [...state.comments, action.payload]
       };
 
     default:

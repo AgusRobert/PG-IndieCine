@@ -23,6 +23,8 @@ import {
   GET_PROFILE_INFO,
   VALIDATE_SUBSCRIPTION,
   DELETE_FAV,
+  //comentarios
+  ADD_COMMENT,
 } from "./actionstype";
 
 export function getMovies() {
@@ -441,6 +443,22 @@ export function getPlanInfo() {
       });
     } catch (error) {
       console.log("getPlanInfo", error);
+    }
+  };
+}
+
+//comments
+
+export function addComment(payload) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.post(`http://localhost:3001/comments/`);
+      return dispatch({
+        type: ADD_COMMENT,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("AddComment", error);
     }
   };
 }

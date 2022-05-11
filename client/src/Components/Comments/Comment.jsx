@@ -1,32 +1,26 @@
 import CommentForm from "./CommentForm";
 
 const Comment = ({
-  comment,
-  replies,
-  setActiveComment,
-  activeComment,
   updateComment,
   deleteComment,
-  addComment,
-  parentId = null,
-  currentUserId,
 }) => {
   const isEditing =
     activeComment &&
     activeComment.id === comment.id &&
     activeComment.type === "editing";
-  const isReplying =
+
+  /* const isReplying =
     activeComment &&
     activeComment.id === comment.id &&
-    activeComment.type === "replying";
-  const fiveMinutes = 300000;
-  const timePassed = new Date() - new Date(comment.createdAt) > fiveMinutes;
-  const canDelete =
-    currentUserId === comment.userId && replies.length === 0 && !timePassed;
-  const canReply = Boolean(currentUserId);
-  const canEdit = currentUserId === comment.userId && !timePassed;
-  const replyId = parentId ? parentId : comment.id;
-  const createdAt = new Date(comment.createdAt).toLocaleDateString();
+    activeComment.type === "replying"; */
+  // const timePassed = new Date() - new Date(comment.createdAt) > fiveMinutes;
+  // const canEdit = currentUserId === comment.userId && !timePassed;
+
+  // const canDelete =
+  //   currentUserId === comment.userId && replies.length === 0 && !timePassed;
+  /* const canReply = Boolean(currentUserId); */
+  /*   const replyId = parentId ? parentId : comment.id; */
+  
   return (
     <div key={comment.id}>
       <div>
@@ -50,15 +44,6 @@ const Comment = ({
           />
         )}
         <div>
-          {canReply && (
-            <div
-              onClick={() =>
-                setActiveComment({ id: comment.id, type: "replying" })
-              }
-            >
-              Responder
-            </div>
-          )}
           {canEdit && (
             <div
               onClick={() =>
@@ -76,30 +61,6 @@ const Comment = ({
             </div>
           )}
         </div>
-        {isReplying && (
-          <CommentForm
-            submitLabel="Responder"
-            handleSubmit={(text) => addComment(text, replyId)}
-          />
-        )}
-        {replies.length > 0 && (
-          <div>
-            {replies.map((reply) => (
-              <Comment
-                comment={reply}
-                key={reply.id}
-                setActiveComment={setActiveComment}
-                activeComment={activeComment}
-                updateComment={updateComment}
-                deleteComment={deleteComment}
-                addComment={addComment}
-                parentId={comment.id}
-                replies={[]}
-                currentUserId={currentUserId}
-              />
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );
