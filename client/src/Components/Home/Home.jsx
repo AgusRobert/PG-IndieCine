@@ -139,19 +139,21 @@ export default function Home() {
                                                 <img src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif" alt="not found" />
                                         }
                                     </Row>
+                                    <Footer />
                                 </Container>
                             </div>
                         </>
                     ) : (
                         <div>
                             <h2>Cargando...</h2>
+                            <Footer />
                         </div>
                     )
                 }
             </div>
-            <div>
-                <Footer />
-            </div>
+            
+                
+          
             {/* <div>
                         <a href="#" class="scroll-top" title="Ir arriba">
                             <i class="fa fa-angle-up"><b>^</b></i>
