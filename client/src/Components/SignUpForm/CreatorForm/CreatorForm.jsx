@@ -8,6 +8,7 @@ import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
+import Swal from 'sweetalert2'
 
 const BoxStyle = styled(Box)({
   padding: "20px",
@@ -197,11 +198,16 @@ export default function CreatorForm() {
           status: "pending",
         })
       );
-      alert(
+     /*  alert(
         "Solicitud enviada correctamente, en breve nos comunicaremos con usted."
-      );
+      ) */
+      Swal.fire("Solicitud enviada correctamente, en breve nos comunicaremos con usted.");
     } else {
-      alert("Porfavor revise los datos ingresados");
+      /* alert("Porfavor revise los datos ingresados") */
+      Swal.fire({
+        icon: 'error',
+        title: "Porfavor revise los datos ingresados",
+      });
     }
   };
 

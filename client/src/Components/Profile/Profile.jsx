@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { /*Link,*/ useNavigate } from "react-router-dom";
+import { Link as Ruta, useNavigate } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
@@ -11,6 +11,8 @@ import {
   updateSubscription,
   getUserInfo,
   updateUser,
+  getMovies,
+  getPlanInfo
 } from "../../redux/actions";
 import { Box, Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
@@ -20,6 +22,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import FavList from "../FavList/FavList";
 import Subs from "../Subs/Subs";
+import Swal from 'sweetalert2'
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -68,8 +71,45 @@ export default function Profile() {
 
   const profileInfo = useSelector((state) => state.profileInfo);
 
-  console.log("USEEEEEEER", user)
-  console.log("USEREMAIL", user.email)
+  
+
+  const plans = useSelector((state) => state.plans);
+
+
+
+
+  
+
+  let nombresdeplanes= plans.map(p=>{
+    return p.name
+   })
+  console.log("LOSNOMBRES", nombresdeplanes)
+
+
+  const plandeluser= plans.filter(p=> p.name===profileInfo?.subcription)
+
+  const limitedeluser= plandeluser.map(e=>e.filmsAllowed)
+
+  console.log("LIMITEDELUSER", limitedeluser[0])
+
+  console.log("PLANDELUSER", plandeluser)
+
+  const allMovies = useSelector(state => state.pelisfiltradas);
+
+
+    useEffect(() => {
+        dispatch(getMovies());
+    }, [dispatch])
+
+  const pelisdeluser= allMovies.filter(peli=>peli.UserId===profileInfo.id)
+
+
+  useEffect(() => {
+    dispatch(getPlanInfo());
+  }, []);
+
+  console.log("USUARIO", profileInfo)
+  console.log("PLANES", plans)
 
   useEffect(() => {
     if(user?.email !== undefined){
@@ -87,7 +127,8 @@ export default function Profile() {
   function handleOnDelete() {
     logout({ returnTo: window.location.origin });
     dispatch(deleteUserInformation(user.email));
-    alert("Serás redirigido al inicio");
+    /* alert("Serás redirigido al inicio"); */
+    Swal.fire("Serás redirigido al inicio")
     navigate("/");
   }
 
@@ -136,7 +177,13 @@ export default function Profile() {
             <h4>{user.nickname}</h4>
             <h4>{user.email}</h4>
 
-            {profileInfo?.status === 'creator approved' && /* user.pelissubidas<plan.filmsAllowed */(
+              {/* {console.log("PLANDELUSER", profileInfo.subcription)} */}
+              {console.log("PELISDELUSER", pelisdeluser, pelisdeluser.length)}
+              {console.log("LOSPLANES", plans)}
+              {console.log("NOMBREPLANES", plans.name)}
+
+
+            {profileInfo?.status === 'creator approved' && pelisdeluser.length<limitedeluser[0]? 
               <Container>
                 <StyledLink
                   sx={{
@@ -153,7 +200,8 @@ export default function Profile() {
                   Subir Proyecto
                 </StyledLink>
               </Container>
-            )}
+              : <h1>LLEGASTE AL LÍMITE DE SUBIDAS DE TU PLAN</h1>
+            }
 
             {profileInfo?.status === 'creator approved' ? (
               <Container>
@@ -199,14 +247,27 @@ export default function Profile() {
         </StyledContainer2>
 
         <StyledContainer3>
-          {profileInfo?.status === 'creator approved' && (
+          {/* profileInfo?.status === 'creator approved' &&  */(
             <>
               <h2>Mis Proyectos</h2>
               <ul>
+              {pelisdeluser.map(peli=>{
+
+                return(<div>
+                <li>
+                  <Ruta to={`/detail/${peli.id}`}>
+                  <button>{peli.title}</button>
+                </Ruta>
+                </li>
+                </div>)
+               
+              })}
+               </ul>
+              {/* <ul>
                 <li>Proyecto 1</li>
                 <li>Proyecto 2</li>
                 <li>Proyecto 3</li>
-              </ul>
+              </ul> */}
 
             </>
           ) } 

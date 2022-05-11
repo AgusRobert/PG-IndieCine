@@ -7,6 +7,7 @@ import { grey } from "@mui/material/colors";
 import { validate } from "./validates";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import Swal from 'sweetalert2'
 import {
   MenuItemStyle,
   InputStyle,
@@ -102,7 +103,11 @@ export function FilmForm() {
     console.log("COMPARACION", comparacion);
     if (!actor.trim() == "" && !comparacion.includes(actor.toLowerCase()))
       movieForm.mainActors.push(actor.trim());
-    else alert("Actor Invalido");
+    else /* alert("Actor Invalido"); */
+    Swal.fire({
+      icon: 'error',
+      title: "Actor Inválido",
+    })
     setActor("");
   };
   //manejador de envio del formulario
@@ -136,7 +141,12 @@ export function FilmForm() {
       //lectura de una respuesta y seteo de la ruta de la imagen subida
       if (typeof rFilm === "string") objResponse.film = rFilm;
     }
-    alert("Pelicula agregada correctamente.");
+    /* alert("Pelicula agregada correctamente."); */
+    Swal.fire(
+      'Formulario enviado correctamente',
+      'Gracias por publicar tu contenido en CINDIE',
+      'success'
+    )
     //despacho de la accion para guardar una pelicula
     console.log("Datos actuales: ", movieForm);
     dispatch(postMovie({ ...movieForm, ...objResponse, email: user.email }));
