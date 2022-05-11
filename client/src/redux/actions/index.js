@@ -23,6 +23,11 @@ import {
   GET_PROFILE_INFO,
   VALIDATE_SUBSCRIPTION,
   DELETE_FAV,
+  //comentarios
+  ADD_COMMENT,
+  UPDATE_COMMENT,
+  GET_COMMENTS,
+  DELETE_COMMENT
 } from "./actionstype";
 
 export function getMovies() {
@@ -82,18 +87,25 @@ export function getMoviesByGenre(payload) {
     try {
       let filtroGenre = [];
       let json3 = await axios.get("http://localhost:3001/films");
-      json3.data.map(peli => {
+      json3.data.map((peli) => {
         let genre = peli.Genres;
-        genre.forEach(obj => {
+        genre.forEach((obj) => {
           if (obj.name === payload) {
             filtroGenre.push(peli);
           }
         });
       });
-      return dispatch({
-        type: FILTER_MOVIES_BY_GENRE,
-        payload: filtroGenre,
-      });
+      if (filtroGenre.length) {
+        return dispatch({
+          type: FILTER_MOVIES_BY_GENRE,
+          payload: filtroGenre,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_MOVIES_BY_GENRE,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -104,6 +116,7 @@ export function getCountries() {
   return async function (dispatch) {
     try {
       var json = await axios.get("http://localhost:3001/countries");
+      console.log('response action', json.data)
       return dispatch({
         type: GET_COUNTRIES,
         payload: json.data,
@@ -119,11 +132,18 @@ export function getMoviesByCountry(payload) {
     try {
       let json3 = await axios.get("http://localhost:3001/films");
       let json4 = json3.data;
-      json4 = json4.filter(e => e.Country.name === payload);
-      return dispatch({
-        type: FILTER_MOVIES_BY_COUNTRY,
-        payload: json4,
-      });
+      json4 = json4.filter((e) => e.Country.name === payload);
+      if (json4.length) {
+        return dispatch({
+          type: FILTER_MOVIES_BY_COUNTRY,
+          payload: json4,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_MOVIES_BY_COUNTRY,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -238,11 +258,18 @@ export function filterDuration(payload) {
     try {
       let json3 = await axios.get("http://localhost:3001/films");
       let json4 = json3.data;
-      json4 = json4.filter(e => e.duration === payload);
-      return dispatch({
-        type: FILTER_DURATION,
-        payload: json4,
-      });
+      json4 = json4.filter((e) => e.duration === payload);
+      if (json4.length) {
+        return dispatch({
+          type: FILTER_DURATION,
+          payload: json4,
+        });
+      } else {
+        return dispatch({
+          type: FILTER_DURATION,
+          payload: ["No films"],
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -352,7 +379,7 @@ export function validateSubscription(email) {
       let response = await axios.get(
         `http://localhost:3001/payment/validate/${email}`
       );
-      return dispatch({
+      dispatch({
         type: VALIDATE_SUBSCRIPTION,
         payload: response.data,
       });
@@ -445,6 +472,69 @@ export function getPlanInfo() {
   };
 }
 
+//comments
+
+export function getComments(payload){
+  return async function(dispatch){
+    try{
+      let response = await axios.get(`http://localhost:3001/comments/film/${payload}`);
+      return dispatch({
+        type: GET_COMMENTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getComments", error);
+    }
+  }
+}
+
+export function addComment(payload) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.post(`http://localhost:3001/comments/`, payload);
+      return dispatch({
+        type: ADD_COMMENT,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("AddComment", error);
+    }
+  };
+}
+
+//      {}
+// El payload debe tener el id del comentario y 
+// lo que se quiere modificar:
+//    - body
+export function updateComment(payload) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.put(`http://localhost:3001/comments/modif`, payload);
+      return dispatch({
+        type: UPDATE_COMMENT,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("updateComment", error);
+    }
+  };
+}
+
+export function deleteComment(id) {
+  console.log("iddd", id)
+  return async function(dispatch) {
+    try{
+      let response = axios.delete("http://localhost:3001/comments/del", {data: {id}})
+      return dispatch({
+        type: DELETE_COMMENT,
+        payload: id
+      });
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+}
 /* 
   export function sortByComment(order){
 return {

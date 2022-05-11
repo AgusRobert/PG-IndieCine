@@ -11,6 +11,7 @@ exports.getAllComments = async (req, res) => {
 
 exports.postComment = async (req, res) => {
   try {
+    console.log("REQ BODY EN EL BACK", req.body)
     res.json(await commentService.create(req.body));
   } catch (error) {
     res.json({ message: "Error al crear el comentario", error });
@@ -54,6 +55,7 @@ exports.getComentsFilm = async (req, res) => {
 
 exports.deleteComent = async (req, res) => {
   try {
+    console.log("REQ BODY ID", req.body)
     const comment = await Comment.findByPk(req.body.id);
     if (comment) {
       await comment.destroy();
@@ -68,13 +70,7 @@ exports.deleteComent = async (req, res) => {
 
 exports.modifyComent = async (req, res) => {
   try {
-    const comment = await Comment.findByPk(req.body.id);
-    if (comment) {
-      await comment.update(req.body);
-      return res.json({ message: "Comentario actualizado correctamente" });
-    } else {
-      return res.json({ message: "Comentario no encontrado" });
-    }
+    res.json(await commentService.update(req.body));
   } catch (error) {
     res.json({ message: "Error al actualizar el comentario", error });
   }

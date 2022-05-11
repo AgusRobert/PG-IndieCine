@@ -6,7 +6,7 @@ import axios from "axios";
 const api = new ApiClient();
 
 const Dashboard = (props) => {
-  console.log(props.record.params);
+ 
   const mail = {
     type: "creator",
     name: props.record.params.name,
@@ -26,7 +26,7 @@ const Dashboard = (props) => {
     setAceptar(true);
   }
   async function handleRechazar() {
-    mail.type = "creatorR";
+    mail.type = "creatorRechazo";
      axios.post("http://localhost:3001/mail", mail);
     setRechazar(true);
   }
