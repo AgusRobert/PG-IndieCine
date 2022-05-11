@@ -9,10 +9,12 @@ import "./style.css";
 import FavButton from "../FavButton/FavButton.jsx";
 import Comments from "../Comments/Comments";
 import { styled } from "@mui/system";
+
 const ImgFav = styled("img")({
   height: "400px",
   width: "auto",
 });
+
 export default function MovieDetail() {
   let dispatch = useDispatch();
 
@@ -26,6 +28,7 @@ export default function MovieDetail() {
   }, [dispatch]);
 
   const peli = useSelector(state => state.detalle);
+  console.log("LAPELI", peli)
 
   let elenco = peli ? peli.mainActors : [];
 

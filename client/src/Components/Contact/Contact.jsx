@@ -4,10 +4,14 @@ import logo from "../Header/LOGO.png";
 import s from "./contact.module.css";
 import Footer from "../Footer/Footer";
 import axios from "axios";
+<<<<<<< HEAD
 import Typography from "@material-ui/core/Typography";
 import { AppBar } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { Box } from "@mui/system";
+=======
+import Swal from 'sweetalert2'
+>>>>>>> 0e4a94ba0a23a6309e858ff7e2eff889496be7d1
 
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
@@ -32,7 +36,8 @@ export default function Contact() {
       email: e.target.email.value,
       message: e.target.message.value,
     };
-    alert("Espere por Favor");
+    /* alert("Espere por Favor"); */
+    Swal.fire("Espere por Favor")
     await axios.post("http://localhost:3001/mail", data);
 
     data.type = "contactAdmin";

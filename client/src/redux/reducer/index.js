@@ -20,6 +20,7 @@ import {
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
   VALIDATE_SUBSCRIPTION,
+  DELETE_FAV,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -53,7 +54,7 @@ function rootReducer(state = initialState, action) {
         return contador;
       };
 
-      let peliFiltro = pelisporfiltrar.filter(data => {
+      let peliFiltro = pelisporfiltrar.filter((data) => {
         if (
           data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
             -1 ||
@@ -68,22 +69,22 @@ function rootReducer(state = initialState, action) {
           return data;
         }
       });
-
-      return {
-        ...state,
-        pelisfiltradas: peliFiltro,
-      };
+      if (peliFiltro.length) {
+        return {
+          ...state,
+          pelisfiltradas: peliFiltro,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
 
     case GET_MOVIES:
       return {
         ...state,
         peliculas: action.payload,
-        pelisfiltradas: action.payload,
-      };
-
-    case FILTER_DURATION:
-      return {
-        ...state,
         pelisfiltradas: action.payload,
       };
 
@@ -98,10 +99,17 @@ function rootReducer(state = initialState, action) {
         }
         return 0;
       });
-      return {
-        ...state,
-        pelisfiltradas: orderMoviesDate,
-      };
+      if (orderMoviesDate.length) {
+        return {
+          ...state,
+          pelisfiltradas: orderMoviesDate,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
 
     case ORDER_COMMENT:
       let orderMoviesCom = [...state.pelisfiltradas];
@@ -114,10 +122,17 @@ function rootReducer(state = initialState, action) {
         }
         return 0;
       });
-      return {
-        ...state,
-        pelisfiltradas: orderMoviesCom,
-      };
+      if (orderMoviesCom.length) {
+        return {
+          ...state,
+          pelisfiltradas: orderMoviesCom,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
 
     case ORDER_BY_NAME:
       let orderMoviesName = [...state.pelisfiltradas];
@@ -130,10 +145,17 @@ function rootReducer(state = initialState, action) {
         }
         return 0;
       });
-      return {
-        ...state,
-        pelisfiltradas: orderMoviesName,
-      };
+      if (orderMoviesName.length) {
+        return {
+          ...state,
+          pelisfiltradas: orderMoviesName,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
 
     case ORDER_BY_RATING:
       let orderMoviesRating = [...state.pelisfiltradas];
@@ -146,9 +168,22 @@ function rootReducer(state = initialState, action) {
         }
         return 0;
       });
+      if (orderMoviesRating.length) {
+        return {
+          ...state,
+          pelisfiltradas: orderMoviesRating,
+        };
+      } else {
+        return {
+          ...state,
+          pelisfiltradas: ["No films"],
+        };
+      }
+
+    case FILTER_DURATION:
       return {
         ...state,
-        pelisfiltradas: orderMoviesRating,
+        pelisfiltradas: action.payload,
       };
 
     case FILTER_MOVIES_BY_COUNTRY:
@@ -170,6 +205,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_COUNTRIES:
+      console.log('payload de countries', action.payload)
       return {
         ...state,
         countries: action.payload,
@@ -201,10 +237,10 @@ function rootReducer(state = initialState, action) {
     //   };
 
     // case CAME_BACK_TO_BASIC:
-      // return {
-      //   ...state,
-      //   isCreator: action.payload,
-      // };
+    // return {
+    //   ...state,
+    //   isCreator: action.payload,
+    // };
 
     // case GET_USER_INFO:
     //   let response = action.payload.creator;
@@ -214,37 +250,51 @@ function rootReducer(state = initialState, action) {
     //   };
 
     case GET_PROFILE_INFO:
+      console.log("QUE LLEGA AL REDUCER", action.payload);
       return {
-        /* ...state, */
+        ...state,
         profileInfo: action.payload,
       };
 
-      // case GET_USER_INFO:
-      //   let response = action.payload.creator
-      //   return {
-      //     ...state,
-      //     isCreator: response,
-      // };
+    // case GET_USER_INFO:
+    //   let response = action.payload.creator
+    //   return {
+    //     ...state,
+    //     isCreator: response,
+    // };
 
-      case VALIDATE_SUBSCRIPTION:
-        let updatedSubscription ="Free"
-        if(action.payload.results[0].status = "pending"){
-          updatedSubscription = action.payload.results[2].reason
-          return{
-            ...state,
-            profileInfo: {
-              ...state.profileInfo,
-              subcription: updatedSubscription
-            }
-          };
-        }
-    
-
-      case GET_PLAN_INFO:
+    case VALIDATE_SUBSCRIPTION:
+      let updatedSubscription = "Free";
+      if ((action.payload.results[0].status = "pending")) {
+        updatedSubscription = action.payload.results[2].reason;
         return {
           ...state,
-          plans: action.payload
-        }
+          profileInfo: {
+            ...state.profileInfo,
+            subcription: updatedSubscription,
+          },
+        };
+      }
+
+    case GET_PLAN_INFO:
+      return {
+        ...state,
+        plans: action.payload,
+      };
+
+    case DELETE_FAV:
+      let deletedFavs = state.favorites.filter((p) => p.id !== action.payload);
+      console.log("DELETED FAVS", deletedFavs);
+      return {
+        ...state,
+        favorites: deletedFavs,
+      };
+
+    case PAY_SUBSCRIPTION:
+      return {
+        ...state,
+        paymentLink: action.payload.init_point,
+      };
 
     default:
       return state;
