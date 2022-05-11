@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { /*Link,*/ useNavigate } from "react-router-dom";
+import { Link as Ruta, useNavigate } from "react-router-dom";
 import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
@@ -11,7 +11,8 @@ import {
   updateSubscription,
   getUserInfo,
   updateUser,
-  getMovies
+  getMovies,
+  getPlanInfo
 } from "../../redux/actions";
 import { Box, Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
@@ -70,6 +71,29 @@ export default function Profile() {
 
   const profileInfo = useSelector((state) => state.profileInfo);
 
+  
+
+  const plans = useSelector((state) => state.plans);
+
+
+
+
+  
+
+  let nombresdeplanes= plans.map(p=>{
+    return p.name
+   })
+  console.log("LOSNOMBRES", nombresdeplanes)
+
+
+  const plandeluser= plans.filter(p=> p.name===profileInfo?.subcription)
+
+  const limitedeluser= plandeluser.map(e=>e.filmsAllowed)
+
+  console.log("LIMITEDELUSER", limitedeluser[0])
+
+  console.log("PLANDELUSER", plandeluser)
+
   const allMovies = useSelector(state => state.pelisfiltradas);
 
 
@@ -79,8 +103,13 @@ export default function Profile() {
 
   const pelisdeluser= allMovies.filter(peli=>peli.UserId===profileInfo.id)
 
-  console.log("USEEEEEEER", user)
-  console.log("USEREMAIL", user.email)
+
+  useEffect(() => {
+    dispatch(getPlanInfo());
+  }, []);
+
+  console.log("USUARIO", profileInfo)
+  console.log("PLANES", plans)
 
   useEffect(() => {
     if(user?.email !== undefined){
@@ -148,7 +177,13 @@ export default function Profile() {
             <h4>{user.nickname}</h4>
             <h4>{user.email}</h4>
 
-            {profileInfo?.status === 'creator approved' && /* user.pelissubidas<plan.filmsAllowed */(
+              {/* {console.log("PLANDELUSER", profileInfo.subcription)} */}
+              {console.log("PELISDELUSER", pelisdeluser, pelisdeluser.length)}
+              {console.log("LOSPLANES", plans)}
+              {console.log("NOMBREPLANES", plans.name)}
+
+
+            {profileInfo?.status === 'creator approved' && pelisdeluser.length<limitedeluser[0]? 
               <Container>
                 <StyledLink
                   sx={{
@@ -165,7 +200,8 @@ export default function Profile() {
                   Subir Proyecto
                 </StyledLink>
               </Container>
-            )}
+              : <h1>LLEGASTE AL LÍMITE DE SUBIDAS DE TU PLAN</h1>
+            }
 
             {profileInfo?.status === 'creator approved' ? (
               <Container>
@@ -217,9 +253,13 @@ export default function Profile() {
               <ul>
               {pelisdeluser.map(peli=>{
 
-                return(<li><Link to={`/detail/${peli.id}`}>
-                  {peli.title}
-                </Link></li>)
+                return(<div>
+                <li>
+                  <Ruta to={`/detail/${peli.id}`}>
+                  <button>{peli.title}</button>
+                </Ruta>
+                </li>
+                </div>)
                
               })}
                </ul>
