@@ -7,8 +7,6 @@ router.get('/', allUsers);
 
 router.get('/byemail/:email', getUserByEmail);
 
-router.get('/byemail/:email', getUserByEmail);
-
 router.get('/:id', getUser);
 
 router.put('/modif', putUser);

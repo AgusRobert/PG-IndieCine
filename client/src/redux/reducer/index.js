@@ -218,7 +218,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case MOVIE_DETAIL:
-      /* console.log(action.payload) */
+      console.log('movie detail reducer', action.payload)
       return {
         ...state,
         detalle: action.payload /* Object.keys(action.payload) */,
@@ -256,7 +256,7 @@ function rootReducer(state = initialState, action) {
     //   };
 
     case GET_PROFILE_INFO:
-      console.log("QUE LLEGA AL REDUCER", action.payload);
+      // console.log("QUE LLEGA AL REDUCER", action.payload);
       return {
         ...state,
         profileInfo: action.payload,

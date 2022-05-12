@@ -1,4 +1,3 @@
-import createPalette from "@mui/material/styles/createPalette";
 import axios from "axios";
 import {
   SEARCH_PELIS,
@@ -27,14 +26,13 @@ import {
   ADD_COMMENT,
   UPDATE_COMMENT,
   GET_COMMENTS,
-  DELETE_COMMENT
+  DELETE_COMMENT,
 } from "./actionstype";
+import { SERVER_BACK } from "../../paths/path";
 
 export function getMovies() {
-  //obtener todos los videojuegos
   return async function (dispatch) {
-    let json = await axios.get("http://localhost:3001/films");
-
+    let json = await axios.get(`${SERVER_BACK}/films`);
     try {
       return dispatch({
         type: GET_MOVIES,
@@ -57,8 +55,7 @@ export function sortName(payload) {
 export function getGenres() {
   //obtener generos
   return async function (dispatch) {
-    let info = await axios.get("http://localhost:3001/genres");
-
+    let info = await axios.get(`${SERVER_BACK}/genres`);
     return dispatch({
       type: GET_GENRES,
       payload: info.data,
@@ -66,18 +63,10 @@ export function getGenres() {
   };
 }
 
-// export function postMovie (movieForm){
-//     return async function(dispatch){
-//       const respo = await axios.post('http://localhost:3001/films', movieForm);
-//       console.log("RESPUESTA DEL BACK: ",movieForm)
-//     }
-// };
 export function postMovie(movieForm) {
   return async () => {
-    const response = (
-      await axios.post("http://localhost:3001/films", movieForm)
-    )?.data;
-    console.log("RESPUESTA: ", response);
+    const response = (await axios.post(`${SERVER_BACK}/films`, movieForm))
+      ?.data;
     return { type: "POST_PELI", payload: response };
   };
 }
@@ -86,7 +75,7 @@ export function getMoviesByGenre(payload) {
   return async function (dispatch) {
     try {
       let filtroGenre = [];
-      let json3 = await axios.get("http://localhost:3001/films");
+      let json3 = await axios.get(`${SERVER_BACK}/films`);
       json3.data.map((peli) => {
         let genre = peli.Genres;
         genre.forEach((obj) => {
@@ -115,8 +104,7 @@ export function getMoviesByGenre(payload) {
 export function getCountries() {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/countries");
-      console.log('response action', json.data)
+      var json = await axios.get(`${SERVER_BACK}/countries`);
       return dispatch({
         type: GET_COUNTRIES,
         payload: json.data,
@@ -130,7 +118,7 @@ export function getCountries() {
 export function getMoviesByCountry(payload) {
   return async function (dispatch) {
     try {
-      let json3 = await axios.get("http://localhost:3001/films");
+      let json3 = await axios.get(`${SERVER_BACK}/films`);
       let json4 = json3.data;
       json4 = json4.filter((e) => e.Country.name === payload);
       if (json4.length) {
@@ -177,11 +165,14 @@ export function searchPelicula_Actor(search) {
 export function renderMovieDetails(id) {
   return async function (dispatch) {
     try {
-      let movie = await axios.get(`http://localhost:3001/films/${id}`);
-      /* console.log(movie.data) */
+      let movie = await axios.get(`${SERVER_BACK}/films/${id}`);
+      let autor = await axios.get(`${SERVER_BACK}/users/${movie.data.UserId}`);
       return dispatch({
         type: MOVIE_DETAIL,
-        payload: movie.data,
+        payload: {
+          ...movie.data,
+          cafecito: autor.data.cafecito,
+        },
       });
     } catch (error) {
       console.log(error);
@@ -192,51 +183,7 @@ export function renderMovieDetails(id) {
 export function signUpFunction(userData) {
   return async function (dispatch) {
     try {
-      console.log("userData", userData);
-
-      // let request = {
-      // name: userData.given_name ? userData.given_name : null,
-      // surname: userData.family_name ? userData.family_name : null,
-      // username: userData.nickname,
-      // email: userData.email,
-      // password: userData.email,
-      // creator: userData.creator,
-      //ver misma situación que status
-      // country: userData.country ? userData.country : null,
-      // people: userData.people
-      // ? userData.people === "true"
-      // ? true
-      // : false
-      // : null,
-      // rol: userData.rol ? userData.rol : null,
-      // telephone: userData.telephone ? parseInt(userData.telephone) : null,
-      // typeOfDocument: userData.typeOfDocument
-      // ? userData.typeOfDocument
-      // : null,
-      // numberOfDocument: userData.numberOfDocument
-      // ? Number(userData.numberOfDocument)
-      // : null,
-      // frontDocument: userData.frontDocument ? userData.frontDocument : null,
-      // backDocument: userData.reverseDocument
-      // ? userData.reverseDocument
-      // : null,
-      // status: userData.status ? userData.status: null,
-      //no puede ser null, si no tiene. No se envía.
-      //porque esto se ejecuta siempre y si le envio null voy a pisar el status actual
-      //cuando se monta el Home
-      // };
-      await axios.post("http://localhost:3001/users/register", userData);
-      // if (request.creator) {
-      //   return dispatch({
-      //     type: SIGN_UP_USER,
-      //     payload: true,
-      //   });
-      // } else {
-      // return dispatch({
-      //   type: SIGN_UP_USER,
-      //   payload: false,
-      // });
-      // }
+      await axios.post(`${SERVER_BACK}/users/register`, userData);
     } catch (error) {
       console.log(error);
     }
@@ -246,7 +193,7 @@ export function signUpFunction(userData) {
 export function updateUser(userData) {
   return async function () {
     try {
-      await axios.put("http://localhost:3001/users/modif", userData);
+      await axios.put(`${SERVER_BACK}/users/modif`, userData);
     } catch (error) {
       console.log("updateUserInformation action", error);
     }
@@ -256,7 +203,7 @@ export function updateUser(userData) {
 export function filterDuration(payload) {
   return async function (dispatch) {
     try {
-      let json3 = await axios.get("http://localhost:3001/films");
+      let json3 = await axios.get(`${SERVER_BACK}/films`);
       let json4 = json3.data;
       json4 = json4.filter((e) => e.duration === payload);
       if (json4.length) {
@@ -279,9 +226,7 @@ export function filterDuration(payload) {
 export function getFavorites(id) {
   return async function (dispatch) {
     try {
-      var pelisFav = await axios.get(
-        `http://localhost:3001/users/getFavs/${id}`
-      );
+      var pelisFav = await axios.get(`${SERVER_BACK}/users/getFavs/${id}`);
       return dispatch({
         type: GET_FAV,
         payload: pelisFav.data,
@@ -295,14 +240,11 @@ export function getFavorites(id) {
 export function deleteUserInformation(email) {
   return async function (dispatch) {
     try {
-      await axios.delete(`http://localhost:3001/users/del`, {
+      await axios.delete(`${SERVER_BACK}/users/del`, {
         data: {
           email: email,
         },
       });
-      // return dispatch({
-      //   type: DELETE_USER_INFORMATION,
-      // });
     } catch (error) {
       console.log("deleteUserInformation", error);
     }
@@ -310,24 +252,21 @@ export function deleteUserInformation(email) {
 }
 
 export function addFavFilm(payload) {
-  return async function (dispatch) {
-    await axios.post("http://localhost:3001/users/addFav", payload);
+  return async function (dispacth) {
+    await axios.post(`${SERVER_BACK}/users/addFav`, payload);
   };
 }
 
 export function deleteFavFilm(payload) {
   return async function (dispatch) {
     try {
-      console.log("SOY PAYLOAD EN ACTIONS", payload);
-      let response = await axios.delete("http://localhost:3001/users/delFav", {
+      let response = await axios.delete(`${SERVER_BACK}/users/delFav`, {
         data: { payload },
       });
-
       let toPayload = {
         msg: response,
         id: payload.favDispatch.idPeli,
       };
-
       return dispatch({
         type: DELETE_FAV,
         payload: toPayload.id,
@@ -338,31 +277,10 @@ export function deleteFavFilm(payload) {
   };
 }
 
-// export function getUserInfo(email) {
-//   return async function (dispatch) {
-//     try {
-//       let response = await axios.get(
-//         `http://localhost:3001/users/byemail`,
-//         email
-//       );
-//       console.log("ISCREATOR", response);
-//       return dispatch({
-//         type: GET_USER_INFO,
-//         payload: response.data,
-//       });
-//     } catch (error) {
-//       console.log("getUserInfo", error);
-//     }
-//   };
-// }
-
 export function getProfileInfo(email) {
   return async function (dispatch) {
     try {
-      console.log("EMAILL EN ACTIONS", email);
-      let response = await axios.get(
-        `http://localhost:3001/users/byemail/${email}`
-      );
+      let response = await axios.get(`${SERVER_BACK}/users/byemail/${email}`);
       return dispatch({
         type: GET_PROFILE_INFO,
         payload: response.data,
@@ -377,7 +295,7 @@ export function validateSubscription(email) {
   return async function (dispatch) {
     try {
       let response = await axios.get(
-        `http://localhost:3001/payment/validate/${email}`
+        `${SERVER_BACK}/payment/validate/${email}`
       );
       dispatch({
         type: VALIDATE_SUBSCRIPTION,
@@ -392,10 +310,7 @@ export function validateSubscription(email) {
 export function updateSubscription(props) {
   return async function (dispatch) {
     try {
-      let response = await axios.put(
-        `http://localhost:3001/users/modif`,
-        props
-      );
+      let response = await axios.put(`${SERVER_BACK}/users/modif`, props);
       return dispatch({
         type: GET_PROFILE_INFO,
         payload: response.data,
@@ -406,29 +321,11 @@ export function updateSubscription(props) {
   };
 }
 
-// export function cameBackToBasic(userData) {
-//   return async function (dispatch) {
-//     try {
-//       let updatedUser = {
-//         email: userData.email,
-//         creator: userData.creator,
-//       };
-//       await axios.put(`http://localhost:3001/users/modif`, updatedUser);
-//       return dispatch({
-//         type: HANDLE_CAME_BACK_TO_BASIC,
-//         payload: false,
-//       });
-//     } catch (error) {
-//       console.log("handleCameBackToBasic", error);
-//     }
-//   };
-// }
-
 export function subscribe(payload) {
   return async function (dispatch) {
     try {
       const paymentInfo = await axios.post(
-        "http://localhost:3001/payment/payment",
+        `${SERVER_BACK}/payment/payment`,
         payload
       );
       return dispatch({
@@ -445,7 +342,7 @@ export function paySubscription(payload) {
   return async function (dispatch) {
     try {
       const paymentInfo = await axios.post(
-        "http://localhost:3001/payment/subscription",
+        `${SERVER_BACK}/payment/subscription`,
         payload
       );
       return dispatch({
@@ -461,7 +358,7 @@ export function paySubscription(payload) {
 export function getPlanInfo() {
   return async function (dispatch) {
     try {
-      let response = await axios.get(`http://localhost:3001/plans/`);
+      let response = await axios.get(`${SERVER_BACK}/plans/`);
       return dispatch({
         type: GET_PLAN_INFO,
         payload: response.data,
@@ -472,12 +369,10 @@ export function getPlanInfo() {
   };
 }
 
-//comments
-
-export function getComments(payload){
-  return async function(dispatch){
-    try{
-      let response = await axios.get(`http://localhost:3001/comments/film/${payload}`);
+export function getComments(payload) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(`${SERVER_BACK}/comments/film/${payload}`);
       return dispatch({
         type: GET_COMMENTS,
         payload: response.data,
@@ -485,13 +380,13 @@ export function getComments(payload){
     } catch (error) {
       console.log("getComments", error);
     }
-  }
+  };
 }
 
 export function addComment(payload) {
   return async function (dispatch) {
     try {
-      let response = await axios.post(`http://localhost:3001/comments/`, payload);
+      let response = await axios.post(`${SERVER_BACK}/comments/`, payload);
       return dispatch({
         type: ADD_COMMENT,
         payload: response.data,
@@ -502,14 +397,10 @@ export function addComment(payload) {
   };
 }
 
-//      {}
-// El payload debe tener el id del comentario y 
-// lo que se quiere modificar:
-//    - body
 export function updateComment(payload) {
   return async function (dispatch) {
     try {
-      let response = await axios.put(`http://localhost:3001/comments/modif`, payload);
+      let response = await axios.put(`${SERVER_BACK}/comments/modif`, payload);
       return dispatch({
         type: UPDATE_COMMENT,
         payload: response.data,
@@ -521,116 +412,17 @@ export function updateComment(payload) {
 }
 
 export function deleteComment(id) {
-  console.log("iddd", id)
-  return async function(dispatch) {
-    try{
-      let response = axios.delete("http://localhost:3001/comments/del", {data: {id}})
+  return async function (dispatch) {
+    try {
+      let response = axios.delete(`${SERVER_BACK}/comments/del`, {
+        data: { id },
+      });
       return dispatch({
         type: DELETE_COMMENT,
-        payload: id
+        payload: id,
       });
+    } catch (error) {
+      console.log(error);
     }
-    catch(error){
-      console.log(error)
-    }
-  }
+  };
 }
-/* 
-  export function sortByComment(order){
-return {
-      type: ORDER_COMMENT,
-      payload: order
-  }
-}
-*/
-
-//LOGICA PENDIENTE PARA TRABAJAR CUANDO VENGA INFO DEL BACK
-
-/* export function getVideogames() { //obtener todos los videojuegos
-    return async function (dispatch) {
-        let json = await axios.get("http://localhost:3001/videogames") //nos traemos los juegos
-
-        try {
-            return dispatch({
-                type: "GET_VIDEOGAMES",
-                payload: json.data
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}
-
-export function filterCreated(payload) { //filtrar por creados
-    return {
-        type: "FILTER_CREATED",
-        payload
-    }
-}
-
-export function getNameVideogames(payload) { //obtener videojuegos por nombre
-    return async function (dispatch) {
-        try {
-            let json = await axios.get("http://localhost:3001/videogames?name=" + payload); //el payload viene siendo el nombre del juego
-            return dispatch({
-                type: "GET_NAME_VIDEOGAMES",
-                payload: json.data
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}
-
-export function filterByGenre(payload) {
-    return {
-        type: "FILTER_BY_GENRE",
-        payload
-    }
-}
-
-export function filterByRating(payload) {
-    return {
-        type: "FILTER_BY_RATING",
-        payload
-    }
-}
-
-export function postVideogame(payload) { //crear videojuego
-    return async function () {
-        const response = await axios.post("http://localhost:3001/videogame", payload);
-
-        return response
-    }
-}
-
-export function getDetail(payload) { //obtener detalle del videojuego(ID)
-    return async function (dispatch) {
-        try {
-            let json = await axios.get("http://localhost:3001/videogame/" + payload);
-
-            return dispatch({
-                type: "GET_DETAIL",
-                payload: json.data
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-} */
-
-/*  export function getGenres (){
-              return async function (dispatch){
-                  try {
-                      var json = await axios.get("URL");
-                      return dispatch({
-                          type: GET_GENRES,
-                          payload: json.data
-                      })
-                  } catch (error) {
-                      console.log(error)
-                  }
-              }
-          };
-
-        }; */

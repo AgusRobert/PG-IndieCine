@@ -1,6 +1,5 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
@@ -23,6 +22,7 @@ import logo from "./LOGO.png";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileInfo } from "../../redux/actions/index.js";
+import { SERVER_BACK } from "../../paths/path.js";
 
 const ToolStyle = styled(Toolbar)({
   marginLeft: 50,
@@ -37,7 +37,6 @@ const AppStyle = styled(AppBar)({
   display: "flex",
   flexWrap: "wrap",
 });
-
 const AvatarStyle = styled(Avatar)({
   marginLeft: "auto",
   color: amber[200],
@@ -62,7 +61,7 @@ export default function Header() {
 
   function handleOnClick() {
     if (infoUser?.status === "admin")
-      window.location.href = "http://localhost:3001/admin";
+      window.location.href = `${SERVER_BACK}/admin`;
     else navigate("/profile");
   }
 
@@ -147,7 +146,6 @@ export default function Header() {
           </>
         )}
         {!isAuthenticated && <SignInBtn />}
-
         {!isAuthenticated && <SignUpBtn />}
       </ToolStyle>
     </AppStyle>
