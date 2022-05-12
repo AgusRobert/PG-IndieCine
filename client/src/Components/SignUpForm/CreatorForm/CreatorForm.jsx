@@ -8,6 +8,7 @@ import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const BoxStyle = styled(Box)({
   padding: "20px",
@@ -36,11 +37,13 @@ export default function CreatorForm({ fillFormFn }) {
     telephone: null,
     typeOfDocument: null, //-------> tipo de identificacion.
     numberOfDocument: null,
+    cafecito: null,
     // termsAndConditions: false,
   });
   const [errors, setErrors] = useState({});
   const [personSelected, setPersonSelected] = useState(false);
   const { user } = useAuth0();
+  const navigate = useNavigate();
 
   // -------- TRAER LA LISTA DE PAISES --------
   const dispatch = useDispatch();
@@ -79,6 +82,10 @@ export default function CreatorForm({ fillFormFn }) {
     } else if (!/^[0-9]/.test(state.numberOfDocument)) {
       errors.numberOfDocument = "Número de identificación debe ser válido.";
     }
+    // cafecito
+    // if(state.cafecito && !/^/.test(state.cafecito)) {
+    //   errors.cafecito = "Debe ser un link válido.";
+    // }
     // termsAndConditions
     // if (!state.termsAndConditions) {
     //     errors.termsAndConditions = "Debe aceptar los términos y condiciones.";
@@ -174,9 +181,11 @@ export default function CreatorForm({ fillFormFn }) {
           status: "pending",
         })
       );
+      fillFormFn(true);
       Swal.fire(
         "Solicitud enviada correctamente, en breve nos comunicaremos con usted."
       );
+      navigate("/profile");
     } else {
       Swal.fire({
         icon: "error",
@@ -423,6 +432,20 @@ export default function CreatorForm({ fillFormFn }) {
             />
           </div>
         </div>
+
+        {/* Link de cafecito */}
+        <div>
+          <label>Tu cafecito ☕</label>
+          <p>Si usted desea recibir donaciones, complete el siguiente campo.</p>
+          <input
+            type="text"
+            name="cafecito"
+            value={input.cafecito}
+            onChange={handleOnChange}
+            placeholder="Ingrese el link de su cafecito"
+          />
+        </div>
+
         {/* <div>
                     <div>
                         <label htmlFor="mail">Acepte los </label>
