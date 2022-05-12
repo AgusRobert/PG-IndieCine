@@ -17,9 +17,11 @@ const AppStyle = styled(AppBar)({
   justifyContent: "space-between",
   alignItems: "center"
 });
+
 const BoxS = styled(Box)({
   paddingTop: 200
 });
+
 export default function Contact() {
   const [redir, setRedir] = useState(false);
 
@@ -46,14 +48,14 @@ export default function Contact() {
   if (!redir) {
     return (
       <>
-       <AppStyle>
-         <Link to={'/'}><img src={logo}  alt="img not found"/></Link>
-       </AppStyle>
-       <BoxS></BoxS>
+        <AppStyle>
+          <Link to={'/'}><img src={logo} alt="img not found" /></Link>
+        </AppStyle>
+        <BoxS></BoxS>
         <div className={s.content}>
           <div className={[s.contactwrapper, s.animated, s.bounceInUp]}>
             <div className={s.contactform}>
-              <h3>Contáctanos</h3>
+              <h3>CONTÁCTANOS</h3>
 
               <form onSubmit={handleSubmit}>
                 <p>

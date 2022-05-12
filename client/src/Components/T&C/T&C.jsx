@@ -10,6 +10,7 @@ import { AppBar, Divider, Paper } from "@mui/material";
 import deco from '../About/deco.png'
 import deco2 from '../About/deco2.png'
 import { amber, grey } from "@mui/material/colors";
+
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
   backgroundColor: "#b388ff",
@@ -17,6 +18,7 @@ const AppStyle = styled(AppBar)({
   justifyContent: "space-between",
   alignItems: "center"
 });
+
 const defaultTheme = createTheme();
 
 const theme = createTheme({
@@ -26,6 +28,7 @@ const theme = createTheme({
     }
   }
 });
+
 const Texto = styled(Typography)({
  color:grey[300],
 //  padding: "1rem",
@@ -34,77 +37,82 @@ marginBottom: "1rem",
   });
  
 const Divisor = styled(Divider)({
- borderColor:amber[500]
-   
- });
- const BoxStyle = styled(Box)({
-   display:"table-row",
-  paddingTop:150,
+  borderColor: amber[500]
+
+});
+
+const BoxStyle = styled(Box)({
+  display: "table-row",
+  paddingTop: 150,
   justifyContent: "space-between",
   alignItems: "center",
-  alignContent:"center",
+  alignContent: "center",
   padding: "1rem",
   marginBottom: "1rem",
 });
+
 const Titulo = styled(Typography)({
-  color:"white",
-  fontSize:"45px"
-   
- });
- const ImgStyle = styled("img")({
-  maxHeight:200,
-  width:"auto"
+  color: "white",
+  fontSize: "45px"
+
+});
+
+const ImgStyle = styled("img")({
+  maxHeight: 200,
+  width: "auto"
 })
+
 const ContainerS = styled(Paper)({
-  maxHeight:200,
-  width:"auto",
+  maxHeight: 200,
+  width: "auto",
   background: 'linear-gradient(50deg,  #424242 40%, #4a148c  90%)',
-  paddingLeft:30
+  paddingLeft: 30
 })
 
 const Fondo = styled(Box)({
   background: 'linear-gradient(90deg,  #6200ea 20%,#651fff 40%, #aa00ff 90%)',
-  backgroundSize:"cover",
-    
-    position:"relative",
-})
-export default function TyC(){
-    return (
-        <>
-         <AppStyle>
-         <Link to={'/'}><img src={logo}  alt="img not found"/></Link>
-       </AppStyle>
+  backgroundSize: "cover",
 
-{/* <Fondo> */}
-       <Box style={{display:"flex", justifyContent:"space-between",paddingTop:60}}>
-    
-    <ImgStyle src={deco2} alt="deco"/>
-   <Box
-      height={100}
-      width={500}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      bgcolor="#f1c232"
-      color="white"
-      fontSize={24}
-      position={"relative"}
-      left={0}
-      top={30}
-      borderRadius={5}
-    >
-       <Titulo variant="bold">SOBRE NOSOTROS</Titulo>  
-    </Box>
-   <ImgStyle src={deco} alt="deco"/>
+  position: "relative",
+})
+
+export default function TyC() {
+  return (
+    <>
+      <AppStyle>
+        <Link to={'/'}><img src={logo} alt="img not found" /></Link>
+      </AppStyle>
+
+      {/* <Fondo> */}
+      <Box style={{ display: "flex", justifyContent: "space-between", paddingTop: 60 }}>
+
+        <ImgStyle src={deco2} alt="deco" />
+        <Box
+          height={100}
+          width={500}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          bgcolor="#f1c232"
+          color="white"
+          fontSize={24}
+          position={"relative"}
+          left={0}
+          top={30}
+          borderRadius={5}
+        >
+          <Titulo variant="bold">TÉRMINOS Y CONDICIONES</Titulo>
+        </Box>
+        <ImgStyle src={deco} alt="deco" />
       </Box>
  <BoxStyle style={{padding:40}}>      
  <ContainerS><h3>Condiciones Generales:</h3></ContainerS>
 
 <Texto style={{padding:40,fontSize: '20px', textAlign:'justify'}}>Por favor lea cuidadosamente estas condiciones generales del servicio antes de acceder a la página Web. El acceso a la página Web por parte del usuario del Servicio implica su consentimiento expreso y sin reservas a estos Términos y Condiciones de Uso. Si usted no está de acuerdo con estos por favor no use la Pagina Web. CINDIE se reserva el derecho, a su sola discreción, de cambiar, modificar, adicionar o remover partes de estas Condiciones en cualquier tiempo y sin previo aviso.
 
-En caso de los niños menores de 12 (doce) años se entenderá que cuentan con el consentimiento de sus padres, representantes legales o tutores asignados, de utilizar esta página Web por lo que el acceso por parte de los menores será bajo estricta responsabilidad de las personas antes mencionadas renunciando a realizar cualquier acción en contra de CINDIE y/o las marcas pertenecientes a la misma anunciadas en esta página Web.
- 
-De las responsabilidades Usted (El Usuario) se compromete a utilizar el Servicio de conformidad con la ley, estas Condiciones Generales, así como de acuerdo con la moral y las buenas costumbres y el orden público. De la misma manera el Usuario se obliga a abstenerse de utilizar el Servicio con fines o efectos ilícitos, contrarios a lo establecido en las Condiciones Generales, lesivos de los derechos e intereses de terceros o que de cualquier forma puedan dañar, inutilizar, sobrecargar o deteriorar el Servicio o impedir la normal utilización o disfrute del Servicio por parte de los Usuarios.</Texto>
+          En caso de los niños menores de 12 (doce) años se entenderá que cuentan con el consentimiento de sus padres, representantes legales o tutores asignados, de utilizar esta página Web por lo que el acceso por parte de los menores será bajo estricta responsabilidad de las personas antes mencionadas renunciando a realizar cualquier acción en contra de CINDIE y/o las marcas pertenecientes a la misma anunciadas en esta página Web.
+
+          De las responsabilidades Usted (El Usuario) se compromete a utilizar el Servicio de conformidad con la ley, estas Condiciones Generales, así como de acuerdo con la moral y las buenas costumbres y el orden público. De la misma manera el Usuario se obliga a abstenerse de utilizar el Servicio con fines o efectos ilícitos, contrarios a lo establecido en las Condiciones Generales, lesivos de los derechos e intereses de terceros o que de cualquier forma puedan dañar, inutilizar, sobrecargar o deteriorar el Servicio o impedir la normal utilización o disfrute del Servicio por parte de los Usuarios.</Texto>
 
 
  
@@ -178,8 +186,9 @@ De las responsabilidades Usted (El Usuario) se compromete a utilizar el Servicio
 <Divisor />
 </BoxStyle> 
 
-<Footer/>
-       {/* </Fondo>  */}
- </>
-    )
+      
+      <Footer />
+      {/* </Fondo>  */}
+    </>
+  )
 }

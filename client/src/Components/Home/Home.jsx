@@ -14,6 +14,7 @@ import {
 } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
+import Swal from "sweetalert2";
 
 // Import Swiper styles
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -92,18 +93,13 @@ export default function Home() {
     );
   }
 
-  if (allMovies[0] === "No films") {
-    return (
-      <>
-        <Header position="sticky" />
-        <div className="container">
-          <div>
-            <h1>No se ha podido encontrar la búsqueda.</h1>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
+  if (moviesFilters[0] === "No films") {
+    Swal.fire({
+      icon: "error",
+      title: "Peliculas no disponibles",
+      text: "No se encontraron resultados para esta busqueda",
+    });
+    dispatch(getMovies());
   }
 
   return (
@@ -206,7 +202,7 @@ export default function Home() {
 
       {/* <div className="pelis">
                 {
-                    allMovies ? allMovies?.map(data => {
+                    moviesFilters ? moviesFilters?.map(data => {
                         let nombresGen = [];
 
                         let generos = data.Genres
