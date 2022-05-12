@@ -21,7 +21,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import logo from "./LOGO.png";
 import "./style.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfileInfo } from "../../redux/actions/index.js";
 
 const ToolStyle = styled(Toolbar)({
   marginLeft: 50,
@@ -54,17 +55,20 @@ const MenuItemStyle = styled(MenuItem)({
 
 export default function Header() {
   const { user, isAuthenticated, logout } = useAuth0();
-
+  const dispacth = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const infoUser = useSelector((state) => state.profileInfo);
   const navigate = useNavigate();
 
   function handleOnClick() {
-    if (infoUser?.rol === "admin")
+    if (infoUser?.status === "admin")
       window.location.href = "http://localhost:3001/admin";
-    navigate("/profile");
+    else navigate("/profile");
   }
 
+  React.useEffect(() => {
+    user?.email && dispacth(getProfileInfo(user.email));
+  });
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
