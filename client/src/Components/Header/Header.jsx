@@ -68,7 +68,7 @@ export default function Header() {
 
   React.useEffect(() => {
     user?.email && dispacth(getProfileInfo(user.email));
-  });
+  },[]);
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }

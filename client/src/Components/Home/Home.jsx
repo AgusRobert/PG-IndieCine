@@ -1,10 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-// import Card from "../Card/Card.jsx"
 import Footer from "../Footer/Footer.jsx";
 import Header from "../Header/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getMovies,
   getProfileInfo,
@@ -14,9 +13,6 @@ import {
 } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
-import Swal from "sweetalert2";
-
-// Import Swiper styles
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -34,14 +30,11 @@ import Grid from "@mui/material/Grid";
 const ContainerS = styled(Container)({
   paddingBottom: 20,
 });
-
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 // import "swiper/swiper.min.css";
-
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
-
   const dispatch = useDispatch();
   const allMovies = useSelector((state) => state.pelisfiltradas);
   const { profileInfo } = useSelector((state) => state);
@@ -51,7 +44,7 @@ export default function Home() {
     if (user?.email !== undefined) {
       dispatch(getProfileInfo(user?.email));
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -76,37 +69,25 @@ export default function Home() {
       //         image: user.picture,
       //     }))
       // }
-    }
-  }, [user, isAuthenticated]);
+    } }, [user, isAuthenticated]);
 
-  if (allMovies[0] === "No films") {
+    if (allMovies[0] === "No films") {
+      return (
+        <>
+          <Header position="sticky" />
+          <div className="container">
+            <div>
+              <h1>No se ha podido encontrar la búsqueda.</h1>
+            </div>
+          </div>
+          <Footer />
+        </>
+      );
+    }
     return (
       <>
         <Header position="sticky" />
-        <div className="container">
-          <div>
-            <h1>No se ha podido encontrar la búsqueda.</h1>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
-
-  if (moviesFilters[0] === "No films") {
-    Swal.fire({
-      icon: "error",
-      title: "Peliculas no disponibles",
-      text: "No se encontraron resultados para esta busqueda",
-    });
-    dispatch(getMovies());
-  }
-
-  return (
-    <>
-      <Header position="sticky" />
-
-      {allMovies.length && allMovies[0] !== "No films" ? (
+        {allMovies.length && allMovies[0] !== "No films" ? (
         <>
           <h2 className="Title">Estrenos</h2>
           <Swiper
@@ -116,7 +97,7 @@ export default function Home() {
             slidesPerView={window.innerWidth < 768 ? 1 : "auto"}
             loop={true}
             coverflowEffect={{
-              rotate: 500,
+              rotate: 50,
               stretch: 0,
               depth: 100,
               modifier: 1,
@@ -139,7 +120,7 @@ export default function Home() {
 
           <ContainerS>
             <Grid container spacing={15}>
-              
+
                 {/* <Row md={6} lg={6} className="newdiv" > */}
                 {allMovies ? (
                   allMovies?.map((data) => {
@@ -181,9 +162,9 @@ export default function Home() {
                 )}
                 {/* </Row> */}
               </Grid>
-            
+
             <Footer />
-          </ContainerS>
+            </ContainerS>
         </>
       ) : (
         <div>
@@ -191,46 +172,6 @@ export default function Home() {
           <Footer />
         </div>
       )}
-
-      {/* <div>
-                        <a href="#" class="scroll-top" title="Ir arriba">
-                            <i class="fa fa-angle-up"><b>^</b></i>
-                        </a>
-                    </div> */}
-
-      {/* </div> */}
-
-      {/* <div className="pelis">
-                {
-                    moviesFilters ? moviesFilters?.map(data => {
-                        let nombresGen = [];
-
-                        let generos = data.Genres
-                        generos.forEach(a => {
-                            nombresGen.push(a.name)
-                        })
-
-                        return (
-                            <div key={data.id}>
-                                <Link key={data.id} to={"/detail/" + data.id}>
-                                <Card title={data.title}
-                                poster={data.poster}
-                                year={data.year}
-                                country={data.Country.name}
-                                Genres={"Géneros: " + nombresGen?.join(", ")}
-                                rating={"Rating: " + data.rating}
-                                duration={"Duración: " + data.duration}
-                                key={data.id} />
-                                </Link>
-                            </div> 
-                        )
-                    }) :
-                    <img src="https://m.media-amazon.com/images/M/MV5BMDBjMmNkMDMtN2ZiYS00MDJiLTk5YWUtOTdhZjFmMjdmM2NhXkEyXkFqcGdeQXVyMjY4MzQzNDk@._V1_FMjpg_UX1000_.jpg" alt="not found" />
-                }
-                </div>
-                <div>
-                    <Footer/>
-                </div> */}
-    </>
-  );
-}
+       </>
+        );
+      }
