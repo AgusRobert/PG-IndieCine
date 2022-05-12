@@ -48,7 +48,7 @@ module.exports = (sequelize) => {
       },
       associateProducer: {
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: true,
       },
       rating: {
         type: DataTypes.REAL,

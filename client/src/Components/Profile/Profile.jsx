@@ -82,6 +82,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const [upgradeBtn, setUpgradeBtn] = useState(false);
   const [fillForm, setFillForm] = useState(false);
+  const [showSubs, setShowSubs] = useState(false);
   // validación de suscripción
 
   const profileInfo = useSelector((state) => state.profileInfo);
@@ -103,7 +104,7 @@ export default function Profile() {
   }, []);
 
   useEffect(() => {
-    if (user?.email !== undefined) {
+    if (user) {
       dispatch(getProfileInfo(user.email));
       dispatch(validateSubscription(user.email));
       profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
@@ -145,6 +146,7 @@ export default function Profile() {
     // );
     dispatch(updateUser({ email: user.email, creator: false, status: "registered" }));
     alert('Se ha cancelado la suscripción');
+    fillForm(false);
   }
 
   const handleUpgradeBtn = () => {
@@ -175,10 +177,11 @@ export default function Profile() {
           <Container>
             <h2>Mis datos</h2>
             <h4>{user.name}</h4>
-            <h4>{user.nickname}</h4>
+            {/* <h4>{user.nickname}</h4> */}
+            <h4>{profileInfo?.username}</h4>
             <h4>{user.email}</h4>
 
-            {profileInfo?.status === 'creator approved' && pelisdeluser.length < limitedeluser[0] ?
+            {profileInfo?.status === 'creator approved' && pelisdeluser.length < limitedeluser[0] &&
               <Container>
                 <StyledLink
                   sx={{
@@ -195,10 +198,14 @@ export default function Profile() {
                   Subir Proyecto
                 </StyledLink>
               </Container>
-              : <h1>LLEGASTE AL LÍMITE DE SUBIDAS DE TU PLAN</h1>
+
             }
 
-            {profileInfo?.status === 'creator approved' ? (
+            {profileInfo?.status === 'creator approved' && pelisdeluser.length >= limitedeluser[0] && (
+              <h1>Para subir más proyectos, cambia tu plan.</h1>
+            )}
+
+            {profileInfo?.status === 'creator approved' && (
               <Container>
                 <StyledLink
                   sx={{
@@ -215,7 +222,7 @@ export default function Profile() {
                   Volver a básico
                 </StyledLink>
               </Container>
-            ) : null}
+            )}
 
             {/* <Container>
               <StyledLink
@@ -272,6 +279,10 @@ export default function Profile() {
             </>
           )}
 
+          {profileInfo?.creator === true && (
+            <Subs currentSub={profileInfo?.subcription} />
+          )}
+
           {profileInfo?.status === 'registered' && fillForm === false && (
             <>
               <h2>¿Desea subir al siguiente nivel?</h2>
@@ -297,7 +308,6 @@ export default function Profile() {
                 >
                   Subir de nivel
                 </StyledLink>
-                {/* <Subs currentSub={profileInfo?.subcription} /> */}
                 {upgradeBtn && fillForm === false && <CreatorForm
                   fillFormFn={handleFillForm}
                 />}
