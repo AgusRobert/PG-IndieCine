@@ -83,8 +83,8 @@ export default function CreatorForm({ fillFormFn }) {
       errors.numberOfDocument = "Número de identificación debe ser válido.";
     }
     // cafecito
-    // if(state.cafecito && !/^/.test(state.cafecito)) {
-    //   errors.cafecito = "Debe ser un link válido.";
+    // if (state.cafecito && !/(http[s]?:\/\/cafecito.app\/)([^\/\s]+\/)(.*)/.test(state.cafecito)) {
+    //   errors.cafecito = "Debe ser un link de cafecito válido.";
     // }
     // termsAndConditions
     // if (!state.termsAndConditions) {
@@ -435,17 +435,19 @@ export default function CreatorForm({ fillFormFn }) {
 
         {/* Link de cafecito */}
         <div>
-          <label>Tu cafecito ☕</label>
-          <p>Si usted desea recibir donaciones, complete el siguiente campo.</p>
-          <input
-            type="text"
-            name="cafecito"
-            value={input.cafecito}
-            onChange={handleOnChange}
-            placeholder="Ingrese el link de su cafecito"
-          />
+          <div>
+            <label>Tu cafecito ☕</label>
+            <p>Si usted desea recibir donaciones, complete el siguiente campo.</p>
+            <input
+              type="text"
+              name="cafecito"
+              value={input.cafecito}
+              onChange={handleOnChange}
+              placeholder="Ingrese el link de su cafecito"
+            />
+          </div>
+          {errors.cafecito && <span>{errors.cafecito}</span>}
         </div>
-
         {/* <div>
                     <div>
                         <label htmlFor="mail">Acepte los </label>

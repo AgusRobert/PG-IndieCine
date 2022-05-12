@@ -66,12 +66,6 @@ export function getGenres() {
   };
 }
 
-// export function postMovie (movieForm){
-//     return async function(dispatch){
-//       const respo = await axios.post('http://localhost:3001/films', movieForm);
-//       console.log("RESPUESTA DEL BACK: ",movieForm)
-//     }
-// };
 export function postMovie(movieForm) {
   return async () => {
     const response = (
@@ -178,10 +172,13 @@ export function renderMovieDetails(id) {
   return async function (dispatch) {
     try {
       let movie = await axios.get(`http://localhost:3001/films/${id}`);
-      /* console.log(movie.data) */
+      let autor = await axios.get(`http://localhost:3001/users/${movie.data.UserId}`);
       return dispatch({
         type: MOVIE_DETAIL,
-        payload: movie.data,
+        payload: {
+          ...movie.data,
+          cafecito: autor.data.cafecito,
+        },
       });
     } catch (error) {
       console.log(error);
@@ -193,50 +190,7 @@ export function signUpFunction(userData) {
   return async function (dispatch) {
     try {
       console.log("userData", userData);
-
-      // let request = {
-      // name: userData.given_name ? userData.given_name : null,
-      // surname: userData.family_name ? userData.family_name : null,
-      // username: userData.nickname,
-      // email: userData.email,
-      // password: userData.email,
-      // creator: userData.creator,
-      //ver misma situación que status
-      // country: userData.country ? userData.country : null,
-      // people: userData.people
-      // ? userData.people === "true"
-      // ? true
-      // : false
-      // : null,
-      // rol: userData.rol ? userData.rol : null,
-      // telephone: userData.telephone ? parseInt(userData.telephone) : null,
-      // typeOfDocument: userData.typeOfDocument
-      // ? userData.typeOfDocument
-      // : null,
-      // numberOfDocument: userData.numberOfDocument
-      // ? Number(userData.numberOfDocument)
-      // : null,
-      // frontDocument: userData.frontDocument ? userData.frontDocument : null,
-      // backDocument: userData.reverseDocument
-      // ? userData.reverseDocument
-      // : null,
-      // status: userData.status ? userData.status: null,
-      //no puede ser null, si no tiene. No se envía.
-      //porque esto se ejecuta siempre y si le envio null voy a pisar el status actual
-      //cuando se monta el Home
-      // };
       await axios.post("http://localhost:3001/users/register", userData);
-      // if (request.creator) {
-      //   return dispatch({
-      //     type: SIGN_UP_USER,
-      //     payload: true,
-      //   });
-      // } else {
-      // return dispatch({
-      //   type: SIGN_UP_USER,
-      //   payload: false,
-      // });
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -502,10 +456,6 @@ export function addComment(payload) {
   };
 }
 
-//      {}
-// El payload debe tener el id del comentario y 
-// lo que se quiere modificar:
-//    - body
 export function updateComment(payload) {
   return async function (dispatch) {
     try {
