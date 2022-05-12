@@ -11,6 +11,7 @@ import Comments from "../Comments/Comments";
 import { styled } from "@mui/system";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from 'sweetalert2'
+import CafecitoBtn from "../CafecitoBtn/CafecitoBtn.jsx";
 
 const ImgFav = styled("img")({
   height: "400px",
@@ -25,6 +26,7 @@ export default function MovieDetail() {
   const [loaded, setLoaded] = useState(false)
 
   const { user, isAuthenticated, loginWithRedirect } = useAuth0()
+  const peli = useSelector(state => state.detalle);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -36,7 +38,6 @@ export default function MovieDetail() {
     }
   }, [dispatch, user]);
 
-  const peli = useSelector(state => state.detalle);
   const profileInfo = useSelector(state => state.profileInfo)
   const navigate = useNavigate()
   let elenco = peli ? peli.mainActors : [];
@@ -58,25 +59,21 @@ export default function MovieDetail() {
             <img src={logo} alt="img not found" />
           </Link>
         </div>
-        {/* {Swal.fire({
+        {Swal.fire({
           title: 'Registrate para acceder a todo nuestro contenido',
-          showDenyButton: false,
-          showCancelButton: false,
-          confirmButtonText: 'Ir al home',
+          showCancelButton: true,
+          cancelButtonAriaLabel: 'Volver al home',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Registrarse',
+          footer: '<span>Al cancelar volverá a home</span>',
         }).then((result) => {
           if (result.isConfirmed) {
-            navigate("/")
+            handleSignUp()
+          } else {
+            window.location.replace("http://localhost:3000/")
           }
-        })
-        } */}
-        {/* {
-          Swal.fire({
-            title: 'Registrate para acceder a todo nuestro contenido',
-          })
-        } */}
-        <div>
-          <h2>Registrate para acceder a todo nuestro contenido</h2>
-        </div>
+        })}
       </>
     )
   }
@@ -124,12 +121,10 @@ export default function MovieDetail() {
                 <View ubicacion={peli.url} />
               </div>
               <div>
-                {profileInfo.cafecito && (
-                  <a
-                    href={profileInfo.cafecito}
-                    rel='noopener'
-                    target='_blank'>
-                    <img srcset='https://cdn.cafecito.app/imgs/buttons/button_3.png 1x, https://cdn.cafecito.app/imgs/buttons/button_3_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_3_3.75x.png 3.75x' src='https://cdn.cafecito.app/imgs/buttons/button_3.png' alt='Invitame un café en cafecito.app' /></a>
+                {peli.cafecito && (
+                  <CafecitoBtn
+                    linkCafecito={profileInfo.cafecito}
+                  />
                 )}
               </div>
               <FavButton filmId={filmId} />

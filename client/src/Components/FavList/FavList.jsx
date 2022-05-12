@@ -60,7 +60,7 @@ export default function FavList(userId) {
   return (
     <Box>
       <div>
-        {favs &&
+        {favs.length ?
           favs.map((peli) => {
             let favDispatch = {
               idPeli: peli.id,
@@ -98,16 +98,21 @@ export default function FavList(userId) {
                       variant="h6"
                       component="h2"
                     >
-                      Pelicula eliminada con exito
+                      Pelicula eliminada con éxito
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      Este film yan o aparecera en tu lista :(
+                      Este film ya no aparecerá en tu lista :(
                     </Typography>
                   </BoxFav>
                 </Modal>
              </>
             );
-          })}
+          }) : (
+            <>
+            <Typography>No tienes peliculas favoritas</Typography>
+            <Typography>Te invitamos a recorrer todo nuestro contenido :)</Typography>
+            </>
+          )}
       </div>
     </Box>
   );

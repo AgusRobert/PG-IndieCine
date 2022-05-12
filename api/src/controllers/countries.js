@@ -30,7 +30,6 @@ const getCountries = async (req, res, next) => {
     const allCountries = await Country.findAll({
       order: [["name", "ASC"]], //para que en el llamado del select aparezcan ordenados de A a Z, aunque ya estan guardados en la tabla en orden alfabético
     });
-    console.log('allCountries back', allCountries)
     res.status(200).json(allCountries);
   } catch (error) {
     next(error);

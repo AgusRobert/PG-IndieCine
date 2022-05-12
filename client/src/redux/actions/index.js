@@ -166,9 +166,13 @@ export function renderMovieDetails(id) {
   return async function (dispatch) {
     try {
       let movie = await axios.get(`${SERVER_BACK}/films/${id}`);
+      let autor = await axios.get(`${SERVER_BACK}/users/${movie.data.UserId}`);
       return dispatch({
         type: MOVIE_DETAIL,
-        payload: movie.data,
+        payload: {
+          ...movie.data,
+          cafecito: autor.data.cafecito,
+        },
       });
     } catch (error) {
       console.log(error);
@@ -393,10 +397,6 @@ export function addComment(payload) {
   };
 }
 
-//      {}
-// El payload debe tener el id del comentario y
-// lo que se quiere modificar:
-//    - body
 export function updateComment(payload) {
   return async function (dispatch) {
     try {
