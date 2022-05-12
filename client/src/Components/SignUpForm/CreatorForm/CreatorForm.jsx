@@ -9,6 +9,7 @@ import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { SERVER_BACK } from "../../../paths/path";
 
 const BoxStyle = styled(Box)({
   padding: "20px",
@@ -47,10 +48,10 @@ export default function CreatorForm({ fillFormFn }) {
 
   // -------- TRAER LA LISTA DE PAISES --------
   const dispatch = useDispatch();
-  const { countries } = useSelector(state => state);
+  const { countries } = useSelector((state) => state);
   useEffect(() => {
     !countries.length && dispatch(getCountries());
-  }, [])
+  }, []);
 
   function validateForm(state) {
     const errors = {};
@@ -155,10 +156,9 @@ export default function CreatorForm({ fillFormFn }) {
         formDocBack.append("extra", "");
         formDocBack.append("file", documents.back);
         const rBack = (
-          await axios.post("http://localhost:3001/upload/inter", formDocBack)
+          await axios.post(`${SERVER_BACK}/upload/inter`, formDocBack)
         )?.data;
         if (typeof rBack === "string") responses.backDocument = rBack;
-        // console.log("Respuesta BACK: ", responses.back);
       }
       if (documents?.front && user?.email) {
         const formDocFront = new FormData();
@@ -167,7 +167,7 @@ export default function CreatorForm({ fillFormFn }) {
         formDocFront.append("extra", "");
         formDocFront.append("file", documents.front);
         const rFront = (
-          await axios.post("http://localhost:3001/upload/inter", formDocFront)
+          await axios.post(`${SERVER_BACK}/upload/inter`, formDocFront)
         )?.data;
         if (typeof rFront === "string") responses.frontDocument = rFront;
       }
@@ -219,16 +219,12 @@ export default function CreatorForm({ fillFormFn }) {
                 },
               }}
             >
-              {/* <MenuItemStyle value="" disabled selected>
-                Seleccione un país
-              </MenuItemStyle> */}
-
               {countries.length
                 ? countries.map((country) => (
-                  <MenuItemStyle key={country.id} value={country.name}>
-                    {country.name}
-                  </MenuItemStyle>
-                ))
+                    <MenuItemStyle key={country.id} value={country.name}>
+                      {country.name}
+                    </MenuItemStyle>
+                  ))
                 : null}
             </SelectStyle>
           </div>
@@ -239,14 +235,6 @@ export default function CreatorForm({ fillFormFn }) {
         <div>
           <div>
             <label htmlFor="people">Persona</label>
-            {/* <SelectStyle name="people" onChange={handleOnSelect}>
-              <MenuItemStyle value="" disabled selected>
-                Seleccione una opción
-              </MenuItemStyle>
-              <MenuItemStyle value="true">Persona Natural</MenuItemStyle>
-              <MenuItemStyle value="false">Persona Jurídica</MenuItemStyle>
-            </SelectStyle> */}
-
             <Box>
               {/* {" "} */}
               <SelectStyle
@@ -371,15 +359,6 @@ export default function CreatorForm({ fillFormFn }) {
                 <MenuItemStyle value="ruc">RUC</MenuItemStyle>
               </SelectStyle>
             </Box>
-            {/*    <SelectStyle name="typeOfDocument" onChange={handleOnSelect}>
-              
-              <MenuItemStyle value="" disabled selected>
-                Seleccione una opción
-              </MenuItemStyle>
-              <MenuItemStyle value="dni">DNI</MenuItemStyle>
-              <MenuItemStyle value="pasaporte">Pasaporte</MenuItemStyle>
-              <MenuItemStyle value="ruc">RUC</MenuItemStyle>
-            </SelectStyle> */}
           </div>
           {errors.typeOfDocument && <span>{errors.typeOfDocument}</span>}
         </div>
@@ -445,18 +424,6 @@ export default function CreatorForm({ fillFormFn }) {
             placeholder="Ingrese el link de su cafecito"
           />
         </div>
-
-        {/* <div>
-                    <div>
-                        <label htmlFor="mail">Acepte los </label>
-                        <Link to={'/terms'}>términos y condiciones</Link>
-                        <input
-                            type="checkbox"
-                            name="termsAndConditions"
-                            onChange={handleOnCheckbox} />
-                    </div>
-                    {errors.termsAndConditions && <span>{errors.termsAndConditions}</span>}
-                </div> */}
         <div>
           <button type="submit">Registrarse</button>
         </div>
