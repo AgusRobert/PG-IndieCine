@@ -83,7 +83,7 @@ export default function Profile() {
   const [upgradeBtn, setUpgradeBtn] = useState(false);
   const [fillForm, setFillForm] = useState(false);
   // validación de suscripción
-
+  const [valid,setValid] = useState(true);
   const profileInfo = useSelector((state) => state.profileInfo);
   const plans = useSelector((state) => state.plans);
   const allMovies = useSelector(state => state.pelisfiltradas);
@@ -105,7 +105,10 @@ export default function Profile() {
   useEffect(() => {
     if (user?.email !== undefined) {
       dispatch(getProfileInfo(user.email));
-      dispatch(validateSubscription(user.email));
+      if(valid){
+        setValid(false);
+        dispatch(validateSubscription(user.email));
+      }
       profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
     }
   }, [fillForm, dispatch]);
