@@ -14,6 +14,7 @@ import {
 } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
+import Swal from "sweetalert2";
 
 // Import Swiper styles
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -41,15 +42,14 @@ export default function Home() {
   const { user, isAuthenticated } = useAuth0();
 
   const dispatch = useDispatch();
-  const allMovies = useSelector((state) => state.pelisfiltradas);
+  const moviesFilters = useSelector((state) => state.pelisfiltradas);
+  const allMovies = useSelector((state) => state.peliculas);
   const estrenos = allMovies?.slice(-7).reverse();
   const { profileInfo } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(getMovies());
-    if (user?.email !== undefined) {
-      dispatch(getProfileInfo(user?.email));
-    }
+    if (moviesFilters?.length === 0) dispatch(getMovies());
+    if (user?.email !== undefined) dispatch(getProfileInfo(user?.email));
   }, [dispatch]);
 
   useEffect(() => {
@@ -77,24 +77,20 @@ export default function Home() {
       // }
     }
   }, [user, isAuthenticated]);
-  if (allMovies[0] === "No films") {
-    return (
-      <>
-        <Header position="sticky" />
-        <div className="container">
-          <div>
-            <h1>No se ha podido encontrar la búsqueda.</h1>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
+
+  if (moviesFilters[0] === "No films") {
+    Swal.fire({
+      icon: "error",
+      title: "Peliculas no disponibles",
+      text: "No se encontraron resultados para esta busqueda",
+    });
+    dispatch(getMovies());
   }
 
   return (
     <>
       <Header position="sticky" />
-      {allMovies.length && allMovies[0] !== "No films" ? (
+      {moviesFilters.length && moviesFilters[0] !== "No films" ? (
         <>
           <h2 className="Title">Estrenos:</h2>
           <Swiper
@@ -130,8 +126,8 @@ export default function Home() {
 
           <ContainerS>
             <Row md={6} lg={6} className="newdiv">
-              {allMovies ? (
-                allMovies?.map((data) => {
+              {moviesFilters ? (
+                moviesFilters?.map((data) => {
                   // console.log("HOME", data)
 
                   let nombresGen = [];
@@ -187,7 +183,7 @@ export default function Home() {
 
       {/* <div className="pelis">
                 {
-                    allMovies ? allMovies?.map(data => {
+                    moviesFilters ? moviesFilters?.map(data => {
                         let nombresGen = [];
 
                         let generos = data.Genres
