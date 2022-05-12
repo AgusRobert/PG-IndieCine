@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
 
 .swiper-slide {
     background-position: center;
@@ -65,11 +66,15 @@
 
 
 .Title{
-  color:antiquewhite;
-  text-shadow: inset 0 0 40px #4830d3;
+  color: #ffc107;
+  text-shadow: 5px 10px 5px black;
   margin-top: 5%;
   text-align: center;
-
+  padding-top: 20px;
+  font-size: 70px;
+  padding-bottom: 0px;
+  line-height: 50px;
+   font-family: 'Koulen', cursive;
 }
 
 .search {

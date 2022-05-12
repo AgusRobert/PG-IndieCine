@@ -1,10 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-// import Card from "../Card/Card.jsx"
 import Footer from "../Footer/Footer.jsx";
 import Header from "../Header/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getMovies,
   getProfileInfo,
@@ -14,9 +13,6 @@ import {
 } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
-import Swal from "sweetalert2";
-
-// Import Swiper styles
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -30,27 +26,25 @@ import SwiperCore, {
 } from "swiper/core";
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "@mui/system";
+import Grid from "@mui/material/Grid";
 const ContainerS = styled(Container)({
   paddingBottom: 20,
 });
-
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
 // import "swiper/swiper.min.css";
-
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
-
   const dispatch = useDispatch();
-  const moviesFilters = useSelector((state) => state.pelisfiltradas);
-  const allMovies = useSelector((state) => state.peliculas);
-  const estrenos = allMovies?.slice(-7).reverse();
+  const allMovies = useSelector((state) => state.pelisfiltradas);
   const { profileInfo } = useSelector((state) => state);
 
   useEffect(() => {
-    if (moviesFilters?.length === 0) dispatch(getMovies());
-    if (user?.email !== undefined) dispatch(getProfileInfo(user?.email));
-  }, [dispatch]);
+    dispatch(getMovies());
+    if (user?.email !== undefined) {
+      dispatch(getProfileInfo(user?.email));
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -75,24 +69,27 @@ export default function Home() {
       //         image: user.picture,
       //     }))
       // }
-    }
-  }, [user, isAuthenticated]);
+    } }, [user, isAuthenticated]);
 
-  if (moviesFilters[0] === "No films") {
-    Swal.fire({
-      icon: "error",
-      title: "Peliculas no disponibles",
-      text: "No se encontraron resultados para esta busqueda",
-    });
-    dispatch(getMovies());
-  }
-
-  return (
-    <>
-      <Header position="sticky" />
-      {moviesFilters.length && moviesFilters[0] !== "No films" ? (
+    if (allMovies[0] === "No films") {
+      return (
         <>
-          <h2 className="Title">Estrenos:</h2>
+          <Header position="sticky" />
+          <div className="container">
+            <div>
+              <h1>No se ha podido encontrar la búsqueda.</h1>
+            </div>
+          </div>
+          <Footer />
+        </>
+      );
+    }
+    return (
+      <>
+        <Header position="sticky" />
+        {allMovies.length && allMovies[0] !== "No films" ? (
+        <>
+          <h2 className="Title">Estrenos</h2>
           <Swiper
             navigation={true}
             effect={"coverflow"}
@@ -106,12 +103,9 @@ export default function Home() {
               modifier: 1,
               slideShadows: true,
             }}
-            pagination={{
-              clickable: true,
-            }}
             className="mySwiper"
           >
-            {estrenos?.map((m) => {
+            {allMovies?.map((m) => {
               return (
                 <div>
                   <SwiperSlide>
@@ -125,46 +119,52 @@ export default function Home() {
           </Swiper>
 
           <ContainerS>
-            <Row md={6} lg={6} className="newdiv">
-              {moviesFilters ? (
-                moviesFilters?.map((data) => {
-                  // console.log("HOME", data)
+            <Grid container spacing={15}>
 
-                  let nombresGen = [];
-                  let generos = data.Genres;
-                  generos.forEach((a) => {
-                    nombresGen.push(a.name);
-                  });
+                {/* <Row md={6} lg={6} className="newdiv" > */}
+                {allMovies ? (
+                  allMovies?.map((data) => {
+                    // console.log("HOME", data)
 
-                  return (
-                    <div className="cardgrid" key={data.id}>
-                      {/* <Link to={`/detail/${data.id}`}> */}
-                      <Cartas
-                        title={data.title}
-                        poster={data.poster}
-                        year={data.year}
-                        country={data.Country.name}
-                        genres={"Géneros: " + nombresGen.join(", ")}
-                        rating={data.rating}
-                        key={data.id}
-                        duration={data.duration}
-                        synopsis={data.synopsis}
-                        director={data.director}
-                        id={data.id}
-                      />
-                      {/* </Link> */}
-                    </div>
-                  );
-                })
-              ) : (
-                <img
-                  src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
-                  alt="not found"
-                />
-              )}
-            </Row>
+                    let nombresGen = [];
+                    let generos = data.Genres;
+                    generos.forEach((a) => {
+                      nombresGen.push(a.name);
+                    });
+
+                    return (
+                     <Grid item m={3}> 
+                     {/* <div className="cardgrid" key={data.id}> */}
+                        {/* <Link to={`/detail/${data.id}`}> */}
+                        <Cartas
+                          title={data.title}
+                          poster={data.poster}
+                          year={data.year}
+                          country={data.Country.name}
+                          genres={"Géneros: " + nombresGen.join(", ")}
+                          rating={data.rating}
+                          key={data.id}
+                          duration={data.duration}
+                          synopsis={data.synopsis}
+                          director={data.director}
+                          id={data.id}
+                        />
+                        {/* </Link> */}
+                      {/* </div> */}
+                      </Grid>
+                    );
+                  })
+                ) : (
+                  <img
+                    src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
+                    alt="not found"
+                  />
+                )}
+                {/* </Row> */}
+              </Grid>
+
             <Footer />
-          </ContainerS>
+            </ContainerS>
         </>
       ) : (
         <div>
@@ -172,46 +172,6 @@ export default function Home() {
           <Footer />
         </div>
       )}
-
-      {/* <div>
-                        <a href="#" class="scroll-top" title="Ir arriba">
-                            <i class="fa fa-angle-up"><b>^</b></i>
-                        </a>
-                    </div> */}
-
-      {/* </div> */}
-
-      {/* <div className="pelis">
-                {
-                    moviesFilters ? moviesFilters?.map(data => {
-                        let nombresGen = [];
-
-                        let generos = data.Genres
-                        generos.forEach(a => {
-                            nombresGen.push(a.name)
-                        })
-
-                        return (
-                            <div key={data.id}>
-                                <Link key={data.id} to={"/detail/" + data.id}>
-                                <Card title={data.title}
-                                poster={data.poster}
-                                year={data.year}
-                                country={data.Country.name}
-                                Genres={"Géneros: " + nombresGen?.join(", ")}
-                                rating={"Rating: " + data.rating}
-                                duration={"Duración: " + data.duration}
-                                key={data.id} />
-                                </Link>
-                            </div> 
-                        )
-                    }) :
-                    <img src="https://m.media-amazon.com/images/M/MV5BMDBjMmNkMDMtN2ZiYS00MDJiLTk5YWUtOTdhZjFmMjdmM2NhXkEyXkFqcGdeQXVyMjY4MzQzNDk@._V1_FMjpg_UX1000_.jpg" alt="not found" />
-                }
-                </div>
-                <div>
-                    <Footer/>
-                </div> */}
-    </>
-  );
-}
+       </>
+        );
+      }
