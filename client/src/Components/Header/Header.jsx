@@ -21,6 +21,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import logo from "./LOGO.png";
 import "./style.css";
+import { useSelector } from "react-redux";
 
 const ToolStyle = styled(Toolbar)({
   marginLeft: 50,
@@ -32,8 +33,8 @@ const AppStyle = styled(AppBar)({
   backgroundColor: "#b388ff",
   position: "fixed",
   justifyContent: "space-between",
-  display: 'flex',
-  flexWrap: 'wrap',
+  display: "flex",
+  flexWrap: "wrap",
 });
 
 const AvatarStyle = styled(Avatar)({
@@ -55,9 +56,12 @@ export default function Header() {
   const { user, isAuthenticated, logout } = useAuth0();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const infoUser = useSelector((state) => state.profileInfo);
   const navigate = useNavigate();
 
   function handleOnClick() {
+    if (infoUser?.rol === "admin")
+      window.location.href = "http://localhost:3001/admin";
     navigate("/profile");
   }
 
@@ -65,7 +69,7 @@ export default function Header() {
     logout({ returnTo: window.location.origin });
   }
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
