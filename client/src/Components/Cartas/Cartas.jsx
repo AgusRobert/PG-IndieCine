@@ -42,15 +42,17 @@ export default function Cartas({
   return (
     <>
       <Card sx={{  padding:0,maxWidth: 300, backgroundColor: "#212121" }}>
+      <Link variant="button" underline="none" to={`/detail/${id}`}>
         <CardMedia
           component="img"
           height="400"
           image={poster}
           alt="img not found"
         />
+        </Link>
         <CardContent>
           {/* Estrellitas favoritos */}
-          <Link variant="button" underline="none" to={`/detail/${id}`}>
+          <Link variant="button"  text-decoration="none" underline="none" to={`/detail/${id}`}>
             <Typography variant="h6" style={{ color: "#f1c232" }}>
               {title}
             </Typography>{" "}
@@ -72,7 +74,7 @@ export default function Cartas({
         <CardActions disableSpacing>
           <ExpandMore
             expand={expanded}
-            onMouseOver={handleExpandClick}
+            onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
           >
@@ -81,21 +83,21 @@ export default function Cartas({
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="h6" style={{ color: "#f1c232" }}>
+            <Typography paragraph style={{ color: "#bdbdbd" }}>
               Dirección: {director}{" "}
             </Typography>
-            <Typography variant="h6" style={{ color: "#f1c232" }}>
+            <Typography paragraph style={{ color: "#bdbdbd" }}>
               {genres}{" "}
             </Typography>
-            <Typography variant="h6" style={{ color: "#f1c232" }}>
+            <Typography paragraph style={{ color: "#bdbdbd" }}>
               {" "}
-              País:
-              {country}
+              País: {country}
             </Typography>
-            <Typography variant="h6" style={{ color: "#f1c232" }}>
+            <Typography paragraph style={{ color: "#bdbdbd" }}>
               Duración: {duration}{" "}
             </Typography>
-            <Typography paragraph>Sinopsis: {synopsis}</Typography>
+            <Typography paragraph  style={{ color: "#757575" }}>Sinopsis: </Typography>
+            <Typography paragraph  style={{ color: "#bdbdbd" }}> {synopsis}</Typography>
           </CardContent>
         </Collapse>
       </Card>

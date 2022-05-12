@@ -1,6 +1,5 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,6 +20,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import logo from "./LOGO.png";
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfileInfo } from "../../redux/actions/index.js";
+import { SERVER_BACK } from "../../paths/path.js";
 
 const ToolStyle = styled(Toolbar)({
   marginLeft: 50,
@@ -32,10 +34,9 @@ const AppStyle = styled(AppBar)({
   backgroundColor: "#b388ff",
   position: "fixed",
   justifyContent: "space-between",
-  display: 'flex',
-  flexWrap: 'wrap',
+  display: "flex",
+  flexWrap: "wrap",
 });
-
 const AvatarStyle = styled(Avatar)({
   marginLeft: "auto",
   color: amber[200],
@@ -53,19 +54,25 @@ const MenuItemStyle = styled(MenuItem)({
 
 export default function Header() {
   const { user, isAuthenticated, logout } = useAuth0();
-
+  const dispacth = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const infoUser = useSelector((state) => state.profileInfo);
   const navigate = useNavigate();
 
   function handleOnClick() {
-    navigate("/profile");
+    if (infoUser?.status === "admin")
+      window.location.href = `${SERVER_BACK}/admin`;
+    else navigate("/profile");
   }
 
+  React.useEffect(() => {
+    user?.email && dispacth(getProfileInfo(user.email));
+  },[]);
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -139,7 +146,6 @@ export default function Header() {
           </>
         )}
         {!isAuthenticated && <SignInBtn />}
-
         {!isAuthenticated && <SignUpBtn />}
       </ToolStyle>
     </AppStyle>

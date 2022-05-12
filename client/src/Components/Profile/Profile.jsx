@@ -84,7 +84,7 @@ export default function Profile() {
   const [fillForm, setFillForm] = useState(false);
   const [showSubs, setShowSubs] = useState(false);
   // validación de suscripción
-
+  const [valid,setValid] = useState(true);
   const profileInfo = useSelector((state) => state.profileInfo);
   const plans = useSelector((state) => state.plans);
   const allMovies = useSelector(state => state.pelisfiltradas);
@@ -106,7 +106,10 @@ export default function Profile() {
   useEffect(() => {
     if (user) {
       dispatch(getProfileInfo(user.email));
-      dispatch(validateSubscription(user.email));
+      if(valid){
+        setValid(false);
+        dispatch(validateSubscription(user.email));
+      }
       profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
     }
   }, [fillForm, dispatch]);
@@ -316,7 +319,8 @@ export default function Profile() {
           )}
           {profileInfo?.status === 'pending' && (
             <>
-              <h2>En los próximos minutos se definirá su situación.</h2>
+              <h2>Tu solicitud esta siendo evaluada</h2>
+              <h3>Pronto nos comunicaremos contigo</h3>
             </>
           )}
         </StyledContainer3>
