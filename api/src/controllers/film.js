@@ -16,7 +16,7 @@ exports.getFilms = async (req, res, next) => {
         },
       ],
     });
-    res.json(allFilms);
+    res.json(allFilms.filter((film) => film.status !== "pending"));
   } catch (err) {
     // res.send("No se pudo acceder a las películas");
     next(err);
@@ -85,7 +85,7 @@ exports.postFilms = async (req, res, next) => {
       associateProducer,
       rating: 5,
       CountryId,
-      status: "to be checked",
+      status: "pending",
       UserId: user.id,
     });
     if (genres) {
