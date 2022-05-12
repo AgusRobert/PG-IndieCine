@@ -319,7 +319,8 @@ export default function Profile() {
           )}
           {profileInfo?.status === 'pending' && (
             <>
-              <h2>En los próximos minutos se definirá su situación.</h2>
+              <h2>Tu solicitud esta siendo evaluada</h2>
+              <h3>Pronto nos comunicaremos contigo</h3>
             </>
           )}
         </StyledContainer3>
