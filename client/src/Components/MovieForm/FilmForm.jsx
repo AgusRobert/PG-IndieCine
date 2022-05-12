@@ -157,6 +157,7 @@ export function FilmForm() {
     Swal.fire(
       "Formulario enviado correctamente",
       "Gracias por publicar tu contenido en CINDIE",
+      "Su pelicula esta en proceso de evaluacion",
       "success"
     );
     //despacho de la accion para guardar una pelicula
