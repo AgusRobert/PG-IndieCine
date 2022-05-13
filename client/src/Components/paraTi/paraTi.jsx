@@ -6,6 +6,7 @@ import { getFavorites, getMovies, getProfileInfo } from "../../redux/actions";
 import { useState } from "react";
 import Cartas from "../Cartas/Cartas";
 import { Grid } from "@material-ui/core";
+import '../Home/style.css';
 
 export default function ParaTi({ userId }) {
   const { user } = useAuth0();
@@ -57,7 +58,9 @@ export default function ParaTi({ userId }) {
   console.log("GENEROOOOS", recomendadosClean);
 
   return (
-    <div>
+   <>
+    {favorites.length? (<div>
+      <h4 className="Title">Para ti</h4>
       {recomendadosClean?.map((data) => {
 
         let nombresGen = [];
@@ -84,6 +87,7 @@ export default function ParaTi({ userId }) {
           </Grid>
         );
       })}
-    </div>
+    </div>) : <div> "" </div> }
+    </>
   );
 }

@@ -28,6 +28,7 @@ import SwiperCore, {
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
+import { Typography } from "@mui/material";
 const ContainerS = styled(Container)({
   paddingBottom: 20,
 });
@@ -166,10 +167,11 @@ export default function Home() {
                     />
                   )}
                   {/* </Row> */}
-                </Grid>
+                </Grid> 
+                <ParaTi userId={profileInfo?.id} />
                 <Footer />
               </ContainerS>
-              <ParaTi userId={profileInfo?.id} />
+             
             </>
           ) : (
             <div>
