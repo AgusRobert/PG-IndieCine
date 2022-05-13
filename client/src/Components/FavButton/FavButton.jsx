@@ -12,6 +12,7 @@ import { Typography } from "@material-ui/core";
 import { useAuth0 } from "@auth0/auth0-react";
 import { deleteFavFilm } from "../../redux/actions";
 import { Button } from "@mui/material";
+import Swal from 'sweetalert2'
 const BoxFav =styled(Box)({
  position: "absolute",
   top: "50%",
@@ -48,7 +49,19 @@ export default function FavButton({ filmId }) {
     setOpen(true);
    setFaved(!faved);
    dispatch(addFavFilm(payload))
-
+   Swal.fire({
+    title: " &#129321; Añadido a favoritos, todos tus proyectos favoritos estan en tu perfil!",
+    width: 600,
+    timer: 3000,
+    timerProgressBar: true,
+    padding: '1em',
+    icon: "success",
+    color: '#716add',
+    background: 'black',
+    backdrop: `
+      rgba(0,0,123,0.2)0  `,
+    confirmButtonText: 'Entiendo',
+  });
   }
   return (
     <div>
@@ -63,7 +76,7 @@ export default function FavButton({ filmId }) {
         }}
         fontSize="large"
       /></IconButton>
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -77,7 +90,7 @@ export default function FavButton({ filmId }) {
             Encuentra todas tus peliculas favoritas en tu perfil!
           </Typography>
         </BoxFav>
-      </Modal>
+      </Modal> */}
     </Box></div>
   );
 }

@@ -182,15 +182,36 @@ export default function CreatorForm({ fillFormFn }) {
         })
       );
       fillFormFn(true);
-      Swal.fire(
-        "Solicitud enviada correctamente, en breve nos comunicaremos con usted."
-      );
+      
+      Swal.fire({
+        title: "Solicitud enviada correctamente, en breve nos comunicaremos con usted.",
+        width: 600,
+        timer: 3000,
+        timerProgressBar: true,
+        padding: '1em',
+        icon: "success",
+        color: '#716add',
+        background: 'black',
+        backdrop: `
+          rgba(0,0,123,0.2)0  `,
+        confirmButtonText: 'OK!',
+      });
       navigate("/profile");
     } else {
       Swal.fire({
-        icon: "error",
         title: "Porfavor revise los datos ingresados",
+        width: 600,
+        timer: 3000,
+        timerProgressBar: true,
+        padding: '1em',
+        icon: "error",
+        color: '#716add',
+        background: 'black',
+        backdrop: `
+          rgba(0,0,123,0.2)0  `,
+        confirmButtonText: 'OK!',
       });
+     
     }
   };
 

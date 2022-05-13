@@ -148,7 +148,19 @@ export default function Profile() {
     //   cameBackToBasic({email: user.email,creator: false})
     // );
     dispatch(updateUser({ email: user.email, creator: false, status: "registered" }));
-    alert('Se ha cancelado la suscripción');
+    Swal.fire({
+      title: "Dejaste de ser creador... &#128549;",
+      width: 600,
+      timer: 3000,
+      timerProgressBar: true,
+      padding: '1em',
+      icon: "info",
+      color: '#716add',
+      background: 'black',
+      backdrop: `
+        rgba(0,0,123,0.2)0  `,
+      confirmButtonText: 'Entiendo',
+    });
     fillForm(false);
   }
 
@@ -222,7 +234,7 @@ export default function Profile() {
                   underline="none"
                   onClick={handleCameBackToBasic}
                 >
-                  Volver a básico
+                  Dejar de ser creador
                 </StyledLink>
               </Container>
             )}
