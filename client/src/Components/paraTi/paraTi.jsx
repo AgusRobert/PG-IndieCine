@@ -6,7 +6,7 @@ import { getFavorites, getMovies, getProfileInfo } from "../../redux/actions";
 import { useState } from "react";
 
 
-export default function ParaTi({profileInfo}){
+export default function ParaTi({userId}){
     const {user} = useAuth0()
     const dispatch = useDispatch()
     const favorites = useSelector(state => state.favorites)
@@ -15,29 +15,27 @@ export default function ParaTi({profileInfo}){
 
     const [loaded, setLoaded] = useState(false)
     
-    console.log("USEEEER", user?.email)
+    console.log("USEEEER", userId)
+    // dispatch(getFavorites(userId))
     useEffect(() => {
-        dispatch(getFavorites(profileInfo?.id))
-    },[dispatch])
+        if(userId){
+            dispatch(getFavorites(userId))
+        }
+    },[])
     
-    // useEffect(() => {
-    //     console.log("entre al segundo use")
-    //     if(!profileInfo?.id){
-    //         if(user) {dispatch(getProfileInfo(user?.email))
-    //         setLoaded(true)}
-    //     }
-    // },[])
-
     console.log("favoriteees", favorites)
-    console.log("PROFILE INFOO", profileInfo)
 
-    let genres = favorites.map(p => p.genres)
-    let recomendados = allMovies.filter(peli => peli.genres?.includes(genres[genres.length-1]))
-    console.log("GENEROOOOS", genres)
-
+    let genres = favorites.map(p => p.Genres.map(g => g.name)).flat()
+    let genres2 = new Set(genres)
+    let genres3 = [...genres2]
+    let recomendados = []
+    
+    genres3.forEach(g => allMovies?.forEach(p => {if(p.Genres.includes(g))recomendados.push(g)}))
+    
+    console.log("GENEROOOOS", recomendados)
     return(
         <div>
-            {loaded? <h1>Cargo   {profileInfo.id}</h1>: <h1>Cargando</h1>}
+            {/* {loaded? <h1>Cargo   {profileInfo.id}</h1>: <h1>Cargando</h1>} */}
            
             PARA TIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
             {/* {recomendados.length?.map(r => <Card/>)} */}
