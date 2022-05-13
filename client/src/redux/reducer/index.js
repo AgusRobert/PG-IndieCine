@@ -70,7 +70,9 @@ function rootReducer(state = initialState, action) {
             .join(" ")
             .toLowerCase()
             .indexOf(action.payload.toLowerCase()) !== -1 ||
-          filtro(data.Genres, action.payload.toLowerCase())
+            filtro(data.Genres, action.payload.toLowerCase())||
+            data.Country.name.toLowerCase().indexOf(action.payload.toLowerCase()) !==
+              -1
         ) {
           return data;
         }

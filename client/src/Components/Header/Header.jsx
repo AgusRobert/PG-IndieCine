@@ -17,7 +17,7 @@ import OrderDate from "../OrderDate/OrderDate.jsx";
 import FilterMovieByCountry from "../FilterByCountry/FilterMoviesByCountry.jsx";
 import FilterMovieByDuration from "../FilterByDuration/FilterMoviesByDuration";
 import { useAuth0 } from "@auth0/auth0-react";
-import SearchBar from "../SearchBar/SearchBar.jsx";
+// import SearchBar from "../SearchBar/SearchBar.jsx";
 import logo from "./LOGO.png";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +26,7 @@ import { SERVER_BACK } from "../../paths/path.js";
 import { useTheme, useMediaQuery} from "@mui/material";
 import DrawerMobile from "./DrawerMobile.jsx";
 import DrawerM from "./Drawer.jsx";
+import AutoSearch from "../AutoSearch/AutoSearch.jsx";
 
 
 const ToolStyle = styled(Toolbar)({
@@ -162,7 +163,7 @@ export default function Header() {
         <FilterMoviesByGenre />
         <FilterMovieByCountry />
         <FilterMovieByDuration />
-        <SearchBar />
+        <AutoSearch />
         {isAuthenticated && (
           <>
             <IconButton
