@@ -59,14 +59,23 @@ export default function MovieDetail() {
             <img src={logo} alt="img not found" />
           </Link>
         </div>
-        {Swal.fire({
+        {
+        Swal.fire({
           title: 'Registrate para acceder a todo nuestro contenido',
           showCancelButton: true,
           cancelButtonAriaLabel: 'Volver al home',
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
+          confirmButtonColor: '#6200ea',
+          cancelButtonColor: '#ffc107',
           confirmButtonText: 'Registrarse',
           footer: '<span>Al cancelar volverá a home</span>',
+          width: 600,
+          padding: '1em',
+          icon: "info",
+          color: '#716add',
+          background: 'black',
+          backdrop: `
+            rgba(0,0,123,0.2)0  `,
+         
         }).then((result) => {
           if (result.isConfirmed) {
             handleSignUp()

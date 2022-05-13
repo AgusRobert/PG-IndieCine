@@ -106,9 +106,18 @@ export function FilmForm() {
       movieForm.mainActors.push(actor.trim());
     /* alert("Actor Invalido"); */ else
       Swal.fire({
-        icon: "error",
         title: "Actor Inválido",
-      });
+        width: 600,
+        timer: 3000,
+        timerProgressBar: true,
+        padding: '1em',
+        icon: 'error',
+        color: '#716add',
+        background: 'black',
+        backdrop: `
+          rgba(0,0,123,0.2)0  `,
+        confirmButtonText: 'Entiendo',
+      })
     setActor("");
   };
   //manejador de envio del formulario
@@ -153,12 +162,25 @@ export function FilmForm() {
       if (typeof rFilm === "string") objResponse.film = rFilm;
     }
     /* alert("Pelicula agregada correctamente."); */
-    Swal.fire(
-      "Formulario enviado correctamente",
-      "Gracias por publicar tu contenido en CINDIE",
-      "Su pelicula esta en proceso de evaluacion",
-      "success"
-    );
+    // Swal.fire(
+    //  "Formulario enviado correctamente" ,
+    //   "Gracias por publicar tu contenido en CINDIE",
+    //   "Su pelicula esta en proceso de evaluacion",
+    //   "success"
+    // );
+    Swal.fire({
+      title: "Formulario enviado correctamente. Gracias por publicar tu contenido en CINDIE. Su pelicula esta en proceso de evaluacion",
+      width: 600,
+      timer: 4000,
+      timerProgressBar: true,
+      padding: '1em',
+      icon: "success",
+      color: '#716add',
+      background: 'black',
+      backdrop: `
+        rgba(0,0,123,0.2)0  `,
+      confirmButtonText: 'Entiendo',
+    })
     //despacho de la accion para guardar una pelicula
     console.log("Datos actuales: ", movieForm);
     dispatch(postMovie({ ...movieForm, ...objResponse, email: user.email }));
