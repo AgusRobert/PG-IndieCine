@@ -46,6 +46,8 @@ export default function Home() {
     if (user) {
       dispatch(getProfileInfo(user?.email));
       setLoaded(true);
+    } else {
+      setLoaded(true);
     }
   }, [user]);
 
@@ -169,7 +171,7 @@ export default function Home() {
                 </Grid>
                 <Footer />
               </ContainerS>
-              <ParaTi userId={profileInfo?.id} />
+              {/* <ParaTi userId={profileInfo?.id} /> */}
             </>
           ) : (
             <div>

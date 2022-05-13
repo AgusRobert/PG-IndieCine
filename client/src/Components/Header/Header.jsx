@@ -130,7 +130,7 @@ export default function Header() {
                 }}
                 onClick={handleOnClick}
               >
-                Mi Perfil
+                {infoUser?.status === "admin" ? 'Panel' : 'Mi Perfil'}
               </MenuItemStyle>
               <MenuItemStyle
                 sx={{
