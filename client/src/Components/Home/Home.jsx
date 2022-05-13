@@ -167,7 +167,6 @@ export default function Home() {
                   )}
                   {/* </Row> */}
                 </Grid>
-                <h1>PROFILE INFOOOOOOOOOOO{profileInfo?.id}</h1>
                 <Footer />
               </ContainerS>
               <ParaTi userId={profileInfo?.id} />
