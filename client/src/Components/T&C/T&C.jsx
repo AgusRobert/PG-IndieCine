@@ -52,9 +52,9 @@ const BoxStyle = styled(Box)({
 });
 
 const Titulo = styled(Typography)({
-  color: "white",
-  fontSize: "45px"
-
+  color: "#e0e0e0",
+  fontSize: "45px",
+  fontFamily: "Koulen"
 });
 
 const ImgStyle = styled("img")({
@@ -88,21 +88,22 @@ export default function TyC() {
 
         <ImgStyle src={deco2} alt="deco" />
         <Box
-          height={100}
-          width={500}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          bgcolor="#f1c232"
-          color="white"
-          fontSize={24}
-          position={"relative"}
-          left={0}
-          top={30}
-          borderRadius={5}
-        >
-          <Titulo variant="bold">TÉRMINOS Y CONDICIONES</Titulo>
-        </Box>
+            height={100}
+            width={500}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            bgcolor="#5e35b1"
+            color="#e0e0e0"
+            fontSize={24}
+            position={"relative"}
+            left={0}
+            top={50}
+            borderRadius={5}
+           
+          >
+            <Titulo variant="bold">TERMINOS Y CONDICIONES</Titulo>
+          </Box>
         <ImgStyle src={deco} alt="deco" />
       </Box>
  <BoxStyle style={{padding:40}}>      

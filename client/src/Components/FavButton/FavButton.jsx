@@ -50,7 +50,7 @@ export default function FavButton({ filmId }) {
    setFaved(!faved);
    dispatch(addFavFilm(payload))
    Swal.fire({
-    title: "Añadido a favoritos, todos tus proyectos favoritos estan en tu perfil!",
+    title: " &#129321; Añadido a favoritos, todos tus proyectos favoritos estan en tu perfil!",
     width: 600,
     timer: 3000,
     timerProgressBar: true,

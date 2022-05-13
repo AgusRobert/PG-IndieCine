@@ -149,7 +149,7 @@ export default function Profile() {
     // );
     dispatch(updateUser({ email: user.email, creator: false, status: "registered" }));
     Swal.fire({
-      title: "Se ha cancelado la subscripción.",
+      title: "Dejaste de ser creador... &#128549;",
       width: 600,
       timer: 3000,
       timerProgressBar: true,
@@ -234,7 +234,7 @@ export default function Profile() {
                   underline="none"
                   onClick={handleCameBackToBasic}
                 >
-                  Volver a básico
+                  Dejar de ser creador
                 </StyledLink>
               </Container>
             )}

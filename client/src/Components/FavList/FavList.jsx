@@ -55,7 +55,7 @@ export default function FavList(userId) {
   function handleOnClick(payload) {
     dispatch(deleteFavFilm(payload))
     Swal.fire({
-      title: "Este proyecto ya no es de tus favoritos =(",
+      title: "Este proyecto ya no es de tus favoritos &#128552;",
       width: 600,
       timer: 3000,
       timerProgressBar: true,
