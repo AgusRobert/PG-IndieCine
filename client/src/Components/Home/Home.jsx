@@ -13,6 +13,7 @@ import {
 } from "../../redux/actions/index.js";
 import { Container, Row } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
+import ParaTi from "../paraTi/paraTi.jsx";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -38,13 +39,15 @@ export default function Home() {
   const dispatch = useDispatch();
   const allMovies = useSelector((state) => state.pelisfiltradas);
   const { profileInfo } = useSelector((state) => state);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     dispatch(getMovies());
-    if (user?.email !== undefined) {
+    if (user) {
       dispatch(getProfileInfo(user?.email));
+      setLoaded(true);
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -69,63 +72,73 @@ export default function Home() {
       //         image: user.picture,
       //     }))
       // }
-    } }, [user, isAuthenticated]);
-
-    if (allMovies[0] === "No films") {
-      return (
-        <>
-          <Header position="sticky" />
-          <div className="container">
-            <div>
-              <h1>No se ha podido encontrar la búsqueda.</h1>
-            </div>
-          </div>
-          <Footer />
-        </>
-      );
     }
+  }, [user, isAuthenticated]);
+
+  if (allMovies[0] === "No films") {
     return (
       <>
         <Header position="sticky" />
-        {allMovies.length && allMovies[0] !== "No films" ? (
+        <div className="container">
+          <div>
+            <h1>No se ha podido encontrar la búsqueda.</h1>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+  return (
+    <div>
+      {loaded ? (
         <>
-          <h2 className="Title">Estrenos</h2>
-          <Swiper
-            navigation={true}
-            effect={"coverflow"}
-            centeredSlides={true}
-            slidesPerView={window.innerWidth < 768 ? 1 : "auto"}
-            loop={true}
-            coverflowEffect={{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: true,
-            }}
-            className="mySwiper"
-          >
-            {allMovies?.map((m) => {
-              return (
-                <div>
-                  <SwiperSlide>
-                    <Link to={`/detail/${m.id}`}>
-                      <img src={m.poster} alt="img not found" />
-                    </Link>
-                  </SwiperSlide>
-                </div>
-              );
-            })}
-          </Swiper>
+          <Header position="sticky" />
+          {allMovies.length && allMovies[0] !== "No films" ? (
+            <>
+              <h2 className="Title">Estrenos</h2>
+              <Swiper
+                navigation={true}
+                effect={"coverflow"}
+                centeredSlides={true}
+                slidesPerView={window.innerWidth < 768 ? 1 : "auto"}
+                loop={true}
+                coverflowEffect={{
+                  rotate: 50,
+                  stretch: 0,
+                  depth: 100,
+                  modifier: 1,
+                  slideShadows: true,
+                }}
+                className="mySwiper"
+              >
+                {allMovies?.map((m) => {
+                  return (
+                    <div>
+                      <SwiperSlide>
+                        <Link to={`/detail/${m.id}`}>
+                          <img src={m.poster} alt="img not found" />
+                        </Link>
+                      </SwiperSlide>
+                    </div>
+                  );
+                })}
+              </Swiper>
 
-          <ContainerS>
-            <Grid container spacing={15}>
+              <ContainerS>
+                <Grid container spacing={15}>
+                  {/* <Row md={6} lg={6} className="newdiv" > */}
+                  {allMovies ? (
+                    allMovies?.map((data) => {
+                      // console.log("HOME", data)
 
-                {/* <Row md={6} lg={6} className="newdiv" > */}
-                {allMovies ? (
-                  allMovies?.map((data) => {
-                    // console.log("HOME", data)
+                      let nombresGen = [];
+                      let generos = data.Genres;
+                      generos.forEach((a) => {
+                        nombresGen.push(a.name);
+                      });
 
+<<<<<<< HEAD
+<<<<<<< HEAD
                     let nombresGen = [];
                     let generos = data.Genres;
                     generos.forEach((a) => {
@@ -165,13 +178,57 @@ export default function Home() {
             
             <Footer />
             </ContainerS>
+=======
+=======
+>>>>>>> 5b063eb9b2c8cf458bd0ea0fc7b15263e322bd74
+                      return (
+                        <Grid item m={3}>
+                          {/* <div className="cardgrid" key={data.id}> */}
+                          {/* <Link to={`/detail/${data.id}`}> */}
+                          <Cartas
+                            title={data.title}
+                            poster={data.poster}
+                            year={data.year}
+                            country={data.Country.name}
+                            genres={"Géneros: " + nombresGen.join(", ")}
+                            rating={data.rating}
+                            key={data.id}
+                            duration={data.duration}
+                            synopsis={data.synopsis}
+                            director={data.director}
+                            id={data.id}
+                          />
+                          {/* </Link> */}
+                          {/* </div> */}
+                        </Grid>
+                      );
+                    })
+                  ) : (
+                    <img
+                      src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
+                      alt="not found"
+                    />
+                  )}
+                  {/* </Row> */}
+                </Grid>
+                <Footer />
+              </ContainerS>
+              <ParaTi userId={profileInfo?.id} />
+            </>
+          ) : (
+            <div>
+              <h2>Cargando...</h2>
+              <Footer />
+            </div>
+          )}
+<<<<<<< HEAD
+>>>>>>> 98cd72d199a41b93715be08f2a0a542c2b5df792
+=======
+>>>>>>> 5b063eb9b2c8cf458bd0ea0fc7b15263e322bd74
         </>
       ) : (
-        <div>
-          <h2>Cargando...</h2>
-          <Footer />
-        </div>
+        <h1>Cargando</h1>
       )}
-       </>
-        );
-      }
+    </div>
+  );
+}

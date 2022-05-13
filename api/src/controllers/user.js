@@ -1,4 +1,4 @@
-const { User, Film } = require("../db");
+const { User, Film, Genre, Country } = require("../db");
 const { Op, where } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const userServices = require("../service/user");
@@ -187,7 +187,18 @@ exports.addFav = async (req, res) => {
 exports.getFavs = async (req, res) => {
   const { id } = req.params;
   const Usuario = await User.findByPk(id);
-  const favoritos = await Usuario.getFilms();
+  const favoritos = await Usuario.getFilms({  
+    include: [
+        {
+          model: Genre,
+          through: {
+            attributes: [],
+          },
+        },
+        {
+          model: Country,
+        },
+      ],});
   // console.log(favoritos)
   res.json(favoritos);
 };
