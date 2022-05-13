@@ -23,20 +23,9 @@ import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileInfo } from "../../redux/actions/index.js";
 import { SERVER_BACK } from "../../paths/path.js";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5b063eb9b2c8cf458bd0ea0fc7b15263e322bd74
 import { useTheme, useMediaQuery} from "@mui/material";
 import DrawerM from "./Drawer.jsx";
 import AutoSearch from "../AutoSearch/AutoSearch.jsx";
-
-<<<<<<< HEAD
-=======
-import AutoSearch from "../AutoSearch/AutoSearch.jsx";
->>>>>>> 98cd72d199a41b93715be08f2a0a542c2b5df792
-=======
->>>>>>> 5b063eb9b2c8cf458bd0ea0fc7b15263e322bd74
 
 const ToolStyle = styled(Toolbar)({
   marginLeft: 50,

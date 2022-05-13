@@ -28,6 +28,7 @@ import SwiperCore, {
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
+import { Typography } from "@mui/material";
 const ContainerS = styled(Container)({
   paddingBottom: 20,
 });
@@ -137,50 +138,6 @@ export default function Home() {
                         nombresGen.push(a.name);
                       });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    let nombresGen = [];
-                    let generos = data.Genres;
-                    generos.forEach((a) => {
-                      nombresGen.push(a.name);
-                    });
-
-                    return (
-                     <Grid item m={3}> 
-                     {/* <div className="cardgrid" key={data.id}> */}
-                        {/* <Link to={`/detail/${data.id}`}> */}
-                        <Cartas
-                          title={data.title}
-                          poster={data.poster}
-                          year={data.year}
-                          country={data.Country.name}
-                          genres={"Géneros: " + nombresGen.join(", ")}
-                          rating={data.rating}
-                          key={data.id}
-                          duration={data.duration}
-                          synopsis={data.synopsis}
-                          director={data.director}
-                          id={data.id}
-                        />
-                        {/* </Link> */}
-                      {/* </div> */}
-                      </Grid>
-                    );
-                  })
-                ) : (
-                  <img
-                    src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
-                    alt="not found"
-                  />
-                )}
-                {/* </Row> */}
-              </Grid>
-            
-            <Footer />
-            </ContainerS>
-=======
-=======
->>>>>>> 5b063eb9b2c8cf458bd0ea0fc7b15263e322bd74
                       return (
                         <Grid item m={3}>
                           {/* <div className="cardgrid" key={data.id}> */}
@@ -210,10 +167,11 @@ export default function Home() {
                     />
                   )}
                   {/* </Row> */}
-                </Grid>
+                </Grid> 
+                <ParaTi userId={profileInfo?.id} />
                 <Footer />
               </ContainerS>
-              <ParaTi userId={profileInfo?.id} />
+             
             </>
           ) : (
             <div>
@@ -221,10 +179,6 @@ export default function Home() {
               <Footer />
             </div>
           )}
-<<<<<<< HEAD
->>>>>>> 98cd72d199a41b93715be08f2a0a542c2b5df792
-=======
->>>>>>> 5b063eb9b2c8cf458bd0ea0fc7b15263e322bd74
         </>
       ) : (
         <h1>Cargando</h1>
