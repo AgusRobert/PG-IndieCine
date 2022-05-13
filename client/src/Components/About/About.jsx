@@ -116,7 +116,7 @@ const ImgStyle = styled("img")({
 });
 const ItemStyle = styled(Item)({
   backgroundColor: grey[800],
-  
+  fontWeight: 'bold'
 });
 
 const DivStyle = styled(Divider)({
@@ -205,7 +205,7 @@ export default function About() {
         <Box sx={{ paddingTop: 15, flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <ItemStyle>Key</ItemStyle>
+              <ItemStyle >Key</ItemStyle>
               <ItemStyle>keynarafaelp@gmail.com</ItemStyle>
             </Grid>
             <Grid item xs={4}>
