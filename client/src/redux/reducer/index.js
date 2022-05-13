@@ -11,14 +11,13 @@ import {
   GET_GENRES,
   GET_COUNTRIES,
   MOVIE_DETAIL,
-  // SIGN_UP_USER,
   GET_FAV,
-  // DELETE_USER_INFORMATION,
   // CAME_BACK_TO_BASIC,
   // GET_USER_INFO,
   GET_PLAN_INFO,
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
+  GET_PROFILE_INFO_BY_ID,
   VALIDATE_SUBSCRIPTION,
   DELETE_FAV,
   // comments
@@ -263,6 +262,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         profileInfo: action.payload,
       };
+
+    case GET_PROFILE_INFO_BY_ID:
+      return {
+        ...state,
+        profileInfo: action.payload,
+      }
 
     // case GET_USER_INFO:
     //   let response = action.payload.creator

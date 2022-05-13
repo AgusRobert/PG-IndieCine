@@ -27,6 +27,7 @@ import {
   UPDATE_COMMENT,
   GET_COMMENTS,
   DELETE_COMMENT,
+  GET_PROFILE_INFO_BY_ID,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -289,6 +290,20 @@ export function getProfileInfo(email) {
       console.log("getUserInfo", error);
     }
   };
+}
+
+export function getProfileInfoById(id) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(`${SERVER_BACK}/users/${id}`);
+      return dispatch({
+        type: GET_PROFILE_INFO_BY_ID,
+        payload: response.data,
+      })
+    } catch (error) {
+      console.log("getUserInfoById", error);
+    }
+  }
 }
 
 export function validateSubscription(email) {
