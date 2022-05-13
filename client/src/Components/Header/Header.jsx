@@ -23,7 +23,7 @@ import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileInfo } from "../../redux/actions/index.js";
 import { SERVER_BACK } from "../../paths/path.js";
-import { useTheme, useMediaQuery} from "@mui/material";
+import { useTheme, useMediaQuery } from "@mui/material";
 import DrawerM from "./Drawer.jsx";
 import AutoSearch from "../AutoSearch/AutoSearch.jsx";
 
@@ -73,7 +73,7 @@ export default function Header() {
 
   React.useEffect(() => {
     user?.email && dispacth(getProfileInfo(user.email));
-  },[]);
+  }, []);
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
@@ -93,131 +93,131 @@ export default function Header() {
           <img src={logo} alt="Cindie" />
         </Link>
         {isMobile ? (
-        <>
-         <DrawerM
-          infoUser={infoUser}
-          />
-        {isAuthenticated && (
           <>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AvatarStyle src={user.picture} alt={user.name} />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItemStyle
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200],
-                    color: "black",
-                  },
-                }}
-                onClick={handleOnClick}
-              >
-                Mi Perfil
-              </MenuItemStyle>
-              <MenuItemStyle
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200], // theme.palette.primary.main
-                    color: "black",
-                  },
-                }}
-                onClick={handleLogout}
-              >
-                Cerrar sesión
-              </MenuItemStyle>
-            </Menu>
+            <DrawerM
+              infoUser={infoUser}
+            />
+            {isAuthenticated && (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AvatarStyle src={user.picture} alt={user.name} />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItemStyle
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200],
+                        color: "black",
+                      },
+                    }}
+                    onClick={handleOnClick}
+                  >
+                    {infoUser?.status === "admin" ? 'Panel' : 'Mi Perfil'}
+                  </MenuItemStyle>
+                  <MenuItemStyle
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200], // theme.palette.primary.main
+                        color: "black",
+                      },
+                    }}
+                    onClick={handleLogout}
+                  >
+                    Cerrar sesión
+                  </MenuItemStyle>
+                </Menu>
+              </>
+            )}
+            {!isAuthenticated && <SignInBtn />}
+            {!isAuthenticated && <SignUpBtn />}
           </>
-        )}
-        {!isAuthenticated && <SignInBtn />}
-        {!isAuthenticated && <SignUpBtn />}
-        </>
 
-        ):(
+        ) : (
           <>
-          <OrderAZ />
-        <OrderDate />
-        <OrderRating />
-        <FilterMoviesByGenre />
-        <FilterMovieByCountry />
-        <FilterMovieByDuration />
-        <AutoSearch />
-        {isAuthenticated && (
-          <>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AvatarStyle src={user.picture} alt={user.name} />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItemStyle
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200],
-                    color: "black",
-                  },
-                }}
-                onClick={handleOnClick}
-              >
-                Mi Perfil
-              </MenuItemStyle>
-              <MenuItemStyle
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200], // theme.palette.primary.main
-                    color: "black",
-                  },
-                }}
-                onClick={handleLogout}
-              >
-                Cerrar sesión
-              </MenuItemStyle>
-            </Menu>
-          </>
-        )}
-        {!isAuthenticated && <SignInBtn />}
-        {!isAuthenticated && <SignUpBtn />}
-        </> )}
-       
+            <OrderAZ />
+            <OrderDate />
+            <OrderRating />
+            <FilterMoviesByGenre />
+            <FilterMovieByCountry />
+            <FilterMovieByDuration />
+            <AutoSearch />
+            {isAuthenticated && (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AvatarStyle src={user.picture} alt={user.name} />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItemStyle
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200],
+                        color: "black",
+                      },
+                    }}
+                    onClick={handleOnClick}
+                  >
+                    {infoUser?.status === "admin" ? 'Panel' : 'Mi Perfil'}
+                  </MenuItemStyle>
+                  <MenuItemStyle
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200], // theme.palette.primary.main
+                        color: "black",
+                      },
+                    }}
+                    onClick={handleLogout}
+                  >
+                    Cerrar sesión
+                  </MenuItemStyle>
+                </Menu>
+              </>
+            )}
+            {!isAuthenticated && <SignInBtn />}
+            {!isAuthenticated && <SignUpBtn />}
+          </>)}
+
       </ToolStyle>
     </AppStyle>
   );

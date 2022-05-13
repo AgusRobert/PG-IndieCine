@@ -47,6 +47,8 @@ export default function Home() {
     if (user) {
       dispatch(getProfileInfo(user?.email));
       setLoaded(true);
+    } else {
+      setLoaded(true)
     }
   }, [user]);
 

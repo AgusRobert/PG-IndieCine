@@ -168,6 +168,21 @@ export function FilmForm() {
     //   "Su pelicula esta en proceso de evaluacion",
     //   "success"
     // );
+    dispatch(postMovie({ ...movieForm, ...objResponse, email: user.email }));
+    setMovieForm({
+      title: "",
+      synopsis: "",
+      year: "",
+      duration: "",
+      mainActors: [],
+      url: "",
+      director: "",
+      associateProducer: "",
+      genres: [],
+      country: "",
+      film: "a",
+      port: "a",
+    })
     Swal.fire({
       title: "Formulario enviado correctamente. Gracias por publicar tu contenido en CINDIE. Su pelicula esta en proceso de evaluacion",
       width: 600,
@@ -180,10 +195,11 @@ export function FilmForm() {
       backdrop: `
         rgba(0,0,123,0.2)0  `,
       confirmButtonText: 'Entiendo',
+    }).then(() => {
+      window.location.replace("http://localhost:3000/")
     })
     //despacho de la accion para guardar una pelicula
     console.log("Datos actuales: ", movieForm);
-    dispatch(postMovie({ ...movieForm, ...objResponse, email: user.email }));
   };
   //array de años para las peliculas
   const años = [];
@@ -354,7 +370,7 @@ export function FilmForm() {
             name="associateProducer"
             placeholder="Productora"
             onChange={(e) => handleOnChange(e)}
-            // required
+          // required
           />
 
           {/* Película Campo para subir una pelicula*/}
