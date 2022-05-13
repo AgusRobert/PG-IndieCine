@@ -83,20 +83,20 @@ export default function Cartas({
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph style={{ color: "#bdbdbd" }}>
+            <Typography paragraph style={{ color: "#bdbdbd",fontWeight: 'bold' }}>
               Dirección: {director}{" "}
             </Typography>
-            <Typography paragraph style={{ color: "#bdbdbd" }}>
+            <Typography paragraph style={{ color: "#bdbdbd",fontWeight: 'bold' }}>
               {genres}{" "}
             </Typography>
-            <Typography paragraph style={{ color: "#bdbdbd" }}>
+            <Typography paragraph style={{ color: "#bdbdbd",fontWeight: 'bold' }}>
               {" "}
               País: {country}
             </Typography>
-            <Typography paragraph style={{ color: "#bdbdbd" }}>
+            <Typography paragraph style={{ color: "#bdbdbd",fontWeight: 'bold' }}>
               Duración: {duration}{" "}
             </Typography>
-            <Typography paragraph  style={{ color: "#757575" }}>Sinopsis: </Typography>
+            <Typography paragraph  style={{ color: "#bdbdbd" ,fontWeight: 'bold' }}>Sinopsis: </Typography>
             <Typography paragraph  style={{ color: "#bdbdbd" }}> {synopsis}</Typography>
           </CardContent>
         </Collapse>
