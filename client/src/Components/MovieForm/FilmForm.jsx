@@ -282,7 +282,7 @@ export function FilmForm() {
           >
             <MenuItemStyle hidden={true}>Países</MenuItemStyle>
             {countries?.map((country) => (
-              <MenuItemStyle key={country.id} value={country.id}>
+              <MenuItemStyle key={country.id} value={country.name}>
                 {country.name}
               </MenuItemStyle>
             ))}
@@ -333,7 +333,7 @@ export function FilmForm() {
           </SelectStyle>
 
           {/* Dirección */}
-          <LabelStyle>Dirección</LabelStyle>
+          <LabelStyle>Dirección *</LabelStyle>
           <InputStyle
             type="text"
             value={movieForm.director}
@@ -374,7 +374,7 @@ export function FilmForm() {
           />
 
           {/* Película Campo para subir una pelicula*/}
-          <LabelStyle>Película Archivo*</LabelStyle>
+          <LabelStyle>Película Archivo *</LabelStyle>
           <InputStyle
             type="file"
             accept="video/mp4"
@@ -392,6 +392,7 @@ export function FilmForm() {
             required
           />
           {errores?.url && <p class="errores">{errores.url}</p>}
+
           <ButtonStyle
             sx={sxButtonStyle}
             type="submit"
