@@ -24,7 +24,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfileInfo } from "../../redux/actions/index.js";
 import { SERVER_BACK } from "../../paths/path.js";
 import { useTheme, useMediaQuery} from "@mui/material";
-import DrawerMobile from "./DrawerMobile.jsx";
 import DrawerM from "./Drawer.jsx";
 
 
