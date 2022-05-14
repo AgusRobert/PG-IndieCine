@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../Header/LOGO.png";
@@ -21,7 +22,7 @@ const AppStyle = styled(AppBar)({
 });
 
 const BoxS = styled(Box)({
-  paddingTop: 50
+  paddingTop: 80
 });
 const ContainerR = styled(Container)({
   paddingTop: 300
