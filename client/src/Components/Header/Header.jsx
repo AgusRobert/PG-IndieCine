@@ -53,7 +53,7 @@ const MenuItemStyle = styled(MenuItem)({
   backgroundColor: grey[900],
 });
 
-export default function Header() {
+export default function Header(/* genres, allMovies, countries */) {
   const { user, isAuthenticated, logout } = useAuth0();
   const dispacth = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -93,7 +93,7 @@ export default function Header() {
         <FilterMoviesByGenre />
         <FilterMovieByCountry />
         <FilterMovieByDuration />
-        <AutoSearch />
+        <AutoSearch/>
         {isAuthenticated && (
           <>
             <IconButton

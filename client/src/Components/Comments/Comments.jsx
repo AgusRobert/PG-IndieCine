@@ -19,7 +19,7 @@ const Comments = ({ filmId, userId, username, image }) => {
     dispatch(getComments(filmId))
   }, [dispatch])
 
-  console.log("ALL COMMENTS", allComments)
+  /* console.log("ALL COMMENTS", allComments) */
 
 
   // autho -> email -> profileinfo -> userId

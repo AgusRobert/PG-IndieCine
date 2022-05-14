@@ -14,7 +14,7 @@ import {
   // SIGN_UP_USER,
   SUBSCRIBE,
   GET_FAV,
-  DELETE_USER_INFORMATION,
+  /* DELETE_USER_INFORMATION, */
   // HANDLE_CAME_BACK_TO_BASIC,
   // GET_USER_INFO,
   GET_PLAN_INFO,
@@ -27,6 +27,8 @@ import {
   UPDATE_COMMENT,
   GET_COMMENTS,
   DELETE_COMMENT,
+  GET_USERS,
+  CLEAN_STATE,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -43,6 +45,20 @@ export function getMovies() {
     }
   };
 }
+
+export function getUsers() {
+  return async function (dispatch) {
+    let json = await axios.get(`${SERVER_BACK}/users`);
+    try {
+      return dispatch({
+        type: GET_USERS,
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };}
+
 
 export function sortName(payload) {
   //ordenar por nombre asc o desc
@@ -179,6 +195,19 @@ export function renderMovieDetails(id) {
     }
   };
 }
+
+export function cleanState() {
+  //obtener generos
+  return async function (dispatch) {
+   
+    return dispatch({
+      type: CLEAN_STATE,
+      
+    });
+  };
+}
+
+
 
 export function signUpFunction(userData) {
   return async function (dispatch) {

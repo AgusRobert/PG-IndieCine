@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../Footer/Footer.jsx";
-import View from "../Reproductor/videoplayer.js";
-import { getProfileInfo, renderMovieDetails } from "../../redux/actions/index";
+import View2 from "../Reproductor/videoplayer2.js";
+import {
+  cleanState,
+  getProfileInfo,
+  renderMovieDetails,
+} from "../../redux/actions/index";
 import logo from "./LOGO.png";
 import "./style.css";
 import FavButton from "../FavButton/FavButton.jsx";
 import Comments from "../Comments/Comments";
 import { styled } from "@mui/system";
 import { useAuth0 } from "@auth0/auth0-react";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import CafecitoBtn from "../CafecitoBtn/CafecitoBtn.jsx";
 
 const ImgFav = styled("img")({
@@ -20,74 +24,73 @@ const ImgFav = styled("img")({
 
 export default function MovieDetail() {
   let dispatch = useDispatch();
-
   let { id } = useParams();
   let filmId = id;
-  const [loaded, setLoaded] = useState(false)
-
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0()
-  const peli = useSelector(state => state.detalle);
+  const [loaded, setLoaded] = useState(false);
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const peli = useSelector((state) => state.detalle);
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(renderMovieDetails(id));
       if (user) {
-        dispatch(getProfileInfo(user?.email))
-        setLoaded(true)
+        dispatch(getProfileInfo(user?.email));
+        setLoaded(true);
       }
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, id, isAuthenticated, peli]);
 
-  const profileInfo = useSelector(state => state.profileInfo)
-  const navigate = useNavigate()
+  useEffect(() => {
+    dispatch(renderMovieDetails(id));
+    return function cleanUp() {
+      dispatch(cleanState());
+    };
+  }, []);
+
+  const profileInfo = useSelector((state) => state.profileInfo);
   let elenco = peli ? peli.mainActors : [];
 
   let key = 0;
-
   const handleSignUp = () => {
     loginWithRedirect({
       screen_hint: "signup",
-    })
-  }
+    });
+  };
 
   if (!isAuthenticated) {
     return (
       <>
-
         <div className="logoIndex">
           <Link to={"/"}>
             <img src={logo} alt="img not found" />
           </Link>
         </div>
-        {
-        Swal.fire({
-          title: 'Registrate para acceder a todo nuestro contenido',
+        {Swal.fire({
+          title: "Registrate para acceder a todo nuestro contenido",
           showCancelButton: true,
-          cancelButtonAriaLabel: 'Volver al home',
-          confirmButtonColor: '#6200ea',
-          cancelButtonColor: '#ffc107',
-          confirmButtonText: 'Registrarse',
-          footer: '<span>Al cancelar volverá a home</span>',
+          cancelButtonAriaLabel: "Volver al home",
+          confirmButtonColor: "#6200ea",
+          cancelButtonColor: "#ffc107",
+          confirmButtonText: "Registrarse",
+          footer: "<span>Al cancelar volverá a home</span>",
           width: 600,
-          padding: '1em',
+          padding: "1em",
           icon: "info",
-          color: '#716add',
-          background: 'black',
+          color: "#716add",
+          background: "black",
           backdrop: `
             rgba(0,0,123,0.2)0  `,
-         
         }).then((result) => {
           if (result.isConfirmed) {
-            handleSignUp()
+            handleSignUp();
           } else {
-            window.location.replace("http://localhost:3000/")
+            window.location.replace("http://localhost:3000/");
           }
         })}
       </>
-    )
+    );
   }
 
-  if (peli) {
+  if (peli?.url) {
     return (
       <div>
         <div className="logoIndex">
@@ -101,7 +104,11 @@ export default function MovieDetail() {
               <div>
                 <div className="detalles">
                   <h2>{peli.title}</h2>
-                  <ImgFav src={peli.poster} alt="Poster" className="imgPoster" />
+                  <ImgFav
+                    src={peli.poster}
+                    alt="Poster"
+                    className="imgPoster"
+                  />
                 </div>
                 <div className="detalles2">
                   <h2>Rating: {peli.rating}</h2>
@@ -115,7 +122,7 @@ export default function MovieDetail() {
                   {elenco?.map((e, i) => {
                     return <p key={key++}>{e}</p>;
                   })}
-                  <h2>Genero: {peli.Genres?.map(a => a.name).join(", ")}</h2>
+                  <h2>Genero: {peli.Genres?.map((a) => a.name).join(", ")}</h2>
                   <h2>Pais de origen: {peli.Country?.name}</h2>
                   {peli.associateProducer && (
                     <>
@@ -126,14 +133,11 @@ export default function MovieDetail() {
                 </div>
               </div>
 
-              <div>
-                <View ubicacion={peli.url} />
-              </div>
+              <View2 ubicacion={peli.url} />
+
               <div>
                 {peli.cafecito && (
-                  <CafecitoBtn
-                    linkCafecito={profileInfo.cafecito}
-                  />
+                  <CafecitoBtn linkCafecito={profileInfo.cafecito} />
                 )}
               </div>
               <FavButton filmId={filmId} />

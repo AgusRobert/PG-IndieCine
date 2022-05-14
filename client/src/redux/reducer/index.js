@@ -26,6 +26,8 @@ import {
   UPDATE_COMMENT,
   GET_COMMENTS,
   DELETE_COMMENT,
+  GET_USERS,
+  CLEAN_STATE,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -42,12 +44,15 @@ const initialState = {
   paymentLink: "",
   profileInfo: {},
   comments: [],
+  users: [],
+  usersfiltrados:[]
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case SEARCH_PELIS:
       let pelisporfiltrar = state.peliculas;
+      let usersporfiltrar = state.users;
 
       const filtro = (array, genre) => {
         let contador = false;
@@ -59,6 +64,14 @@ function rootReducer(state = initialState, action) {
         }
         return contador;
       };
+
+      let userFiltro = usersporfiltrar.filter((data) => {
+        if (
+            data.username.toLowerCase().indexOf(action.payload.toLowerCase()) !==
+              -1
+        ) {
+          return data;
+        } }) 
 
       let peliFiltro = pelisporfiltrar.filter((data) => {
         if (
@@ -81,8 +94,19 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           pelisfiltradas: peliFiltro,
+        
         };
-      } else {
+      } 
+      
+      else if (userFiltro.length) {
+        return {
+          ...state,
+          usersfiltrados: userFiltro
+        };
+      }
+
+      
+      else {
         return {
           ...state,
           pelisfiltradas: ["No films"],
@@ -95,6 +119,14 @@ function rootReducer(state = initialState, action) {
         peliculas: action.payload,
         pelisfiltradas: action.payload,
       };
+
+      
+
+      case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+      }
 
     case ORDER_DATE:
       let orderMoviesDate = [...state.pelisfiltradas];
@@ -225,6 +257,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         detalle: action.payload /* Object.keys(action.payload) */,
       };
+
+      case CLEAN_STATE:
+        
+        return {
+          ...state,
+          detalle: {} /* Object.keys(action.payload) */,
+        }
 
     // case SIGN_UP_USER:
     //   return {

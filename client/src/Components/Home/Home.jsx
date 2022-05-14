@@ -7,11 +7,12 @@ import { Link } from "react-router-dom";
 import {
   getMovies,
   getProfileInfo,
-  getUserInfo,
+  /* getUserInfo, */
   signUpFunction,
-  updateUser,
+ /*  updateUser, */
+  getUsers,
 } from "../../redux/actions/index.js";
-import { Container, Row } from "react-bootstrap";
+import { Container, /* Row */ } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
 import ParaTi from "../paraTi/paraTi.jsx";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -28,6 +29,10 @@ import SwiperCore, {
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
+import AutoSearch from "../AutoSearch/AutoSearch.jsx";
+import userCards from "../userCards/userCards.jsx";
+
+
 const ContainerS = styled(Container)({
   paddingBottom: 20,
 });
@@ -38,16 +43,19 @@ export default function Home() {
   const { user, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const allMovies = useSelector((state) => state.pelisfiltradas);
+  const users = useSelector((state) => state.usersfiltrados);
+  console.log("LOSUSERS", users)
   const { profileInfo } = useSelector((state) => state);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     dispatch(getMovies());
+    !users?.length && dispatch(getUsers());
     if (user) {
       dispatch(getProfileInfo(user?.email));
       setLoaded(true);
     }
-  }, [user]);
+  }, [user, dispatch, users?.length]);
 
   useEffect(() => {
     if (user) {
@@ -123,14 +131,35 @@ export default function Home() {
                   );
                 })}
               </Swiper>
+             {/*  <AutoSearch/> */}
+
+              {users.lenght!==0 && users.map((user)=>{
+               /*  console.log("USERSDELMAP", users)
+                console.log("UNUSER", user) */
+
+                return (
+               
+                  <Grid item m={3}>
+                    
+                    <userCards
+                            name={user.name}
+                            picture={user.image}
+                            username={user.username}
+                            /* id={user.id} */
+                          />
+                    <h1>SI LEE:{user.name}</h1>
+                    </Grid>
+                    
+               )
+
+              })}
 
               <ContainerS>
                 <Grid container spacing={15}>
-                  {/* <Row md={6} lg={6} className="newdiv" > */}
+           
                   {allMovies ? (
                     allMovies?.map((data) => {
-                      // console.log("HOME", data)
-
+               
                       let nombresGen = [];
                       let generos = data.Genres;
                       generos.forEach((a) => {
@@ -169,6 +198,7 @@ export default function Home() {
                 </Grid>
                 <Footer />
               </ContainerS>
+              
               <ParaTi userId={profileInfo?.id} />
             </>
           ) : (
