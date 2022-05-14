@@ -100,7 +100,7 @@ export default function Profile() {
     dispatch(getMovies());
     if (user) {
       dispatch(getProfileInfo(user.email));
-      if (cont === 0) dispatch(validateSubscription(user.email));
+      if (cont === 0) dispatch(validateSubscription(user.email)); cont++;
       profileInfo?.status &&
         setFillForm(profileInfo.status === "registered" ? false : true);
     }
