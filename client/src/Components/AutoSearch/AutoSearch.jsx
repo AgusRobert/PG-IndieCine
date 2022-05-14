@@ -6,16 +6,44 @@ import {
   getMovies,
   getGenres,
   getCountries,
+  getUsers,
 } from "../../redux/actions/index";
 import { useEffect } from "react";
+import "./AutoSearch.css"
+import { Button, TextField } from "@mui/material";
+import { deepPurple } from "@mui/material/colors";
+import { styled, Box } from "@mui/system";
+import MenuItem from "@mui/material/MenuItem";
 
-export default function AutoSearch() {
+const MenuItemStyle = styled(MenuItem)({
+  marginLeft: "auto",
+  color: "black",
+  backgroundColor: "#b388ff",
+});
+
+const SelectStyle = styled(TextField)({
+  borderRadius: 2,
+  width: 160,
+  padding: 0,
+});
+
+const ButtonStyle = styled(Button)({
+  color: "black",
+  borderColor: deepPurple[500],
+  backgroundColor: deepPurple[700],
+  padding: 8,
+});
+
+export default function AutoSearch(/* genres, allMovies, countries */ ) {
+  let key = 1;
   const [value, setValue] = useState("");
   const [presidenteSeleccionado, setPresidenteSeleccionado] = useState({});
 
-  const genres = useSelector(state => state.genres);
-  const allMovies = useSelector(state => state.peliculas);
-  const countries = useSelector(state => state.countries);
+  const genres = useSelector((state) => state.genres);
+  const allMovies = useSelector((state) => state.peliculas);
+  const countries = useSelector((state) => state.countries);
+  const users = useSelector((state) => state.users);
+
 
   genres?.forEach(g => {
     return delete g.id;
@@ -28,7 +56,11 @@ export default function AutoSearch() {
     return { name: p.title };
   });
 
-  let dires = allMovies?.map(p => {
+  let usuarios = users?.map((u) => {
+    return { name: u.username};
+  });
+
+  let dires = allMovies?.map((p) => {
     return { name: p.director };
   });
 
@@ -44,7 +76,7 @@ export default function AutoSearch() {
     return { name: p };
   });
 
-  let data = genres?.concat(nombres, dires, elenco2, countries);
+  let data = genres?.concat(nombres, dires, elenco2, countries, usuarios);
 
   const [presidentes, setPresidentes] = useState(data);
   /* console.log("SIRVEE", data); */
@@ -57,6 +89,8 @@ export default function AutoSearch() {
     !genres?.length && dispatch(getGenres());
 
     !countries?.length && dispatch(getCountries());
+
+    !users?.length && dispatch(getUsers())
   }, [allMovies?.length, genres?.length, dispatch]);
 
   const onSuggestionsFetchRequested = ({ value }) => {
@@ -94,10 +128,35 @@ export default function AutoSearch() {
 
   const renderSuggestion = suggestion => (
     <div
-      className="sugerencia"
-      onClick={() => seleccionarPresidente(suggestion)}
+    /* className="sugerencia" */
+     onClick={() => seleccionarPresidente(suggestion)}
     >
-      {`${suggestion.name}`}
+     {/* {`${suggestion.name}`} */}
+
+<Box>
+  {/*     <SelectStyle
+        name="select"
+        onClick={() => seleccionarPresidente(suggestion)}
+    
+        label={`${suggestion.name}`}
+        variant="outlined"
+        size="small"
+        sx={{
+          ":active": {
+            color: "black",
+            borderColor: deepPurple[600],
+          },
+          ":focused": {
+            borderColor: deepPurple[600],
+          },
+        }}
+      > */}
+       
+       <MenuItemStyle key={key++} value={`${suggestion.name}`}>
+            {`${suggestion.name}`}
+          </MenuItemStyle>
+      {/* </SelectStyle> */}
+    </Box>
     </div>
   );
 
@@ -141,9 +200,20 @@ export default function AutoSearch() {
         onSuggestionSelected={eventEnter}
       />
       <br />
-      <button onClick={() => handleSearch(presidenteSeleccionado.name)}>
+      <ButtonStyle
+        sx={{
+          ":hover": {
+            bgcolor: "#ffc107",
+            color: "black",
+            borderBlockColor: deepPurple[200],
+            borderInlineStartColor: deepPurple[900],
+            borderInlineEndColor: deepPurple[900],
+          },
+        }}
+        onClick={() => handleSearch(presidenteSeleccionado.name)}
+      >
         Buscar
-      </button>
+      </ButtonStyle>
     </div>
   );
 }

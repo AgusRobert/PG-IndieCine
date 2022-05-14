@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import Footer from "../Footer/Footer.jsx";
-import View from "../Reproductor/videoplayer.js";
-import { getProfileInfo, renderMovieDetails } from "../../redux/actions/index";
+import View2 from "../Reproductor/videoplayer2.js";
+import {
+  cleanState,
+  getProfileInfo,
+  renderMovieDetails,
+} from "../../redux/actions/index";
 import logo from "./LOGO.png";
 import "./style.css";
 import FavButton from "../FavButton/FavButton.jsx";
@@ -14,7 +18,7 @@ import Swal from "sweetalert2";
 import CafecitoBtn from "../CafecitoBtn/CafecitoBtn.jsx";
 import { AppBar, Box, Paper, Typography } from "@mui/material";
 import { deepPurple, grey } from "@mui/material/colors";
-import View2 from "../Reproductor/ComponenteVideo/VideoPlayer2";
+
 
 const ImgFav = styled("img")({
   height: "700px",
@@ -128,15 +132,12 @@ const Titulo = styled(Typography)({
 });
 export default function MovieDetail() {
   let dispatch = useDispatch();
-
   let { id } = useParams();
   let filmId = id;
   const [loaded, setLoaded] = useState(false);
 
   const allMovies = useSelector(state => state.pelisfiltradas);
   const profileInfo = useSelector(state => state.profileInfo);
-
-  console.log("PELICULA", allMovies);
 
   const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
 
@@ -147,19 +148,24 @@ export default function MovieDetail() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(renderMovieDetails(id));
       if (user) {
         dispatch(getProfileInfo(user?.email));
         setLoaded(true);
       }
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, id, isAuthenticated, peli]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(renderMovieDetails(id));
+    return function cleanUp() {
+      dispatch(cleanState());
+    };
+  }, []);
+
+
   let elenco = peli ? peli.mainActors : [];
 
   let key = 0;
-
   const handleSignUp = () => {
     loginWithRedirect({
       screen_hint: "signup",
@@ -200,9 +206,11 @@ export default function MovieDetail() {
     );
   }
 
-  if (peli) {
+  if (peli?.url) {
     return (
       <>
+
+
         <AppStyle>
           <Link to={"/"}>
             <img src={logo} alt="img not found" />
@@ -210,7 +218,11 @@ export default function MovieDetail() {
         </AppStyle>
         <>
           {loaded ? (
+
+
+
             <Box>
+              
               {/* <div className="detalles"> */}
               <div className="detalle3"></div>
               <PaperTop>
@@ -241,6 +253,7 @@ export default function MovieDetail() {
                       >
                         <Titulo variant="bold">{peli.title}</Titulo>
                       </Box>
+                      
                     </PaperTitulo>
                     <PaperStyle6>
                       <PaperStyle4>
@@ -289,8 +302,11 @@ export default function MovieDetail() {
               </PaperTop>
               <PaperBot>
                 <PaperStyle2>
-                  <View ubicacion={peli.url} />
+                  <View2 ubicacion={peli.url} />
                 </PaperStyle2>
+
+                
+
                 <Comments
                   userId={profileInfo?.id}
                   filmId={Number(filmId)}
@@ -305,6 +321,11 @@ export default function MovieDetail() {
                   <CafecitoBtn linkCafecito={profileInfo.cafecito} />
                 )}
                 <FavButton filmId={filmId} />
+                
+                      <Link to={`/users/${peli.UserId}`}>
+                    <button>PERFIL</button>
+                  </Link>
+                
               </div>
               <Footer />
             </Box>
