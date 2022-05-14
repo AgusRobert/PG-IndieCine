@@ -6,7 +6,18 @@ import { getFavorites, getMovies, getProfileInfo } from "../../redux/actions";
 import { useState } from "react";
 import Cartas from "../Cartas/Cartas";
 import { Grid } from "@material-ui/core";
-import '../Home/style.css';
+import { flexbox, styled } from "@mui/system";
+import { Container} from "react-bootstrap";
+import Box from "@mui/material/Box";
+import "../Home/style.css";
+
+const ContainerS = styled(Container)({
+  paddingBottom: 20,
+});
+
+const BoxStyle = styled(Box)({
+  paddingRight: 125,
+});
 
 export default function ParaTi({ userId }) {
   const { user } = useAuth0();
@@ -58,36 +69,51 @@ export default function ParaTi({ userId }) {
   console.log("GENEROOOOS", recomendadosClean);
 
   return (
-   <>
-    {favorites.length? (<div>
-      <h4 className="Title">Para ti</h4>
-      {recomendadosClean?.map((data) => {
+    <>
+      {favorites.length ? (
+        <ContainerS>
+          <h4 className="Title">Para ti</h4>
+          <Grid container spacing={25}>
+            {recomendadosClean.length ? (
+              recomendadosClean?.map((data) => {
 
-        let nombresGen = [];
-        let generos = data.Genres;
-        generos.forEach((a) => {
-          nombresGen.push(a.name);
-        });
+                let nombresGen = [];
+                let generos = data.Genres;
+                generos.forEach((a) => {
+                  nombresGen.push(a.name);
+                });
 
-        return (
-          <Grid item m={3}>
-            <Cartas
-              title={data.title}
-              poster={data.poster}
-              year={data.year}
-              country={data.Country.name}
-              genres={"Géneros: " + nombresGen.join(", ")}
-              rating={data.rating}
-              key={data.id}
-              duration={data.duration}
-              synopsis={data.synopsis}
-              director={data.director}
-              id={data.id}
-            />
+                return ( 
+                  <BoxStyle>
+                  <Grid item m={3}>
+                    <Cartas
+                      title={data.title}
+                      poster={data.poster}
+                      year={data.year}
+                      country={data.Country.name}
+                      genres={"Géneros: " + nombresGen.join(", ")}
+                      rating={data.rating}
+                      key={data.id}
+                      duration={data.duration}
+                      synopsis={data.synopsis}
+                      director={data.director}
+                      id={data.id}
+                    />
+                  </Grid>
+                  </BoxStyle>
+                );
+              })
+            ) : (
+              <img
+                src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
+                alt="not found"
+              />
+            )}
           </Grid>
-        );
-      })}
-    </div>) : <div> "" </div> }
+        </ContainerS>
+      ) : (
+        <div></div>
+      )}
     </>
   );
 }
