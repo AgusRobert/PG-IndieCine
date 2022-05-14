@@ -75,7 +75,7 @@ export default function SignInBtn() {
             onClick={handleLogin}
             sx={{
               ":hover": {
-                bgcolor: deepPurple[200],
+                bgcolor: deepPurple[700],
                 color: "black",
                 borderBlockColor: deepPurple[200],
                 borderInlineStartColor: deepPurple[900],

@@ -42,14 +42,16 @@ export default function UserProfile() {
   let { id } = useParams();
   let filmId = id;
 
-  const allMovies = useSelector(state => state.pelisfiltradas);
-  const profileInfo = useSelector(state => state.profileInfo);
+  const allMovies = useSelector((state) => state.pelisfiltradas);
+  const profileInfo = useSelector((state) => state.profileInfo);
 
   /* console.log(profileInfo); */ //PROPIEDADES USUARIO DEL PERFIL
 
-  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
+  const pelisdeluser = allMovies.filter(
+    (peli) => peli.UserId === profileInfo.id
+  );
 
-  let idPeli = pelisdeluser.map(a => a.id);
+  let idPeli = pelisdeluser.map((a) => a.id);
 
   /* console.log(pelisdeluser); */ //PELICULAS DEL USUARIO DEL PERFIL
 
@@ -87,7 +89,7 @@ export default function UserProfile() {
 
         <div>
           {pelisdeluser ? (
-            pelisdeluser?.map(data => {
+            pelisdeluser?.map((data) => {
               console.log(data);
               return (
                 <div>

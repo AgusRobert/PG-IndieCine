@@ -29,6 +29,7 @@ export default function OrderRating (){
       <Box>
         <SelectStyle 
         select
+        value=""
         label="Valoracion"
         onChange={onSelectChange}
         variant= 'outlined'

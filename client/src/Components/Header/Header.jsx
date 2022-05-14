@@ -37,7 +37,7 @@ const ToolStyle = styled(Toolbar)({
 });
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: "#682F8A",
+  backgroundColor: "#b388ff",
   position: "fixed",
   justifyContent: "space-between",
   display: "flex",
@@ -58,7 +58,7 @@ const MenuItemStyle = styled(MenuItem)({
   backgroundColor: grey[900],
 });
 
-export default function Header() {
+export default function Header(/* genres, allMovies, countries */) {
   const { user, isAuthenticated, logout } = useAuth0();
   const dispacth = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);

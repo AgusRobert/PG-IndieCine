@@ -34,6 +34,10 @@ const Comments = ({ filmId, userId, username, image }) => {
   useEffect(() => {
     dispatch(getComments(filmId))
   }, [dispatch])
+
+  /* console.log("ALL COMMENTS", allComments) */
+
+
   // autho -> email -> profileinfo -> userId
   // moviedetail -> idPeli
 
