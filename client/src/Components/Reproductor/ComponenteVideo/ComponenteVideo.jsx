@@ -140,12 +140,12 @@ const Controls = forwardRef(
 
     return (
       <div ref={ref} className={classes.controlsWrapper}>
-        <Grid
+        {/* <Grid
           container
           direction="column"
           justify="space-between"
           style={{ flexGrow: 1 }}
-        >
+        > */}
           <Grid
             container
             direction="row"
@@ -330,7 +330,7 @@ const Controls = forwardRef(
               </IconButton>
             </Grid>
           </Grid>
-        </Grid>
+        {/* </Grid> */}
       </div>
     );
   }

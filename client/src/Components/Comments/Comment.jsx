@@ -2,8 +2,57 @@ import CommentForm from "./CommentForm";
 import { deleteComment, updateComment } from "../../redux/actions";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { Avatar, Box, Button, Divider, Paper, Typography } from "@mui/material";
+import { amber, deepPurple,grey  } from "@material-ui/core/colors";
+import { styled } from "@mui/system";
+import { maxWidth } from "@mui/system/sizing";
 
 
+const ButtonStyle = styled(Button)({
+  whiteSpace: "nowrap",
+  color: deepPurple[200],
+  borderBlockColor: deepPurple[200],
+  borderInlineStartColor: deepPurple[900],
+  borderInlineEndColor: deepPurple[900],
+  backgroundColor:deepPurple[400]
+});
+const AvatarStyle = styled(Avatar)({
+  color: amber[200],
+  backgroundColor: deepPurple[900],
+  height:45,
+  width:50,
+  borderRadius: 40,
+  border: `2px solid ${amber[600]}`,
+  borderRight: "4px solid transparent",
+});
+const BodyStyle = styled(Box)({
+  padding: "10px",
+  whiteSpace:"pre-line",
+  maxWidth:"500px"
+});
+const BoxStyle = styled(Box)({
+  padding: "20px",
+});
+const NameStyle = styled(Paper)({
+  paddingLeft:20,
+  paddingRight:20,
+  backgroundColor: amber[600],
+  borderRadius: 20,
+  display:"inline-block",
+
+});
+const Pgeneral = styled(Paper)({
+  paddingLeft:20,
+  paddingRight:20,
+  backgroundColor: deepPurple[200],
+  borderRadius: 20,
+  display:"inline-block",
+
+});
+const BoxGeneral = styled(Box)({
+  padding: "10px",
+  display:"flex",
+});
 const Comment = ({ comment, id, userId }) => {
 
   const dispatch = useDispatch()
@@ -38,53 +87,24 @@ const Comment = ({ comment, id, userId }) => {
   }
 
   return (
-    <div>
-      <img src={comment.image} alt={comment.username} />
-      <div>
-        <h4>{comment.username}</h4></div>
-      <div>{comment.body}</div>
+    <BoxGeneral>
+    <Pgeneral>
+   <BoxStyle><BoxGeneral>
+      <AvatarStyle src={comment.image} alt={comment.username} />
+     <BodyStyle>
+      <NameStyle>
+        <Typography variant="h7" color={'black'} fontFamily="">{comment.username}</Typography></NameStyle></BodyStyle></BoxGeneral>
+      <BodyStyle>{comment.body}</BodyStyle>
       {comment.UserId === userId &&
-        <button onClick={handleEdit}>{aux ? "Cerrar" : "Editar"}</button>
+        <ButtonStyle size="small" variant="outlined"onClick={handleEdit}>{aux ? "Cerrar" : "Editar"}</ButtonStyle>
       }
       {aux && <CommentForm info={infoUpdate} closeFn={closeForm} />}
       {comment.UserId === userId &&
-        <button onClick={handleDelete}>X</button>
+        <ButtonStyle size="small" variant="outlined" onClick={handleDelete}>X</ButtonStyle>
       }
-    </div>
-    // <div key={comment.id}>
-    //   <div>
-    //     <img src="/user-icon.png" /> {/* icono usuario */}
-    //   </div>
-    //   <div>
-    //     <div>
-    //       <div>{comment.username}</div>
-    //       <div>{createdAt}</div>
-    //     </div>
-    //     {!isEditing && <div>{comment.body}</div>}
-    //     {isEditing && (
-    //       <CommentForm
-    //       />
-    //     )}
-    //     <div>
-    //       {canEdit && (
-    //         <div
-    //           // onClick={() =>
-    //           //   updateComment(idPeli)
-    //           // }
-    //         >
-    //           Editar
-    //         </div>
-    //       )}
-    //       {/* {canDelete && (
-    //         <div
-    //           onClick={() => deleteComment(comment.id)}
-    //         >
-    //           Borrar
-    //         </div>
-    //       )} */}
-    //     </div>
-    //   </div>
-    // </div>
+    </BoxStyle>
+    <Divider color="#ffb300"/>
+   </Pgeneral></BoxGeneral> 
   );
 };
 

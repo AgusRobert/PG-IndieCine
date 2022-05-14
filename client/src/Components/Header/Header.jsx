@@ -36,7 +36,7 @@ const ToolStyle = styled(Toolbar)({
 });
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: "#b388ff",
+  backgroundColor: "#682F8A",
   position: "fixed",
   justifyContent: "space-between",
   display: "flex",
