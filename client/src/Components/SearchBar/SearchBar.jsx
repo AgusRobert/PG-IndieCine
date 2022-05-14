@@ -5,6 +5,7 @@ import { searchPelicula_Actor } from "../../redux/actions/index"
 import { AppBar, Button, InputBase, Toolbar } from "@mui/material";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { styled } from "@mui/system";
+import SearchIcon from '@mui/icons-material/Search';
 const SearchStyle = styled(InputBase)({
   backgroundColor: amber[50],
   borderRadius: 5,
@@ -66,7 +67,7 @@ export default function SearchBar() {
               borderInlineStartColor: deepPurple[900],
               borderInlineEndColor: deepPurple[900],
             },
-          }} type="submit" value="Search">Buscar</ButtonStyle>
+          }} type="submit" value="Search" startIcon={<SearchIcon/>}>Buscar</ButtonStyle>
       </Toolbar>
     </form>
 

@@ -45,14 +45,14 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
   const users = useSelector((state) => state.users);
 
 
-  genres?.forEach((g) => {
+  genres?.forEach(g => {
     return delete g.id;
   });
-  countries?.forEach((g) => {
+  countries?.forEach(g => {
     return delete g.id;
   });
 
-  let nombres = allMovies?.map((p) => {
+  let nombres = allMovies?.map(p => {
     return { name: p.title };
   });
 
@@ -66,20 +66,20 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
 
   let elenco = [];
 
-  let actores = allMovies?.map((p) => {
-    p.mainActors?.map((a) => {
+  let actores = allMovies?.map(p => {
+    p.mainActors?.map(a => {
       elenco.push(a);
     });
   });
 
-  let elenco2 = elenco?.map((p) => {
+  let elenco2 = elenco?.map(p => {
     return { name: p };
   });
 
   let data = genres?.concat(nombres, dires, elenco2, countries, usuarios);
 
   const [presidentes, setPresidentes] = useState(data);
- /*  console.log("SIRVEE", data); */
+  /* console.log("SIRVEE", data); */
 
   let dispatch = useDispatch();
 
@@ -97,11 +97,11 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
     setPresidentes(filtrarPresidentes(value));
   };
 
-  const filtrarPresidentes = (value) => {
+  const filtrarPresidentes = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    var filtrado = data.filter((presidente) => {
+    var filtrado = data.filter(presidente => {
       var textoCompleto = presidente.name;
 
       if (
@@ -122,11 +122,11 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
     setPresidentes([]);
   };
 
-  const getSuggestionValue = (suggestion) => {
+  const getSuggestionValue = suggestion => {
     return `${suggestion.name}`;
   };
 
-  const renderSuggestion = (suggestion) => (
+  const renderSuggestion = suggestion => (
     <div
     /* className="sugerencia" */
      onClick={() => seleccionarPresidente(suggestion)}
@@ -160,7 +160,7 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
     </div>
   );
 
-  const seleccionarPresidente = (presidente) => {
+  const seleccionarPresidente = presidente => {
     setPresidenteSeleccionado(presidente);
   };
 
@@ -174,7 +174,7 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
     onChange,
   };
 
-  const eventEnter = (e) => {
+  const eventEnter = e => {
     if (e.key == "Enter") {
       var split = e.target.value.split("-");
       var presidente = {
@@ -203,7 +203,7 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
       <ButtonStyle
         sx={{
           ":hover": {
-            bgcolor: deepPurple[200],
+            bgcolor: "#ffc107",
             color: "black",
             borderBlockColor: deepPurple[200],
             borderInlineStartColor: deepPurple[900],

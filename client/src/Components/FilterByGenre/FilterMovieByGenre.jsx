@@ -42,6 +42,7 @@ export default function FilterMoviesByGenre() {
       <SelectStyle
         name="select"
         onChange={(e) => handleChange(e)}
+        select
         value=""
         label="Generos"
         variant="outlined"

@@ -23,12 +23,17 @@ import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileInfo } from "../../redux/actions/index.js";
 import { SERVER_BACK } from "../../paths/path.js";
+import { useTheme, useMediaQuery } from "@mui/material";
+import DrawerM from "./Drawer.jsx";
 import AutoSearch from "../AutoSearch/AutoSearch.jsx";
+import BotonRecarga from "./BotonRecarga.jsx";
 
 const ToolStyle = styled(Toolbar)({
   marginLeft: 50,
   position: "sticky",
   justifyContent: "space-between",
+  display: "flex",
+  flexWrap: "wrap",
 });
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
@@ -57,9 +62,10 @@ export default function Header(/* genres, allMovies, countries */) {
   const { user, isAuthenticated, logout } = useAuth0();
   const dispacth = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const infoUser = useSelector((state) => state.profileInfo);
+  const infoUser = useSelector(state => state.profileInfo);
   const navigate = useNavigate();
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   function handleOnClick() {
     if (infoUser?.status === "admin")
       window.location.href = `${SERVER_BACK}/admin`;
@@ -68,12 +74,12 @@ export default function Header(/* genres, allMovies, countries */) {
 
   React.useEffect(() => {
     user?.email && dispacth(getProfileInfo(user.email));
-  },[]);
+  }, []);
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
 
-  const handleMenu = (event) => {
+  const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -87,67 +93,131 @@ export default function Header(/* genres, allMovies, countries */) {
         <Link to={"/"}>
           <img src={logo} alt="Cindie" />
         </Link>
-        <OrderAZ />
-        <OrderDate />
-        <OrderRating />
-        <FilterMoviesByGenre />
-        <FilterMovieByCountry />
-        <FilterMovieByDuration />
-        <AutoSearch/>
-        {isAuthenticated && (
+        {isMobile ? (
           <>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AvatarStyle src={user.picture} alt={user.name} />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItemStyle
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200],
-                    color: "black",
-                  },
-                }}
-                onClick={handleOnClick}
-              >
-                Mi Perfil
-              </MenuItemStyle>
-              <MenuItemStyle
-                sx={{
-                  ":hover": {
-                    bgcolor: deepPurple[200], // theme.palette.primary.main
-                    color: "black",
-                  },
-                }}
-                onClick={handleLogout}
-              >
-                Cerrar sesión
-              </MenuItemStyle>
-            </Menu>
+            <BotonRecarga />
+            <DrawerM infoUser={infoUser} />
+            {isAuthenticated && (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AvatarStyle src={user.picture} alt={user.name} />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItemStyle
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200],
+                        color: "black",
+                      },
+                    }}
+                    onClick={handleOnClick}
+                  >
+                    {infoUser?.status === "admin" ? "Panel" : "Mi Perfil"}
+                  </MenuItemStyle>
+                  <MenuItemStyle
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200], // theme.palette.primary.main
+                        color: "black",
+                      },
+                    }}
+                    onClick={handleLogout}
+                  >
+                    Cerrar sesión
+                  </MenuItemStyle>
+                </Menu>
+              </>
+            )}
+            {!isAuthenticated && <SignInBtn />}
+            {!isAuthenticated && <SignUpBtn />}
+          </>
+        ) : (
+          <>
+            <BotonRecarga />
+            <OrderAZ />
+            <OrderDate />
+            <OrderRating />
+            <FilterMoviesByGenre />
+            <FilterMovieByCountry />
+            <FilterMovieByDuration />
+            <AutoSearch />
+            {isAuthenticated && (
+              <>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AvatarStyle src={user.picture} alt={user.name} />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItemStyle
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200],
+                        color: "black",
+                      },
+                    }}
+                    onClick={handleOnClick}
+                  >
+                    {infoUser?.status === "admin" ? "Panel" : "Mi Perfil"}
+                  </MenuItemStyle>
+                  <MenuItemStyle
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200], // theme.palette.primary.main
+                        color: "black",
+                      },
+                    }}
+                    onClick={handleLogout}
+                  >
+                    Cerrar sesión
+                  </MenuItemStyle>
+                </Menu>
+              </>
+            )}
+            {!isAuthenticated && <SignInBtn />}
+            {!isAuthenticated && <SignUpBtn />}
           </>
         )}
-        {!isAuthenticated && <SignInBtn />}
-        {!isAuthenticated && <SignUpBtn />}
       </ToolStyle>
     </AppStyle>
   );

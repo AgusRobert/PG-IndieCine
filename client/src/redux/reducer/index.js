@@ -11,14 +11,13 @@ import {
   GET_GENRES,
   GET_COUNTRIES,
   MOVIE_DETAIL,
-  // SIGN_UP_USER,
   GET_FAV,
-  // DELETE_USER_INFORMATION,
   // CAME_BACK_TO_BASIC,
   // GET_USER_INFO,
   GET_PLAN_INFO,
   PAY_SUBSCRIPTION,
   GET_PROFILE_INFO,
+  GET_PROFILE_INFO_BY_ID,
   VALIDATE_SUBSCRIPTION,
   DELETE_FAV,
   // comments
@@ -45,7 +44,8 @@ const initialState = {
   profileInfo: {},
   comments: [],
   users: [],
-  usersfiltrados:[]
+  usersfiltrados:[],
+  perfilUsuario: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -83,9 +83,10 @@ function rootReducer(state = initialState, action) {
             .join(" ")
             .toLowerCase()
             .indexOf(action.payload.toLowerCase()) !== -1 ||
-            filtro(data.Genres, action.payload.toLowerCase())||
-            data.Country.name.toLowerCase().indexOf(action.payload.toLowerCase()) !==
-              -1
+          filtro(data.Genres, action.payload.toLowerCase()) ||
+          data.Country.name
+            .toLowerCase()
+            .indexOf(action.payload.toLowerCase()) !== -1
         ) {
           return data;
         }
@@ -245,14 +246,14 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_COUNTRIES:
-      console.log('payload de countries', action.payload)
+      console.log("payload de countries", action.payload);
       return {
         ...state,
         countries: action.payload,
       };
 
     case MOVIE_DETAIL:
-      console.log('movie detail reducer', action.payload)
+      /* console.log('movie detail reducer', action.payload) */
       return {
         ...state,
         detalle: action.payload /* Object.keys(action.payload) */,
@@ -303,6 +304,12 @@ function rootReducer(state = initialState, action) {
         profileInfo: action.payload,
       };
 
+    case GET_PROFILE_INFO_BY_ID:
+      return {
+        ...state,
+        profileInfo: action.payload,
+      };
+
     // case GET_USER_INFO:
     //   let response = action.payload.creator
     //   return {
@@ -330,7 +337,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case DELETE_FAV:
-      let deletedFavs = state.favorites.filter((p) => p.id !== action.payload);
+      let deletedFavs = state.favorites.filter(p => p.id !== action.payload);
       console.log("DELETED FAVS", deletedFavs);
       return {
         ...state,
@@ -348,16 +355,16 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         comments: action.payload,
-      }
+      };
 
     case ADD_COMMENT:
       return {
         ...state,
-        comments: [...state.comments, action.payload],
+        comments: [action.payload, ...state.comments],
       };
 
     case UPDATE_COMMENT:
-      let updatedComments = state.comments.map((comment) => {
+      let updatedComments = state.comments.map(comment => {
         if (comment.id === action.payload.id) {
           return action.payload;
         }
@@ -368,11 +375,13 @@ function rootReducer(state = initialState, action) {
         comments: updatedComments,
       };
     case DELETE_COMMENT:
-      let filteredComments = state.comments.filter( c => c.id !== action.payload)
-      return{
+      let filteredComments = state.comments.filter(
+        c => c.id !== action.payload
+      );
+      return {
         ...state,
-        comments: filteredComments
-      }
+        comments: filteredComments,
+      };
     default:
       return state;
   }

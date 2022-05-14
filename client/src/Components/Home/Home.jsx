@@ -31,11 +31,17 @@ import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import UserCards from "../userCards/userCards.jsx";
 
+import { Typography } from "@mui/material";
 const ContainerS = styled(Container)({
   paddingBottom: 20,
 });
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
+const ImgStyle = styled("img")({
+  maxHeight: 200,
+  width: "auto",
+  color: "white",
+});
 // import "swiper/swiper.min.css";
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
@@ -51,6 +57,8 @@ export default function Home() {
     !users?.length && dispatch(getUsers());
     if (user) {
       dispatch(getProfileInfo(user?.email));
+      setLoaded(true);
+    } else {
       setLoaded(true);
     }
   }, [user, dispatch, users?.length]);
@@ -118,12 +126,12 @@ export default function Home() {
                 }}
                 className="mySwiper"
               >
-                {allMovies?.map((m) => {
+                {allMovies?.map(m => {
                   return (
                     <div>
                       <SwiperSlide>
                         <Link to={`/detail/${m.id}`}>
-                          <img src={m.poster} alt="img not found" />
+                          <ImgStyle src={m.poster} alt="img not found" />
                         </Link>
                       </SwiperSlide>
                     </div>
@@ -155,7 +163,7 @@ export default function Home() {
                     allMovies?.map((data) => {
                       let nombresGen = [];
                       let generos = data.Genres;
-                      generos.forEach((a) => {
+                      generos.forEach(a => {
                         nombresGen.push(a.name);
                       });
 
@@ -189,10 +197,10 @@ export default function Home() {
                   )}
                   {/* </Row> */}
                 </Grid>
+                <ParaTi userId={profileInfo?.id} />
                 <Footer />
               </ContainerS>
 
-              <ParaTi userId={profileInfo?.id} />
             </>
           ) : (
             <div>

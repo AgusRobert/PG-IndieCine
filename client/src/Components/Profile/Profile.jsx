@@ -12,18 +12,18 @@ import {
   getUserInfo,
   updateUser,
   getMovies,
-  getPlanInfo
+  getPlanInfo,
 } from "../../redux/actions";
 import { /*Box,*/ Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
-import { Modal, Box } from '@material-ui/core';
+import { Modal, Box } from "@material-ui/core";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from "../Header/LOGO.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import FavList from "../FavList/FavList";
 import Subs from "../Subs/Subs";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -84,20 +84,22 @@ export default function Profile() {
   const [fillForm, setFillForm] = useState(false);
   const [showSubs, setShowSubs] = useState(false);
   // validación de suscripción
-  const [valid,setValid] = useState(true);
-  const profileInfo = useSelector((state) => state.profileInfo);
-  const plans = useSelector((state) => state.plans);
+  const [valid, setValid] = useState(true);
+  const profileInfo = useSelector(state => state.profileInfo);
+  const plans = useSelector(state => state.plans);
   const allMovies = useSelector(state => state.pelisfiltradas);
 
-  const plandeluser = plans.filter(p => p.name === profileInfo?.subcription)
+  const plandeluser = plans.filter(p => p.name === profileInfo?.subcription);
 
-  const limitedeluser = plandeluser.map(e => e.filmsAllowed)
+  const limitedeluser = plandeluser.map(e => e.filmsAllowed);
 
   useEffect(() => {
     dispatch(getMovies());
-  }, [dispatch])
+  }, [dispatch]);
 
-  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id)
+  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
+
+  console.log("PELIS USER", pelisdeluser);
 
   useEffect(() => {
     dispatch(getPlanInfo());
@@ -106,35 +108,36 @@ export default function Profile() {
   useEffect(() => {
     if (user) {
       dispatch(getProfileInfo(user.email));
-      if(valid){
+      if (valid) {
         setValid(false);
         dispatch(validateSubscription(user.email));
       }
-      profileInfo?.status && setFillForm(profileInfo.status === 'registered' ? false : true)
+      profileInfo?.status &&
+        setFillForm(profileInfo.status === "registered" ? false : true);
     }
   }, [fillForm, dispatch]);
 
   // Config del modal
   const [open, setOpen] = useState(false);
   const handleClose = () => {
-    setOpen(false)
+    setOpen(false);
     navigate("/");
   };
   const handleOnClick = () => {
-    setOpen(true)
+    setOpen(true);
     logout({ returnTo: window.location.origin });
     dispatch(deleteUserInformation(user.email));
-  }
+  };
 
-  const handleFillForm = (payload) => {
+  const handleFillForm = payload => {
     setFillForm(payload);
-  }
+  };
 
   const subsToUpdate = {
     email: user.email,
     subcription: profileInfo?.subcription,
-    PlanId: profileInfo?.subcription === "de Culto" ? 2 : 3
-  }
+    PlanId: profileInfo?.subcription === "de Culto" ? 2 : 3,
+  };
 
   // function handleOnDelete() {
   //   logout({ returnTo: window.location.origin });
@@ -147,26 +150,28 @@ export default function Profile() {
     // dispatch(
     //   cameBackToBasic({email: user.email,creator: false})
     // );
-    dispatch(updateUser({ email: user.email, creator: false, status: "registered" }));
+    dispatch(
+      updateUser({ email: user.email, creator: false, status: "registered" })
+    );
     Swal.fire({
       title: "Dejaste de ser creador... &#128549;",
       width: 600,
       timer: 3000,
       timerProgressBar: true,
-      padding: '1em',
+      padding: "1em",
       icon: "info",
-      color: '#716add',
-      background: 'black',
+      color: "#716add",
+      background: "black",
       backdrop: `
         rgba(0,0,123,0.2)0  `,
-      confirmButtonText: 'Entiendo',
+      confirmButtonText: "Entiendo",
     });
     fillForm(false);
-  }
+  };
 
   const handleUpgradeBtn = () => {
     setUpgradeBtn(true);
-  }
+  };
 
   return (
     <>
@@ -196,31 +201,32 @@ export default function Profile() {
             <h4>{profileInfo?.username}</h4>
             <h4>{user.email}</h4>
 
-            {profileInfo?.status === 'creator approved' && pelisdeluser.length < limitedeluser[0] &&
-              <Container>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={() => navigate("/addFilm")}
-                >
-                  Subir Proyecto
-                </StyledLink>
-              </Container>
+            {profileInfo?.status === "creator approved" &&
+              pelisdeluser.length < limitedeluser[0] && (
+                <Container>
+                  <StyledLink
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200],
+                        color: "black",
+                      },
+                    }}
+                    color="textPrimary"
+                    variant="button"
+                    underline="none"
+                    onClick={() => navigate("/addFilm")}
+                  >
+                    Subir Proyecto
+                  </StyledLink>
+                </Container>
+              )}
 
-            }
+            {profileInfo?.status === "creator approved" &&
+              pelisdeluser.length >= limitedeluser[0] && (
+                <h1>Para subir más proyectos, cambia tu plan.</h1>
+              )}
 
-            {profileInfo?.status === 'creator approved' && pelisdeluser.length >= limitedeluser[0] && (
-              <h1>Para subir más proyectos, cambia tu plan.</h1>
-            )}
-
-            {profileInfo?.status === 'creator approved' && (
+            {profileInfo?.status === "creator approved" && (
               <Container>
                 <StyledLink
                   sx={{
@@ -275,20 +281,20 @@ export default function Profile() {
         </StyledContainer2>
 
         <StyledContainer3>
-          {profileInfo?.status === 'creator approved' && (
+          {profileInfo?.status === "creator approved" && (
             <>
               <h2>Mis Proyectos</h2>
               <ul>
                 {pelisdeluser.map(peli => {
-
-                  return (<div>
-                    <li>
-                      <Ruta to={`/detail/${peli.id}`}>
-                        <button>{peli.title}</button>
-                      </Ruta>
-                    </li>
-                  </div>)
-
+                  return (
+                    <div>
+                      <li>
+                        <Ruta to={`/detail/${peli.id}`}>
+                          <button>{peli.title}</button>
+                        </Ruta>
+                      </li>
+                    </div>
+                  );
                 })}
               </ul>
             </>
@@ -298,7 +304,7 @@ export default function Profile() {
             <Subs currentSub={profileInfo?.subcription} />
           )}
 
-          {profileInfo?.status === 'registered' && fillForm === false && (
+          {profileInfo?.status === "registered" && fillForm === false && (
             <>
               <h2>¿Desea subir al siguiente nivel?</h2>
 
@@ -323,13 +329,13 @@ export default function Profile() {
                 >
                   Subir de nivel
                 </StyledLink>
-                {upgradeBtn && fillForm === false && <CreatorForm
-                  fillFormFn={handleFillForm}
-                />}
+                {upgradeBtn && fillForm === false && (
+                  <CreatorForm fillFormFn={handleFillForm} />
+                )}
               </Container>
             </>
           )}
-          {profileInfo?.status === 'pending' && (
+          {profileInfo?.status === "pending" && (
             <>
               <h2>Tu solicitud esta siendo evaluada</h2>
               <h3>Pronto nos comunicaremos contigo</h3>
