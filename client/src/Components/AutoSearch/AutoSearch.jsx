@@ -13,41 +13,41 @@ export default function AutoSearch() {
   const [value, setValue] = useState("");
   const [presidenteSeleccionado, setPresidenteSeleccionado] = useState({});
 
-  const genres = useSelector((state) => state.genres);
-  const allMovies = useSelector((state) => state.peliculas);
-  const countries = useSelector((state) => state.countries);
+  const genres = useSelector(state => state.genres);
+  const allMovies = useSelector(state => state.peliculas);
+  const countries = useSelector(state => state.countries);
 
-  genres?.forEach((g) => {
+  genres?.forEach(g => {
     return delete g.id;
   });
-  countries?.forEach((g) => {
+  countries?.forEach(g => {
     return delete g.id;
   });
 
-  let nombres = allMovies?.map((p) => {
+  let nombres = allMovies?.map(p => {
     return { name: p.title };
   });
 
-  let dires = allMovies?.map((p) => {
+  let dires = allMovies?.map(p => {
     return { name: p.director };
   });
 
   let elenco = [];
 
-  let actores = allMovies?.map((p) => {
-    p.mainActors?.map((a) => {
+  let actores = allMovies?.map(p => {
+    p.mainActors?.map(a => {
       elenco.push(a);
     });
   });
 
-  let elenco2 = elenco?.map((p) => {
+  let elenco2 = elenco?.map(p => {
     return { name: p };
   });
 
   let data = genres?.concat(nombres, dires, elenco2, countries);
 
   const [presidentes, setPresidentes] = useState(data);
-  console.log("SIRVEE", data);
+  /* console.log("SIRVEE", data); */
 
   let dispatch = useDispatch();
 
@@ -63,11 +63,11 @@ export default function AutoSearch() {
     setPresidentes(filtrarPresidentes(value));
   };
 
-  const filtrarPresidentes = (value) => {
+  const filtrarPresidentes = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    var filtrado = data.filter((presidente) => {
+    var filtrado = data.filter(presidente => {
       var textoCompleto = presidente.name;
 
       if (
@@ -88,11 +88,11 @@ export default function AutoSearch() {
     setPresidentes([]);
   };
 
-  const getSuggestionValue = (suggestion) => {
+  const getSuggestionValue = suggestion => {
     return `${suggestion.name}`;
   };
 
-  const renderSuggestion = (suggestion) => (
+  const renderSuggestion = suggestion => (
     <div
       className="sugerencia"
       onClick={() => seleccionarPresidente(suggestion)}
@@ -101,7 +101,7 @@ export default function AutoSearch() {
     </div>
   );
 
-  const seleccionarPresidente = (presidente) => {
+  const seleccionarPresidente = presidente => {
     setPresidenteSeleccionado(presidente);
   };
 
@@ -115,7 +115,7 @@ export default function AutoSearch() {
     onChange,
   };
 
-  const eventEnter = (e) => {
+  const eventEnter = e => {
     if (e.key == "Enter") {
       var split = e.target.value.split("-");
       var presidente = {

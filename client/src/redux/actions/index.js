@@ -78,9 +78,9 @@ export function getMoviesByGenre(payload) {
     try {
       let filtroGenre = [];
       let json3 = await axios.get(`${SERVER_BACK}/films`);
-      json3.data.map((peli) => {
+      json3.data.map(peli => {
         let genre = peli.Genres;
-        genre.forEach((obj) => {
+        genre.forEach(obj => {
           if (obj.name === payload) {
             filtroGenre.push(peli);
           }
@@ -122,7 +122,7 @@ export function getMoviesByCountry(payload) {
     try {
       let json3 = await axios.get(`${SERVER_BACK}/films`);
       let json4 = json3.data;
-      json4 = json4.filter((e) => e.Country.name === payload);
+      json4 = json4.filter(e => e.Country.name === payload);
       if (json4.length) {
         return dispatch({
           type: FILTER_MOVIES_BY_COUNTRY,
@@ -207,7 +207,7 @@ export function filterDuration(payload) {
     try {
       let json3 = await axios.get(`${SERVER_BACK}/films`);
       let json4 = json3.data;
-      json4 = json4.filter((e) => e.duration === payload);
+      json4 = json4.filter(e => e.duration === payload);
       if (json4.length) {
         return dispatch({
           type: FILTER_DURATION,
@@ -300,11 +300,11 @@ export function getProfileInfoById(id) {
       return dispatch({
         type: GET_PROFILE_INFO_BY_ID,
         payload: response.data,
-      })
+      });
     } catch (error) {
       console.log("getUserInfoById", error);
     }
-  }
+  };
 }
 
 export function validateSubscription(email) {

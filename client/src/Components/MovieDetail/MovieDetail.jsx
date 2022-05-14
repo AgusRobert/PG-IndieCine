@@ -10,7 +10,7 @@ import FavButton from "../FavButton/FavButton.jsx";
 import Comments from "../Comments/Comments";
 import { styled } from "@mui/system";
 import { useAuth0 } from "@auth0/auth0-react";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import CafecitoBtn from "../CafecitoBtn/CafecitoBtn.jsx";
 
 const ImgFav = styled("img")({
@@ -23,23 +23,31 @@ export default function MovieDetail() {
 
   let { id } = useParams();
   let filmId = id;
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
 
-  const { user, isAuthenticated, loginWithRedirect } = useAuth0()
+  const allMovies = useSelector(state => state.pelisfiltradas);
+  const profileInfo = useSelector(state => state.profileInfo);
+
+  console.log("PELICULA", allMovies);
+
+  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
+
+  /* console.log("USER", pelisdeluser); */
+
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const peli = useSelector(state => state.detalle);
 
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(renderMovieDetails(id));
       if (user) {
-        dispatch(getProfileInfo(user?.email))
-        setLoaded(true)
+        dispatch(getProfileInfo(user?.email));
+        setLoaded(true);
       }
     }
   }, [dispatch, user]);
 
-  const profileInfo = useSelector(state => state.profileInfo)
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   let elenco = peli ? peli.mainActors : [];
 
   let key = 0;
@@ -47,44 +55,41 @@ export default function MovieDetail() {
   const handleSignUp = () => {
     loginWithRedirect({
       screen_hint: "signup",
-    })
-  }
+    });
+  };
 
   if (!isAuthenticated) {
     return (
       <>
-
         <div className="logoIndex">
           <Link to={"/"}>
             <img src={logo} alt="img not found" />
           </Link>
         </div>
-        {
-        Swal.fire({
-          title: 'Registrate para acceder a todo nuestro contenido',
+        {Swal.fire({
+          title: "Registrate para acceder a todo nuestro contenido",
           showCancelButton: true,
-          cancelButtonAriaLabel: 'Volver al home',
-          confirmButtonColor: '#6200ea',
-          cancelButtonColor: '#ffc107',
-          confirmButtonText: 'Registrarse',
-          footer: '<span>Al cancelar volverá a home</span>',
+          cancelButtonAriaLabel: "Volver al home",
+          confirmButtonColor: "#6200ea",
+          cancelButtonColor: "#ffc107",
+          confirmButtonText: "Registrarse",
+          footer: "<span>Al cancelar volverá a home</span>",
           width: 600,
-          padding: '1em',
+          padding: "1em",
           icon: "info",
-          color: '#716add',
-          background: 'black',
+          color: "#716add",
+          background: "black",
           backdrop: `
             rgba(0,0,123,0.2)0  `,
-         
-        }).then((result) => {
+        }).then(result => {
           if (result.isConfirmed) {
-            handleSignUp()
+            handleSignUp();
           } else {
-            window.location.replace("http://localhost:3000/")
+            window.location.replace("http://localhost:3000/");
           }
         })}
       </>
-    )
+    );
   }
 
   if (peli) {
@@ -101,7 +106,16 @@ export default function MovieDetail() {
               <div>
                 <div className="detalles">
                   <h2>{peli.title}</h2>
-                  <ImgFav src={peli.poster} alt="Poster" className="imgPoster" />
+                  <ImgFav
+                    src={peli.poster}
+                    alt="Poster"
+                    className="imgPoster"
+                  />
+                </div>
+                <div>
+                  <Link to={`/users/${peli.UserId}`}>
+                    <button>PERFIL</button>
+                  </Link>
                 </div>
                 <div className="detalles2">
                   <h2>Rating: {peli.rating}</h2>
@@ -131,9 +145,7 @@ export default function MovieDetail() {
               </div>
               <div>
                 {peli.cafecito && (
-                  <CafecitoBtn
-                    linkCafecito={profileInfo.cafecito}
-                  />
+                  <CafecitoBtn linkCafecito={profileInfo.cafecito} />
                 )}
               </div>
               <FavButton filmId={filmId} />

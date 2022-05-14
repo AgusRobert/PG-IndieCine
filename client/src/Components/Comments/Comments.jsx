@@ -1,4 +1,4 @@
-// div que contiene al commentform y componentes comment 
+// div que contiene al commentform y componentes comment
 import { useState, useEffect } from "react";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
@@ -12,15 +12,14 @@ const Comments = ({ filmId, userId, username, image }) => {
   //   });
   // }, []);
 
-  const dispatch = useDispatch()
-  const allComments = useSelector(state => state.comments)
+  const dispatch = useDispatch();
+  const allComments = useSelector(state => state.comments);
 
   useEffect(() => {
-    dispatch(getComments(filmId))
-  }, [dispatch])
+    dispatch(getComments(filmId));
+  }, [dispatch]);
 
-  console.log("ALL COMMENTS", allComments)
-
+  /* console.log("ALL COMMENTS", allComments) */
 
   // autho -> email -> profileinfo -> userId
   // moviedetail -> idPeli
@@ -41,12 +40,22 @@ const Comments = ({ filmId, userId, username, image }) => {
     formType: "postear",
     username,
     image,
-  }
+  };
   return (
     <div>
       <h3>Comentarios</h3>
       <CommentForm info={infoPost} />
-      {allComments ? allComments?.map(p => <Comment comment={p} id={p.id} userId={userId}/*usernameComment={username} imageComment={image}*/ />) : "0"}
+      {allComments
+        ? allComments?.map(p => (
+            <Comment
+              comment={p}
+              id={p.id}
+              userId={
+                userId
+              } /*usernameComment={username} imageComment={image}*/
+            />
+          ))
+        : "0"}
     </div>
 
     /* <CommentForm filmId= {filmId} userId={userId} /> 
@@ -57,7 +66,6 @@ const Comments = ({ filmId, userId, username, image }) => {
       {/* {rootComments.map((rootComment) => (
       ))}
     </div> */
-
   );
 };
 
