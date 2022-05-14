@@ -7,11 +7,11 @@ import { deepPurple, grey, amber } from "@mui/material/colors";
 
 const ButtonStyle = styled(Button)({
   whiteSpace: "nowrap",
-  color: amber[400],
+  color: "#1F271B",
   borderBlockColor: amber[900],
   borderInlineStartColor: amber[200],
   borderInlineEndColor: amber[200],
-  backgroundColor:amber[800]
+  backgroundColor: "#ffc107",
 });
 export default function SignInBtn() {
   // const dispatch = useDispatch();
