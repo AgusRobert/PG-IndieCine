@@ -28,6 +28,7 @@ import {
   GET_COMMENTS,
   DELETE_COMMENT,
   GET_PROFILE_INFO_BY_ID,
+  CANCEL_SUBSCRIPTION,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -369,6 +370,22 @@ export function paySubscription(payload) {
     }
   };
 }
+
+export function cancelSubscription(email){
+  return async function (dispatch) {
+  try {
+    //busco el id de la suscripción a cancelar.
+    const id = await axios.get(`${SERVER_BACK}/payment/${email}`);
+    //cancelo la suscripción.
+    const cancelInfo = await axios.put(`${SERVER_BACK}/payment/cancel/${id.data}`);
+    return dispatch({
+      type: CANCEL_SUBSCRIPTION,
+      payload: cancelInfo.data,
+    })
+  } catch (error) {
+    console.log("cancelSubscription action", error);
+  }
+}}
 
 export function getPlanInfo() {
   return async function (dispatch) {

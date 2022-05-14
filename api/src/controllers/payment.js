@@ -16,6 +16,7 @@ exports.validate = async (req, res) => {
     // console.log("validationData", validationData);
 
     let testResult = validationData.results?.pop();
+    console.log("testResult", testResult);
 
     if (testResult?.status === "authorized") {
       let user = await User.findOne({
@@ -38,6 +39,24 @@ exports.validate = async (req, res) => {
     }
     return res.json(validationData);
   } catch (error) {
-    res.json('validate controller catch', error);
+    res.json("validate controller catch", error);
   }
 };
+
+exports.cancelSubcription = async (req, res) => {
+  try {
+    const { id } = req.params;
+    return res.json(await paymentService.cancelSuscribe(id));
+  } catch (error) {
+    console.log("cancelSubcription controller catch", error);
+  }
+};
+
+exports.getIdSubscription = async (req, res) => {
+  try {
+    const { email } = req.params;
+    return res.json(await paymentService.getIdSubscribe(email));
+  } catch (error) {
+    console.log("getIdSubscription controller catch", error);
+  }
+}
