@@ -83,35 +83,24 @@ export default function Profile() {
   const [upgradeBtn, setUpgradeBtn] = useState(false);
   const [fillForm, setFillForm] = useState(false);
   const [showSubs, setShowSubs] = useState(false);
-  // validación de suscripción
-  const [valid, setValid] = useState(true);
-  const profileInfo = useSelector(state => state.profileInfo);
-  const plans = useSelector(state => state.plans);
-  const allMovies = useSelector(state => state.pelisfiltradas);
 
-  const plandeluser = plans.filter(p => p.name === profileInfo?.subcription);
+  const profileInfo = useSelector((state) => state.profileInfo);
+  const plans = useSelector((state) => state.plans);
+  const allMovies = useSelector((state) => state.pelisfiltradas);
 
-  const limitedeluser = plandeluser.map(e => e.filmsAllowed);
-
-  useEffect(() => {
-    dispatch(getMovies());
-  }, [dispatch]);
-
-  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
-
-  console.log("PELIS USER", pelisdeluser);
-
+  const plandeluser = plans.filter((p) => p.name === profileInfo?.subcription);
+  const limitedeluser = plandeluser.map((e) => e.filmsAllowed);
+  const pelisdeluser = allMovies.filter(
+    (peli) => peli.UserId === profileInfo.id
+  );
+  
+  var cont = 0;
   useEffect(() => {
     dispatch(getPlanInfo());
-  }, []);
-
-  useEffect(() => {
+    dispatch(getMovies());
     if (user) {
       dispatch(getProfileInfo(user.email));
-      if (valid) {
-        setValid(false);
-        dispatch(validateSubscription(user.email));
-      }
+      if (cont === 0) dispatch(validateSubscription(user.email));
       profileInfo?.status &&
         setFillForm(profileInfo.status === "registered" ? false : true);
     }
@@ -129,7 +118,7 @@ export default function Profile() {
     dispatch(deleteUserInformation(user.email));
   };
 
-  const handleFillForm = payload => {
+  const handleFillForm = (payload) => {
     setFillForm(payload);
   };
 
@@ -285,7 +274,7 @@ export default function Profile() {
             <>
               <h2>Mis Proyectos</h2>
               <ul>
-                {pelisdeluser.map(peli => {
+                {pelisdeluser.map((peli) => {
                   return (
                     <div>
                       <li>

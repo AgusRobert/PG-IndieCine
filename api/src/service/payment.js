@@ -1,5 +1,11 @@
 const { ACCESS_TOKEN } = process.env;
 const axios = require("axios");
+const header = {
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${ACCESS_TOKEN}`,
+  },
+};
 
 exports.toPay = async (props) => {
   const { name, price, description, picture_url, id, email } = props;
@@ -22,14 +28,7 @@ exports.toPay = async (props) => {
       success: "/success",
     },
   };
-  return (
-    await axios.post(url, body, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    })
-  )?.data;
+  return (await axios.post(url, body, header))?.data;
 };
 
 exports.subscribe = async (props) => {
@@ -47,26 +46,14 @@ exports.subscribe = async (props) => {
     payer_email: payer_email,
     notification_url: "https://8d19-179-6-206-23.ngrok.io/payment/notification",
   };
-  return (
-    await axios.post(url, body, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    })
-  )?.data;
+  return (await axios.post(url, body, header))?.data;
 };
 
 exports.validation = async (props) => {
   // console.log("EMAIL DE VALIDATE", props)
   try {
     const url = `https://api.mercadopago.com/preapproval/search?payer_email=${props}`;
-    const response = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    });
+    const response = await axios.get(url, header);
     return response.data;
   } catch (error) {
     console.log("validation service catch", error);
@@ -79,13 +66,7 @@ exports.cancelSuscribe = async (id) => {
     const body = {
       status: "cancelled",
     };
-    const response = await axios.put(url, body, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    });
-    return response.data;
+    return (await axios.put(url, body, header))?.data;
   } catch (error) {
     console.log("cancelSuscribe service catch", error);
   }
@@ -93,26 +74,33 @@ exports.cancelSuscribe = async (id) => {
 
 exports.getIdSubscribe = async (email) => {
   try {
-    const url = `https://api.mercadopago.com/preapproval/search?payer_email=${email}`;
-    const response = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    });
-    const subscriptions =  response.data.results;
-    let aux = -1;
-    subscriptions?.forEach((subscription) => {
-      if (subscription.status === "authorized") {
-        //quedaria guardado en aux, la ultima subscripcion que esta autorizada
-        //porque primero tenemos que pagar las dos y luego cancelar la primera.
-        //y acá queda la segunda.
-        aux = subscription.id;
-      }
-    })
-    return aux;
-  
-  } catch (error) {
-    console.log("getIdSubscription service catch", error);
+    const url = `https://api.mercadopago.com/preapproval/search?payer_email=${email}&sort=last_modified:desc&status=authorized&limit=1`;
+    return (await axios.get(url, header))?.data?.results[0]?.id;
+  } catch {
+    console.log("Service getIdSubscribe", error);
   }
+  //Valen
+  // try {
+  //   const url = `https://api.mercadopago.com/preapproval/search?payer_email=${email}`;
+  //   const response = await axios.get(url, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${ACCESS_TOKEN}`,
+  //     },
+  //   });
+  //   const subscriptions =  response.data.results;
+  //   let aux = -1;
+  //   subscriptions?.forEach((subscription) => {
+  //     if (subscription.status === "authorized") {
+  //       //quedaria guardado en aux, la ultima subscripcion que esta autorizada
+  //       //porque primero tenemos que pagar las dos y luego cancelar la primera.
+  //       //y acá queda la segunda.
+  //       aux = subscription.id;
+  //     }
+  //   })
+  //   return aux;
+
+  // } catch (error) {
+  //   console.log("getIdSubscription service catch", error);
+  // }
 };
