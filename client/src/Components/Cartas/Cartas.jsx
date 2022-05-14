@@ -41,7 +41,7 @@ export default function Cartas({
 
   return (
     <>
-      <Card sx={{  padding:0,maxWidth: 300, backgroundColor: "#212121" }}>
+      <Card sx={{  padding:0,maxWidth: 300, backgroundColor: "#1F271B" }}>
       <Link variant="button" underline="none" to={`/detail/${id}`}>
         <CardMedia
           component="img"
@@ -53,7 +53,7 @@ export default function Cartas({
         <CardContent>
           {/* Estrellitas favoritos */}
           <Link variant="button"  text-decoration="none" underline="none" to={`/detail/${id}`}>
-            <Typography variant="h6" style={{ color: "#f1c232" }}>
+            <Typography variant="h6" style={{ color: "#FFBE0B" }}>
               {title}
             </Typography>{" "}
           </Link>

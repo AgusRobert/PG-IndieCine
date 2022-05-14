@@ -6,7 +6,7 @@ import {  styled } from "@mui/system";
 import {  deepPurple } from "@mui/material/colors";
 
 const StyledLink = styled(Link)({
-    marginRight: 150,
+  marginRight: 150,
   justifyContent:'space-between',
   color:deepPurple[50],
   
@@ -15,7 +15,7 @@ const StyledLink = styled(Link)({
 });
 const BoxStyle = styled(Box)({
     opacity:0.85 ,
-    backgroundColor: "#311b92",
+    backgroundColor: "#1F271B",
 })
 const ConStyle = styled(Container)({
   alignItems:"center",
@@ -35,7 +35,7 @@ export default function Footer() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        minHeight: "50vh",
+        minHeight: "18vh",
         alignContent: "space-between",
       }}
     >
@@ -53,7 +53,7 @@ export default function Footer() {
               <StyledLink
               sx={{
                 ":hover": {
-                  bgcolor: deepPurple[200],
+                  bgcolor: "#93A8AC",
                   color: "black",
                 },
               }}
