@@ -79,28 +79,4 @@ exports.getIdSubscribe = async (email) => {
   } catch {
     console.log("Service getIdSubscribe", error);
   }
-  //Valen
-  // try {
-  //   const url = `https://api.mercadopago.com/preapproval/search?payer_email=${email}`;
-  //   const response = await axios.get(url, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${ACCESS_TOKEN}`,
-  //     },
-  //   });
-  //   const subscriptions =  response.data.results;
-  //   let aux = -1;
-  //   subscriptions?.forEach((subscription) => {
-  //     if (subscription.status === "authorized") {
-  //       //quedaria guardado en aux, la ultima subscripcion que esta autorizada
-  //       //porque primero tenemos que pagar las dos y luego cancelar la primera.
-  //       //y acá queda la segunda.
-  //       aux = subscription.id;
-  //     }
-  //   })
-  //   return aux;
-
-  // } catch (error) {
-  //   console.log("getIdSubscription service catch", error);
-  // }
 };
