@@ -1,4 +1,4 @@
-// div que contiene al commentform y componentes comment 
+// div que contiene al commentform y componentes comment
 import { useState, useEffect } from "react";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
@@ -28,8 +28,8 @@ const NameStyle = styled(Paper)({
 
 const Comments = ({ filmId, userId, username, image }) => {
 
-  const dispatch = useDispatch()
-  const allComments = useSelector(state => state.comments)
+  const dispatch = useDispatch();
+  const allComments = useSelector(state => state.comments);
 
   useEffect(() => {
     dispatch(getComments(filmId))
@@ -46,14 +46,13 @@ const Comments = ({ filmId, userId, username, image }) => {
   //   CommentId: commentId, (1)
   //   FilmId: filmId,
   // });
-
   const infoPost = {
     userId: userId,
     filmId: filmId,
     formType: "postear",
     username,
     image,
-  }
+  };
   return (
     <NameStyle>
       {/* <Titulo variant="bold">Comentarios</Titulo> */}

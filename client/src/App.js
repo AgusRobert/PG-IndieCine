@@ -11,6 +11,8 @@ import NotFound from "./Components/NotFound/NotFound";
 import Subs from "./Components/Subs/Subs";
 import Subs3 from "./Components/Subs/Subs3";
 import Subs2 from "./Components/Subs/Subs2";
+import ProfileDetail from "./Components/ProfileDetail/ProfileDetail";
+import UserProfile from "./Components/UserProfile/UserProfile";
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -26,6 +28,8 @@ function App() {
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/terms" element={<TyC />} />
           <Route exact path="/detail/:id" element={<MovieDetail />} />
+          <Route exact path="/users/:id" element={<UserProfile />} />
+          <Route exact path="/profileDetail/:id" element={<ProfileDetail />} />
           {isAuthenticated && (
             <Route exact path="/addFilm" element={<FilmForm />} />
           )}

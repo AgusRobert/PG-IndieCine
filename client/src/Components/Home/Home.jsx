@@ -43,8 +43,8 @@ const ImgStyle = styled("img")({
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
-  const allMovies = useSelector((state) => state.pelisfiltradas);
-  const { profileInfo } = useSelector((state) => state);
+  const allMovies = useSelector(state => state.pelisfiltradas);
+  const { profileInfo } = useSelector(state => state);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -53,9 +53,15 @@ export default function Home() {
       dispatch(getProfileInfo(user?.email));
       setLoaded(true);
     } else {
-      setLoaded(true)
+      setLoaded(true);
     }
   }, [user]);
+
+  function handleClick(e) {
+    //funcion para volver a cargar todos los personajes
+    e.preventDefault();
+    dispatch(getMovies());
+  }
 
   useEffect(() => {
     if (user) {
@@ -104,6 +110,13 @@ export default function Home() {
           {allMovies.length && allMovies[0] !== "No films" ? (
             <>
               <h2 className="Title">Estrenos</h2>
+              <button
+                onClick={e => {
+                  handleClick(e);
+                }}
+              >
+                CARGAR PELIS DE NUEVO
+              </button>
               <Swiper
                 navigation={true}
                 effect={"coverflow"}
@@ -119,7 +132,7 @@ export default function Home() {
                 }}
                 className="mySwiper"
               >
-                {allMovies?.map((m) => {
+                {allMovies?.map(m => {
                   return (
                     <div>
                       <SwiperSlide>
@@ -136,12 +149,12 @@ export default function Home() {
                 <Grid container spacing={15}>
                   {/* <Row md={6} lg={6} className="newdiv" > */}
                   {allMovies ? (
-                    allMovies?.map((data) => {
+                    allMovies?.map(data => {
                       // console.log("HOME", data)
 
                       let nombresGen = [];
                       let generos = data.Genres;
-                      generos.forEach((a) => {
+                      generos.forEach(a => {
                         nombresGen.push(a.name);
                       });
 
@@ -174,11 +187,10 @@ export default function Home() {
                     />
                   )}
                   {/* </Row> */}
-                </Grid> 
+                </Grid>
                 <ParaTi userId={profileInfo?.id} />
                 <Footer />
               </ContainerS>
-             
             </>
           ) : (
             <div>

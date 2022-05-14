@@ -137,8 +137,17 @@ export default function MovieDetail() {
   let filmId = id;
   const [loaded, setLoaded] = useState(false);
 
+  const allMovies = useSelector(state => state.pelisfiltradas);
+  const profileInfo = useSelector(state => state.profileInfo);
+
+  console.log("PELICULA", allMovies);
+
+  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
+
+  /* console.log("USER", pelisdeluser); */
+
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
-  const peli = useSelector((state) => state.detalle);
+  const peli = useSelector(state => state.detalle);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -150,7 +159,6 @@ export default function MovieDetail() {
     }
   }, [dispatch, user]);
 
-  const profileInfo = useSelector((state) => state.profileInfo);
   const navigate = useNavigate();
   let elenco = peli ? peli.mainActors : [];
 
