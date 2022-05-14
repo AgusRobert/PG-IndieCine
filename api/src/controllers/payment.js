@@ -16,7 +16,7 @@ exports.validate = async (req, res) => {
     // console.log("validationData", validationData);
 
     let testResult = validationData.results?.pop();
-    console.log("testResult", testResult);
+    // console.log("testResult", testResult);
 
     if (testResult?.status === "authorized") {
       let user = await User.findOne({
