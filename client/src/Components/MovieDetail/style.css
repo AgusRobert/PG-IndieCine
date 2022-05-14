@@ -9,10 +9,11 @@
 }
 .detalles{
     display: inline-block;
-    margin: 15px 15px;
+    margin: 0px 15px;
     width: 30%;
     height: auto;
     color: rgb(243, 240, 255);
+    
 }
 
 .detalles2{
@@ -22,7 +23,22 @@
     height: auto;
     color: rgb(243, 240, 255);
 }
-
+.detalle3{
+    display: inline-block;
+    margin: 40px 15px;
+    width: 30%;
+    height: auto;
+    color: rgb(243, 240, 255);
+    padding-bottom: 50px;
+    justify-content: left;
+}
+.detalles4{
+    display: flex;
+    margin: 20px 15px;
+    width: 30%;
+    height: auto;
+    margin-right: auto;
+}
 h2, h3{
     color: #b388ff;
     font-weight: bolder;

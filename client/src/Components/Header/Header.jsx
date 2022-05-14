@@ -26,6 +26,7 @@ import { SERVER_BACK } from "../../paths/path.js";
 import { useTheme, useMediaQuery } from "@mui/material";
 import DrawerM from "./Drawer.jsx";
 import AutoSearch from "../AutoSearch/AutoSearch.jsx";
+import BotonRecarga from "./BotonRecarga.jsx";
 
 const ToolStyle = styled(Toolbar)({
   marginLeft: 50,
@@ -36,7 +37,7 @@ const ToolStyle = styled(Toolbar)({
 });
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: "#b388ff",
+  backgroundColor: "#682F8A",
   position: "fixed",
   justifyContent: "space-between",
   display: "flex",
@@ -61,7 +62,7 @@ export default function Header() {
   const { user, isAuthenticated, logout } = useAuth0();
   const dispacth = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const infoUser = useSelector((state) => state.profileInfo);
+  const infoUser = useSelector(state => state.profileInfo);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -78,7 +79,7 @@ export default function Header() {
     logout({ returnTo: window.location.origin });
   }
 
-  const handleMenu = (event) => {
+  const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -94,9 +95,8 @@ export default function Header() {
         </Link>
         {isMobile ? (
           <>
-            <DrawerM
-              infoUser={infoUser}
-            />
+            <BotonRecarga />
+            <DrawerM infoUser={infoUser} />
             {isAuthenticated && (
               <>
                 <IconButton
@@ -133,7 +133,7 @@ export default function Header() {
                     }}
                     onClick={handleOnClick}
                   >
-                    {infoUser?.status === "admin" ? 'Panel' : 'Mi Perfil'}
+                    {infoUser?.status === "admin" ? "Panel" : "Mi Perfil"}
                   </MenuItemStyle>
                   <MenuItemStyle
                     sx={{
@@ -152,9 +152,9 @@ export default function Header() {
             {!isAuthenticated && <SignInBtn />}
             {!isAuthenticated && <SignUpBtn />}
           </>
-
         ) : (
           <>
+            <BotonRecarga />
             <OrderAZ />
             <OrderDate />
             <OrderRating />
@@ -198,7 +198,7 @@ export default function Header() {
                     }}
                     onClick={handleOnClick}
                   >
-                    {infoUser?.status === "admin" ? 'Panel' : 'Mi Perfil'}
+                    {infoUser?.status === "admin" ? "Panel" : "Mi Perfil"}
                   </MenuItemStyle>
                   <MenuItemStyle
                     sx={{
@@ -216,8 +216,8 @@ export default function Header() {
             )}
             {!isAuthenticated && <SignInBtn />}
             {!isAuthenticated && <SignUpBtn />}
-          </>)}
-
+          </>
+        )}
       </ToolStyle>
     </AppStyle>
   );

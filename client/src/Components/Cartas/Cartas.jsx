@@ -41,7 +41,7 @@ export default function Cartas({
 
   return (
     <>
-      <Card sx={{  padding:0,maxWidth: 300, backgroundColor: "#212121" }}>
+      <Card sx={{  padding:0,maxWidth: 300, backgroundColor: "#1F271B" }}>
       <Link variant="button" underline="none" to={`/detail/${id}`}>
         <CardMedia
           component="img"
@@ -53,7 +53,7 @@ export default function Cartas({
         <CardContent>
           {/* Estrellitas favoritos */}
           <Link variant="button"  text-decoration="none" underline="none" to={`/detail/${id}`}>
-            <Typography variant="h6" style={{ color: "#f1c232" }}>
+            <Typography variant="h6" style={{ color: "#FFBE0B" }}>
               {title}
             </Typography>{" "}
           </Link>
@@ -77,8 +77,9 @@ export default function Cartas({
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
+            
           >
-            <ExpandMoreIcon />
+            <ExpandMoreIcon style={{ color: '#651fff', backgroundColor:'#f1c232', borderRadius:20 }} />
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>

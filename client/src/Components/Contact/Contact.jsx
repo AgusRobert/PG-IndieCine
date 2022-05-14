@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../Header/LOGO.png";
@@ -14,14 +15,14 @@ import { Container } from "@mui/material";
 
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: "#b388ff",
+  backgroundColor: "#682F8A",
   position: "fixed",
   justifyContent: "space-between",
   alignItems: "center"
 });
 
 const BoxS = styled(Box)({
-  paddingTop: 200
+  paddingTop: 80
 });
 const ContainerR = styled(Container)({
   paddingTop: 300

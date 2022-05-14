@@ -34,6 +34,11 @@ const ContainerS = styled(Container)({
 });
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
+const ImgStyle = styled("img")({
+  maxHeight: 200,
+  width: "auto",
+  color: "white",
+});
 // import "swiper/swiper.min.css";
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
@@ -51,12 +56,6 @@ export default function Home() {
       setLoaded(true);
     }
   }, [user]);
-
-  function handleClick(e) {
-    //funcion para volver a cargar todos los personajes
-    e.preventDefault();
-    dispatch(getMovies());
-  }
 
   useEffect(() => {
     if (user) {
@@ -105,13 +104,6 @@ export default function Home() {
           {allMovies.length && allMovies[0] !== "No films" ? (
             <>
               <h2 className="Title">Estrenos</h2>
-              <button
-                onClick={e => {
-                  handleClick(e);
-                }}
-              >
-                CARGAR PELIS DE NUEVO
-              </button>
               <Swiper
                 navigation={true}
                 effect={"coverflow"}
@@ -132,7 +124,7 @@ export default function Home() {
                     <div>
                       <SwiperSlide>
                         <Link to={`/detail/${m.id}`}>
-                          <img src={m.poster} alt="img not found" />
+                          <ImgStyle src={m.poster} alt="img not found" />
                         </Link>
                       </SwiperSlide>
                     </div>
