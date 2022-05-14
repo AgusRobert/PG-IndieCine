@@ -1,9 +1,12 @@
 const AdminJS = require("adminjs");
 const AdminJSExpress = require("@adminjs/express");
 const AdminJSSequelize = require("@adminjs/sequelize");
+
 AdminJS.registerAdapter(AdminJSSequelize);
 
-const { User, Film, Country, Genre, Comment, Plans } = require("../db.js");
+const { User, Film, Country, Genre, Comment, Plans, filmGenre } = require("../db.js");
+const {userResource} = require('../resource/userResource.js');
+const {filmResource} = require('../resource/filmResource.js');
 
 const adminJs = new AdminJS({
   databases: [
@@ -11,37 +14,9 @@ const adminJs = new AdminJS({
   ],
   rootPath: "/admin",
   resources: [
-    {
-      resource: User,
-      options: {
-        actions: {
-          enviarMail: {
-            actionType: "record",
-            icon: "Email",
-            component: AdminJS.bundle("../components/mailCreador.jsx"),
-            handler: async (req, res, context) => {
-              return { record: context.record.toJSON() };
-            },
-          },
-        },
-        parent: { icon: "User" },
-      },
-    },
-    { resource: Film, 
-      options: { 
-        actions: {
-         enviarMail: {
-          actionType: "record",
-          icon: "Email",
-          component: AdminJS.bundle("../components/mailFilm.jsx"),
-          handler: async (req, res, context) => {
-            return { record: context.record.toJSON() };
-          },
-        },
-      },
-      parent: { icon: "Camera" }
-     } 
-    },
+   userResource,
+    filmResource,
+      
     { resource: Country, options: { parent: { icon: "Map" } } },
     { resource: Genre, options: { parent: { icon: "Star" } } },
     { resource: Comment, options: { parent: { icon: "Chat" } } },
