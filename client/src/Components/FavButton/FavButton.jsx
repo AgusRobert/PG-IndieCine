@@ -13,24 +13,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { deleteFavFilm } from "../../redux/actions";
 import { Button } from "@mui/material";
 import Swal from 'sweetalert2'
-const BoxFav =styled(Box)({
- position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  backgroundColor: grey[700],
-  border: "none",
-  padding:10,
-  boxShadow: 24,
-  borderRadius:5,
-  color: "black",
-  p: 4,
-});
- const ButtonFav = styled(Button)({
-   backgroundColor:amber[500],
-   color:amber[500]
- })
+
 
 export default function FavButton({ filmId }) {
   let dispatch = useDispatch();
@@ -64,8 +47,8 @@ export default function FavButton({ filmId }) {
   });
   }
   return (
-    <div>
-    <Box >
+    
+    <Box>
     <IconButton onClick={ () =>{(handleOnClick({favDispatch}));(handleOpen())}} >
       <FavoriteIcon
         sx={{
@@ -76,21 +59,6 @@ export default function FavButton({ filmId }) {
         }}
         fontSize="large"
       /></IconButton>
-      {/* <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <BoxFav>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Pelicula añadida con exito
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Encuentra todas tus peliculas favoritas en tu perfil!
-          </Typography>
-        </BoxFav>
-      </Modal> */}
-    </Box></div>
+    </Box>
   );
 }

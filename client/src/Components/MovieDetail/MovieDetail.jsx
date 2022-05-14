@@ -12,12 +12,120 @@ import { styled } from "@mui/system";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2";
 import CafecitoBtn from "../CafecitoBtn/CafecitoBtn.jsx";
+import { AppBar, Box, Paper, Typography } from "@mui/material";
+import { deepPurple, grey } from "@mui/material/colors";
+import View2 from "../Reproductor/ComponenteVideo/VideoPlayer2";
 
 const ImgFav = styled("img")({
-  height: "400px",
+  height: "700px",
   width: "auto",
 });
-
+const AppStyle = styled(AppBar)({
+  opacity: 0.85,
+  backgroundColor: "#b388ff",
+  position: "fixed",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+const PaperStyle = styled(Paper)({
+  display: "flex",
+  width: "550px",
+  padding: 25,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: grey[900],
+  borderRadius: 20,
+  opacity: "90%",
+});
+const PaperStyle2 = styled(Paper)({
+  display: "flex",
+  width: "1080px",
+  height: "auto",
+  padding: 0,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: grey[900],
+  borderRadius: 20,
+});
+const PaperStyle3 = styled(Paper)({
+  display: "flex",
+  width: 1150,
+  padding: 25,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: grey[900],
+  borderRadius: 20,
+  opacity: "90%",
+});
+const PaperStyle4 = styled(Paper)({
+  display: "flex",
+  width: "600px",
+  padding: 10,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  borderRadius: 20,
+  opacity: "90%",
+  maxHeight: 90,
+  boxShadow: "none",
+});
+const PaperStyle5 = styled(Paper)({
+  display: "flex",
+  flexWrap: "wrap",
+  padding: 45,
+  justifyContent: "space-between",
+  width: 1150,
+  backgroundColor: grey[900],
+  borderRadius: 20,
+  opacity: "90%",
+});
+const PaperStyle6 = styled(Paper)({
+  display: "flex",
+  width: "1000px",
+  padding: 25,
+  justifyContent: "space-around",
+  alignItems: "center",
+  borderRadius: 20,
+  backgroundColor: "transparent",
+  boxShadow: "none",
+});
+const PaperTop = styled(Paper)({
+  display: "flex",
+  padding: 25,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  borderRadius: 20,
+  boxShadow: "none",
+});
+const PaperMid = styled(Paper)({
+  display: "table-column",
+  padding: 25,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  borderRadius: 20,
+  boxShadow: "none",
+});
+const PaperBot = styled(Paper)({
+  display: "flex",
+  padding: 25,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  borderRadius: 20,
+  boxShadow: "none",
+});
+const PaperTitulo = styled(Paper)({
+  paddingBottom: 100,
+  backgroundColor: "transparent",
+  boxShadow: "none",
+});
+const Titulo = styled(Typography)({
+  color: "#e0e0e0",
+  fontSize: "45px",
+  fontFamily: "Koulen",
+});
 export default function MovieDetail() {
   let dispatch = useDispatch();
 
@@ -61,11 +169,11 @@ export default function MovieDetail() {
   if (!isAuthenticated) {
     return (
       <>
-        <div className="logoIndex">
+        <AppStyle>
           <Link to={"/"}>
             <img src={logo} alt="img not found" />
           </Link>
-        </div>
+        </AppStyle>
         {Swal.fire({
           title: "Registrate para acceder a todo nuestro contenido",
           showCancelButton: true,
@@ -94,62 +202,95 @@ export default function MovieDetail() {
 
   if (peli) {
     return (
-      <div>
-        <div className="logoIndex">
+      <>
+        <AppStyle>
           <Link to={"/"}>
             <img src={logo} alt="img not found" />
           </Link>
-        </div>
+        </AppStyle>
         <>
           {loaded ? (
-            <>
-              <div>
-                <div className="detalles">
-                  <h2>{peli.title}</h2>
+            <Box>
+              {/* <div className="detalles"> */}
+              <div className="detalle3"></div>
+              <PaperTop>
+                <PaperStyle>
                   <ImgFav
                     src={peli.poster}
                     alt="Poster"
                     className="imgPoster"
                   />
-                </div>
-                <div>
-                  <Link to={`/users/${peli.UserId}`}>
-                    <button>PERFIL</button>
-                  </Link>
-                </div>
-                <div className="detalles2">
-                  <h2>Rating: {peli.rating}</h2>
-                  <h3>Sinopsis:</h3>
-                  <p>{peli.synopsis}</p>
-                  <h3>Director:</h3>
-                  <p>{peli.director}</p>
-                  <h3>Año</h3>
-                  <p>{peli.year}</p>
-                  <h3>Elenco principal:</h3>
-                  {elenco?.map((e, i) => {
-                    return <p key={key++}>{e}</p>;
-                  })}
-                  <h2>Genero: {peli.Genres?.map(a => a.name).join(", ")}</h2>
-                  <h2>Pais de origen: {peli.Country?.name}</h2>
-                  {peli.associateProducer && (
-                    <>
-                      <h3>Productor Asociado</h3>
-                      <p>{peli.associateProducer}</p>
-                    </>
-                  )}
-                </div>
-              </div>
+                </PaperStyle>
+                {/* </div> */}
+                <PaperMid>
+                  <PaperStyle5>
+                    <PaperTitulo>
+                      <Box
+                        height={100}
+                        width={500}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        bgcolor="#5e35b1"
+                        color="#e0e0e0"
+                        fontSize={24}
+                        position={"relative"}
+                        left={0}
+                        top={50}
+                        borderRadius={5}
+                      >
+                        <Titulo variant="bold">{peli.title}</Titulo>
+                      </Box>
+                    </PaperTitulo>
+                    <PaperStyle6>
+                      <PaperStyle4>
+                        <h2>Rating: {peli.rating}</h2>
 
-              <div>
-                <View ubicacion={peli.url} />
-              </div>
-              <div>
-                {peli.cafecito && (
-                  <CafecitoBtn linkCafecito={profileInfo.cafecito} />
-                )}
-              </div>
-              <FavButton filmId={filmId} />
-              <div>
+                        <h3>Año</h3>
+                        <p>{peli.year}</p>
+                      </PaperStyle4>
+                      <PaperStyle4>
+                        <h3>Elenco principal:</h3>
+                        {elenco?.map((e, i) => {
+                          return <p key={key++}>{e}</p>;
+                        })}{" "}
+                      </PaperStyle4>
+                    </PaperStyle6>
+                    <PaperStyle6>
+                      <PaperStyle4>
+                        {" "}
+                        <PaperStyle4>
+                          <h2>Genero:</h2>{" "}
+                          <p>{peli.Genres?.map(a => a.name).join(", ")}</p>
+                        </PaperStyle4>
+                        <h2>Pais de origen: </h2>
+                        <p>{peli.Country?.name}</p>
+                      </PaperStyle4>
+                      {peli.associateProducer && (
+                        <PaperStyle4>
+                          <PaperStyle4>
+                            <h3>Director:</h3>
+                            <p>{peli.director}</p>
+                          </PaperStyle4>
+                          <h3>Productor Asociado:</h3>
+                          <p>{peli.associateProducer}</p>
+                        </PaperStyle4>
+                      )}
+                    </PaperStyle6>{" "}
+                  </PaperStyle5>
+
+                  <PaperStyle3>
+                    <Box paddingRight={12} opacity={"100%"}>
+                      <h3>Sinopsis:</h3>
+                    </Box>
+                    <p>{peli.synopsis}</p>
+                  </PaperStyle3>
+                </PaperMid>
+              </PaperTop>
+              <PaperBot>
+                <PaperStyle2>
+                  <View ubicacion={peli.url} />
+                </PaperStyle2>
                 <Comments
                   userId={profileInfo?.id}
                   filmId={Number(filmId)}
@@ -158,18 +299,22 @@ export default function MovieDetail() {
                   // image={profileInfo?.image}
                   image={user?.picture}
                 />
+              </PaperBot>{" "}
+              <div className="detalles4">
+                {peli.cafecito && (
+                  <CafecitoBtn linkCafecito={profileInfo.cafecito} />
+                )}
+                <FavButton filmId={filmId} />
               </div>
-              <div>
-                <Footer />
-              </div>
-            </>
+              <Footer />
+            </Box>
           ) : (
             <div>
               <h2>Cargando...</h2>
             </div>
           )}
         </>
-      </div>
+      </>
     );
   }
 }
