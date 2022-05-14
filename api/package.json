@@ -10,10 +10,10 @@
   "author": "Grupo05",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1129.0",
     "@adminjs/express": "^4.1.0",
     "@adminjs/sequelize": "^2.1.5",
     "adminjs": "^5.10.0",
+    "aws-sdk": "^2.1129.0",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
@@ -32,6 +32,7 @@
     "nodemailer": "^6.7.5",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
+    "react-google-charts": "^4.0.0",
     "sequelize": "^6.19.0",
     "tslib": "^2.4.0"
   },

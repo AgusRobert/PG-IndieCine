@@ -13,6 +13,9 @@ const adminJs = new AdminJS({
     /* con */
   ],
   rootPath: "/admin",
+  dashboard: {
+    component: AdminJS.bundle('../components/Dashboard/index.jsx'),
+  },
   resources: [
    userResource,
     filmResource,
