@@ -25,6 +25,7 @@ export default function ParaTi({ userId }) {
     }
   }, []);
 
+ /*  console.log("allMovies", allMovies); */
   /* console.log("allMovies", allMovies); */
 
   let genres = favorites.map(p => p.Genres.map(g => g.name)).flat();
@@ -53,6 +54,7 @@ export default function ParaTi({ userId }) {
     if (!igual) recomendadosClean.push(recomendados4[i]);
   }
 
+ /*  console.log("GENEROOOOS", recomendadosClean); */
   /* console.log("GENEROOOOS", recomendadosClean); */
 
   return (

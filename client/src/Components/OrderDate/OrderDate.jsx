@@ -36,6 +36,7 @@ export default function OrderDate() {
    name="select"
   onChange={onSelectChange}
   select
+  value=""
   label="
   Antigüedad"
   variant="outlined"

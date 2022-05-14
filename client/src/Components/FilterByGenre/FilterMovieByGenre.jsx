@@ -43,8 +43,10 @@ export default function FilterMoviesByGenre() {
         name="select"
         onChange={(e) => handleChange(e)}
         select
+        value=""
         label="Generos"
         variant="outlined"
+        selected
         size="small"
         sx={{
           ":active": {
