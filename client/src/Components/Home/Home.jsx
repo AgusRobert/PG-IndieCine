@@ -34,6 +34,11 @@ const ContainerS = styled(Container)({
 });
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
+const ImgStyle = styled("img")({
+  maxHeight: 200,
+  width: "auto",
+  color:"white"
+});
 // import "swiper/swiper.min.css";
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
@@ -119,7 +124,7 @@ export default function Home() {
                     <div>
                       <SwiperSlide>
                         <Link to={`/detail/${m.id}`}>
-                          <img src={m.poster} alt="img not found" />
+                          <ImgStyle src={m.poster} alt="img not found" />
                         </Link>
                       </SwiperSlide>
                     </div>

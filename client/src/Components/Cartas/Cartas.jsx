@@ -77,8 +77,9 @@ export default function Cartas({
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
+            
           >
-            <ExpandMoreIcon />
+            <ExpandMoreIcon style={{ color: '#651fff', backgroundColor:'#f1c232', borderRadius:20 }} />
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>

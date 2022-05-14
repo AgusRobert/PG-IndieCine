@@ -1,9 +1,32 @@
 // // La caja donde se escribe el comentario
 
+import { Box, Button, InputBase, Toolbar } from "@mui/material";
+import { amber } from "@mui/material/colors";
+import { styled } from "@mui/system";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 import { addComment, updateComment } from "../../redux/actions";
-
+const ButtonStyle = styled(Button)({
+  whiteSpace: "nowrap",
+  color: amber[400],
+  borderBlockColor: amber[900],
+  borderInlineStartColor: amber[200],
+  borderInlineEndColor: amber[200],
+  backgroundColor:amber[800]
+});
+const TextStyle = styled(InputBase)({
+  backgroundColor: amber[50],
+  borderRadius: 5,
+  width: "400px",
+  padding: 4,
+  height:"50px"
+});
+const BoxGeneral = styled(Box)({
+  padding: "10px",
+  display:"flex",
+  alignContent:"center",
+});
 const CommentForm = ({ info, closeFn }) => {
 
   const dispatch = useDispatch()
@@ -30,20 +53,35 @@ const CommentForm = ({ info, closeFn }) => {
       }
       setText("")
     } else {
-      alert("No puedes dejar el comentario vacio")
+      Swal.fire({
+        title: "Tenes que comentar un mensaje con al menos un carácter! 🙄​",
+        width: 600,
+        timer: 4000,
+        timerProgressBar: true,
+        padding: '1em',
+        icon: "warning",
+        color: '#716add',
+        background: 'black',
+        backdrop: `
+          rgba(0,0,123,0.2)0  `,
+        confirmButtonText: 'Entiendo',
+      })
     }
   };
   console.log("texto", text)
   return (
     <form onSubmit={onSubmit}>
-      <textarea
+      <BoxGeneral>
+      <TextStyle
         value={text}
         onChange={(e) => setText(e.target.value)}
-        required
+        // required
       />
-      <button>
+      <Box paddingLeft={3}>
+      <ButtonStyle  size="large" type="submit" variant="contained">
         Enviar
-      </button>
+      </ButtonStyle>
+   </Box></BoxGeneral>
     </form>
   );
 };
