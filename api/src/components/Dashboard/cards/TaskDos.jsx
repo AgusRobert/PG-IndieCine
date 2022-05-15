@@ -11,9 +11,9 @@ const api = new ApiClient();
 const makeChartData = (records) => {
    
     const duration= {
-        'largometraje': 'Largometraje',
-        'cortometraje': 'Cortometraje',
-        'mediometraje': 'Mediometraje',
+        'Largometraje': 'Largometraje',
+        'Cortometraje': 'Cortometraje',
+        'Mediometraje': 'Mediometraje',
     };
     const values =_.groupBy(records, (record) => record.params.duration);
     
