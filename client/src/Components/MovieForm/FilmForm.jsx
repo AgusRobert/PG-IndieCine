@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGenres, getCountries } from "../../redux/actions";
 import { postMovie } from "../../redux/actions/index";
 import { Box } from "@mui/system";
-import { grey } from "@mui/material/colors";
+import { deepPurple, grey } from "@mui/material/colors";
 import { validate } from "./validates";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -19,7 +19,84 @@ import {
   sxButtonStyle,
 } from "../StyleMUI/StyleMUI";
 import { SERVER_BACK } from "../../paths/path";
+import { styled } from "@mui/material/styles";
+import logo from "../Header/LOGO.png";
+import { AppBar, Button, Divider, Link, Paper, Typography } from "@mui/material";
+const AppStyle = styled(AppBar)({
+  opacity: 0.85,
+  backgroundColor: "#b388ff",
+  position: "fixed",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+const BoxS = styled(Box)({
+  paddingTop: 100,
+});
+const Titulo = styled(Typography)({
+  color: "#e0e0e0",
+  fontSize: "45px",
+  fontFamily: "Koulen",
+});
+const ButtonStyle2 = styled(Button)({
+  whiteSpace: "nowrap",
+  color: deepPurple[200],
+  borderBlockColor: deepPurple[200],
+  borderInlineStartColor: deepPurple[900],
+  borderInlineEndColor: deepPurple[900],
 
+  backgroundColor: deepPurple[400],
+});
+const PaperStyle4 = styled(Paper)({
+  display: "flex",
+  width: "1600px",
+  padding: 10,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  borderRadius: 20,
+  opacity: "90%",
+  maxHeight: "auto",
+  boxShadow: "none",
+});
+const PaperStyle3 = styled(Paper)({
+  display: "table-row",
+  width: "300px",
+  padding: 10,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  boxShadow: "none",
+});
+const Container12 = styled(Paper)({
+  display: "flex",
+  width: "1500px",
+  padding: 10,
+  // justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  opacity: "90%",
+  boxShadow: "none",
+});
+const GyE = styled(Paper)({
+  display: "table-column",
+  width: "500px",
+  padding: 10,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  opacity: "90%",
+  boxShadow: "none",
+});
+const GyE2 = styled(Paper)({
+  display: "flex",
+  width: "500px",
+  padding: 10,
+  justifyContent: "space-around",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  boxShadow: "none",
+  flexWrap:'wrap'
+});
 export function FilmForm() {
   //para validacion de errores
   const [errores, setErrores] = useState({ block: true });
@@ -110,14 +187,14 @@ export function FilmForm() {
         width: 600,
         timer: 3000,
         timerProgressBar: true,
-        padding: '1em',
-        icon: 'error',
-        color: '#716add',
-        background: 'black',
+        padding: "1em",
+        icon: "error",
+        color: "#716add",
+        background: "black",
         backdrop: `
           rgba(0,0,123,0.2)0  `,
-        confirmButtonText: 'Entiendo',
-      })
+        confirmButtonText: "Entiendo",
+      });
     setActor("");
   };
   //manejador de envio del formulario
@@ -182,22 +259,23 @@ export function FilmForm() {
       country: "",
       film: "a",
       port: "a",
-    })
+    });
     Swal.fire({
-      title: "Formulario enviado correctamente. Gracias por publicar tu contenido en CINDIE. Su pelicula esta en proceso de evaluacion",
+      title:
+        "Formulario enviado correctamente. Gracias por publicar tu contenido en CINDIE. Su pelicula esta en proceso de evaluacion",
       width: 600,
       timer: 4000,
       timerProgressBar: true,
-      padding: '1em',
+      padding: "1em",
       icon: "success",
-      color: '#716add',
-      background: 'black',
+      color: "#716add",
+      background: "black",
       backdrop: `
         rgba(0,0,123,0.2)0  `,
-      confirmButtonText: 'Entiendo',
+      confirmButtonText: "Entiendo",
     }).then(() => {
-      window.location.replace("http://localhost:3000/")
-    })
+      window.location.replace("http://localhost:3000/");
+    });
     //despacho de la accion para guardar una pelicula
     console.log("Datos actuales: ", movieForm);
   };
@@ -206,50 +284,114 @@ export function FilmForm() {
   for (let i = 2022; i > 1950; i--) años.push(`${i}`);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: grey[100],
-      }}
-    >
-      <h1>Subí tu proyecto a la red!</h1>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <BoxStyle>
-          {/* Título */}
-          <LabelStyle>Título</LabelStyle>
-          <InputStyle
-            type="text"
-            value={movieForm.title}
-            placeholder="Título de la Película"
-            name="title"
-            onChange={(e) => handleOnChange(e)}
-            required
-          />
-          {errores?.title && <p class="errores">{errores.title}</p>}
-
-          {/* Póster */}
-          <LabelStyle>Póster</LabelStyle>
-          <InputStyle
-            type="file"
-            accept="image/jpg image/png image/jpeg"
-            name="port"
-            placeholder="Portada de la Pelicula"
-            onChange={(e) => selectMultimedia(e)}
-            required
-          />
-
-          {/* Sinopsis */}
-          <LabelStyle>Sinopsis</LabelStyle>
-          <InputStyle
-            type="text"
-            value={movieForm.synopsis}
-            placeholder="Sinopsis"
-            name="synopsis"
-            onChange={(e) => handleOnChange(e)}
-            required
-          />
-          {errores?.synopsis && <p class="errores">{errores.synopsis}</p>}
-
+    <>
+      <AppStyle>
+        <Link to={"/"}>
+          <img src={logo} alt="img not found" />
+        </Link>
+      </AppStyle>
+      <BoxS></BoxS>
+      <Box
+        sx={{
+          backgroundColor: grey[800],
+          borderRadius: 20,
+        }}
+      >
+        <Box
+          height={100}
+          width={500}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          bgcolor="#5e35b1"
+          color="#e0e0e0"
+          fontSize={24}
+          position={"relative"}
+          left={60}
+          top={15}
+          borderRadius={5}
+        >
+          <Titulo variant="bold">Sube tu proyecto</Titulo>
+        </Box>
+        <form onSubmit={(e) => onSubmit(e)}>
+         {/* <Container12> */}
+          {/* CONTAINER 1 */}
+          <PaperStyle4>
+            <PaperStyle3>
+            {/* Título */}
+            <LabelStyle>Título</LabelStyle>
+            <InputStyle
+              type="text"
+              value={movieForm.title}
+              placeholder="Título de la Película"
+              name="title"
+              onChange={(e) => handleOnChange(e)}
+              required
+            />
+            {errores?.title && <p class="errores">{errores.title}</p>}
+            {/* Dirección */}
+            <LabelStyle>Dirección</LabelStyle>
+            <InputStyle
+              type="text"
+              value={movieForm.director}
+              name="director"
+              placeholder="Dirección"
+              onChange={(e) => handleOnChange(e)}
+              required
+            />
+            {errores?.director && <p class="errores">{errores.director}</p>}
+         </PaperStyle3>
+         <PaperStyle3>
+              {/* Productora */}
+            <LabelStyle>Productora Asociada</LabelStyle>
+            <InputStyle
+              type="text"
+              value={movieForm.associateProducer}
+              name="associateProducer"
+              placeholder="Productora"
+              onChange={(e) => handleOnChange(e)}
+              // required
+            /> </PaperStyle3>
+              {/* Elenco */}
+            <GyE>
+            <LabelStyle>Elenco *</LabelStyle>
+            <InputStyle
+              type="text"
+              value={actor}
+              placeholder="Actores"
+              name="actor"
+              onChange={(e) => setActor(e.target.value)}
+            />
+            <ButtonStyle
+              sx={sxButtonStyle}
+              type="button"
+              name="elenco"
+              onClick={(e) => handleElenco(e)}
+            >
+              Añadir
+            </ButtonStyle><GyE2>
+            {movieForm.mainActors.map((data) => (
+              
+                <ButtonStyle2
+                  key={data}
+                  onClick={() => handleDeleteActors(data)}
+                >
+                  {data}
+                </ButtonStyle2>
+             
+            ))} </GyE2></GyE>
+             </PaperStyle4>  
+            
+            {/* FIN CONTAINER 1 */}
+            
+             
+          <Divider orientation="vertical" color="black"/>
+          {/* CONTAINER 2 */}
+          <PaperStyle4> 
+     
+          
           {/* Géneros */}
+          <GyE>
           <LabelStyle>Géneros *</LabelStyle>
           <SelectStyle
             name="genres"
@@ -266,9 +408,18 @@ export function FilmForm() {
                 {genre.name}
               </MenuItemStyle>
             ))}
-          </SelectStyle>
+          </SelectStyle><GyE2>
+          {movieForm.genres.map((data) => (
+            <div>
+              <ButtonStyle2
+                key={data.id}
+                onClick={() => handleDeleteGenre(data)}
+              >
+                {data}
+              </ButtonStyle2>
+            </div>
+          ))}</GyE2></GyE>
           {errores?.genres && <p class="errores">{errores.genres}</p>}
-
           {/* País */}
           <LabelStyle>País *</LabelStyle>
           <SelectStyle
@@ -288,10 +439,10 @@ export function FilmForm() {
             ))}
           </SelectStyle>
           {errores?.genres && <p class="errores">{errores.genres}</p>}
-
-          {/* Año*/}
+          </PaperStyle4> 
+           <PaperStyle4>
+             {/* Año*/}
           <LabelStyle>Año *</LabelStyle>
-
           <SelectStyle
             name="year"
             value={movieForm.year}
@@ -308,7 +459,7 @@ export function FilmForm() {
               </MenuItemStyle>
             ))}
           </SelectStyle>
-
+         
           {/* Duración */}
           <LabelStyle>Duración *</LabelStyle>
           <SelectStyle
@@ -331,48 +482,22 @@ export function FilmForm() {
               Largometraje
             </MenuItemStyle>
           </SelectStyle>
+             </PaperStyle4> 
+          {/* FIN CONTAINER 2 */}
+          {/* </Container12> */}
 
-          {/* Dirección */}
-          <LabelStyle>Dirección</LabelStyle>
+          {/* CONTAINER 3 */}
+          <PaperStyle4>
+          {/* Póster */}
+          <LabelStyle>Póster</LabelStyle>
           <InputStyle
-            type="text"
-            value={movieForm.director}
-            name="director"
-            placeholder="Dirección"
-            onChange={(e) => handleOnChange(e)}
+            type="file"
+            accept="image/jpg image/png image/jpeg"
+            name="port"
+            placeholder="Portada de la Pelicula"
+            onChange={(e) => selectMultimedia(e)}
             required
           />
-          {errores?.director && <p class="errores">{errores.director}</p>}
-
-          {/* Elenco */}
-          <LabelStyle>Elenco *</LabelStyle>
-          <InputStyle
-            type="text"
-            value={actor}
-            placeholder="Actores"
-            name="actor"
-            onChange={(e) => setActor(e.target.value)}
-          />
-          <ButtonStyle
-            sx={sxButtonStyle}
-            type="button"
-            name="elenco"
-            onClick={(e) => handleElenco(e)}
-          >
-            Añadir
-          </ButtonStyle>
-
-          {/* Productora */}
-          <LabelStyle>Productora Asociada</LabelStyle>
-          <InputStyle
-            type="text"
-            value={movieForm.associateProducer}
-            name="associateProducer"
-            placeholder="Productora"
-            onChange={(e) => handleOnChange(e)}
-          // required
-          />
-
           {/* Película Campo para subir una pelicula*/}
           <LabelStyle>Película Archivo*</LabelStyle>
           <InputStyle
@@ -382,41 +507,32 @@ export function FilmForm() {
             placeholder="Subir Película.mp4"
             onChange={(e) => selectMultimedia(e)}
           />
-          <LabelStyle>Pelicula Link *</LabelStyle>
+          {/* FIN DE CONTAINER 3 */}
+          </PaperStyle4>
+          {/* CONTAINER 4 */}
+          <PaperStyle4>
+          {/* Sinopsis */}
+          <LabelStyle>Sinopsis</LabelStyle>
           <InputStyle
             type="text"
-            value={movieForm.url}
-            name="url"
-            placeholder="URL de la Pelicula"
+            value={movieForm.synopsis}
+            placeholder="Sinopsis"
+            name="synopsis"
             onChange={(e) => handleOnChange(e)}
             required
           />
-          {errores?.url && <p class="errores">{errores.url}</p>}
+          {errores?.synopsis && <p class="errores">{errores.synopsis}</p>}
           <ButtonStyle
             sx={sxButtonStyle}
             type="submit"
-            disabled={errores.block}
+            // disabled={errores.block}
           >
             Subir proyecto
           </ButtonStyle>
-        </BoxStyle>
-      </form>
-      <div>
-        {movieForm.genres.map((data) => (
-          <div>
-            <button key={data.id} onClick={() => handleDeleteGenre(data)}>
-              {data}
-            </button>
-          </div>
-        ))}
-        {movieForm.mainActors.map((data) => (
-          <div>
-            <button key={data} onClick={() => handleDeleteActors(data)}>
-              {data}
-            </button>
-          </div>
-        ))}
-      </div>
-    </Box>
+          </PaperStyle4>
+          {/* FIN DE CONTAINER 4 */}
+        </form>
+      </Box>
+    </>
   );
 }
