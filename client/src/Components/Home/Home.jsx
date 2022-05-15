@@ -37,6 +37,9 @@ const ContainerS = styled(Container)({
 });
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
+/* import "swiper/components/pagination/pagination.min.css"; */
+
+
 const ImgStyle = styled("img")({
   maxHeight: 200,
   width: "auto",
@@ -119,7 +122,8 @@ export default function Home() {
                 navigation={true}
                 effect={"coverflow"}
                 centeredSlides={true}
-                slidesPerView={window.innerWidth < 768 ? 1 : "auto"}
+                spaceBetween={10}
+                slidesPerView={3}
                 loop={true}
                 coverflowEffect={{
                   rotate: 50,
@@ -200,7 +204,7 @@ export default function Home() {
                       alt="not found"
                     />
                   )}
-                  {/* </Row> */}
+                
                 </Grid>
                 <ParaTi userId={profileInfo?.id} />
                 <Footer />

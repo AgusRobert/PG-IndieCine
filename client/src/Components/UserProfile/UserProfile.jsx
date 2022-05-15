@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../Footer/Footer.jsx";
 import {
   getMovies,
@@ -8,28 +8,17 @@ import {
 } from "../../redux/actions/index";
 import { styled } from "@mui/system";
 import Cartas from "../Cartas/Cartas.jsx";
-import {
-  cleanState,
-  getProfileInfo,
-  renderMovieDetails,
-} from "../../redux/actions/index";
-import { useAuth0 } from "@auth0/auth0-react";
 import CafecitoBtn from "../CafecitoBtn/CafecitoBtn.jsx";
-import { AppBar, Box, Paper, Typography } from "@mui/material";
-import { deepPurple, grey } from "@mui/material/colors";
-
+import { AppBar, Box, Paper, Typography, Grid } from "@mui/material";
+import {grey } from "@mui/material/colors";
+/* import logo from "./LOGO.png"; */
+import "./style.css";
 
 const ImgFav = styled("img")({
   height: "auto",
   width: "auto",
 });
-/* const AppStyle = styled(AppBar)({
-  opacity: 0.85,
-  backgroundColor: "#b388ff",
-  position: "fixed",
-  justifyContent: "space-between",
-  alignItems: "center",
-}); */
+
 const PaperStyle = styled(Paper)({
   display: "flex",
   width: "550px",
@@ -40,58 +29,19 @@ const PaperStyle = styled(Paper)({
   borderRadius: 20,
   opacity: "90%",
 });
-const PaperStyle2 = styled(Paper)({
-  display: "flex",
-  width: "1080px",
-  height: "auto",
-  padding: 0,
-  justifyContent: "space-around",
-  alignItems: "center",
-  backgroundColor: grey[900],
-  borderRadius: 20,
-});
-const PaperStyle3 = styled(Paper)({
-  display: "flex",
-  width: 1150,
-  padding: 25,
-  justifyContent: "space-around",
-  alignItems: "center",
-  backgroundColor: grey[900],
-  borderRadius: 20,
-  opacity: "90%",
-});
-const PaperStyle4 = styled(Paper)({
-  display: "flex",
-  width: "600px",
-  padding: 10,
-  justifyContent: "space-around",
-  alignItems: "center",
-  backgroundColor: "transparent",
-  borderRadius: 20,
-  opacity: "90%",
-  maxHeight: 90,
-  boxShadow: "none",
-});
+
 const PaperStyle5 = styled(Paper)({
   display: "flex",
   flexWrap: "wrap",
   padding: 45,
   justifyContent: "space-between",
-  width: 1150,
+  alignItems: "left",
+  width: 500,
   backgroundColor: grey[900],
   borderRadius: 20,
   opacity: "90%",
 });
-const PaperStyle6 = styled(Paper)({
-  display: "flex",
-  width: "1000px",
-  padding: 25,
-  justifyContent: "space-around",
-  alignItems: "center",
-  borderRadius: 20,
-  backgroundColor: "transparent",
-  boxShadow: "none",
-});
+
 const PaperTop = styled(Paper)({
   display: "flex",
   padding: 25,
@@ -123,11 +73,10 @@ const PaperTitulo = styled(Paper)({
   paddingBottom: 100,
   backgroundColor: "transparent",
   boxShadow: "none",
-});
-const Titulo = styled(Typography)({
-  color: "#e0e0e0",
-  fontSize: "45px",
-  fontFamily: "Koulen",
+  alignItems: "left",
+  width: "200",
+  height: "auto"
+
 });
 
 const AppStyle = styled(AppBar)({
@@ -138,14 +87,6 @@ const AppStyle = styled(AppBar)({
   alignItems: "center",
 });
 
-const BoxStyle = styled(Box)({
-  paddingTop: 50,
-  justifyContent: "space-evenly",
-  alignItems: "center",
-  paddingBottom: 0,
-  alignContent: "center",
-  justifyItems: "flex-end",
-});
 
 export default function UserProfile() {
   let dispatch = useDispatch();
@@ -171,66 +112,18 @@ export default function UserProfile() {
     dispatch(getProfileInfoById(filmId));
   }, [dispatch]);
 
-/*   return (
-    <>
-      <AppStyle>
-        <Link to={"/"}>
-          <img src={logo} alt="img not found" />
-        </Link>
-      </AppStyle>
-      <BoxStyle>
-        <div>
-          <h1>{profileInfo?.name + " " + profileInfo?.surname}</h1>
-        </div>
-        <div>
-          <img src={profileInfo?.image} />
-        </div>
-        <div>
-          <h1>{profileInfo?.country}</h1>
-        </div>
-        <div>
-          <h1>{profileInfo?.cafecito}</h1>
-        </div>
-        <div>
-          <h1>{profileInfo?.rol}</h1>
-        </div>
-        <div>
-          <h1>{profileInfo?.username + " <- USERNAME"}</h1>
-        </div>
 
-        <div>
-          {pelisdeluser ? (
-            pelisdeluser?.map((data) => {
-              console.log(data);
-              return (
-                <div>
-                  <Cartas
-                    id={data.id}
-                    title={data.title}
-                    poster={data.poster}
-                  />
-                </div>
-              );
-            })
-          ) : (
-            <img
-              src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
-              alt="not found"
-            />
-          )}
-        </div>
-      </BoxStyle>
-    </>
-  );
-}
- */
 
 return (
   <>
 
     
     <>
-      
+    <AppStyle>
+          <Link to={"/"}>
+            <img src="" alt="img not found" />
+          </Link>
+        </AppStyle>
 
         <Box>
           
@@ -249,40 +142,19 @@ return (
             <PaperMid>
               <PaperStyle5>
                 <PaperTitulo>
-                  <Box
-                    height={100}
-                    width={500}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    bgcolor="#5e35b1"
-                    color="#e0e0e0"
-                    fontSize={24}
-                    position={"relative"}
-                    left={0}
-                    top={50}
-                    borderRadius={5}
-                  >
-                    <Titulo variant="bold">{profileInfo?.name}</Titulo>
-                  </Box>
                   
+                  <h5 className="Title">Nombre completo</h5>
+                  <h2>{profileInfo?.name}{" "}{profileInfo?.surname}</h2>
+
+                  <h5 className="Title">Nombre de usuario</h5>
+                  <h2>{profileInfo?.username}</h2>
+
+                  <h5 className="Title">País de origen</h5>
+                  <h2>{profileInfo?.country}</h2>
+
                 </PaperTitulo>
-                <PaperStyle6>
-                 
-                 
-                </PaperStyle6>
-                <PaperStyle6>
-                  <PaperStyle4>
-                    {" "}
-                   
-                    <h2>Pais de origen: </h2>
-                    <p>{profileInfo?.country}</p>
-                  </PaperStyle4>
-                  
-                </PaperStyle6>{" "}
               </PaperStyle5>
 
-              
             </PaperMid>
           </PaperTop>
           <PaperBot>
@@ -295,19 +167,20 @@ return (
             )}
             
 
-
+            <h5 className="Title">Proyectos</h5>
             <div>
+            <Grid container spacing={15}>
           {pelisdeluser ? (
             pelisdeluser?.map((data) => {
               console.log(data);
               return (
-                <div>
+                <Grid item m={3}>
                   <Cartas
                     id={data.id}
                     title={data.title}
                     poster={data.poster}
                   />
-                </div>
+                </Grid>
               );
             })
           ) : (
@@ -316,6 +189,7 @@ return (
               alt="not found"
             />
           )}
+          </Grid>
         </div>
             
           </div>
