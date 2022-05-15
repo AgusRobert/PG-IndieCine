@@ -7,11 +7,12 @@ import { Link } from "react-router-dom";
 import {
   getMovies,
   getProfileInfo,
-  getUserInfo,
+  /* getUserInfo, */
   signUpFunction,
-  updateUser,
+  /*  updateUser, */
+  getUsers,
 } from "../../redux/actions/index.js";
-import { Container, Row } from "react-bootstrap";
+import { Container /* Row */ } from "react-bootstrap";
 import Cartas from "../Cartas/Cartas.jsx";
 import ParaTi from "../paraTi/paraTi.jsx";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -28,34 +29,43 @@ import SwiperCore, {
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
+import UserCards from "../userCards/userCards.jsx";
+
 import { Typography } from "@mui/material";
 const ContainerS = styled(Container)({
   paddingBottom: 20,
 });
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
+/* import "swiper/components/pagination/pagination.min.css"; */
+
+
 const ImgStyle = styled("img")({
   maxHeight: 200,
   width: "auto",
-  color:"white"
+  color: "white",
 });
 // import "swiper/swiper.min.css";
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const allMovies = useSelector((state) => state.pelisfiltradas);
+  const estrenos= allMovies?.slice(-7).reverse();
+  const users = useSelector((state) => state.usersfiltrados);
+/*   console.log("LOSUSERS", users); */
   const { profileInfo } = useSelector((state) => state);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     dispatch(getMovies());
+    !users?.length && dispatch(getUsers());
     if (user) {
       dispatch(getProfileInfo(user?.email));
       setLoaded(true);
     } else {
-      setLoaded(true)
+      setLoaded(true);
     }
-  }, [user]);
+  }, [user, dispatch, users?.length]);
 
   useEffect(() => {
     if (user) {
@@ -83,13 +93,16 @@ export default function Home() {
     }
   }, [user, isAuthenticated]);
 
-  if (allMovies[0] === "No films") {
+  if (allMovies[0] === "No films" || users[0] === "No films") {
     return (
       <>
         <Header position="sticky" />
         <div className="container">
           <div>
             <h1>No se ha podido encontrar la búsqueda.</h1>
+            
+                <button onClick={()=>window.location.reload()}>Volver al Home</button>
+           
           </div>
         </div>
         <Footer />
@@ -101,14 +114,16 @@ export default function Home() {
       {loaded ? (
         <>
           <Header position="sticky" />
-          {allMovies.length && allMovies[0] !== "No films" ? (
+          {estrenos.length && estrenos[0] !== "No films" ? (
             <>
               <h2 className="Title">Estrenos</h2>
+            
               <Swiper
                 navigation={true}
                 effect={"coverflow"}
                 centeredSlides={true}
-                slidesPerView={window.innerWidth < 768 ? 1 : "auto"}
+                spaceBetween={10}
+                slidesPerView={3}
                 loop={true}
                 coverflowEffect={{
                   rotate: 50,
@@ -119,7 +134,7 @@ export default function Home() {
                 }}
                 className="mySwiper"
               >
-                {allMovies?.map((m) => {
+                {allMovies?.map(m => {
                   return (
                     <div>
                       <SwiperSlide>
@@ -131,17 +146,33 @@ export default function Home() {
                   );
                 })}
               </Swiper>
+            
+
+               {users.lenght !== 0 &&
+                users?.map((user) => {
+                  console.log("USERS", users)
+                  return (
+                    <div>
+                      <h5 className="Title">Usuarios</h5>
+                    <Grid item m={3}> 
+                      <UserCards
+                        title={user.username}
+                        poster={user.image}
+                        country={user.country}
+                        id={user.id}
+                      />        
+                     </Grid> 
+                    </div>
+                  );
+                })} 
 
               <ContainerS>
                 <Grid container spacing={15}>
-                  {/* <Row md={6} lg={6} className="newdiv" > */}
                   {allMovies ? (
                     allMovies?.map((data) => {
-                      // console.log("HOME", data)
-
                       let nombresGen = [];
                       let generos = data.Genres;
-                      generos.forEach((a) => {
+                      generos.forEach(a => {
                         nombresGen.push(a.name);
                       });
 
@@ -173,12 +204,12 @@ export default function Home() {
                       alt="not found"
                     />
                   )}
-                  {/* </Row> */}
-                </Grid> 
+                
+                </Grid>
                 <ParaTi userId={profileInfo?.id} />
                 <Footer />
               </ContainerS>
-             
+
             </>
           ) : (
             <div>

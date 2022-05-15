@@ -58,7 +58,7 @@ const ButtonStyle2 = styled(Button)({
 const PaperStyle4 = styled(Paper)({
   display: "flex",
   width: "1500px",
-  padding: 20,
+  padding: 65,
   justifyContent: "space-around",
   alignItems: "center",
   backgroundColor: "transparent",
@@ -84,6 +84,7 @@ const Container12 = styled(Paper)({
   backgroundColor: "transparent",
   height: "200px",
   boxShadow: "none",
+  paddingBottom:30
 });
 const Container2 = styled(Paper)({
   display: "grid",
@@ -97,8 +98,8 @@ const Container2 = styled(Paper)({
 const GyE = styled(Paper)({
   display: "table-column",
   width: "200px",
-  padding: 10,
-  justifyContent: "space-around",
+  padding: 1,
+  // justifyContent: "space-around",
   alignItems: "center",
   backgroundColor: "transparent",
   opacity: "90%",
@@ -107,7 +108,7 @@ const GyE = styled(Paper)({
 const GyE2 = styled(Paper)({
   display: "flex",
   width: "500px",
-  padding: 10,
+  padding: 1,
   justifyContent: "space-around",
   alignItems: "center",
   backgroundColor: "transparent",

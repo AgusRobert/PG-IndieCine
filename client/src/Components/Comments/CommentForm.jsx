@@ -28,11 +28,10 @@ const BoxGeneral = styled(Box)({
   alignContent:"center",
 });
 const CommentForm = ({ info, closeFn }) => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [text, setText] = useState("");
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     if (text) {
       let commentData = {
@@ -43,15 +42,15 @@ const CommentForm = ({ info, closeFn }) => {
         filmId: info.filmId,
         username: info.username,
         image: info.image,
-      }
-      console.log("COMMENTDATA", commentData)
+      };
+      console.log("COMMENTDATA", commentData);
       if (info.formType === "postear") {
-        dispatch(addComment(commentData))
+        dispatch(addComment(commentData));
       } else {
-        dispatch(updateComment({ ...commentData, id: info.id }))
-        closeFn(false)
+        dispatch(updateComment({ ...commentData, id: info.id }));
+        closeFn(false);
       }
-      setText("")
+      setText("");
     } else {
       Swal.fire({
         title: "Tenes que comentar un mensaje con al menos un carácter! 🙄​",
@@ -68,7 +67,7 @@ const CommentForm = ({ info, closeFn }) => {
       })
     }
   };
-  console.log("texto", text)
+  /* console.log("texto", text) */
   return (
     <form onSubmit={onSubmit}>
       <BoxGeneral>

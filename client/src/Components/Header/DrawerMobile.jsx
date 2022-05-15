@@ -23,6 +23,7 @@ import FilterMoviesByGenre from '../FilterByGenre/FilterMovieByGenre';
 import FilterMovieByCountry from '../FilterByCountry/FilterMoviesByCountry';
 import FilterMovieByDuration from '../FilterByDuration/FilterMoviesByDuration';
 import SearchBar from '../SearchBar/SearchBar';
+import AutoSearch from "../AutoSearch/AutoSearch.jsx";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from 'react-router-dom';
 import { SERVER_BACK } from "../../paths/path.js";
@@ -81,7 +82,8 @@ export default function DrawerMobile(infoUser) {
       <Divider />
       <List>
           <ListItem  disablePadding>
-           <SearchBar />
+           {/* <SearchBar /> */}
+           <AutoSearch />
           </ListItem>
       </List>
     </BoxA>

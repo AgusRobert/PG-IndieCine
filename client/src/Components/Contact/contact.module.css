@@ -34,18 +34,18 @@ ul {
 
 .contactwrapper {
     box-shadow: 0 0 20px 0 rgba(255, 255, 255, .3);
-    padding-top: 100px;
+    padding-top: 0px;
     border-radius: 20%;
 }
 
 .contactwrapper > * {
     padding: 1em;
-    padding-top: 100px;
+    padding-top: 0px;
     border-radius: 20%;
 }
 
 .contactform {
-    background: #222222;
+    background: #1F271B;
     border-radius: 2%;
 }
 
@@ -57,6 +57,8 @@ ul {
 
 .contactform form label {
     display: block;
+    color: #FFF;
+    font-weight: bold;
 }
 
 .contactform form p {
@@ -77,12 +79,15 @@ ul {
     background: none;
     outline: 0;
     color: #fff;
-    border-bottom: 1px solid #8208ff;
+    border-bottom: 1px solid #A249D6;
 }
 
 .contactform form button {
-    background: #8208ff;
+    background: #A249D6;
     border: 0;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 5px;
     text-transform: uppercase;
     padding: 1em;
     cursor: pointer;
@@ -92,6 +97,7 @@ ul {
     text-align: center;
     font-size: 2em;
     margin-bottom: 1em;
+    color: #F4B942;
 }
 .contactform form button:hover,
 .contactform form button:focus {

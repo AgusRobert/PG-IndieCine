@@ -36,7 +36,8 @@ export default function OrderAZ() {
         <SelectStyle
           select
           label="Orden alfabético"
-          value={ordenAlfabetico}
+          /* value={ordenAlfabetico} */
+          value=""
           onChange={handleSort}
           variant="outlined"
           size="small"

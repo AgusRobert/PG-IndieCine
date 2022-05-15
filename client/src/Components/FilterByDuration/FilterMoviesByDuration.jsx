@@ -31,6 +31,7 @@ export default function FilterMovieByDuration() {
         name="select"
         onChange={onSelectChange}
         select
+        value=""
         label="
         Duración"
         variant="outlined"

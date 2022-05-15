@@ -6,26 +6,58 @@ import {
   getMovies,
   getGenres,
   getCountries,
+  getUsers,
 } from "../../redux/actions/index";
 import { useEffect } from "react";
+import "./AutoSearch.css"
+import { Button, TextField } from "@mui/material";
+import { deepPurple } from "@mui/material/colors";
+import { styled, Box } from "@mui/system";
+import MenuItem from "@mui/material/MenuItem";
 
-export default function AutoSearch() {
+const MenuItemStyle = styled(MenuItem)({
+  marginLeft: "auto",
+  color: "black",
+  backgroundColor: "#b388ff",
+});
+
+const SelectStyle = styled(TextField)({
+  borderRadius: 2,
+  width: 160,
+  padding: 0,
+});
+
+const ButtonStyle = styled(Button)({
+  color: "black",
+  borderColor: deepPurple[500],
+  backgroundColor: deepPurple[700],
+  padding: 8,
+});
+
+export default function AutoSearch(/* genres, allMovies, countries */ ) {
+  let key = 1;
   const [value, setValue] = useState("");
   const [presidenteSeleccionado, setPresidenteSeleccionado] = useState({});
 
   const genres = useSelector((state) => state.genres);
   const allMovies = useSelector((state) => state.peliculas);
   const countries = useSelector((state) => state.countries);
+  const users = useSelector((state) => state.users);
 
-  genres?.forEach((g) => {
+
+  genres?.forEach(g => {
     return delete g.id;
   });
-  countries?.forEach((g) => {
+  countries?.forEach(g => {
     return delete g.id;
   });
 
-  let nombres = allMovies?.map((p) => {
+  let nombres = allMovies?.map(p => {
     return { name: p.title };
+  });
+
+  let usuarios = users?.map((u) => {
+    return { name: u.username};
   });
 
   let dires = allMovies?.map((p) => {
@@ -34,20 +66,20 @@ export default function AutoSearch() {
 
   let elenco = [];
 
-  let actores = allMovies?.map((p) => {
-    p.mainActors?.map((a) => {
+  let actores = allMovies?.map(p => {
+    p.mainActors?.map(a => {
       elenco.push(a);
     });
   });
 
-  let elenco2 = elenco?.map((p) => {
+  let elenco2 = elenco?.map(p => {
     return { name: p };
   });
 
-  let data = genres?.concat(nombres, dires, elenco2, countries);
+  let data = genres?.concat(nombres, dires, elenco2, countries, usuarios);
 
   const [presidentes, setPresidentes] = useState(data);
-  console.log("SIRVEE", data);
+  /* console.log("SIRVEE", data); */
 
   let dispatch = useDispatch();
 
@@ -57,17 +89,19 @@ export default function AutoSearch() {
     !genres?.length && dispatch(getGenres());
 
     !countries?.length && dispatch(getCountries());
+
+    !users?.length && dispatch(getUsers())
   }, [allMovies?.length, genres?.length, dispatch]);
 
   const onSuggestionsFetchRequested = ({ value }) => {
     setPresidentes(filtrarPresidentes(value));
   };
 
-  const filtrarPresidentes = (value) => {
+  const filtrarPresidentes = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    var filtrado = data.filter((presidente) => {
+    var filtrado = data.filter(presidente => {
       var textoCompleto = presidente.name;
 
       if (
@@ -88,20 +122,26 @@ export default function AutoSearch() {
     setPresidentes([]);
   };
 
-  const getSuggestionValue = (suggestion) => {
+  const getSuggestionValue = suggestion => {
     return `${suggestion.name}`;
   };
 
-  const renderSuggestion = (suggestion) => (
+  const renderSuggestion = suggestion => (
     <div
-      className="sugerencia"
-      onClick={() => seleccionarPresidente(suggestion)}
+     onClick={() => seleccionarPresidente(suggestion)}
     >
-      {`${suggestion.name}`}
+     
+
+<Box>
+       
+       <MenuItemStyle key={key++} value={`${suggestion.name}`}>
+            {`${suggestion.name}`}
+          </MenuItemStyle>
+    </Box>
     </div>
   );
 
-  const seleccionarPresidente = (presidente) => {
+  const seleccionarPresidente = presidente => {
     setPresidenteSeleccionado(presidente);
   };
 
@@ -115,7 +155,7 @@ export default function AutoSearch() {
     onChange,
   };
 
-  const eventEnter = (e) => {
+  const eventEnter = e => {
     if (e.key == "Enter") {
       var split = e.target.value.split("-");
       var presidente = {
@@ -126,7 +166,10 @@ export default function AutoSearch() {
   };
 
   function handleSearch(presidenteSeleccionado) {
-    dispatch(searchPelicula_Actor(presidenteSeleccionado));
+   console.log("QUEMANDA", presidenteSeleccionado)
+   presidenteSeleccionado !==undefined? dispatch(searchPelicula_Actor(presidenteSeleccionado.toString()))
+   : dispatch(searchPelicula_Actor("aseafasrafs"))
+
   }
 
   return (
@@ -141,9 +184,20 @@ export default function AutoSearch() {
         onSuggestionSelected={eventEnter}
       />
       <br />
-      <button onClick={() => handleSearch(presidenteSeleccionado.name)}>
+      <ButtonStyle
+        sx={{
+          ":hover": {
+            bgcolor: "#ffc107",
+            color: "black",
+            borderBlockColor: deepPurple[200],
+            borderInlineStartColor: deepPurple[900],
+            borderInlineEndColor: deepPurple[900],
+          },
+        }}
+        onClick={() => handleSearch(presidenteSeleccionado.name)}
+      >
         Buscar
-      </button>
+      </ButtonStyle>
     </div>
   );
 }

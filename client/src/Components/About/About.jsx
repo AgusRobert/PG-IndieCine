@@ -53,7 +53,7 @@ const style = {
 };
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: "#b388ff",
+  backgroundColor: "#682F8A",
   position: "fixed",
   justifyContent: "space-between",
   alignItems: "center",
@@ -67,7 +67,7 @@ const BoxStyle = styled(Box)({
   justifyItems: "flex-end",
 });
 const Titulo = styled(Typography)({
-  color: "#e0e0e0",
+  color: "#1F271B",
   fontSize: "45px",
   fontFamily: "Koulen"
 });
@@ -77,7 +77,7 @@ const PaperStyle = styled(Paper)({
   padding: 25,
   justifyContent: "space-around",
   alignItems: "center",
-  backgroundColor: grey[800],
+  backgroundColor: "#1F271B",
   borderRadius: 20,
   opacity: "80%"
 });
@@ -87,7 +87,7 @@ const ImgStyle = styled("img")({
   color:"white"
 });
 const ItemStyle = styled(Item)({
-  backgroundColor: grey[800],
+  backgroundColor: "#1F271B",
   fontWeight: 'bold'
 });
 
@@ -118,7 +118,7 @@ export default function About() {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            bgcolor="#5e35b1"
+            bgcolor="#FFBE0B"
             color="#e0e0e0"
             fontSize={24}
             position={"relative"}
@@ -220,7 +220,7 @@ export default function About() {
                     sx={{
                       color: grey[200],
                       ":hover": {
-                        color: amber[400],
+                        color: "#FFBE0B",
                       },
                     }}
                     fontSize="large"
