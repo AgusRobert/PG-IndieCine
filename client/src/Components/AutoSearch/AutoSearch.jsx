@@ -128,34 +128,15 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
 
   const renderSuggestion = suggestion => (
     <div
-    /* className="sugerencia" */
      onClick={() => seleccionarPresidente(suggestion)}
     >
-     {/* {`${suggestion.name}`} */}
+     
 
 <Box>
-  {/*     <SelectStyle
-        name="select"
-        onClick={() => seleccionarPresidente(suggestion)}
-    
-        label={`${suggestion.name}`}
-        variant="outlined"
-        size="small"
-        sx={{
-          ":active": {
-            color: "black",
-            borderColor: deepPurple[600],
-          },
-          ":focused": {
-            borderColor: deepPurple[600],
-          },
-        }}
-      > */}
        
        <MenuItemStyle key={key++} value={`${suggestion.name}`}>
             {`${suggestion.name}`}
           </MenuItemStyle>
-      {/* </SelectStyle> */}
     </Box>
     </div>
   );
@@ -185,7 +166,10 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
   };
 
   function handleSearch(presidenteSeleccionado) {
-    dispatch(searchPelicula_Actor(presidenteSeleccionado));
+   console.log("QUEMANDA", presidenteSeleccionado)
+   presidenteSeleccionado !==undefined? dispatch(searchPelicula_Actor(presidenteSeleccionado.toString()))
+   : dispatch(searchPelicula_Actor("aseafasrafs"))
+
   }
 
   return (

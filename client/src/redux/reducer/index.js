@@ -111,6 +111,7 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           pelisfiltradas: ["No films"],
+          usersfiltrados: ["No films"]
         };
       }
 
@@ -246,7 +247,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_COUNTRIES:
-      console.log("payload de countries", action.payload);
+    /*   console.log("payload de countries", action.payload); */
       return {
         ...state,
         countries: action.payload,
