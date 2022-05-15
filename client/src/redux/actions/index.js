@@ -30,6 +30,7 @@ import {
   GET_USERS,
   CLEAN_STATE,
   GET_PROFILE_INFO_BY_ID,
+  GET_PROFILE_INFO_BY_ID_USER,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -58,8 +59,8 @@ export function getUsers() {
     } catch (error) {
       console.log(error);
     }
-  };}
-
+  };
+}
 
 export function sortName(payload) {
   //ordenar por nombre asc o desc
@@ -200,11 +201,10 @@ export function renderMovieDetails(id) {
 export function cleanState() {
   return async function (dispatch) {
     return dispatch({
-      type: CLEAN_STATE, 
+      type: CLEAN_STATE,
     });
   };
 }
-
 
 export function signUpFunction(userData) {
   return async function (dispatch) {
@@ -253,6 +253,7 @@ export function getFavorites(id) {
   return async function (dispatch) {
     try {
       var pelisFav = await axios.get(`${SERVER_BACK}/users/getFavs/${id}`);
+      console.log("ACTION", pelisFav.data);
       return dispatch({
         type: GET_FAV,
         payload: pelisFav.data,
@@ -323,6 +324,20 @@ export function getProfileInfoById(id) {
       let response = await axios.get(`${SERVER_BACK}/users/${id}`);
       return dispatch({
         type: GET_PROFILE_INFO_BY_ID,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getUserInfoById", error);
+    }
+  };
+}
+
+export function getProfileInfoByIdListUser(id) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(`${SERVER_BACK}/users/${id}`);
+      return dispatch({
+        type: GET_PROFILE_INFO_BY_ID_USER,
         payload: response.data,
       });
     } catch (error) {

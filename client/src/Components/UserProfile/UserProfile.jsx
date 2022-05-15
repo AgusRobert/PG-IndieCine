@@ -5,14 +5,16 @@ import Footer from "../Footer/Footer.jsx";
 import {
   getMovies,
   getProfileInfoById,
+  getFavorites,
 } from "../../redux/actions/index";
 import { styled } from "@mui/system";
 import Cartas from "../Cartas/Cartas.jsx";
 import CafecitoBtn from "../CafecitoBtn/CafecitoBtn.jsx";
 import { AppBar, Box, Paper, Typography, Grid } from "@mui/material";
-import {grey } from "@mui/material/colors";
-/* import logo from "./LOGO.png"; */
+import { grey } from "@mui/material/colors";
+import logo from "../Header/LOGO.png";
 import "./style.css";
+import FavListUser from "../FavList/FavListUser";
 
 const ImgFav = styled("img")({
   height: "auto",
@@ -75,8 +77,7 @@ const PaperTitulo = styled(Paper)({
   boxShadow: "none",
   alignItems: "left",
   width: "200",
-  height: "auto"
-
+  height: "auto",
 });
 
 const AppStyle = styled(AppBar)({
@@ -87,46 +88,40 @@ const AppStyle = styled(AppBar)({
   alignItems: "center",
 });
 
-
 export default function UserProfile() {
   let dispatch = useDispatch();
 
   let { id } = useParams();
-  let filmId = id;
 
-  const allMovies = useSelector((state) => state.pelisfiltradas);
-  const profileInfo = useSelector((state) => state.profileInfo);
+  const allMovies = useSelector(state => state.pelisfiltradas);
+  const profileInfo = useSelector(state => state.profileInfo);
+  let favs = useSelector(state => state.favorites);
 
-  /* console.log(profileInfo); */ //PROPIEDADES USUARIO DEL PERFIL
+  /* console.log("LOSFAVS", favs); */
+  /*  console.log("ELIDELPERFILQUEESTOYMIRANDO", id); */
 
-  const pelisdeluser = allMovies.filter(
-    (peli) => peli.UserId === profileInfo.id
-  );
+  const pelisdeluser = profileInfo?.Films;
 
-  let idPeli = pelisdeluser.map((a) => a.id);
+  console.log("FILTRO", pelisdeluser);
 
-  /* console.log(pelisdeluser); */ //PELICULAS DEL USUARIO DEL PERFIL
+  console.log("PELICULAS USER", profileInfo); //PELICULAS DEL USUARIO DEL PERFIL
 
   useEffect(() => {
     dispatch(getMovies());
-    dispatch(getProfileInfoById(filmId));
+    dispatch(getProfileInfoById(id));
+    dispatch(getFavorites(id));
   }, [dispatch]);
 
-
-
-return (
-  <>
-
-    
+  return (
     <>
-    <AppStyle>
+      <>
+        <AppStyle>
           <Link to={"/"}>
-            <img src="" alt="img not found" />
+            <img src={logo} alt="img not found" />
           </Link>
         </AppStyle>
 
         <Box>
-          
           {/* <div className="detalles"> */}
           <div className="detalle3"></div>
           <PaperTop>
@@ -135,69 +130,72 @@ return (
                 src={profileInfo?.image}
                 alt="Poster"
                 className="imgPoster"
-                height= "300px"
+                height="300px"
               />
             </PaperStyle>
             {/* </div> */}
             <PaperMid>
               <PaperStyle5>
                 <PaperTitulo>
-                  
                   <h5 className="Title">Nombre completo</h5>
-                  <h2>{profileInfo?.name}{" "}{profileInfo?.surname}</h2>
+                  <h2>
+                    {profileInfo?.name} {profileInfo?.surname}
+                  </h2>
 
                   <h5 className="Title">Nombre de usuario</h5>
                   <h2>{profileInfo?.username}</h2>
 
-                  <h5 className="Title">País de origen</h5>
+                  <h5 className="Title">PaÃ­s de origen</h5>
                   <h2>{profileInfo?.country}</h2>
-
                 </PaperTitulo>
               </PaperStyle5>
-
             </PaperMid>
           </PaperTop>
-          <PaperBot>
-            
-            
-          </PaperBot>{" "}
+          <PaperBot></PaperBot>{" "}
           <div className="detalles4">
             {profileInfo?.cafecito && (
               <CafecitoBtn linkCafecito={profileInfo.cafecito} />
             )}
-            
 
             <h5 className="Title">Proyectos</h5>
             <div>
-            <Grid container spacing={15}>
-          {pelisdeluser ? (
-            pelisdeluser?.map((data) => {
-              console.log(data);
-              return (
-                <Grid item m={3}>
-                  <Cartas
-                    id={data.id}
-                    title={data.title}
-                    poster={data.poster}
+              <Grid container spacing={15}>
+                {pelisdeluser ? (
+                  pelisdeluser?.map(data => {
+                    console.log(data);
+                    return (
+                      <Grid item m={3}>
+                        <Cartas
+                          id={data.id}
+                          title={data.title}
+                          poster={data.poster}
+                        />
+                      </Grid>
+                    );
+                  })
+                ) : (
+                  <img
+                    src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
+                    alt="not found"
                   />
-                </Grid>
-              );
-            })
-          ) : (
-            <img
-              src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
-              alt="not found"
-            />
-          )}
-          </Grid>
-        </div>
-            
+                )}
+              </Grid>
+            </div>
+          </div>
+          <div>
+            <div>
+              <h5 className="Title">
+                Peliculas favoritas de {profileInfo?.name}
+              </h5>
+            </div>
+            <div>
+              <h2>Lista de peliculas favoritas.</h2>
+              {profileInfo?.id && <FavListUser userId={id} />}
+            </div>
           </div>
           <Footer />
         </Box>
-       
+      </>
     </>
-  </>
-);
+  );
 }
-

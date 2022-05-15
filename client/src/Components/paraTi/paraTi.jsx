@@ -25,7 +25,7 @@ export default function ParaTi({ userId }) {
     }
   }, []);
 
- /*  console.log("allMovies", allMovies); */
+  /*  console.log("allMovies", allMovies); */
   /* console.log("allMovies", allMovies); */
 
   let genres = favorites.map(p => p.Genres.map(g => g.name)).flat();
@@ -54,14 +54,14 @@ export default function ParaTi({ userId }) {
     if (!igual) recomendadosClean.push(recomendados4[i]);
   }
 
- /*  console.log("GENEROOOOS", recomendadosClean); */
+  /*  console.log("GENEROOOOS", recomendadosClean); */
   /* console.log("GENEROOOOS", recomendadosClean); */
 
   return (
     <>
       {favorites.length ? (
         <div>
-          <h4 className="Title">Para ti</h4>
+          <h4 className="Title paraTi">Para ti</h4>
           {recomendadosClean?.map(data => {
             let nombresGen = [];
             let generos = data.Genres;

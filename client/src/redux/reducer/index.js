@@ -27,6 +27,7 @@ import {
   DELETE_COMMENT,
   GET_USERS,
   CLEAN_STATE,
+  GET_PROFILE_INFO_BY_ID_USER,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -42,9 +43,10 @@ const initialState = {
   plans: [],
   paymentLink: "",
   profileInfo: {},
+  profileInfoUser: {},
   comments: [],
   users: [],
-  usersfiltrados:[],
+  usersfiltrados: [],
   perfilUsuario: {},
 };
 
@@ -65,15 +67,16 @@ function rootReducer(state = initialState, action) {
         return contador;
       };
 
-      let userFiltro = usersporfiltrar.filter((data) => {
+      let userFiltro = usersporfiltrar.filter(data => {
         if (
-            data.username.toLowerCase().indexOf(action.payload.toLowerCase()) !==
-              -1
+          data?.username.toLowerCase().indexOf(action.payload.toLowerCase()) !==
+          -1
         ) {
           return data;
-        } }) 
+        }
+      });
 
-      let peliFiltro = pelisporfiltrar.filter((data) => {
+      let peliFiltro = pelisporfiltrar.filter(data => {
         if (
           data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
             -1 ||
@@ -97,20 +100,16 @@ function rootReducer(state = initialState, action) {
           pelisfiltradas: peliFiltro,
           usersfiltrados: []
         };
-      } 
-      
-      else if (userFiltro.length) {
+      } else if (userFiltro.length) {
         return {
           ...state,
-          usersfiltrados: userFiltro
+          usersfiltrados: userFiltro,
         };
-      }
-      
-      else {
+      } else {
         return {
           ...state,
           pelisfiltradas: ["No films"],
-          usersfiltrados: ["No films"]
+          usersfiltrados: ["No films"],
         };
       }
 
@@ -121,13 +120,11 @@ function rootReducer(state = initialState, action) {
         pelisfiltradas: action.payload,
       };
 
-      
-
-      case GET_USERS:
+    case GET_USERS:
       return {
         ...state,
         users: action.payload,
-      }
+      };
 
     case ORDER_DATE:
       let orderMoviesDate = [...state.pelisfiltradas];
@@ -246,7 +243,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_COUNTRIES:
-    /*   console.log("payload de countries", action.payload); */
+      /*   console.log("payload de countries", action.payload); */
       return {
         ...state,
         countries: action.payload,
@@ -259,12 +256,11 @@ function rootReducer(state = initialState, action) {
         detalle: action.payload /* Object.keys(action.payload) */,
       };
 
-      case CLEAN_STATE:
-        
-        return {
-          ...state,
-          detalle: {} /* Object.keys(action.payload) */,
-        }
+    case CLEAN_STATE:
+      return {
+        ...state,
+        detalle: {} /* Object.keys(action.payload) */,
+      };
 
     // case SIGN_UP_USER:
     //   return {
@@ -308,6 +304,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         profileInfo: action.payload,
+      };
+    case GET_PROFILE_INFO_BY_ID_USER:
+      return {
+        ...state,
+        profileInfoUser: action.payload,
       };
 
     // case GET_USER_INFO:
