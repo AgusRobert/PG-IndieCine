@@ -21,7 +21,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import logo from "./LOGO.png";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfileInfo } from "../../redux/actions/index.js";
+import { getProfileInfo, validateSubscription } from "../../redux/actions/index.js";
 import { SERVER_BACK } from "../../paths/path.js";
 import { useTheme, useMediaQuery } from "@mui/material";
 import DrawerM from "./Drawer.jsx";
@@ -71,6 +71,8 @@ export default function Header(/* genres, allMovies, countries */) {
     if (infoUser?.status === "admin")
       window.location.href = `${SERVER_BACK}/admin`;
     else {
+      // dispacth(getProfileInfo(user.email));
+      // dispacth(validateSubscription(user.email));
       navigate("/profile");
     }
   }

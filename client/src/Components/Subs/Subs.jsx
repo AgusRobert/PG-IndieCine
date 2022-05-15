@@ -20,22 +20,21 @@ import MovieCreationIcon from "@mui/icons-material/MovieCreation";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2";
 
-export default function Subs(currentSub) {
-  console.log("currentSub", currentSub.currentSub);
+export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }) {
+  console.log("currentSub", currentSub);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const plans = useSelector((state) => state.plans);
+  // const plans = useSelector((state) => state.plans);
   const paymentLink = useSelector((state) => state.paymentLink);
 
-  useEffect(() => {
-    dispatch(getPlanInfo());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getPlanInfo());
+  // }, []);
 
   useEffect(() => {
-    // console.log("LO QUE SEA", paymentLink);
     if (paymentLink !== "") {
-      console.log("ya no soy un array vacio", paymentLink);
+      // console.log("ya no soy un array vacio", paymentLink);
       window.location.replace(paymentLink);
     }
   }, [paymentLink]);
@@ -50,13 +49,14 @@ export default function Subs(currentSub) {
       payer_email: user?.email,
     };
     if (plan.name.toLowerCase() === "free") {
-      dispatch(cancelSubscription(user?.email));
-      Swal.fire("Ahora seras un simple mortal!!").then((result) => {
-        window.location.reload();
-      });
-      // dispatch(paySubscription(nuestroPlan)); //--> de cualquier plan a 'Free'
+      dispatch(cancelSubscription(user?.email));//--> de cualquier plan a 'Free'
+      // Swal.fire("Ahora seras un simple mortal!!").then((result) => {
+      //   window.location.reload();
+      // });
+      planChangeFn(true)
     } else {
       dispatch(paySubscription(nuestroPlan));
+      planChangeFn(true)
       // dispatch(
       //   updateUser({
       //     email: user?.email,
@@ -67,10 +67,12 @@ export default function Subs(currentSub) {
     }
   };
 
-  const onCancel = (e) => {
-    
+  const onCancel = () => {
     dispatch(cancelSubscription(user.email));
-    Swal.fire("Ahora seras un simple mortal!!").then((result) => {
+    planCanceledFn(true)
+    Swal.fire("Ahora tendrás el plan Free!!").then(() => {
+      // usamos el window.location.reload() para que se actualice la pagina para que se vea el cambio de plan
+      // está hardcodeado porque no se encontró la solución óptima en el useEffect.
       window.location.reload();
     });
   };
@@ -97,7 +99,6 @@ export default function Subs(currentSub) {
                     >
                       <MovieCreationIcon />
                       Plan "{esteplan.name}"
-                      {/* {console.log("ESTE PLAN", esteplan.name)} */}
                     </h3>
                     <h2
                       style={{
@@ -132,12 +133,12 @@ export default function Subs(currentSub) {
                   </CardContent>
 
                   <CardActions>
-                    {currentSub?.currentSub.toLowerCase() ===
-                    esteplan.name.toLowerCase() ? (
+                    {currentSub?.toLowerCase() ===
+                      esteplan.name.toLowerCase() ? (
                       <Button
                         size="small"
-                        onClick={(e) => {
-                          onCancel(e);
+                        onClick={() => {
+                          onCancel();
                         }}
                         disabled={esteplan.id === 1 ? true : false}
                       >

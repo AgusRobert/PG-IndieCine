@@ -31,6 +31,7 @@ import {
   CLEAN_STATE,
   GET_PROFILE_INFO_BY_ID,
   CANCEL_SUBSCRIPTION,
+  DELETE_EXCEDED_FILMS,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -86,6 +87,27 @@ export function postMovie(movieForm) {
     const response = (await axios.post(`${SERVER_BACK}/films`, movieForm))
       ?.data;
     return { type: "POST_PELI", payload: response };
+  };
+}
+
+export function deleteExcededFilms(filmsIdToDelete , userId) {
+  return async function (dispatch) {
+    try {
+      // borro los pelis que exceden el limite
+      await axios.delete(`${SERVER_BACK}/users/del`, {
+        data: {
+          filmsIdToDelete: filmsIdToDelete,
+        },
+      });
+      // obtengo los pelis actuales del usuario
+      let actualFilms = await axios.get(`${SERVER_BACK}/users/getFilmsById/${userId}`);
+      return dispatch({
+        type: DELETE_EXCEDED_FILMS,
+        payload: actualFilms.data,
+      });
+    } catch (error) {
+      console.log("deleteExcededFilms action", error);
+    }
   };
 }
 
@@ -414,13 +436,14 @@ export function cancelSubscription(email) {
       //cancelo la suscripción.
       await axios.put(`${SERVER_BACK}/payment/cancel/${id.data}`);
       //actualizo la prop subscription en 'Free'
-      await axios.put(`${SERVER_BACK}/users/modif`, {
+      const userUpdated = await axios.put(`${SERVER_BACK}/users/modif`, {
         email: email,
         subcription: "Free",
-        status: 'creator approved'
+        status: "creator approved",
       });
       return {
         type: CANCEL_SUBSCRIPTION,
+        payload: userUpdated.data,
       };
     } catch (error) {
       console.log("cancelSubscription action", error);

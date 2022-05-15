@@ -145,3 +145,37 @@ exports.updateFilm = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteFilm = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await Film.destroy({
+      where: {
+        id: id,
+      },
+    });
+    res.send({ msg: "La pelicula se eliminó con éxito" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteFilms = async (req, res, next) => {
+  try {
+    const { filmsIdToDelete } = req.body;
+    if (filmsIdToDelete.length) {
+      filmsIdToDelete.forEach(async (filmId) => {
+        await Film.destroy({
+          where: {
+            id: filmId,
+          },
+        });
+      });
+      res.json({ msg: "Las peliculas se eliminaron con éxito" });
+    } else {
+      res.json({ msg: "No hay películas para eliminar" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};

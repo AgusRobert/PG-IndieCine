@@ -13,6 +13,7 @@ import {
   updateUser,
   getMovies,
   getPlanInfo,
+  deleteExcededFilms,
 } from "../../redux/actions";
 import { /*Box,*/ Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
@@ -81,8 +82,17 @@ export default function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [upgradeBtn, setUpgradeBtn] = useState(false);
+  // estado que controla cuando el CreatorForm fue llenado.
   const [fillForm, setFillForm] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  // planChanged y planCanceled intentan solucionar el problema del renderizado cuando se cambia de plan.
+  const [planChanged, setPlanChanged] = useState(false);
+  const [planCanceled, setPlanCanceled] = useState(false);
+  // con el render intentamos que se vuelva a ejecutar el useEffect para que actualize el renderizado
+  const [render, setRender] = useState(false);
+  // estado que controla cuando el usuario está excedido de su plan.
+  const [outLimit, setOutLimit] = useState(false);
+  const [filmsToDelete, setFilmsToDelete] = useState([]);
 
   const profileInfo = useSelector((state) => state.profileInfo);
   const plans = useSelector((state) => state.plans);
@@ -94,21 +104,65 @@ export default function Profile() {
     (peli) => peli.UserId === profileInfo.id
   );
 
-  var cont = 0;
+  // var cont = 0;
   useEffect(() => {
     dispatch(getPlanInfo());
     dispatch(getMovies());
     if (user) {
       dispatch(getProfileInfo(user.email));
-      if (cont === 0) {
-        dispatch(validateSubscription(user.email));
-        cont++;
-      }
+      // setRender(true);
+      // if (cont === 0) {
+      profileInfo?.creator && dispatch(validateSubscription(user.email));
+      // cont++;
+      // }
       profileInfo?.status &&
         setFillForm(profileInfo.status === "registered" ? false : true);
       setLoaded(true);
+      limitedeluser[0] > pelisdeluser.length && setOutLimit(true);
+      limitedeluser[0] <= pelisdeluser.length && setOutLimit(false);
     }
-  }, [fillForm, dispatch]);
+  }, [fillForm, dispatch, planChanged, planCanceled, render]);
+
+  // funcion para que vuelva a ejecutar el useEffect cuando se cambie el plan
+  const handlePlanChange = (payload) => {
+    setPlanChanged(payload);
+  }
+  // funcion para que vuelva a ejecutar el useEffect cuando se cancele el plan para volver a Free
+  const handlePlanCancel = (payload) => {
+    setPlanCanceled(payload);
+  }
+
+  // -- Feature para que el usuario pueda eliminar sus proyectos excedentes al limite permitido -- //
+  const addProjectToDelete = (e) => {
+    filmsToDelete.push(e.target.id);
+  }
+
+  const handleProjectsToDelete = () => {
+    setFilmsToDelete(
+      filmsToDelete.filter((film) => film.id !== peli.id)
+    )
+  }
+
+  const deleteProjects = () => {
+    //en el estado local filmsToDelete tengo un array con los id 
+    // de los proyectos que quiero borrar
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Una vez borrados no podrás recuperarlos",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteExcededFilms(filmsToDelete, profileInfo.id));
+        setFilmsToDelete([]);
+      }
+    })
+  }
+  // -------------------------------------------------------------------------------------------- //
 
   // Config del modal
   const [open, setOpen] = useState(false);
@@ -266,6 +320,7 @@ export default function Profile() {
                 </BoxFav>
               </Modal>
             </Container> */}
+
             </Container>
           </StyledContainer>
 
@@ -275,7 +330,8 @@ export default function Profile() {
           </StyledContainer2>
 
           <StyledContainer3>
-            {profileInfo?.status === "creator approved" && (
+            {/* Los proyectos del usuario, mientras la cantidad de proyectos sea menos o igual a su limite */}
+            {profileInfo?.status === "creator approved" && profileInfo?.creator === true && !outLimit && (
               <>
                 <h2>Mis Proyectos</h2>
                 <ul>
@@ -294,11 +350,47 @@ export default function Profile() {
               </>
             )}
 
+            {/* Caso en que el usuario supere su limite de proyectos */}
+            {profileInfo?.status === "creator approved" && profileInfo?.creator === true && outLimit && (
+              <>
+                {Swal.fire({
+                  title: "¡Atención!",
+                  text: "Tienes más peliculas que las permitidas para tu plan.",
+                  icon: "warning",
+                })}
+                <h2>Mis Proyectos</h2>
+                <h4>Para continuar, debe elegir los proyectos que desea eliminar</h4>
+                <ul>
+                  {pelisdeluser.map((peli) => {
+                    return (
+                      <li key={peli.id}>
+                        <button onClick={addProjectToDelete}>{peli.title}</button>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <div>
+                  <p>Proyectos a borrar:</p>
+                  {
+                    filmsToDelete.map((peli) => {
+                      return (
+                        <>
+                          <p>{peli.title}</p>
+                          <button onClick={handleProjectsToDelete}>x</button>
+                        </>
+                      )
+                    })
+                  }
+                </div>
+                <button onClick={deleteProjects}>Listo</button>
+              </>
+            )}
+
             {/* {console.log("profileInfo", profileInfo)} */}
             {profileInfo?.creator === true && profileInfo.status !== "pending" && (
               <>
                 {/* <h2>{profileInfo?.subcription}</h2> */}
-                <Subs currentSub={profileInfo?.subcription} />
+                <Subs currentSub={profileInfo?.subcription} plans={plans} planChangeFn={handlePlanChange} planCanceledFn={handlePlanCancel} />
               </>
             )}
 
