@@ -47,6 +47,7 @@ export default function Home() {
   const { user, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
   const allMovies = useSelector((state) => state.pelisfiltradas);
+  const estrenos= allMovies?.slice(-7).reverse();
   const users = useSelector((state) => state.usersfiltrados);
 /*   console.log("LOSUSERS", users); */
   const { profileInfo } = useSelector((state) => state);
@@ -89,13 +90,16 @@ export default function Home() {
     }
   }, [user, isAuthenticated]);
 
-  if (allMovies[0] === "No films") {
+  if (allMovies[0] === "No films" || users[0] === "No films") {
     return (
       <>
         <Header position="sticky" />
         <div className="container">
           <div>
             <h1>No se ha podido encontrar la búsqueda.</h1>
+            
+                <button onClick={()=>window.location.reload()}>Volver al Home</button>
+           
           </div>
         </div>
         <Footer />
@@ -107,7 +111,7 @@ export default function Home() {
       {loaded ? (
         <>
           <Header position="sticky" />
-          {allMovies.length && allMovies[0] !== "No films" ? (
+          {estrenos.length && estrenos[0] !== "No films" ? (
             <>
               <h2 className="Title">Estrenos</h2>
             
@@ -141,15 +145,16 @@ export default function Home() {
             
 
                {users.lenght !== 0 &&
-                users.map((user) => {
+                users?.map((user) => {
+                  console.log("USERS", users)
                   return (
                     <div>
-                      <h1>USUARIOS</h1>
+                      <h5 className="Title">Usuarios</h5>
                     <Grid item m={3}> 
                       <UserCards
                         title={user.username}
                         poster={user.image}
-                        year={user.country}
+                        country={user.country}
                         id={user.id}
                       />        
                      </Grid> 
