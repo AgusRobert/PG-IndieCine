@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getPlanInfo, subscribe, paySubscription } from "../../redux/actions";
+import { getPlanInfo, subscribe, paySubscription, cancelSubscription, upgradeSubscription, updateUser } from "../../redux/actions";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -13,6 +13,7 @@ import MovieCreationIcon from "@mui/icons-material/MovieCreation";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Subs(currentSub) {
+  console.log("currentSub", currentSub.currentSub)
   const dispatch = useDispatch();
 
   const plans = useSelector(state => state.plans);
@@ -23,7 +24,7 @@ export default function Subs(currentSub) {
   }, []);
 
   useEffect(() => {
-    console.log("LO QUE SEA", paymentLink);
+    // console.log("LO QUE SEA", paymentLink);
     if (paymentLink !== "") {
       console.log("ya no soy un array vacio", paymentLink);
       window.location.replace(paymentLink);
@@ -32,16 +33,29 @@ export default function Subs(currentSub) {
 
   const { user } = useAuth0();
 
-  const onSubscribe = id => {
-    let plan = {
-      reason: plans[id - 1]?.name,
-      transaction_amount: plans[id - 1]?.price,
+  const onSubscribe = (plan) => {
+    let nuestroPlan = {
+      reason: plan.name,
+      transaction_amount: plan.price,
       currency_id: "ARS",
       payer_email: user?.email,
     };
-    dispatch(paySubscription(plan));
-    console.log("ONSUBSCRIBE");
+    if (plan.name.toLowerCase() === "free") {
+      dispatch(paySubscription(nuestroPlan)); //--> de cualquier plan a 'Free'
+    } else {
+      dispatch(paySubscription(nuestroPlan)); 
+      dispatch(updateUser({
+        email: user?.email,
+        status: 'pending',
+      }))
+      // dispatch(upgradeSubscription(nuestroPlan)) // --> de cualquier plan a otro plan
+    }
   };
+
+  const onCancel = (e) => {
+    e.preventDefault();
+    dispatch(cancelSubscription(user.email))
+  }
 
   return (
     <>
@@ -65,7 +79,7 @@ export default function Subs(currentSub) {
                     >
                       <MovieCreationIcon />
                       Plan "{esteplan.name}"
-                      {console.log("ESTE PLAN", esteplan.name)}
+                      {/* {console.log("ESTE PLAN", esteplan.name)} */}
                     </h3>
                     <h2
                       style={{
@@ -100,16 +114,24 @@ export default function Subs(currentSub) {
                   </CardContent>
 
                   <CardActions>
-                    {currentSub?.currentSub === esteplan.name ? (
-                      <h3> Éste es tu plan actual</h3>
+                    {currentSub?.currentSub.toLowerCase() === esteplan.name.toLowerCase() ? (
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          onCancel(esteplan.id);
+                        }}
+                        disabled={esteplan.id === 1 ? true : false}
+                      >
+                        <h3>CANCELAR</h3>
+                      </Button>
                     ) : (
                       <Button
                         size="small"
                         onClick={() => {
-                          onSubscribe(esteplan.id);
+                          onSubscribe(esteplan);
                         }}
                       >
-                        MEJORA TU PLAN
+                        <h3>SELECCIONAR PLAN</h3>
                       </Button>
                     )}
                   </CardActions>

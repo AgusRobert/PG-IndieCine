@@ -93,7 +93,7 @@ export default function Profile() {
   const pelisdeluser = allMovies.filter(
     (peli) => peli.UserId === profileInfo.id
   );
-  
+
   var cont = 0;
   useEffect(() => {
     dispatch(getPlanInfo());
@@ -289,8 +289,12 @@ export default function Profile() {
             </>
           )}
 
-          {profileInfo?.creator === true && (
+          {/* {console.log("profileInfo", profileInfo)} */}
+          {profileInfo?.creator === true && profileInfo.status !== 'pending' && (
+            <>
+              {/* <h2>{profileInfo?.subcription}</h2> */}
             <Subs currentSub={profileInfo?.subcription} />
+            </>
           )}
 
           {profileInfo?.status === "registered" && fillForm === false && (
