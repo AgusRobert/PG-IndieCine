@@ -65,7 +65,7 @@ export default function Home() {
     } else {
       setLoaded(true);
     }
-  }, [user, dispatch, users?.length]);
+  }, [user, dispatch, users?.length, allMovies.length]);
 
   useEffect(() => {
     if (user) {
@@ -123,15 +123,16 @@ export default function Home() {
                 effect={"coverflow"}
                 centeredSlides={true}
                 spaceBetween={10}
-                slidesPerView={3}
+                slidesPerView={5}
                 loop={true}
                 coverflowEffect={{
-                  rotate: 50,
-                  stretch: 0,
-                  depth: 100,
+                  rotate: 30,
+                  stretch: 40,
+                  depth: 10,
                   modifier: 1,
                   slideShadows: true,
                 }}
+                
                 className="mySwiper"
               >
                 {allMovies?.map(m => {
@@ -148,9 +149,9 @@ export default function Home() {
               </Swiper>
             
 
-               {users.lenght !== 0 &&
-                users?.map((user) => {
-                  console.log("USERS", users)
+               {users.lenght !== 0 && 
+               
+                (users?.map((user) => {
                   return (
                     <div>
                       <h5 className="Title">Usuarios</h5>
@@ -164,7 +165,7 @@ export default function Home() {
                      </Grid> 
                     </div>
                   );
-                })} 
+                }))} 
 
               <ContainerS>
                 <Grid container spacing={15}>
