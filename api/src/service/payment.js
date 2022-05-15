@@ -49,10 +49,10 @@ exports.subscribe = async (props) => {
   return (await axios.post(url, body, header))?.data;
 };
 
-exports.validation = async (props) => {
+exports.validation = async (email) => {
   // console.log("EMAIL DE VALIDATE", props)
   try {
-    const url = `https://api.mercadopago.com/preapproval/search?payer_email=${props}`;
+    const url = `https://api.mercadopago.com/preapproval/search?payer_email=${email}&sort=last_modified:desc&status=authorized&status=pending&limit=1`;
     const response = await axios.get(url, header);
     return response.data;
   } catch (error) {
@@ -72,10 +72,10 @@ exports.cancelSuscribe = async (id) => {
   }
 };
 
-exports.getIdSubscribe = async (email) => {
+exports.getIdSubscribe = async (email, i = 0) => {
   try {
-    const url = `https://api.mercadopago.com/preapproval/search?payer_email=${email}&sort=last_modified:desc&status=authorized&limit=1`;
-    return (await axios.get(url, header))?.data?.results[0]?.id;
+    const url = `https://api.mercadopago.com/preapproval/search?payer_email=${email}&sort=last_modified:desc&status=authorized&limit=2`;
+    return (await axios.get(url, header))?.data?.results[i]?.id;
   } catch {
     console.log("Service getIdSubscribe", error);
   }

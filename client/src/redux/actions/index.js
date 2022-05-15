@@ -59,8 +59,8 @@ export function getUsers() {
     } catch (error) {
       console.log(error);
     }
-  };}
-
+  };
+}
 
 export function sortName(payload) {
   //ordenar por nombre asc o desc
@@ -94,9 +94,9 @@ export function getMoviesByGenre(payload) {
     try {
       let filtroGenre = [];
       let json3 = await axios.get(`${SERVER_BACK}/films`);
-      json3.data.map(peli => {
+      json3.data.map((peli) => {
         let genre = peli.Genres;
-        genre.forEach(obj => {
+        genre.forEach((obj) => {
           if (obj.name === payload) {
             filtroGenre.push(peli);
           }
@@ -138,7 +138,7 @@ export function getMoviesByCountry(payload) {
     try {
       let json3 = await axios.get(`${SERVER_BACK}/films`);
       let json4 = json3.data;
-      json4 = json4.filter(e => e.Country.name === payload);
+      json4 = json4.filter((e) => e.Country.name === payload);
       if (json4.length) {
         return dispatch({
           type: FILTER_MOVIES_BY_COUNTRY,
@@ -201,11 +201,10 @@ export function renderMovieDetails(id) {
 export function cleanState() {
   return async function (dispatch) {
     return dispatch({
-      type: CLEAN_STATE, 
+      type: CLEAN_STATE,
     });
   };
 }
-
 
 export function signUpFunction(userData) {
   return async function (dispatch) {
@@ -232,7 +231,7 @@ export function filterDuration(payload) {
     try {
       let json3 = await axios.get(`${SERVER_BACK}/films`);
       let json4 = json3.data;
-      json4 = json4.filter(e => e.duration === payload);
+      json4 = json4.filter((e) => e.duration === payload);
       if (json4.length) {
         return dispatch({
           type: FILTER_DURATION,
@@ -362,6 +361,17 @@ export function updateSubscription(props) {
   };
 }
 
+// export function upgradeSubscription(payload) {
+//   // el payload que llega es el nuevo plan.
+//   return async function (dispatch) {
+//     try {
+
+//     } catch (error) {
+//       console.log("upgradeSubscription action", error);
+//     }
+//   };
+// }
+
 export function subscribe(payload) {
   return async function (dispatch) {
     try {
@@ -396,21 +406,27 @@ export function paySubscription(payload) {
   };
 }
 
-export function cancelSubscription(email){
-  return async function (dispatch) {
-  try {
-    //busco el id de la suscripción a cancelar.
-    const id = await axios.get(`${SERVER_BACK}/payment/${email}`);
-    //cancelo la suscripción.
-    const cancelInfo = await axios.put(`${SERVER_BACK}/payment/cancel/${id.data}`);
-    return dispatch({
-      type: CANCEL_SUBSCRIPTION,
-      payload: cancelInfo.data,
-    })
-  } catch (error) {
-    console.log("cancelSubscription action", error);
-  }
-}}
+export function cancelSubscription(email) {
+  return async function () {
+    try {
+      //busco el id de la suscripción a cancelar.
+      const id = await axios.get(`${SERVER_BACK}/payment/${email}`);
+      //cancelo la suscripción.
+      await axios.put(`${SERVER_BACK}/payment/cancel/${id.data}`);
+      //actualizo la prop subscription en 'Free'
+      await axios.put(`${SERVER_BACK}/users/modif`, {
+        email: email,
+        subcription: "Free",
+        status: 'creator approved'
+      });
+      return {
+        type: CANCEL_SUBSCRIPTION,
+      };
+    } catch (error) {
+      console.log("cancelSubscription action", error);
+    }
+  };
+}
 
 export function getPlanInfo() {
   return async function (dispatch) {
