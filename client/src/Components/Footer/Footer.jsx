@@ -40,6 +40,7 @@ export default function Footer() {
         flexDirection: "column",
         minHeight: "18vh",
         alignContent: "space-between",
+        marginTop: 40,
       }}
     >
       <BoxStyle
@@ -51,7 +52,7 @@ export default function Footer() {
         }}
       >
         <ConStyle maxWidth="sm">
-          {navlinks.map((navl) => (
+          {navlinks.map(navl => (
             <StyledLink
               sx={{
                 ":hover": {
