@@ -62,24 +62,31 @@ export default function Header(/* genres, allMovies, countries */) {
   const { user, isAuthenticated, logout } = useAuth0();
   const dispacth = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const infoUser = useSelector(state => state.profileInfo);
+  const infoUser = useSelector((state) => state.profileInfo);
   const navigate = useNavigate();
   const theme = useTheme();
+  const [render, setRender] = React.useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   function handleOnClick() {
     if (infoUser?.status === "admin")
       window.location.href = `${SERVER_BACK}/admin`;
-    else navigate("/profile");
+    else {
+      navigate("/profile");
+    }
   }
+  React.useEffect(() => {
+    user && dispacth(getProfileInfo(user?.email));
+  }, [render]);
 
   React.useEffect(() => {
     user?.email && dispacth(getProfileInfo(user.email));
+    setRender(!render);
   }, []);
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 

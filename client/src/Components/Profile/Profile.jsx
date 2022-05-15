@@ -82,7 +82,7 @@ export default function Profile() {
   const navigate = useNavigate();
   const [upgradeBtn, setUpgradeBtn] = useState(false);
   const [fillForm, setFillForm] = useState(false);
-  const [showSubs, setShowSubs] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const profileInfo = useSelector((state) => state.profileInfo);
   const plans = useSelector((state) => state.plans);
@@ -100,9 +100,13 @@ export default function Profile() {
     dispatch(getMovies());
     if (user) {
       dispatch(getProfileInfo(user.email));
-      if (cont === 0) dispatch(validateSubscription(user.email)); cont++;
+      if (cont === 0) {
+        dispatch(validateSubscription(user.email));
+        cont++;
+      }
       profileInfo?.status &&
         setFillForm(profileInfo.status === "registered" ? false : true);
+      setLoaded(true);
     }
   }, [fillForm, dispatch]);
 
@@ -164,34 +168,59 @@ export default function Profile() {
 
   return (
     <>
-      <StyledBox>
-        <Container>
-          <StyledLink
-            sx={{
-              ":hover": {
-                bgcolor: deepPurple[200],
-                color: "black",
-              },
-            }}
-            color="textPrimary"
-            variant="button"
-            underline="none"
-            href={`/`}
-          >
-            <img src={logo} alt="Img not found" />
-          </StyledLink>
-        </Container>
-        <StyledContainer sx={{}}>
-          <h1>PROFILE</h1>
+      {loaded ? (
+        <StyledBox>
           <Container>
-            <h2>Mis datos</h2>
-            <h4>{user.name}</h4>
-            {/* <h4>{user.nickname}</h4> */}
-            <h4>{profileInfo?.username}</h4>
-            <h4>{user.email}</h4>
+            <StyledLink
+              sx={{
+                ":hover": {
+                  bgcolor: deepPurple[200],
+                  color: "black",
+                },
+              }}
+              color="textPrimary"
+              variant="button"
+              underline="none"
+              href={`/`}
+            >
+              <img src={logo} alt="Img not found" />
+            </StyledLink>
+          </Container>
+          <StyledContainer sx={{}}>
+            <h1>PROFILE</h1>
+            <Container>
+              <h2>Mis datos</h2>
+              <h4>{user.name}</h4>
+              {/* <h4>{user.nickname}</h4> */}
+              <h4>{profileInfo?.username}</h4>
+              <h4>{user.email}</h4>
 
-            {profileInfo?.status === "creator approved" &&
-              pelisdeluser.length < limitedeluser[0] && (
+              {profileInfo?.status === "creator approved" &&
+                pelisdeluser.length < limitedeluser[0] && (
+                  <Container>
+                    <StyledLink
+                      sx={{
+                        ":hover": {
+                          bgcolor: deepPurple[200],
+                          color: "black",
+                        },
+                      }}
+                      color="textPrimary"
+                      variant="button"
+                      underline="none"
+                      onClick={() => navigate("/addFilm")}
+                    >
+                      Subir Proyecto
+                    </StyledLink>
+                  </Container>
+                )}
+
+              {profileInfo?.status === "creator approved" &&
+                pelisdeluser.length >= limitedeluser[0] && (
+                  <h1>Para subir más proyectos, cambia tu plan.</h1>
+                )}
+
+              {profileInfo?.status === "creator approved" && (
                 <Container>
                   <StyledLink
                     sx={{
@@ -203,38 +232,14 @@ export default function Profile() {
                     color="textPrimary"
                     variant="button"
                     underline="none"
-                    onClick={() => navigate("/addFilm")}
+                    onClick={handleCameBackToBasic}
                   >
-                    Subir Proyecto
+                    Dejar de ser creador
                   </StyledLink>
                 </Container>
               )}
 
-            {profileInfo?.status === "creator approved" &&
-              pelisdeluser.length >= limitedeluser[0] && (
-                <h1>Para subir más proyectos, cambia tu plan.</h1>
-              )}
-
-            {profileInfo?.status === "creator approved" && (
-              <Container>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={handleCameBackToBasic}
-                >
-                  Dejar de ser creador
-                </StyledLink>
-              </Container>
-            )}
-
-            {/* <Container>
+              {/* <Container>
               <StyledLink
                 sx={{
                   ":hover": {
@@ -261,81 +266,84 @@ export default function Profile() {
                 </BoxFav>
               </Modal>
             </Container> */}
-          </Container>
-        </StyledContainer>
+            </Container>
+          </StyledContainer>
 
-        <StyledContainer2>
-          <h2>Lista de peliculas favoritas.</h2>
-          {profileInfo?.id && <FavList userId={profileInfo?.id} />}
-        </StyledContainer2>
+          <StyledContainer2>
+            <h2>Lista de peliculas favoritas.</h2>
+            {profileInfo?.id && <FavList userId={profileInfo?.id} />}
+          </StyledContainer2>
 
-        <StyledContainer3>
-          {profileInfo?.status === "creator approved" && (
-            <>
-              <h2>Mis Proyectos</h2>
-              <ul>
-                {pelisdeluser.map((peli) => {
-                  return (
-                    <div>
-                      <li>
-                        <Ruta to={`/detail/${peli.id}`}>
-                          <button>{peli.title}</button>
-                        </Ruta>
-                      </li>
-                    </div>
-                  );
-                })}
-              </ul>
-            </>
-          )}
-
-          {/* {console.log("profileInfo", profileInfo)} */}
-          {profileInfo?.creator === true && profileInfo.status !== 'pending' && (
-            <>
-              {/* <h2>{profileInfo?.subcription}</h2> */}
-            <Subs currentSub={profileInfo?.subcription} />
-            </>
-          )}
-
-          {profileInfo?.status === "registered" && fillForm === false && (
-            <>
-              <h2>¿Desea subir al siguiente nivel?</h2>
-
-              <Container>
-                <h4>Beneficios de convertirse en Creador.</h4>
+          <StyledContainer3>
+            {profileInfo?.status === "creator approved" && (
+              <>
+                <h2>Mis Proyectos</h2>
                 <ul>
-                  <li>Posibilidad de publicar tu contenido.</li>
-                  <li>Visibilidad a tu contenido.</li>
-                  <li>Sección donde gestionar tu contenido.</li>
+                  {pelisdeluser.map((peli) => {
+                    return (
+                      <div>
+                        <li>
+                          <Ruta to={`/detail/${peli.id}`}>
+                            <button>{peli.title}</button>
+                          </Ruta>
+                        </li>
+                      </div>
+                    );
+                  })}
                 </ul>
-                <StyledLink
-                  sx={{
-                    ":hover": {
-                      bgcolor: deepPurple[200],
-                      color: "black",
-                    },
-                  }}
-                  color="textPrimary"
-                  variant="button"
-                  underline="none"
-                  onClick={handleUpgradeBtn}
-                >
-                  Subir de nivel
-                </StyledLink>
-                {upgradeBtn && fillForm === false && (
-                  <CreatorForm fillFormFn={handleFillForm} />
-                )}
-              </Container>
-            </>
-          )}
-          {profileInfo?.status === "pending" && (
-            <>
-              <h2>Tu solicitud esta siendo evaluada</h2>
-              <h3>Pronto nos comunicaremos contigo</h3>
-            </>
-          )}
-        </StyledContainer3>
-      </StyledBox>
+              </>
+            )}
+
+            {/* {console.log("profileInfo", profileInfo)} */}
+            {profileInfo?.creator === true && profileInfo.status !== "pending" && (
+              <>
+                {/* <h2>{profileInfo?.subcription}</h2> */}
+                <Subs currentSub={profileInfo?.subcription} />
+              </>
+            )}
+
+            {profileInfo?.status === "registered" && fillForm === false && (
+              <>
+                <h2>¿Desea subir al siguiente nivel?</h2>
+
+                <Container>
+                  <h4>Beneficios de convertirse en Creador.</h4>
+                  <ul>
+                    <li>Posibilidad de publicar tu contenido.</li>
+                    <li>Visibilidad a tu contenido.</li>
+                    <li>Sección donde gestionar tu contenido.</li>
+                  </ul>
+                  <StyledLink
+                    sx={{
+                      ":hover": {
+                        bgcolor: deepPurple[200],
+                        color: "black",
+                      },
+                    }}
+                    color="textPrimary"
+                    variant="button"
+                    underline="none"
+                    onClick={handleUpgradeBtn}
+                  >
+                    Subir de nivel
+                  </StyledLink>
+                  {upgradeBtn && fillForm === false && (
+                    <CreatorForm fillFormFn={handleFillForm} />
+                  )}
+                </Container>
+              </>
+            )}
+            {profileInfo?.status === "pending" && (
+              <>
+                <h2>Tu solicitud esta siendo evaluada</h2>
+                <h3>Pronto nos comunicaremos contigo</h3>
+              </>
+            )}
+          </StyledContainer3>
+        </StyledBox>
+      ) : (
+        <h1>CARGANDO...</h1>
+      )}
     </>
   );
 }
