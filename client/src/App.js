@@ -33,7 +33,7 @@ function App() {
           {isAuthenticated && (
             <Route exact path="/addFilm" element={<FilmForm />} />
           )}
-          <Route path="*" element={<NotFound />} />
+          {<Route path="*" element={<NotFound />} />}
           <Route path="/subs" element={<Subs />} />
           <Route path="/subs3" element={<Subs3 />} />
           <Route path="/subs2" element={<Subs2 />} />
