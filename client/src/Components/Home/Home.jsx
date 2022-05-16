@@ -82,7 +82,7 @@ export default function Home() {
     } else {
       setLoaded(true);
     }
-  }, [user, dispatch, users?.length]);
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -150,6 +150,7 @@ export default function Home() {
                   modifier: 1,
                   slideShadows: true,
                 }}
+                
                 className="mySwiper"
               >
                 {allMovies?.map(m => {
@@ -165,12 +166,12 @@ export default function Home() {
                 })}
               </Swiper>
 
-              {users.lenght !== 0 &&
-                users?.map(user => {
-                  console.log("USERS", users);
+               {users.lenght !== 0 && 
+               
+                (users?.map((user) => {
                   return (
                     <div>
-                      <h5 className="Title">Usuarios</h5>
+                      {/* <h5 className="Title">Usuarios</h5> */}
                       <Grid item m={3}>
                         <UserCards
                           title={user.username}
@@ -181,7 +182,7 @@ export default function Home() {
                       </Grid>
                     </div>
                   );
-                })}
+                }))} 
 
               <ContainerS>
                 <Grid container spacing={15}>

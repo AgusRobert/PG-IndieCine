@@ -98,6 +98,7 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           pelisfiltradas: peliFiltro,
+          usersfiltrados: []
         };
       } else if (userFiltro.length) {
         return {
