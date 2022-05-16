@@ -244,7 +244,7 @@ export function FilmForm() {
       //autor de la pelicula
       formFilm.append("email", user.email);
       //tipo de la archivo
-      formFilm.append("tipo", "poster");
+      formFilm.append("tipo", "film");
       //aclaracion de archivo subido
       formFilm.append("extra", movieForm.title);
       //adicion de la pelicula para la subida

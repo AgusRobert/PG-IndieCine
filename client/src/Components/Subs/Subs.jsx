@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getPlanInfo, subscribe, paySubscription } from "../../redux/actions";
+import {
+  getPlanInfo,
+  subscribe,
+  paySubscription,
+  cancelSubscription,
+  upgradeSubscription,
+  updateUser,
+} from "../../redux/actions";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -11,37 +18,64 @@ import Grid from "@mui/material/Grid";
 import Chip from "@mui/material/Chip";
 import MovieCreationIcon from "@mui/icons-material/MovieCreation";
 import { useAuth0 } from "@auth0/auth0-react";
+import Swal from "sweetalert2";
 import { deepPurple } from "@mui/material/colors";
 
-export default function Subs(currentSub) {
+export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }) {
+  console.log("currentSub", currentSub);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const plans = useSelector(state => state.plans);
-  const paymentLink = useSelector(state => state.paymentLink);
+  // const plans = useSelector((state) => state.plans);
+  const paymentLink = useSelector((state) => state.paymentLink);
+
+  // useEffect(() => {
+  //   dispatch(getPlanInfo());
+  // }, []);
 
   useEffect(() => {
-    dispatch(getPlanInfo());
-  }, []);
-
-  useEffect(() => {
-    console.log("LO QUE SEA", paymentLink);
     if (paymentLink !== "") {
-      console.log("ya no soy un array vacio", paymentLink);
+      // console.log("ya no soy un array vacio", paymentLink);
       window.location.replace(paymentLink);
     }
   }, [paymentLink]);
 
   const { user } = useAuth0();
 
-  const onSubscribe = id => {
-    let plan = {
-      reason: plans[id - 1]?.name,
-      transaction_amount: plans[id - 1]?.price,
+  const onSubscribe = (plan) => {
+    let nuestroPlan = {
+      reason: plan.name,
+      transaction_amount: plan.price,
       currency_id: "ARS",
       payer_email: user?.email,
     };
-    dispatch(paySubscription(plan));
-    console.log("ONSUBSCRIBE");
+    if (plan.name.toLowerCase() === "free") {
+      dispatch(cancelSubscription(user?.email));//--> de cualquier plan a 'Free'
+      // Swal.fire("Ahora seras un simple mortal!!").then((result) => {
+      //   window.location.reload();
+      // });
+      planChangeFn(true)
+    } else {
+      dispatch(paySubscription(nuestroPlan));
+      planChangeFn(true)
+      // dispatch(
+      //   updateUser({
+      //     email: user?.email,
+      //     status: "pending",
+      //   })
+      // );
+      // dispatch(upgradeSubscription(nuestroPlan)) // --> de cualquier plan a otro plan
+    }
+  };
+
+  const onCancel = () => {
+    dispatch(cancelSubscription(user.email));
+    planCanceledFn(true)
+    Swal.fire("Ahora tendrás el plan Free!!").then(() => {
+      // usamos el window.location.reload() para que se actualice la pagina para que se vea el cambio de plan
+      // está hardcodeado porque no se encontró la solución óptima en el useEffect.
+      window.location.reload();
+    });
   };
 
   return (
@@ -66,7 +100,6 @@ export default function Subs(currentSub) {
                     >
                       <MovieCreationIcon />
                       Plan "{esteplan.name}"
-                      {console.log("ESTE PLAN", esteplan.name)}
                     </h3>
                     <h2
                       style={{
@@ -100,19 +133,23 @@ export default function Subs(currentSub) {
                     </h3>
                   </CardContent>
 
-                  <CardActions >
-                    {currentSub?.currentSub === esteplan.name ? (
-                      <h3   style={{
-                        color: "#f3f6f4",
-                        textShadow: "0 0 1px #351c75, 0 0 2px #351c75",
-                        textAlign: "center",
-                        marginRight:'auto'
-                      }}> Éste es tu plan actual</h3>
+                  <CardActions>
+                    {currentSub?.toLowerCase() ===
+                      esteplan.name.toLowerCase() ? (
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          onCancel();
+                        }}
+                        disabled={esteplan.id === 1 ? true : false}
+                      >
+                        <h3>CANCELAR</h3>
+                      </Button>
                     ) : (
                       <Button
                         size="medium"
                         onClick={() => {
-                          onSubscribe(esteplan.id);
+                          onSubscribe(esteplan);
                         }}
                         style={{
                           color: "#f3f6f4",
@@ -125,7 +162,7 @@ export default function Subs(currentSub) {
                           },
                         }}
                       >
-                        MEJORA TU PLAN
+                        <h3>SELECCIONAR PLAN</h3>
                       </Button>
                     )}
                   </CardActions>
