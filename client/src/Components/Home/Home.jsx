@@ -59,8 +59,8 @@ const Container3 = styled(Paper)({
 /* import "swiper/components/pagination/pagination.min.css"; */
 
 const ImgStyle = styled("img")({
-  maxHeight: 200,
-  width: "auto",
+  maxHeight: 500,
+  width: 'auto',
   color: "white",
 });
 // import "swiper/swiper.min.css";
@@ -145,22 +145,22 @@ export default function Home() {
                 effect={"coverflow"}
                 centeredSlides={true}
                 spaceBetween={10}
-                slidesPerView={5}
+                slidesPerView={4}
                 loop={true}
                 coverflowEffect={{
                   rotate: 30,
-                  stretch: 40,
-                  depth: 10,
+                  stretch: 5,
+                  depth: 1,
                   modifier: 1,
-                  slideShadows: true,
+                  slideShadows: false,
                 }}
                 
                 className="mySwiper"
               >
                 {allMovies?.map(m => {
                   return (
-                    <div>
-                      <SwiperSlide>
+                    <div height={600}>
+                      <SwiperSlide >
                         <Link to={`/detail/${m.id}`}>
                           <ImgStyle src={m.poster} alt="img not found" />
                         </Link>
