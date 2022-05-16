@@ -83,3 +83,18 @@
   .contactMe .formulario .form span {
     margin: 0 5px 0 15px;
   }
+  ::-webkit-scrollbar-track {
+    background: rgb(35, 35, 36);
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #211b27;;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f4b942;
+  }

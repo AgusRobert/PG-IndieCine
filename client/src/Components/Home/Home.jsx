@@ -26,16 +26,36 @@ import SwiperCore, {
   Pagination,
   Navigation,
 } from "swiper/core";
+import Twitter from "../Twitter/Twitter";
+import Paper from "@mui/material/Paper";
 import { useAuth0 } from "@auth0/auth0-react";
 import { styled } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import UserCards from "../userCards/userCards.jsx";
-
+import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 const ContainerS = styled(Container)({
   paddingBottom: 20,
 });
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
+
+const Container2 = styled(Paper)({
+  display: "flex",
+  width: "800px",
+  justifyContent: "end",
+  alignItems: "right",
+  backgroundColor: "transparent",
+  height: "300px",
+  boxShadow: "none",
+  marginRight: "auto",
+});
+
+const Container3 = styled(Paper)({
+  backgroundColor: "transparent",
+  boxShadow: "none",
+});
+
+/* import "swiper/components/pagination/pagination.min.css"; */
 
 const ImgStyle = styled("img")({
   maxHeight: 200,
@@ -46,10 +66,11 @@ const ImgStyle = styled("img")({
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
-  const allMovies = useSelector((state) => state.pelisfiltradas);
-  const users = useSelector((state) => state.usersfiltrados);
-/*   console.log("LOSUSERS", users); */
-  const { profileInfo } = useSelector((state) => state);
+  const allMovies = useSelector(state => state.pelisfiltradas);
+  const estrenos = allMovies?.slice(-7).reverse();
+  const users = useSelector(state => state.usersfiltrados);
+  /*   console.log("LOSUSERS", users); */
+  const { profileInfo } = useSelector(state => state);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -89,13 +110,17 @@ export default function Home() {
     }
   }, [user, isAuthenticated]);
 
-  if (allMovies[0] === "No films") {
+  if (allMovies[0] === "No films" || users[0] === "No films") {
     return (
       <>
         <Header position="sticky" />
         <div className="container">
           <div>
             <h1>No se ha podido encontrar la búsqueda.</h1>
+
+            <button onClick={() => window.location.reload()}>
+              Volver al Home
+            </button>
           </div>
         </div>
         <Footer />
@@ -107,20 +132,21 @@ export default function Home() {
       {loaded ? (
         <>
           <Header position="sticky" />
-          {allMovies.length && allMovies[0] !== "No films" ? (
+          {estrenos.length && estrenos[0] !== "No films" ? (
             <>
               <h2 className="Title">Estrenos</h2>
-            
+
               <Swiper
                 navigation={true}
                 effect={"coverflow"}
                 centeredSlides={true}
-                slidesPerView={window.innerWidth < 768 ? 1 : "auto"}
+                spaceBetween={10}
+                slidesPerView={5}
                 loop={true}
                 coverflowEffect={{
-                  rotate: 50,
-                  stretch: 0,
-                  depth: 100,
+                  rotate: 30,
+                  stretch: 40,
+                  depth: 10,
                   modifier: 1,
                   slideShadows: true,
                 }}
@@ -138,29 +164,29 @@ export default function Home() {
                   );
                 })}
               </Swiper>
-            
 
-               {users.lenght !== 0 &&
-                users.map((user) => {
+              {users.lenght !== 0 &&
+                users?.map(user => {
+                  console.log("USERS", users);
                   return (
                     <div>
-                      <h1>USUARIOS</h1>
-                    <Grid item m={3}> 
-                      <UserCards
-                        title={user.username}
-                        poster={user.image}
-                        year={user.country}
-                        id={user.id}
-                      />        
-                     </Grid> 
+                      <h5 className="Title">Usuarios</h5>
+                      <Grid item m={3}>
+                        <UserCards
+                          title={user.username}
+                          poster={user.image}
+                          country={user.country}
+                          id={user.id}
+                        />
+                      </Grid>
                     </div>
                   );
-                })} 
+                })}
 
               <ContainerS>
                 <Grid container spacing={15}>
                   {allMovies ? (
-                    allMovies?.map((data) => {
+                    allMovies?.map(data => {
                       let nombresGen = [];
                       let generos = data.Genres;
                       generos.forEach(a => {
@@ -195,12 +221,21 @@ export default function Home() {
                       alt="not found"
                     />
                   )}
-                  {/* </Row> */}
                 </Grid>
-                <ParaTi userId={profileInfo?.id} />
-                <Footer />
+                <Container3 className="twitter">
+                  <Container2 className="paraTi2">
+                    <Box className="paraTi2">
+                      <ParaTi userId={profileInfo?.id} />
+                    </Box>
+                    <Box>
+                      <Twitter />
+                    </Box>
+                  </Container2>
+                  {/* <Footer className="footer" /> */}
+                </Container3>
+                {/* <ParaTi userId={profileInfo?.id} /> */}
+                {<Footer className="footer" />}
               </ContainerS>
-
             </>
           ) : (
             <div>

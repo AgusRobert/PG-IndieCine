@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import Chip from "@mui/material/Chip";
 import MovieCreationIcon from "@mui/icons-material/MovieCreation";
 import { useAuth0 } from "@auth0/auth0-react";
+import { deepPurple } from "@mui/material/colors";
 
 export default function Subs(currentSub) {
   const dispatch = useDispatch();
@@ -46,20 +47,20 @@ export default function Subs(currentSub) {
   return (
     <>
       <Box sx={{ flexGrow: 1 }} position={"relative"} left={100}>
-        <Grid container spacing={2}>
+        <Grid container spacing={5}>
           {plans?.map(esteplan => {
             return (
-              <Grid item xs={4}>
+              <Grid item xs={4} paddingBottom={10}>
                 <Card
                   raised={true}
-                  sx={{ maxWidth: 345, backgroundColor: "#000000" }}
-                  elevation={24}
+                  sx={{ maxWidth: 345, backgroundColor: "#673ab7" }}
+                  elevation={2}
                 >
                   <CardContent>
                     <h3
                       style={{
                         color: "#f3f6f4",
-                        textShadow: "0 0 3px #351c75, 0 0 5px #351c75",
+                        textShadow: "0 0 1px #351c75, 0 0 2px #351c75",
                         textAlign: "center",
                       }}
                     >
@@ -99,14 +100,29 @@ export default function Subs(currentSub) {
                     </h3>
                   </CardContent>
 
-                  <CardActions>
+                  <CardActions >
                     {currentSub?.currentSub === esteplan.name ? (
-                      <h3> Éste es tu plan actual</h3>
+                      <h3   style={{
+                        color: "#f3f6f4",
+                        textShadow: "0 0 1px #351c75, 0 0 2px #351c75",
+                        textAlign: "center",
+                        marginRight:'auto'
+                      }}> Éste es tu plan actual</h3>
                     ) : (
                       <Button
-                        size="small"
+                        size="medium"
                         onClick={() => {
                           onSubscribe(esteplan.id);
+                        }}
+                        style={{
+                          color: "#f3f6f4",
+                          textShadow: "0 0 1px #351c75, 0 0 2px #351c75",
+                          textAlign: "center",
+                        }} sx={{
+                          ":hover": {
+                            bgcolor: deepPurple[200],
+                            color: "black",
+                          },
                         }}
                       >
                         MEJORA TU PLAN
