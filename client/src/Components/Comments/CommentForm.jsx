@@ -13,7 +13,6 @@ const ButtonStyle = styled(Button)({
   borderBlockColor: amber[900],
   borderInlineStartColor: amber[200],
   borderInlineEndColor: amber[200],
-  backgroundColor:amber[800]
 });
 const TextStyle = styled(InputBase)({
   backgroundColor: amber[50],
@@ -27,6 +26,19 @@ const BoxGeneral = styled(Box)({
   display:"flex",
   alignContent:"center",
 });
+
+const ButtonBox = styled(Box)({
+  backgroundColor: "#f4b942",
+  padding: "10px",
+  display:"flex",
+  alignContent:"center",
+  borderRadius: 5,
+  marginLeft: 3,
+  ":hover":{
+    backgroundColor: "#93a8ac"
+  }
+});
+
 const CommentForm = ({ info, closeFn }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
@@ -76,11 +88,12 @@ const CommentForm = ({ info, closeFn }) => {
         onChange={(e) => setText(e.target.value)}
         // required
       />
-      <Box paddingLeft={3}>
-      <ButtonStyle  size="large" type="submit" variant="contained">
-        Enviar
-      </ButtonStyle>
-   </Box></BoxGeneral>
+      <ButtonBox>
+        <ButtonStyle size="large" type="submit" >
+          Enviar
+        </ButtonStyle>
+      </ButtonBox>
+    </BoxGeneral>
     </form>
   );
 };

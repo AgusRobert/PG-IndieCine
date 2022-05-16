@@ -52,7 +52,7 @@ export default function FavButton({ filmId }) {
     <IconButton onClick={ () =>{(handleOnClick({favDispatch}));(handleOpen())}} >
       <FavoriteIcon
         sx={{
-          color: grey[800],
+          color: "#93a8ac",
           ":hover": {
             color: amber[400],
           },
