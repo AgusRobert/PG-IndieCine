@@ -149,6 +149,7 @@ exports.updateFilm = async (req, res, next) => {
 exports.deleteFilm = async (req, res, next) => {
   try {
     const { id } = req.params;
+    console.log("id en deleteFilm", id);
     await Film.destroy({
       where: {
         id: id,
@@ -162,12 +163,13 @@ exports.deleteFilm = async (req, res, next) => {
 
 exports.deleteFilms = async (req, res, next) => {
   try {
-    const { filmsIdToDelete } = req.body;
-    if (filmsIdToDelete.length) {
-      filmsIdToDelete.forEach(async (filmId) => {
+    const { filmsToDelete } = req.body;
+    // filmsToDelete debe ser un array.
+    if (filmsToDelete.length) {
+      filmsToDelete.forEach(async (film) => {
         await Film.destroy({
           where: {
-            id: filmId,
+            id: film.id,
           },
         });
       });

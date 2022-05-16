@@ -14,6 +14,7 @@ import {
   getMovies,
   getPlanInfo,
   deleteExcededFilms,
+  deleteFilm,
 } from "../../redux/actions";
 import { /*Box,*/ Container, Link } from "@mui/material";
 import { color, styled } from "@mui/system";
@@ -118,8 +119,17 @@ export default function Profile() {
       profileInfo?.status &&
         setFillForm(profileInfo.status === "registered" ? false : true);
       setLoaded(true);
-      limitedeluser[0] > pelisdeluser.length && setOutLimit(true);
-      limitedeluser[0] <= pelisdeluser.length && setOutLimit(false);
+      // limitedeluser[0] < pelisdeluser.length && setOutLimit(true);
+      // limitedeluser[0] >= pelisdeluser.length && setOutLimit(false);
+
+      // if (limitedeluser[0] < pelisdeluser.length) {
+      //   let excedente = pelisdeluser.length - limitedeluser[0];
+      //   Swal.fire({
+      //     title: "¡Atención!",
+      //     text: `Tienes más proyectos que los permitidos para tu plan. Por favor, elimina ${excedente} proyectos para poder continuar.`,
+      //     icon: "warning",
+      //   })
+      // }
     }
   }, [fillForm, dispatch, planChanged, planCanceled, render]);
 
@@ -134,10 +144,19 @@ export default function Profile() {
 
   // -- Feature para que el usuario pueda eliminar sus proyectos excedentes al limite permitido -- //
   const addProjectToDelete = (e) => {
-    filmsToDelete.push(e.target.id);
+    setFilmsToDelete([...filmsToDelete, { id: e.target.id, title: e.target.name }]);
+    // filmsToDelete.push(e.target.id);
   }
 
-  const handleProjectsToDelete = () => {
+  const handleDeleteProject = (filmId) => {
+    setRender(false);
+    dispatch(deleteFilm(filmId));
+    // dispatch(getProfileInfo(user.email));
+    setFilmsToDelete(filmsToDelete.filter((film) => film.id !== filmId));
+    setRender(true);
+  }
+
+  const handleProjectsToDelete = (peli) => {
     setFilmsToDelete(
       filmsToDelete.filter((film) => film.id !== peli.id)
     )
@@ -163,6 +182,10 @@ export default function Profile() {
     })
   }
   // -------------------------------------------------------------------------------------------- //
+
+  const handleNavigateBtn = (id) => {
+    navigate(`/detail/${id}`);
+  }
 
   // Config del modal
   const [open, setOpen] = useState(false);
@@ -194,9 +217,6 @@ export default function Profile() {
   // }
 
   const handleCameBackToBasic = () => {
-    // dispatch(
-    //   cameBackToBasic({email: user.email,creator: false})
-    // );
     dispatch(
       updateUser({ email: user.email, creator: false, status: "registered" })
     );
@@ -245,7 +265,6 @@ export default function Profile() {
             <Container>
               <h2>Mis datos</h2>
               <h4>{user.name}</h4>
-              {/* <h4>{user.nickname}</h4> */}
               <h4>{profileInfo?.username}</h4>
               <h4>{user.email}</h4>
 
@@ -270,8 +289,11 @@ export default function Profile() {
                 )}
 
               {profileInfo?.status === "creator approved" &&
-                pelisdeluser.length >= limitedeluser[0] && (
-                  <h1>Para subir más proyectos, cambia tu plan.</h1>
+                pelisdeluser.length > limitedeluser[0] && (
+                  <>
+                    <h1>Para subir más proyectos, cambia tu plan.</h1>
+                    <h2>O elimina {pelisdeluser.length - limitedeluser[0]} proyecto{(pelisdeluser.length - limitedeluser[0]) === 1 ? null : 's'} para continuar.</h2>
+                  </>
                 )}
 
               {profileInfo?.status === "creator approved" && (
@@ -331,17 +353,17 @@ export default function Profile() {
 
           <StyledContainer3>
             {/* Los proyectos del usuario, mientras la cantidad de proyectos sea menos o igual a su limite */}
-            {profileInfo?.status === "creator approved" && profileInfo?.creator === true && !outLimit && (
+            {profileInfo?.status === "creator approved" && profileInfo?.creator === true /*&& !outLimit*/ && (
               <>
                 <h2>Mis Proyectos</h2>
                 <ul>
                   {pelisdeluser.map((peli) => {
+                    let idpeli = peli.id
                     return (
                       <div>
                         <li>
-                          <Ruta to={`/detail/${peli.id}`}>
-                            <button>{peli.title}</button>
-                          </Ruta>
+                          <button onClick={() => handleNavigateBtn(idpeli)}>{peli.title}</button>
+                          <button onClick={() => handleDeleteProject(idpeli)}>x</button>
                         </li>
                       </div>
                     );
@@ -350,21 +372,22 @@ export default function Profile() {
               </>
             )}
 
+            {/* {Swal.fire({
+              title: "¡Atención!",
+              text: "Tienes más peliculas que las permitidas para tu plan.",
+              icon: "warning",
+            }).then(() => navigate('/profile'))} */}
             {/* Caso en que el usuario supere su limite de proyectos */}
-            {profileInfo?.status === "creator approved" && profileInfo?.creator === true && outLimit && (
+            {/* {profileInfo?.status === "creator approved" && profileInfo?.creator === true && outLimit && (
               <>
-                {Swal.fire({
-                  title: "¡Atención!",
-                  text: "Tienes más peliculas que las permitidas para tu plan.",
-                  icon: "warning",
-                })}
                 <h2>Mis Proyectos</h2>
+                {console.log("Peliculas del usuario", pelisdeluser)}
                 <h4>Para continuar, debe elegir los proyectos que desea eliminar</h4>
                 <ul>
                   {pelisdeluser.map((peli) => {
                     return (
                       <li key={peli.id}>
-                        <button onClick={addProjectToDelete}>{peli.title}</button>
+                        <button onClick={addProjectToDelete} id={peli.id} name={peli.title}>{peli.title}</button>
                       </li>
                     );
                   })}
@@ -372,19 +395,22 @@ export default function Profile() {
                 <div>
                   <p>Proyectos a borrar:</p>
                   {
-                    filmsToDelete.map((peli) => {
+                    filmsToDelete.forEach((peli) => {
                       return (
                         <>
+                          <h1>ENTRA AL RETURN</h1>
                           <p>{peli.title}</p>
-                          <button onClick={handleProjectsToDelete}>x</button>
+                          <button onClick={(peli) => handleProjectsToDelete(peli)}>x</button>
                         </>
                       )
-                    })
+                    }
+
+                    )
                   }
                 </div>
                 <button onClick={deleteProjects}>Listo</button>
               </>
-            )}
+            )} */}
 
             {/* {console.log("profileInfo", profileInfo)} */}
             {profileInfo?.creator === true && profileInfo.status !== "pending" && (
