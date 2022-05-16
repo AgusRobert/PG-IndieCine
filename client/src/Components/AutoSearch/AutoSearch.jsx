@@ -169,9 +169,12 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
   };
 
   function handleSearch(presidenteSeleccionado) {
-   console.log("QUEMANDA", presidenteSeleccionado)
-   presidenteSeleccionado !==undefined? dispatch(searchPelicula_Actor(presidenteSeleccionado.toString()))
-   : dispatch(searchPelicula_Actor(search))
+   /* console.log("QUE MANDA", presidenteSeleccionado, search) */
+   if (presidenteSeleccionado !==undefined) {dispatch(searchPelicula_Actor(presidenteSeleccionado.toString())); setPresidenteSeleccionado({});}
+   else {dispatch(searchPelicula_Actor(search));setSearch("");};
+    setSearch("");
+    setPresidenteSeleccionado({})
+
 
   }
 

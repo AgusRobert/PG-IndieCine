@@ -82,7 +82,7 @@ export default function Home() {
     } else {
       setLoaded(true);
     }
-  }, [user, dispatch, users?.length, allMovies.length]);
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -171,7 +171,7 @@ export default function Home() {
                 (users?.map((user) => {
                   return (
                     <div>
-                      <h5 className="Title">Usuarios</h5>
+                      {/* <h5 className="Title">Usuarios</h5> */}
                       <Grid item m={3}>
                         <UserCards
                           title={user.username}
