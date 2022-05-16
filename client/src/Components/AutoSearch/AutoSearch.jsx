@@ -189,7 +189,6 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
         inputProps={inputProps}
         onSuggestionSelected={eventEnter}
       />
-      <br />
       <ButtonStyle 
         sx={{
           color: "white",
