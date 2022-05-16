@@ -21,7 +21,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import logo from "./LOGO.png";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfileInfo } from "../../redux/actions/index.js";
+import { getProfileInfo, validateSubscription } from "../../redux/actions/index.js";
 import { SERVER_BACK } from "../../paths/path.js";
 import { useTheme, useMediaQuery } from "@mui/material";
 import DrawerM from "./Drawer.jsx";
@@ -62,24 +62,33 @@ export default function Header(/* genres, allMovies, countries */) {
   const { user, isAuthenticated, logout } = useAuth0();
   const dispacth = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const infoUser = useSelector(state => state.profileInfo);
+  const infoUser = useSelector((state) => state.profileInfo);
   const navigate = useNavigate();
   const theme = useTheme();
+  const [render, setRender] = React.useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   function handleOnClick() {
     if (infoUser?.status === "admin")
       window.location.href = `${SERVER_BACK}/admin`;
-    else navigate("/profile");
+    else {
+      // dispacth(getProfileInfo(user.email));
+      // dispacth(validateSubscription(user.email));
+      navigate("/profile");
+    }
   }
+  React.useEffect(() => {
+    user && dispacth(getProfileInfo(user?.email));
+  }, [render]);
 
   React.useEffect(() => {
     user?.email && dispacth(getProfileInfo(user.email));
+    setRender(!render);
   }, []);
   function handleLogout() {
     logout({ returnTo: window.location.origin });
   }
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 

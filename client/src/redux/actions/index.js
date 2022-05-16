@@ -30,6 +30,9 @@ import {
   GET_USERS,
   CLEAN_STATE,
   GET_PROFILE_INFO_BY_ID,
+  CANCEL_SUBSCRIPTION,
+  DELETE_EXCEDED_FILMS,
+  DELETE_FILM,
   GET_PROFILE_INFO_BY_ID_USER,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
@@ -89,14 +92,51 @@ export function postMovie(movieForm) {
   };
 }
 
+export function deleteFilm(id){
+  return async function (dispatch){
+    try {
+      console.log("id en la action", id);
+      await axios.delete(`${SERVER_BACK}/films/${id}`);
+      // let actualFilms = await axios.get(`${SERVER_BACK}/users/getFilmsById/${userId}`);
+      return dispatch({
+        type: DELETE_FILM,
+        // payload: actualFilms.data,
+      })
+    } catch (error) {
+      console.log("deleteFilm action", error);
+    }
+  }
+}
+
+export function deleteExcededFilms(filmsToDelete , userId) {
+  return async function (dispatch) {
+    try {
+      // borro los pelis que exceden el limite
+      await axios.delete(`${SERVER_BACK}/films/del`, {
+        data: {
+          filmsToDelete: filmsToDelete,
+        },
+      });
+      // obtengo los pelis actuales del usuario
+      let actualFilms = await axios.get(`${SERVER_BACK}/users/getFilmsById/${userId}`);
+      return dispatch({
+        type: DELETE_EXCEDED_FILMS,
+        payload: actualFilms.data,
+      });
+    } catch (error) {
+      console.log("deleteExcededFilms action", error);
+    }
+  };
+}
+
 export function getMoviesByGenre(payload) {
   return async function (dispatch) {
     try {
       let filtroGenre = [];
       let json3 = await axios.get(`${SERVER_BACK}/films`);
-      json3.data.map(peli => {
+      json3.data.map((peli) => {
         let genre = peli.Genres;
-        genre.forEach(obj => {
+        genre.forEach((obj) => {
           if (obj.name === payload) {
             filtroGenre.push(peli);
           }
@@ -138,7 +178,7 @@ export function getMoviesByCountry(payload) {
     try {
       let json3 = await axios.get(`${SERVER_BACK}/films`);
       let json4 = json3.data;
-      json4 = json4.filter(e => e.Country.name === payload);
+      json4 = json4.filter((e) => e.Country.name === payload);
       if (json4.length) {
         return dispatch({
           type: FILTER_MOVIES_BY_COUNTRY,
@@ -231,7 +271,7 @@ export function filterDuration(payload) {
     try {
       let json3 = await axios.get(`${SERVER_BACK}/films`);
       let json4 = json3.data;
-      json4 = json4.filter(e => e.duration === payload);
+      json4 = json4.filter((e) => e.duration === payload);
       if (json4.length) {
         return dispatch({
           type: FILTER_DURATION,
@@ -352,7 +392,7 @@ export function validateSubscription(email) {
       let response = await axios.get(
         `${SERVER_BACK}/payment/validate/${email}`
       );
-      dispatch({
+      return dispatch({
         type: VALIDATE_SUBSCRIPTION,
         payload: response.data,
       });
@@ -375,6 +415,17 @@ export function updateSubscription(props) {
     }
   };
 }
+
+// export function upgradeSubscription(payload) {
+//   // el payload que llega es el nuevo plan.
+//   return async function (dispatch) {
+//     try {
+
+//     } catch (error) {
+//       console.log("upgradeSubscription action", error);
+//     }
+//   };
+// }
 
 export function subscribe(payload) {
   return async function (dispatch) {
@@ -406,6 +457,30 @@ export function paySubscription(payload) {
       });
     } catch (err) {
       console.log("subscribe", err);
+    }
+  };
+}
+
+export function cancelSubscription(email) {
+  return async function (dispatch) {
+    try {
+      //busco el id de la suscripción a cancelar.
+      const id = await axios.get(`${SERVER_BACK}/payment/${email}`);
+      //cancelo la suscripción.
+      await axios.put(`${SERVER_BACK}/payment/cancel/${id.data}`);
+      //actualizo la prop subscription en 'Free'
+      const userUpdated = await axios.put(`${SERVER_BACK}/users/modif`, {
+        email: email,
+        subcription: "Free",
+        status: "creator approved",
+      });
+      console.log("userUpdated", userUpdated);
+      return dispatch({
+        type: CANCEL_SUBSCRIPTION,
+        payload: userUpdated.data,
+      });
+    } catch (error) {
+      console.log("cancelSubscription action", error);
     }
   };
 }

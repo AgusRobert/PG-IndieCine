@@ -157,15 +157,24 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.getFilmsById = async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findOne({
-    where: {
-      id,
-    },
-    include: Film,
-  });
-  let films = user.Films;
-  res.json(films);
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({
+      where: {
+        id,
+      },
+      include: Film,
+    });
+
+    if (user) {
+      let films = user.Films;
+      res.json(films);
+    } else {
+      res.json({ msg: "No se encontró el usuario en getFilmsById" });
+    }
+  } catch (error) {
+    res.json({ msg: "Ha ocurrido un error en getFilmsById", error });
+  }
 };
 
 exports.addFav = async (req, res) => {
@@ -187,18 +196,19 @@ exports.addFav = async (req, res) => {
 exports.getFavs = async (req, res) => {
   const { id } = req.params;
   const Usuario = await User.findByPk(id);
-  const favoritos = await Usuario.getFilms({  
+  const favoritos = await Usuario.getFilms({
     include: [
-        {
-          model: Genre,
-          through: {
-            attributes: [],
-          },
+      {
+        model: Genre,
+        through: {
+          attributes: [],
         },
-        {
-          model: Country,
-        },
-      ],});
+      },
+      {
+        model: Country,
+      },
+    ],
+  });
   // console.log(favoritos)
   res.json(favoritos);
 };
