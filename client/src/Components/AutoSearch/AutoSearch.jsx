@@ -173,7 +173,7 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
   }
 
   return (
-    <div>
+    <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
       <Autosuggest
         suggestions={presidentes}
         onSuggestionsFetchRequested={onSuggestionsFetchRequested}

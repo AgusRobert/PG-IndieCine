@@ -29,7 +29,10 @@
   }
   
   .react-autosuggest__input{
-    width: 350px;
+    width: 100%;
+    font-size: 1rem;
+    padding: 9px;
+    border-radius: 5px 5px 5px 5px;
   }
   
   .react-autosuggest__suggestion--highlighted {
