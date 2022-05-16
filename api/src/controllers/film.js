@@ -23,6 +23,32 @@ exports.getFilms = async (req, res, next) => {
   }
 };
 
+exports.getHiddenFilms = async (req, res, next) => {
+  try {
+    const allFilms = await Film.findAll({
+      include: [
+        {
+          model: Genre,
+          through: {
+            attributes: [],
+          },
+        },
+        {
+          model: Country,
+        },
+      ],
+    });
+    const hiddenFilms = allFilms.filter((film) => film.status === "hidden");
+    const hiddenUserFilms = hiddenFilms.filter(
+      (film) => film.UserId === req.params.id
+    );
+    res.json(hiddenUserFilms);
+  } catch (err) {
+    // res.send("No se pudo acceder a las películas");
+    next(err);
+  }
+};
+
 exports.getById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -104,39 +130,38 @@ exports.postFilms = async (req, res, next) => {
 
 exports.updateFilm = async (req, res, next) => {
   try {
-    const {
-      title,
-      genres,
-      poster,
-      synopsis,
-      year,
-      director,
-      duration,
-      mainActors,
-      country,
-      url,
-      associateProducer,
-      rating,
-      id,
-    } = req.body;
+    // const {
+    //   title,
+    //   genres,
+    //   poster,
+    //   synopsis,
+    //   year,
+    //   director,
+    //   duration,
+    //   mainActors,
+    //   country,
+    //   url,
+    //   associateProducer,
+    //   rating,
+    //   id,
+    // } = req.body;
     await Film.update(
-      {
-        title,
-        genres,
-        poster,
-        synopsis,
-        year,
-        director,
-        duration,
-        mainActors,
-        country,
-        url,
-        associateProducer,
-        rating,
-      },
+      // title,
+      // genres,
+      // poster,
+      // synopsis,
+      // year,
+      // director,
+      // duration,
+      // mainActors,
+      // country,
+      // url,
+      // associateProducer,
+      // rating,
+      req.body,
       {
         where: {
-          id: id,
+          id: req.body.id,
         },
       }
     );

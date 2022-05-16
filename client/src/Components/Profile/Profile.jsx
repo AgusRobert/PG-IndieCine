@@ -144,6 +144,10 @@ export default function Profile() {
   const pelisdeluser = allMovies.filter(
     (peli) => peli.UserId === profileInfo.id
   );
+  // si el usuario tenía un exceso de peliculas para su plan, éstas
+  // van a estar en userHiddenFilms. 
+  const { userHiddenFilms } = useSelector((state) => state);
+
   const [showSubs, setShowSubs] = useState(false);
   // validación de suscripción
   const [valid, setValid] = useState(true);
@@ -166,6 +170,14 @@ export default function Profile() {
       setLoaded(true);
       // limitedeluser[0] < pelisdeluser.length && setOutLimit(true);
       // limitedeluser[0] >= pelisdeluser.length && setOutLimit(false);
+
+      // if (!pelisdeluser.length) {
+      //   Swal.fire({
+      //     title: "Como estas excediendo tu limite de proyectos, tus peliculas fueron ocultas",
+      //     icon: "warning",
+      //     text: "Para continuar, selecciona las peliculas que deseas mostrar",
+      //   })
+      // }
 
       // if (limitedeluser[0] < pelisdeluser.length) {
       //   let excedente = pelisdeluser.length - limitedeluser[0];
@@ -198,7 +210,7 @@ export default function Profile() {
 
   const handleKeepProject = (film) => {
     setRender(false);
-    dispatch(keepFilm({ ...film, status: "approved" }));
+    dispatch(keepFilm({ id: film.id, status: "approved" }));
     // dispatch(getProfileInfo(user.email));
     // setFilmsToDelete(filmsToDelete.filter(film => film.id !== filmId));
     setRender(true);
@@ -364,6 +376,24 @@ export default function Profile() {
                     </h2>
                   </>
                 )}
+
+              {profileInfo?.status === "creator approved" && userHiddenFilms.length && (
+                <>
+                  <h3>Usted tiene los siguientes proyectos en espera.</h3>
+                  <h3>Teniendo en cuenta su plan, puede rehabilitar hasta </h3>
+                  <h3>{pelisdeluser.length - limitedeluser[0]} proyectos. </h3>
+                  {userHiddenFilms.map((film) => {
+                    return (
+                      <>
+                        <Link to={`/detail/${film.id}`}>
+                          <h4>{film.title}</h4>
+                        </Link>
+                        <button onClick={handleKeepProject}>Rehabilitar</button>
+                      </>
+                    )
+                  })}
+                </>
+              )}
 
               {profileInfo?.status === "creator approved" && (
                 <Container>

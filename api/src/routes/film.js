@@ -5,6 +5,7 @@ const {getFilms, postFilms, updateFilm, getById, deleteFilm, deleteFilms} = requ
 
 router.get('/', getFilms)
 router.get('/:id', getById)
+router.get('/:id/hidden', getFilms)
 router.post('/', postFilms)
 router.put('/', updateFilm)
 router.delete('/', deleteFilms)

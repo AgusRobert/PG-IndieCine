@@ -35,6 +35,7 @@ import {
   DELETE_FILM,
   GET_PROFILE_INFO_BY_ID_USER,
   KEEP_FILM,
+  GET_USER_HIDDEN_FILMS,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -111,7 +112,7 @@ export function deleteFilm(id) {
 
 export function keepFilm(peli) {
   return async function () {
-    await axios.put(`${SERVER_BACK}/films`,peli);
+    await axios.put(`${SERVER_BACK}/films`, peli);
     return {
       type: KEEP_FILM,
     };
@@ -165,6 +166,20 @@ export function getMoviesByGenre(payload) {
           payload: ["No films"],
         });
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getUserHiddenFilms(userId) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(`${SERVER_BACK}/films/${userId}/hidden`);
+      return dispatch({
+        type: GET_USER_HIDDEN_FILMS,
+        payload: response.data,
+      });
     } catch (error) {
       console.log(error);
     }

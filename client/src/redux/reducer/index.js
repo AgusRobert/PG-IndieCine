@@ -30,6 +30,7 @@ import {
   CANCEL_SUBSCRIPTION,
   DELETE_EXCEDED_FILMS,
   GET_PROFILE_INFO_BY_ID_USER,
+  GET_USER_HIDDEN_FILMS,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -50,6 +51,7 @@ const initialState = {
   users: [],
   usersfiltrados: [],
   perfilUsuario: {},
+  userHiddenFilms: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -69,7 +71,7 @@ function rootReducer(state = initialState, action) {
         return contador;
       };
 
-      let userFiltro = usersporfiltrar.filter(data => {
+      let userFiltro = usersporfiltrar.filter((data) => {
         if (
           data?.username.toLowerCase().indexOf(action.payload.toLowerCase()) !==
           -1
@@ -78,7 +80,7 @@ function rootReducer(state = initialState, action) {
         }
       });
 
-      let peliFiltro = pelisporfiltrar.filter(data => {
+      let peliFiltro = pelisporfiltrar.filter((data) => {
         if (
           data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
             -1 ||
@@ -100,7 +102,7 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           pelisfiltradas: peliFiltro,
-          usersfiltrados: []
+          usersfiltrados: [],
         };
       } else if (userFiltro.length) {
         return {
@@ -120,6 +122,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         peliculas: action.payload,
         pelisfiltradas: action.payload,
+      };
+
+    case GET_USER_HIDDEN_FILMS:
+      return {
+        ...state,
+        userHiddenFilms: action.payload,
       };
 
     case GET_USERS:
