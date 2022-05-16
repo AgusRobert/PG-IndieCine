@@ -1,0 +1,29 @@
+::-webkit-scrollbar-track {
+    background: white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1f271b;;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f4b942;
+  }
+
+  .deleteButton{
+    background-color: #f4b942;
+    border-radius: 50%;
+    color: #1f271b;
+    margin-left: 5px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .deleteButton:hover{
+    background-color: rgb(176, 9, 9);
+    color: white;
+  }

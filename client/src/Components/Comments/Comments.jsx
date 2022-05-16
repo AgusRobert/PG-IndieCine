@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getComments } from "../../redux/actions";
 import { Box, Paper, styled, Typography } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import "./comments.modules.css"
 const Titulo = styled(Typography)({
   color: "black ",
   fontSize: "30px",
@@ -17,13 +18,16 @@ const BoxStyle = styled(Box)({
 const NameStyle = styled(Paper)({
   paddingLeft:20,
   paddingRight:20,
-  backgroundColor: deepPurple[300],
+  backgroundColor: "transparent",
+  opacity: "90%",
   borderRadius: 20,
   display:"inline-block",
- paddingTop:20,
- paddingBottom:20,
- overflow: 'auto',
-  maxHeight: 520
+  paddingTop:20,
+  paddingBottom:20,
+  overflow: 'auto',
+  maxHeight: 520,
+  width: "100%",
+  marginLeft: "20px"
 });
 
 const Comments = ({ filmId, userId, username, image }) => {
