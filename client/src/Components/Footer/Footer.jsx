@@ -40,7 +40,7 @@ export default function Footer() {
         flexDirection: "column",
         minHeight: "18vh",
         alignContent: "space-between",
-        marginTop: 40,
+        marginTop: 4
       }}
     >
       <BoxStyle

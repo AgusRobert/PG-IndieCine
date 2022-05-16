@@ -45,7 +45,7 @@ export default function Cartas({
       <Link variant="button" underline="none" to={`/detail/${id}`}>
         <CardMedia
           component="img"
-          height="400"
+          height="350"
           image={poster}
           alt="img not found"
         />
