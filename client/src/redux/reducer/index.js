@@ -312,17 +312,19 @@ function rootReducer(state = initialState, action) {
     // };
 
     case VALIDATE_SUBSCRIPTION:
-      let updatedSubscription = "Free";
-      if ((action.payload.results[0].status = "pending")) {
-        updatedSubscription = action.payload.results[2].reason;
-        return {
-          ...state,
-          profileInfo: {
-            ...state.profileInfo,
-            subcription: updatedSubscription,
-          },
-        };
-      }
+      // let updatedSubscription = "Free";
+      // if (action.payload.status !== "Suscripcion cancelada") {
+      //   updatedSubscription = action.payload.subcription;
+      return {
+        ...state,
+        // profileInfo: {
+        // ...state.profileInfo,
+
+        // subcription: updatedSubscription,
+        // },
+        profileInfo: action.payload,
+      };
+    // }
 
     case GET_PLAN_INFO:
       return {

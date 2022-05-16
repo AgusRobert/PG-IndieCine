@@ -42,18 +42,21 @@ exports.validate = async (req, res) => {
 
     return res.json(result.dataValues);
   } else if (testResult?.status === "pending") {
-    // let user = await User.findOne({
-    //   where: {
-    //     email: email,
-    //   },
-    // });
+    await paymentService.cancelSuscribe(testResult.id);
+
+    let user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
     // let infoToUpdate = {
-    //   status: "pending",
+    //   subcription: "Free",
     // };
     // const result = await user.update(infoToUpdate);
     // console.log("Result", result);
-    // return res.json(result.dataValues);
-    return await paymentService.cancelSuscribe(testResult.id);
+    return res.json(user);
+
+    // return res.json({ status: "Suscripcion cancelada" });
   } else {
     let user = await User.findOne({
       where: {

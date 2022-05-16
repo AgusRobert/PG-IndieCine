@@ -376,7 +376,7 @@ export function validateSubscription(email) {
       let response = await axios.get(
         `${SERVER_BACK}/payment/validate/${email}`
       );
-      dispatch({
+      return dispatch({
         type: VALIDATE_SUBSCRIPTION,
         payload: response.data,
       });
@@ -446,7 +446,7 @@ export function paySubscription(payload) {
 }
 
 export function cancelSubscription(email) {
-  return async function () {
+  return async function (dispatch) {
     try {
       //busco el id de la suscripción a cancelar.
       const id = await axios.get(`${SERVER_BACK}/payment/${email}`);
@@ -458,10 +458,11 @@ export function cancelSubscription(email) {
         subcription: "Free",
         status: "creator approved",
       });
-      return {
+      console.log("userUpdated", userUpdated);
+      return dispatch({
         type: CANCEL_SUBSCRIPTION,
         payload: userUpdated.data,
-      };
+      });
     } catch (error) {
       console.log("cancelSubscription action", error);
     }
