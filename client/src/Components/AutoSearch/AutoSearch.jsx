@@ -145,8 +145,11 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
     setPresidenteSeleccionado(presidente);
   };
 
+  const [search, setSearch] = useState('')
+
   const onChange = (e, { newValue }) => {
     setValue(newValue);
+    setSearch(e.target.value)
   };
 
   const inputProps = {
@@ -166,9 +169,12 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
   };
 
   function handleSearch(presidenteSeleccionado) {
-   console.log("QUEMANDA", presidenteSeleccionado)
-   presidenteSeleccionado !==undefined? dispatch(searchPelicula_Actor(presidenteSeleccionado.toString()))
-   : dispatch(searchPelicula_Actor("aseafasrafs"))
+   /* console.log("QUE MANDA", presidenteSeleccionado, search) */
+   if (presidenteSeleccionado !==undefined) {dispatch(searchPelicula_Actor(presidenteSeleccionado.toString())); setPresidenteSeleccionado({});}
+   else {dispatch(searchPelicula_Actor(search));setSearch("");};
+    setSearch("");
+    setPresidenteSeleccionado({})
+
 
   }
 

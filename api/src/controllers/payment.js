@@ -9,35 +9,93 @@ exports.subcription = async (req, res) => {
 };
 
 exports.validate = async (req, res) => {
-  try {
-    // console.log("EMAIL AL VALIDATE", req.params.email);
-    const validationData = await paymentService.validation(req.params.email);
+  // try {
+  const { email } = req.params;
+  // console.log("CONTROLADOR : ", email);
+  const validationData = await paymentService.validation(email);
+  // console.log("validationData", validationData);
+  let testResult = validationData?.results?.pop();
+  // console.log("testResult", testResult);
+  if (testResult?.status === "authorized") {
+    let user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
 
-    // console.log("validationData", validationData);
+    let plan = await Plans.findOne({
+      where: { name: testResult.reason },
+    });
 
-    let testResult = validationData.results?.pop();
+    let infoToUpdate = {
+      subcription: testResult.reason,
+      PlanId: plan.id,
+      status: "creator approved",
+    };
 
-    if (testResult?.status === "authorized") {
-      let user = await User.findOne({
-        where: {
-          email: req.params.email,
-        },
-      });
-
-      let plan = await Plans.findOne({
-        where: { name: testResult.reason },
-      });
-
-      let infoToUpdate = {
-        subcription: testResult.reason,
-        PlanId: plan.id,
-      };
-
-      await user.update(infoToUpdate);
-      console.log("USER UPDATEADO", user);
+    const result = await user.update(infoToUpdate);
+    //_----------------------------------
+    const idToCancel = await paymentService.getIdSubscribe(email, 1);
+    if (idToCancel) {
+      await paymentService.cancelSuscribe(idToCancel);
     }
-    return res.json(validationData);
+
+    return res.json(result.dataValues);
+  } else if (testResult?.status === "pending") {
+    await paymentService.cancelSuscribe(testResult.id);
+
+    let user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+    // let infoToUpdate = {
+    //   subcription: "Free",
+    // };
+    // const result = await user.update(infoToUpdate);
+    // console.log("Result", result);
+    return res.json(user);
+
+    // return res.json({ status: "Suscripcion cancelada" });
+  } else {
+    let user = await User.findOne({
+      where: {
+        email: req.params.email,
+      },
+    });
+
+    let infoToUpdate = {
+      subcription: "Free",
+      PlanId: 1,
+      status: "creator approved",
+    };
+    const result = await user.update(infoToUpdate);
+
+    return res.json(result.dataValues);
+  }
+  // } catch (error) {
+  //   res.send("validate controller catch", error);
+  // }
+};
+
+exports.cancelSubcription = async (req, res) => {
+  try {
+    const { id } = req.params;
+    return res.json((await paymentService.cancelSuscribe(id))?.status);
   } catch (error) {
-    res.json('validate controller catch', error);
+    console.log("cancelSubcription controller catch", error);
+  }
+};
+
+exports.getIdSubscription = async (req, res) => {
+  try {
+    const { email } = req.params;
+    console.log(
+      "\n\n--------------------------------------------------------\n\nEMAIL QUE LLEGO: ",
+      email
+    );
+    return res.json(await paymentService.getIdSubscribe(email));
+  } catch (error) {
+    console.log("getIdSubscription controller catch", error);
   }
 };

@@ -122,3 +122,11 @@ span {
 .paraTi2{
   min-width: 1700px; /* ACA SE CAMBIA EL TWITTER A LA DERECHA O IZQ */
 }
+
+.contenedor{
+  background: red;
+}
+
+.contenedor2{
+  background: green;
+}

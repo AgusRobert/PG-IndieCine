@@ -27,6 +27,8 @@ import {
   DELETE_COMMENT,
   GET_USERS,
   CLEAN_STATE,
+  CANCEL_SUBSCRIPTION,
+  DELETE_EXCEDED_FILMS,
   GET_PROFILE_INFO_BY_ID_USER,
 } from "../actions/actionstype";
 
@@ -98,6 +100,7 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           pelisfiltradas: peliFiltro,
+          usersfiltrados: []
         };
       } else if (userFiltro.length) {
         return {
@@ -318,17 +321,19 @@ function rootReducer(state = initialState, action) {
     // };
 
     case VALIDATE_SUBSCRIPTION:
-      let updatedSubscription = "Free";
-      if ((action.payload.results[0].status = "pending")) {
-        updatedSubscription = action.payload.results[2].reason;
-        return {
-          ...state,
-          profileInfo: {
-            ...state.profileInfo,
-            subcription: updatedSubscription,
-          },
-        };
-      }
+      // let updatedSubscription = "Free";
+      // if (action.payload.status !== "Suscripcion cancelada") {
+      //   updatedSubscription = action.payload.subcription;
+      return {
+        ...state,
+        // profileInfo: {
+        // ...state.profileInfo,
+
+        // subcription: updatedSubscription,
+        // },
+        profileInfo: action.payload,
+      };
+    // }
 
     case GET_PLAN_INFO:
       return {
@@ -337,17 +342,32 @@ function rootReducer(state = initialState, action) {
       };
 
     case DELETE_FAV:
-      let deletedFavs = state.favorites.filter(p => p.id !== action.payload);
+      let deletedFavs = state.favorites.filter((p) => p.id !== action.payload);
       console.log("DELETED FAVS", deletedFavs);
       return {
         ...state,
         favorites: deletedFavs,
       };
 
+    // case DELETE_EXCEDED_FILMS:
+    //   return {
+    //     ...state,
+    //     profileInfo: {
+    //       ...state.profileInfo,
+    //       films: action.payload,
+    //     }
+    //   }
+
     case PAY_SUBSCRIPTION:
       return {
         ...state,
         paymentLink: action.payload.init_point,
+      };
+
+    case CANCEL_SUBSCRIPTION:
+      return {
+        ...state,
+        profileInfo: action.payload,
       };
 
     // comments y en estado inicial
@@ -364,7 +384,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case UPDATE_COMMENT:
-      let updatedComments = state.comments.map(comment => {
+      let updatedComments = state.comments.map((comment) => {
         if (comment.id === action.payload.id) {
           return action.payload;
         }
@@ -376,7 +396,7 @@ function rootReducer(state = initialState, action) {
       };
     case DELETE_COMMENT:
       let filteredComments = state.comments.filter(
-        c => c.id !== action.payload
+        (c) => c.id !== action.payload
       );
       return {
         ...state,
