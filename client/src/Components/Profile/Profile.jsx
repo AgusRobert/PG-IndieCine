@@ -15,6 +15,7 @@ import {
   getPlanInfo,
   deleteExcededFilms,
   deleteFilm,
+  keepFilm,
 } from "../../redux/actions";
 import {
   /*Box,*/ AppBar,
@@ -134,17 +135,21 @@ export default function Profile() {
   const [outLimit, setOutLimit] = useState(false);
   const [filmsToDelete, setFilmsToDelete] = useState([]);
 
-  const profileInfo = useSelector(state => state.profileInfo);
-  const plans = useSelector(state => state.plans);
-  const allMovies = useSelector(state => state.pelisfiltradas);
+  const profileInfo = useSelector((state) => state.profileInfo);
+  const plans = useSelector((state) => state.plans);
+  const allMovies = useSelector((state) => state.pelisfiltradas);
 
-  const plandeluser = plans.filter(p => p.name === profileInfo?.subcription);
-  const limitedeluser = plandeluser.map(e => e.filmsAllowed);
-  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
+  const plandeluser = plans.filter((p) => p.name === profileInfo?.subcription);
+  const limitedeluser = plandeluser.map((e) => e.filmsAllowed);
+  const pelisdeluser = allMovies.filter(
+    (peli) => peli.UserId === profileInfo.id
+  );
   const [showSubs, setShowSubs] = useState(false);
   // validación de suscripción
   const [valid, setValid] = useState(true);
-
+  // const validatePelis = () => {
+  //   pelisdeluser.
+  // }
   // var cont = 0;
   useEffect(() => {
     dispatch(getPlanInfo());
@@ -174,16 +179,16 @@ export default function Profile() {
   }, [fillForm, dispatch, planChanged, planCanceled, render]);
 
   // funcion para que vuelva a ejecutar el useEffect cuando se cambie el plan
-  const handlePlanChange = payload => {
+  const handlePlanChange = (payload) => {
     setPlanChanged(payload);
   };
   // funcion para que vuelva a ejecutar el useEffect cuando se cancele el plan para volver a Free
-  const handlePlanCancel = payload => {
+  const handlePlanCancel = (payload) => {
     setPlanCanceled(payload);
   };
 
   // -- Feature para que el usuario pueda eliminar sus proyectos excedentes al limite permitido -- //
-  const addProjectToDelete = e => {
+  const addProjectToDelete = (e) => {
     setFilmsToDelete([
       ...filmsToDelete,
       { id: e.target.id, title: e.target.name },
@@ -191,16 +196,12 @@ export default function Profile() {
     // filmsToDelete.push(e.target.id);
   };
 
-  const handleDeleteProject = filmId => {
+  const handleKeepProject = (film) => {
     setRender(false);
-    dispatch(deleteFilm(filmId));
+    dispatch(keepFilm({ ...film, status: "approved" }));
     // dispatch(getProfileInfo(user.email));
-    setFilmsToDelete(filmsToDelete.filter(film => film.id !== filmId));
+    // setFilmsToDelete(filmsToDelete.filter(film => film.id !== filmId));
     setRender(true);
-  };
-
-  const handleProjectsToDelete = peli => {
-    setFilmsToDelete(filmsToDelete.filter(film => film.id !== peli.id));
   };
 
   const deleteProjects = () => {
@@ -215,7 +216,7 @@ export default function Profile() {
       cancelButtonColor: "#d33",
       confirmButtonText: "Si, borrar",
       cancelButtonText: "Cancelar",
-    }).then(result => {
+    }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteExcededFilms(filmsToDelete, profileInfo.id));
         setFilmsToDelete([]);
@@ -224,7 +225,7 @@ export default function Profile() {
   };
   // -------------------------------------------------------------------------------------------- //
 
-  const handleNavigateBtn = id => {
+  const handleNavigateBtn = (id) => {
     navigate(`/detail/${id}`);
   };
 
@@ -240,7 +241,7 @@ export default function Profile() {
     dispatch(deleteUserInformation(user.email));
   };
 
-  const handleFillForm = payload => {
+  const handleFillForm = (payload) => {
     setFillForm(payload);
   };
 
@@ -329,7 +330,6 @@ export default function Profile() {
               <h4>{user.name}</h4>
               <h4>{profileInfo?.username}</h4>
               <h4>{user.email}</h4>
-
               {profileInfo?.status === "creator approved" &&
                 pelisdeluser.length < limitedeluser[0] && (
                   <Container>
@@ -467,7 +467,7 @@ export default function Profile() {
                 <>
                   <h2>Mis Proyectos</h2>
                   <BoxFavG>
-                    {pelisdeluser.map(peli => {
+                    {pelisdeluser.map((peli) => {
                       let idpeli = peli.id;
                       return (
                         <Box paddingLeft={5}>
@@ -487,7 +487,7 @@ export default function Profile() {
                           >
                             {peli.title}
                           </StyledLink>
-                          <button onClick={() => handleDeleteProject(idpeli)}>
+                          <button onClick={() => handleKeepProject(peli)}>
                             x
                           </button>
                         </Box>

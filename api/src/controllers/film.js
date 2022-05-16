@@ -16,7 +16,7 @@ exports.getFilms = async (req, res, next) => {
         },
       ],
     });
-    res.json(allFilms.filter((film) => film.status !== "pending"));
+    res.json(allFilms.filter((film) => film.status === "approved"));
   } catch (err) {
     // res.send("No se pudo acceder a las películas");
     next(err);

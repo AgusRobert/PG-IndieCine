@@ -34,6 +34,7 @@ import {
   DELETE_EXCEDED_FILMS,
   DELETE_FILM,
   GET_PROFILE_INFO_BY_ID_USER,
+  KEEP_FILM,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -92,8 +93,8 @@ export function postMovie(movieForm) {
   };
 }
 
-export function deleteFilm(id){
-  return async function (dispatch){
+export function deleteFilm(id) {
+  return async function (dispatch) {
     try {
       console.log("id en la action", id);
       await axios.delete(`${SERVER_BACK}/films/${id}`);
@@ -101,14 +102,23 @@ export function deleteFilm(id){
       return dispatch({
         type: DELETE_FILM,
         // payload: actualFilms.data,
-      })
+      });
     } catch (error) {
       console.log("deleteFilm action", error);
     }
-  }
+  };
 }
 
-export function deleteExcededFilms(filmsToDelete , userId) {
+export function keepFilm(peli) {
+  return async function () {
+    await axios.put(`${SERVER_BACK}/films`,peli);
+    return {
+      type: KEEP_FILM,
+    };
+  };
+}
+
+export function deleteExcededFilms(filmsToDelete, userId) {
   return async function (dispatch) {
     try {
       // borro los pelis que exceden el limite
@@ -118,7 +128,9 @@ export function deleteExcededFilms(filmsToDelete , userId) {
         },
       });
       // obtengo los pelis actuales del usuario
-      let actualFilms = await axios.get(`${SERVER_BACK}/users/getFilmsById/${userId}`);
+      let actualFilms = await axios.get(
+        `${SERVER_BACK}/users/getFilmsById/${userId}`
+      );
       return dispatch({
         type: DELETE_EXCEDED_FILMS,
         payload: actualFilms.data,
