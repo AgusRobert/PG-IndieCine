@@ -1,0 +1,29 @@
+.separador{
+    width: 405px;
+}
+
+.wrapper{
+    padding: 7px;
+    max-height: fit-content;
+    max-width: 1150px;
+    display: flex;
+    overflow-x: auto;
+}
+
+.wrapper::-webkit-scrollbar{
+    width: 12px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+    background: white;
+  }
+
+
+.wrapper::-webkit-scrollbar-thumb {
+    background: #1f271b;;
+  }
+
+.wrpper::-webkit-scrollbar-thumb:hover {
+    background: #f4b942;
+  }
+

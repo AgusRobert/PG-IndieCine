@@ -31,13 +31,11 @@
 .Title{
   color: #ffc107;
   text-shadow: 5px 10px 5px black;
-  margin-top: 5%;
   text-align: center;
-  padding-top: 20px;
   font-size: 40px;
   padding-bottom: 0px;
   line-height: 50px;
-   font-family: 'Koulen', cursive;
+  font-family: 'Koulen', cursive;
 }
 
 .search {
@@ -62,15 +60,49 @@
   box-shadow: 5px 5px 30px 10px rgb(223, 216, 216);
 }
 
-h5 {
+/* h5 {
   text-align: center;
   margin: 5px 5px;
   color: #3b30d3;
   margin-top: 50px;
   margin-bottom: 10px;
+} */
+
+.Nombre {
+  color: white;
+}
+
+.Datos {
+  color: #93a8ac;
 }
 
 p,
 span {
   color: rgb(172, 168, 168);
+}
+
+.Cafecito{
+  color: #ffc107;
+  text-shadow: 5px 10px 5px black;
+  text-align: center;
+  font-size: 35px;
+  font-family: 'Koulen', cursive;
+  padding-bottom: 10px;
+}
+
+.Pcafecito{
+  color: white;
+  padding-top: 0;
+  font-size: 28px;
+  font-family: 'Koulen';
+}
+
+.Proyectos{
+  color: #ffc107;
+  text-shadow: 5px 10px 5px black;
+  text-align: center;
+  font-size: 40px;
+  padding-bottom: 0px;
+  line-height: 20px;
+  font-family: 'Koulen', cursive;
 }

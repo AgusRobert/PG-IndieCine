@@ -13,27 +13,28 @@ import {
   getFavorites,
   getProfileInfo,
 } from "../../redux/actions";
-import { Paper } from "material-ui";
 import Swal from "sweetalert2";
 import { Modal } from "@mui/material";
-const ImgFav = styled("img")({
-  height: "400px",
-  width: "auto",
-});
-const BoxFav = styled(Box)({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  backgroundColor: grey[700],
+import Cartas from "../Cartas/Cartas.jsx";
+import Grid from "@mui/material/Grid";
+import { Paper } from "@mui/material";
+import "./FavListUser.modules.css";
+
+const PaperPelis = styled(Paper)({
+  display: "flex",
+  justifyContent: "space-evenly",
+  flexDirection: "row",
+  width: "100%",
+  maxWidth: "1150px",
+  backgroundColor: "transparent",
   border: "none",
-  padding: 10,
-  boxShadow: 24,
-  borderRadius: 5,
-  color: "black",
-  p: 4,
+  overflowX: "auto",
+  boxShadow: 15,
+  border: "8px solid transparent",
+  maxHeight: "600px",
+  gridColumn: "2/4",
 });
+
 export default function FavListUser({ userId }) {
   const { user } = useAuth0();
   let dispatch = useDispatch();
@@ -41,8 +42,8 @@ export default function FavListUser({ userId }) {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
-  const profileInfo = useSelector(state => state.profileInfoUser);
-  let favs = useSelector(state => state.favorites);
+  const profileInfo = useSelector((state) => state.profileInfoUser);
+  let favs = useSelector((state) => state.favorites);
 
   console.log("FAVORITOS", favs);
 
@@ -75,38 +76,30 @@ export default function FavListUser({ userId }) {
 
   return (
     <Box>
-      <div>
+      <div className="wrapper">
         {favs.length ? (
-          favs?.map(peli => {
-            let favDispatch = {
-              idPeli: peli.id,
-              email: user.email,
-            };
+          favs?.map((data) => {
+            let nombresGen = [];
+            let generos = data.Genres;
+            generos.forEach((a) => {
+              nombresGen.push(a.name);
+            });
             return (
               <>
-                <Box>
-                  <ImgFav src={peli.poster} alt="Poster" />
-                </Box>
-                <Typography>{peli.title}</Typography>
-                {/* <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <BoxFav>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Pelicula eliminada con éxito
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      Este film ya no aparecerá en tu lista :(
-                    </Typography>
-                  </BoxFav>
-                </Modal> */}
+                <Cartas
+                  title={data.title}
+                  poster={data.poster}
+                  year={data.year}
+                  country={data.Country.name}
+                  genres={"Géneros: " + nombresGen.join(", ")}
+                  rating={data.rating}
+                  key={data.id}
+                  duration={data.duration}
+                  synopsis={data.synopsis}
+                  director={data.director}
+                  id={data.id}
+                />
+                <div className="separador"></div>
               </>
             );
           })
