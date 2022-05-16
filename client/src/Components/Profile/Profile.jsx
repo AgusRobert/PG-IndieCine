@@ -374,10 +374,10 @@ export default function Profile() {
                      
                  </Box> );
                 })}
-            </BoxFavG>
+            </BoxFavG> <Divider color="#FFBE0B" width={900}/>
             </>
           )}
-  <Divider color="#FFBE0B" width={900}/>
+ 
             <br></br>
           {profileInfo?.creator === true && (
             <Subs currentSub={profileInfo?.subcription} />
@@ -385,7 +385,7 @@ export default function Profile() {
 
           {profileInfo?.status === "registered" && fillForm === false && (
             <>
-              <h2>¿Desea subir al siguiente nivel?</h2>
+              <Subtitulo variant="medium">¿Desea subir al siguiente nivel?</Subtitulo>
 
               <Container>
                 <h4>Beneficios de convertirse en Creador.</h4>
@@ -394,6 +394,7 @@ export default function Profile() {
                   <li>Visibilidad a tu contenido.</li>
                   <li>Sección donde gestionar tu contenido.</li>
                 </ul>
+                <Box paddingBottom={1}>
                 <StyledLink
                   sx={{
                     ":hover": {
@@ -407,7 +408,9 @@ export default function Profile() {
                   onClick={handleUpgradeBtn}
                 >
                   Subir de nivel
-                </StyledLink>
+                </StyledLink></Box>
+                <Divider color="#FFBE0B"/>
+                <br></br>
                 {upgradeBtn && fillForm === false && (
                   <CreatorForm fillFormFn={handleFillForm} />
                 )}
@@ -416,8 +419,8 @@ export default function Profile() {
           )}
           {profileInfo?.status === "pending" && (
             <>
-              <h2>Tu solicitud esta siendo evaluada</h2>
-              <h3>Pronto nos comunicaremos contigo</h3>
+              <Subtitulo variant="medium">Tu solicitud esta siendo evaluada</Subtitulo>
+              <Subtitulo variant="medium">Pronto nos comunicaremos contigo</Subtitulo>
             </>
           )}
         </StyledContainer3>
