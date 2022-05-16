@@ -184,8 +184,9 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
         onSuggestionSelected={eventEnter}
       />
       <br />
-      <ButtonStyle
+      <ButtonStyle 
         sx={{
+          color: "white",
           ":hover": {
             bgcolor: "#ffc107",
             color: "black",
