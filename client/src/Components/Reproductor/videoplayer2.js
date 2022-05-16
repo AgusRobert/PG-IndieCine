@@ -4,8 +4,8 @@ function View2({ ubicacion }) {
   return (
     <div>
       <video
-        width="940"
-        height="680"
+        width="100%"
+        height="100%"
         controls
         controlsList="nodownload"
       >

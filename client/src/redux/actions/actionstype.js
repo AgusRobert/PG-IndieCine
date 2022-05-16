@@ -33,6 +33,7 @@ export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 export const GET_USERS = "GET_USERS";
 export const CLEAN_STATE = "CLEAN_STATE";
+export const GET_PROFILE_INFO_BY_ID_USER = "GET_PROFILE_INFO_BY_ID_USER";
 
 
 

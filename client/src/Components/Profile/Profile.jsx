@@ -16,9 +16,8 @@ import {
   deleteExcededFilms,
   deleteFilm,
 } from "../../redux/actions";
-import { /*Box,*/ Container, Link } from "@mui/material";
+import { /*Box,*/ AppBar, Box, Container, Divider, Link, Typography } from "@mui/material";
 import { color, styled } from "@mui/system";
-import { Modal, Box } from "@material-ui/core";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from "../Header/LOGO.png";
 import { useEffect, useState } from "react";
@@ -28,12 +27,11 @@ import Subs from "../Subs/Subs";
 import Swal from "sweetalert2";
 
 const StyledLink = styled(Link)({
-  marginRight: 150,
+  backgroundColor: deepPurple[500],
   justifyContent: "space-between",
   color: deepPurple[50],
-
   padding: 8,
-  borderRadius: "6%",
+  borderRadius: 10,
 });
 
 const StyledBox = styled(Box)({
@@ -45,20 +43,21 @@ const StyledBox = styled(Box)({
 });
 
 const StyledContainer = styled(Container)({
-  border: "1px solid #ced4da",
+  backgroundColor: grey[900],
   borderRadius: "10px",
   gridColumn: "1/1",
+  paddingBottom: 30
 });
 
 const StyledContainer2 = styled(Container)({
-  border: "1px solid #ced4da",
+  backgroundColor: grey[900],
   borderRadius: "10px",
   gridColumn: "2/4",
   width: "100%",
 });
 
 const StyledContainer3 = styled(Container)({
-  border: "1px solid #ced4da",
+  backgroundColor: grey[900],
   borderRadius: "10px",
   gridColumn: "1/4",
 });
@@ -77,7 +76,40 @@ const BoxFav = styled(Box)({
   color: "black",
   p: 4,
 });
-
+const AppStyle = styled(AppBar)({
+  opacity: 0.85,
+  backgroundColor: "#b388ff",
+  position: "fixed",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+const BoxS = styled(Box)({
+  paddingTop: 100,
+});
+const Titulo = styled(Typography)({
+  color: "white",
+  fontSize: "45px",
+  fontFamily: "Koulen"
+});
+const Subtitulo = styled(Typography)({
+  color: "#FFBE0B",
+  fontSize: "30px",
+  fontFamily: "Koulen"
+});
+const BoxFavG = styled(Box)({
+  border: "none",
+  //  justifyContent:'space-between',
+  alignItems: "center",
+  borderRadius: 5,
+  display: "flex",
+  paddingBottom: 20,
+  overflow: 'auto',
+  width: 900
+});
+const ImgP = styled("img")({
+  height: "400px",
+  width: "auto"
+})
 export default function Profile() {
   const { user, logout } = useAuth0();
   const dispatch = useDispatch();
@@ -104,6 +136,9 @@ export default function Profile() {
   const pelisdeluser = allMovies.filter(
     (peli) => peli.UserId === profileInfo.id
   );
+  const [showSubs, setShowSubs] = useState(false);
+  // validación de suscripción
+  const [valid, setValid] = useState(true);
 
   // var cont = 0;
   useEffect(() => {
@@ -242,9 +277,15 @@ export default function Profile() {
 
   return (
     <>
+      <AppStyle>
+        <Ruta to={"/"}>
+          <img src={logo} alt="img not found" />
+        </Ruta>
+      </AppStyle>
+      <BoxS></BoxS>
       {loaded ? (
         <StyledBox>
-          <Container>
+          {/* <Container>
             <StyledLink
               sx={{
                 ":hover": {
@@ -259,11 +300,26 @@ export default function Profile() {
             >
               <img src={logo} alt="Img not found" />
             </StyledLink>
-          </Container>
+          </Container> */}
           <StyledContainer sx={{}}>
-            <h1>PROFILE</h1>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              bgcolor="#FFBE0B"
+              color="#e0e0e0"
+              fontSize={24}
+              position={"relative"}
+              left={10}
+              top={30}
+              borderRadius={5}
+            >
+              <Titulo variant="bold">Perfil</Titulo>
+            </Box>
             <Container>
-              <h2>Mis datos</h2>
+              <br></br>
+              <br></br>
+              <Subtitulo variant="medium">Mis datos</Subtitulo>
               <h4>{user.name}</h4>
               <h4>{profileInfo?.username}</h4>
               <h4>{user.email}</h4>
@@ -316,6 +372,34 @@ export default function Profile() {
               )}
 
               {/* <Container>
+            <Divider color="#FFBE0B"/>
+            <br></br>
+            {profileInfo?.status === "creator approved" &&
+              pelisdeluser.length >= limitedeluser[0] && (
+                <Subtitulo variant="medium">Para aumentar la cantidad de proyectos para subir, cambia tu plan.</Subtitulo>
+              )}
+              <br></br>
+            {profileInfo?.status === "creator approved" && (
+              <Container>
+                <br></br>
+                <StyledLink
+                  sx={{ bcolor: deepPurple[400],
+                    ":hover": {
+                      bgcolor: deepPurple[200],
+                      color: "black",
+                    },
+                  }}
+                  color="textPrimary"
+                  variant="button"
+                  underline="none"
+                  onClick={handleCameBackToBasic}
+                >
+                  Dejar de ser creador
+                </StyledLink>
+              </Container>
+            )}
+
+            {/* <Container>
               <StyledLink
                 sx={{
                   ":hover": {
@@ -347,7 +431,20 @@ export default function Profile() {
           </StyledContainer>
 
           <StyledContainer2>
-            <h2>Lista de peliculas favoritas.</h2>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              bgcolor="#FFBE0B"
+              color="#e0e0e0"
+              fontSize={24}
+              position={"relative"}
+              left={10}
+              top={30}
+              borderRadius={5}
+            >
+              <Titulo variant="bold">Tus proyectos favoritos</Titulo>
+            </Box>
             {profileInfo?.id && <FavList userId={profileInfo?.id} />}
           </StyledContainer2>
 
@@ -356,19 +453,29 @@ export default function Profile() {
             {profileInfo?.status === "creator approved" && profileInfo?.creator === true /*&& !outLimit*/ && (
               <>
                 <h2>Mis Proyectos</h2>
-                <ul>
+                <BoxFavG>
                   {pelisdeluser.map((peli) => {
-                    let idpeli = peli.id
+                    let idpeli = peli.id;
                     return (
-                      <div>
-                        <li>
-                          <button onClick={() => handleNavigateBtn(idpeli)}>{peli.title}</button>
-                          <button onClick={() => handleDeleteProject(idpeli)}>x</button>
-                        </li>
-                      </div>
-                    );
+                      <Box paddingLeft={5}>
+                        <ImgP src={peli.poster} alt='Poster' />
+                        <StyledLink
+                          sx={{
+                            bcolor: deepPurple[400],
+                            ":hover": {
+                              bgcolor: deepPurple[200],
+                              color: "black",
+                            },
+                          }}
+                          color="textPrimary"
+                          variant="button"
+                          underline="none"
+                          onClick={() => handleNavigateBtn(idpeli)}
+                        >{peli.title}</StyledLink>
+                        <button onClick={() => handleDeleteProject(idpeli)}>x</button>
+                      </Box>);
                   })}
-                </ul>
+                </BoxFavG>
               </>
             )}
 
@@ -411,6 +518,9 @@ export default function Profile() {
                 <button onClick={deleteProjects}>Listo</button>
               </>
             )} */}
+
+            <Divider color="#FFBE0B" width={900} />
+            <br></br>
 
             {/* {console.log("profileInfo", profileInfo)} */}
             {profileInfo?.creator === true && profileInfo.status !== "pending" && (

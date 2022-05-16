@@ -33,6 +33,7 @@ import {
   CANCEL_SUBSCRIPTION,
   DELETE_EXCEDED_FILMS,
   DELETE_FILM,
+  GET_PROFILE_INFO_BY_ID_USER,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -292,6 +293,7 @@ export function getFavorites(id) {
   return async function (dispatch) {
     try {
       var pelisFav = await axios.get(`${SERVER_BACK}/users/getFavs/${id}`);
+      console.log("ACTION", pelisFav.data);
       return dispatch({
         type: GET_FAV,
         payload: pelisFav.data,
@@ -362,6 +364,20 @@ export function getProfileInfoById(id) {
       let response = await axios.get(`${SERVER_BACK}/users/${id}`);
       return dispatch({
         type: GET_PROFILE_INFO_BY_ID,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log("getUserInfoById", error);
+    }
+  };
+}
+
+export function getProfileInfoByIdListUser(id) {
+  return async function (dispatch) {
+    try {
+      let response = await axios.get(`${SERVER_BACK}/users/${id}`);
+      return dispatch({
+        type: GET_PROFILE_INFO_BY_ID_USER,
         payload: response.data,
       });
     } catch (error) {

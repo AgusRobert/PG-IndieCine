@@ -29,6 +29,7 @@ import {
   CLEAN_STATE,
   CANCEL_SUBSCRIPTION,
   DELETE_EXCEDED_FILMS,
+  GET_PROFILE_INFO_BY_ID_USER,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -44,6 +45,7 @@ const initialState = {
   plans: [],
   paymentLink: "",
   profileInfo: {},
+  profileInfoUser: {},
   comments: [],
   users: [],
   usersfiltrados: [],
@@ -67,16 +69,16 @@ function rootReducer(state = initialState, action) {
         return contador;
       };
 
-      let userFiltro = usersporfiltrar.filter((data) => {
+      let userFiltro = usersporfiltrar.filter(data => {
         if (
-          data.username.toLowerCase().indexOf(action.payload.toLowerCase()) !==
+          data?.username.toLowerCase().indexOf(action.payload.toLowerCase()) !==
           -1
         ) {
           return data;
         }
       });
 
-      let peliFiltro = pelisporfiltrar.filter((data) => {
+      let peliFiltro = pelisporfiltrar.filter(data => {
         if (
           data.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
             -1 ||
@@ -98,6 +100,7 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           pelisfiltradas: peliFiltro,
+          usersfiltrados: []
         };
       } else if (userFiltro.length) {
         return {
@@ -108,6 +111,7 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           pelisfiltradas: ["No films"],
+          usersfiltrados: ["No films"],
         };
       }
 
@@ -241,7 +245,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_COUNTRIES:
-      console.log("payload de countries", action.payload);
+      /*   console.log("payload de countries", action.payload); */
       return {
         ...state,
         countries: action.payload,
@@ -302,6 +306,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         profileInfo: action.payload,
+      };
+    case GET_PROFILE_INFO_BY_ID_USER:
+      return {
+        ...state,
+        profileInfoUser: action.payload,
       };
 
     // case GET_USER_INFO:
