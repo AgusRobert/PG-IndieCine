@@ -186,17 +186,15 @@ export default function MovieDetail() {
   let filmId = id;
   const [loaded, setLoaded] = useState(false);
 
-  const allMovies = useSelector((state) => state.pelisfiltradas);
-  const profileInfo = useSelector((state) => state.profileInfo);
+  const allMovies = useSelector(state => state.pelisfiltradas);
+  const profileInfo = useSelector(state => state.profileInfo);
 
-  const pelisdeluser = allMovies.filter(
-    (peli) => peli.UserId === profileInfo.id
-  );
+  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
 
   /* console.log("USER", pelisdeluser); */
 
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
-  const peli = useSelector((state) => state.detalle);
+  const peli = useSelector(state => state.detalle);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -214,6 +212,7 @@ export default function MovieDetail() {
     };
   }, []);
 
+  /* console.log("ELENCO", peli.mainActors.join(", ")); */
   let elenco = peli ? peli.mainActors : [];
 
   let key = 0;
@@ -246,7 +245,7 @@ export default function MovieDetail() {
           background: "black",
           backdrop: `
             rgba(0,0,123,0.2)0  `,
-        }).then((result) => {
+        }).then(result => {
           if (result.isConfirmed) {
             handleSignUp();
           } else {
@@ -276,7 +275,7 @@ export default function MovieDetail() {
                     flexDirection: {
                       tablet: "column",
                       mobile: "column",
-                      laptop: "row"
+                      laptop: "row",
                     },
                     paddingTop: {
                       tablet: "15px",
@@ -289,7 +288,7 @@ export default function MovieDetail() {
                       paddingLeft: {
                         tablet: "0px",
                         mobile: "0px",
-                        laptop: "1.5%"
+                        laptop: "1.5%",
                       },
                     }}
                   >
@@ -305,7 +304,7 @@ export default function MovieDetail() {
                       padding: {
                         tablet: "0%",
                         mobile: "0%",
-                      }
+                      },
                     }}
                   >
                     <PaperStyle5>
@@ -344,7 +343,7 @@ export default function MovieDetail() {
                           <h3>Género:</h3>
                           {/* <p color="#1f271b">_</p> */}
                           <p>
-                            &nbsp;{peli.Genres?.map((a) => a.name).join(", ")}
+                            &nbsp;{peli.Genres?.map(a => a.name).join(", ")}
                           </p>
                         </PaperStyle4>
                       </PaperStyle6>
@@ -362,9 +361,7 @@ export default function MovieDetail() {
                         <PaperStyle4>
                           <h3>Elenco principal:</h3>
                           &nbsp;
-                          {elenco?.map((e, i) => {
-                            return <p key={key++}>{e}</p>;
-                          })}{" "}
+                          <p>{peli.mainActors.join(", ")}</p>
                         </PaperStyle4>
                       </PaperStyle6>{" "}
                     </PaperStyle5>
@@ -379,58 +376,56 @@ export default function MovieDetail() {
                 </PaperTop>
               </ThemeProvider>
               <ThemeProvider theme={theme}>
-              <PaperBot
-                sx={{
-                  flexDirection: {
-                    tablet: "column",
-                    mobile: "column",
-                    laptop: "row"
-                  },
-                }}
-              >
-                <PaperView
+                <PaperBot
                   sx={{
-                    width: {
-                      tablet: "100%",
-                      mobile: "100%",
-                    }
+                    flexDirection: {
+                      tablet: "column",
+                      mobile: "column",
+                      laptop: "row",
+                    },
                   }}
                 >
-                  <View2
-                    ubicacion={
-                      peli.url
-                    }
-                  />
-                </PaperView>
-                <PaperComments
-                  sx={{
-                    width: {
-                      tablet: "100%",
-                      mobile: "100%",
-                    }
-                  }}
-                >
-                  <PaperFavs>
-                    <div className="detalles4">
-                      <FavButton filmId={filmId} />
-                      <Link to={`/users/${peli.UserId}`}>
-                        <button className="autorProfile">PÉRFIL DEL AUTOR</button>
-                      </Link>
-                      {peli.cafecito && (
-                        <CafecitoBtn linkCafecito={profileInfo.cafecito} />
-                      )}
-                    </div>
-                    <Comments
-                      userId={profileInfo?.id}
-                      filmId={Number(filmId)}
-                      // username={profileInfo?.username}
-                      username={user?.nickname}
-                      // image={profileInfo?.image}
-                      image={user?.picture}
-                    />
-                  </PaperFavs>
-                </PaperComments>
-              </PaperBot>{" "}
+                  <PaperView
+                    sx={{
+                      width: {
+                        tablet: "100%",
+                        mobile: "100%",
+                      },
+                    }}
+                  >
+                    <View2 ubicacion={peli.url} />
+                  </PaperView>
+                  <PaperComments
+                    sx={{
+                      width: {
+                        tablet: "100%",
+                        mobile: "100%",
+                      },
+                    }}
+                  >
+                    <PaperFavs>
+                      <div className="detalles4">
+                        <FavButton filmId={filmId} />
+                        <Link to={`/users/${peli.UserId}`}>
+                          <button className="autorProfile">
+                            PÉRFIL DEL AUTOR
+                          </button>
+                        </Link>
+                        {peli.cafecito && (
+                          <CafecitoBtn linkCafecito={profileInfo.cafecito} />
+                        )}
+                      </div>
+                      <Comments
+                        userId={profileInfo?.id}
+                        filmId={Number(filmId)}
+                        // username={profileInfo?.username}
+                        username={user?.nickname}
+                        // image={profileInfo?.image}
+                        image={user?.picture}
+                      />
+                    </PaperFavs>
+                  </PaperComments>
+                </PaperBot>{" "}
               </ThemeProvider>
               <Footer />
             </Box>
