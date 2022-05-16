@@ -16,7 +16,14 @@ import {
   deleteExcededFilms,
   deleteFilm,
 } from "../../redux/actions";
-import { /*Box,*/ AppBar, Box, Container, Divider, Link, Typography } from "@mui/material";
+import {
+  /*Box,*/ AppBar,
+  Box,
+  Container,
+  Divider,
+  Link,
+  Typography,
+} from "@mui/material";
 import { color, styled } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from "../Header/LOGO.png";
@@ -46,7 +53,7 @@ const StyledContainer = styled(Container)({
   backgroundColor: grey[900],
   borderRadius: "10px",
   gridColumn: "1/1",
-  paddingBottom: 30
+  paddingBottom: 30,
 });
 
 const StyledContainer2 = styled(Container)({
@@ -89,12 +96,12 @@ const BoxS = styled(Box)({
 const Titulo = styled(Typography)({
   color: "white",
   fontSize: "45px",
-  fontFamily: "Koulen"
+  fontFamily: "Koulen",
 });
 const Subtitulo = styled(Typography)({
   color: "#FFBE0B",
   fontSize: "30px",
-  fontFamily: "Koulen"
+  fontFamily: "Koulen",
 });
 const BoxFavG = styled(Box)({
   border: "none",
@@ -103,13 +110,13 @@ const BoxFavG = styled(Box)({
   borderRadius: 5,
   display: "flex",
   paddingBottom: 20,
-  overflow: 'auto',
-  width: 900
+  overflow: "auto",
+  width: 900,
 });
 const ImgP = styled("img")({
   height: "400px",
-  width: "auto"
-})
+  width: "auto",
+});
 export default function Profile() {
   const { user, logout } = useAuth0();
   const dispatch = useDispatch();
@@ -127,15 +134,13 @@ export default function Profile() {
   const [outLimit, setOutLimit] = useState(false);
   const [filmsToDelete, setFilmsToDelete] = useState([]);
 
-  const profileInfo = useSelector((state) => state.profileInfo);
-  const plans = useSelector((state) => state.plans);
-  const allMovies = useSelector((state) => state.pelisfiltradas);
+  const profileInfo = useSelector(state => state.profileInfo);
+  const plans = useSelector(state => state.plans);
+  const allMovies = useSelector(state => state.pelisfiltradas);
 
-  const plandeluser = plans.filter((p) => p.name === profileInfo?.subcription);
-  const limitedeluser = plandeluser.map((e) => e.filmsAllowed);
-  const pelisdeluser = allMovies.filter(
-    (peli) => peli.UserId === profileInfo.id
-  );
+  const plandeluser = plans.filter(p => p.name === profileInfo?.subcription);
+  const limitedeluser = plandeluser.map(e => e.filmsAllowed);
+  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
   const [showSubs, setShowSubs] = useState(false);
   // validación de suscripción
   const [valid, setValid] = useState(true);
@@ -169,36 +174,37 @@ export default function Profile() {
   }, [fillForm, dispatch, planChanged, planCanceled, render]);
 
   // funcion para que vuelva a ejecutar el useEffect cuando se cambie el plan
-  const handlePlanChange = (payload) => {
+  const handlePlanChange = payload => {
     setPlanChanged(payload);
-  }
+  };
   // funcion para que vuelva a ejecutar el useEffect cuando se cancele el plan para volver a Free
-  const handlePlanCancel = (payload) => {
+  const handlePlanCancel = payload => {
     setPlanCanceled(payload);
-  }
+  };
 
   // -- Feature para que el usuario pueda eliminar sus proyectos excedentes al limite permitido -- //
-  const addProjectToDelete = (e) => {
-    setFilmsToDelete([...filmsToDelete, { id: e.target.id, title: e.target.name }]);
+  const addProjectToDelete = e => {
+    setFilmsToDelete([
+      ...filmsToDelete,
+      { id: e.target.id, title: e.target.name },
+    ]);
     // filmsToDelete.push(e.target.id);
-  }
+  };
 
-  const handleDeleteProject = (filmId) => {
+  const handleDeleteProject = filmId => {
     setRender(false);
     dispatch(deleteFilm(filmId));
     // dispatch(getProfileInfo(user.email));
-    setFilmsToDelete(filmsToDelete.filter((film) => film.id !== filmId));
+    setFilmsToDelete(filmsToDelete.filter(film => film.id !== filmId));
     setRender(true);
-  }
+  };
 
-  const handleProjectsToDelete = (peli) => {
-    setFilmsToDelete(
-      filmsToDelete.filter((film) => film.id !== peli.id)
-    )
-  }
+  const handleProjectsToDelete = peli => {
+    setFilmsToDelete(filmsToDelete.filter(film => film.id !== peli.id));
+  };
 
   const deleteProjects = () => {
-    //en el estado local filmsToDelete tengo un array con los id 
+    //en el estado local filmsToDelete tengo un array con los id
     // de los proyectos que quiero borrar
     Swal.fire({
       title: "¿Estás seguro?",
@@ -209,18 +215,18 @@ export default function Profile() {
       cancelButtonColor: "#d33",
       confirmButtonText: "Si, borrar",
       cancelButtonText: "Cancelar",
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         dispatch(deleteExcededFilms(filmsToDelete, profileInfo.id));
         setFilmsToDelete([]);
       }
-    })
-  }
+    });
+  };
   // -------------------------------------------------------------------------------------------- //
 
-  const handleNavigateBtn = (id) => {
+  const handleNavigateBtn = id => {
     navigate(`/detail/${id}`);
-  }
+  };
 
   // Config del modal
   const [open, setOpen] = useState(false);
@@ -234,7 +240,7 @@ export default function Profile() {
     dispatch(deleteUserInformation(user.email));
   };
 
-  const handleFillForm = (payload) => {
+  const handleFillForm = payload => {
     setFillForm(payload);
   };
 
@@ -348,7 +354,14 @@ export default function Profile() {
                 pelisdeluser.length > limitedeluser[0] && (
                   <>
                     <h1>Para subir más proyectos, cambia tu plan.</h1>
-                    <h2>O elimina {pelisdeluser.length - limitedeluser[0]} proyecto{(pelisdeluser.length - limitedeluser[0]) === 1 ? null : 's'} para continuar.</h2>
+                    <h2>
+                      O elimina {pelisdeluser.length - limitedeluser[0]}{" "}
+                      proyecto
+                      {pelisdeluser.length - limitedeluser[0] === 1
+                        ? null
+                        : "s"}{" "}
+                      para continuar.
+                    </h2>
                   </>
                 )}
 
@@ -426,7 +439,6 @@ export default function Profile() {
                 </BoxFav>
               </Modal>
             </Container> */}
-
             </Container>
           </StyledContainer>
 
@@ -450,34 +462,40 @@ export default function Profile() {
 
           <StyledContainer3>
             {/* Los proyectos del usuario, mientras la cantidad de proyectos sea menos o igual a su limite */}
-            {profileInfo?.status === "creator approved" && profileInfo?.creator === true /*&& !outLimit*/ && (
-              <>
-                <h2>Mis Proyectos</h2>
-                <BoxFavG>
-                  {pelisdeluser.map((peli) => {
-                    let idpeli = peli.id;
-                    return (
-                      <Box paddingLeft={5}>
-                        <ImgP src={peli.poster} alt='Poster' />
-                        <StyledLink
-                          sx={{
-                            bcolor: deepPurple[400],
-                            ":hover": {
-                              bgcolor: deepPurple[200],
-                              color: "black",
-                            },
-                          }}
-                          color="textPrimary"
-                          variant="button"
-                          underline="none"
-                          onClick={() => handleNavigateBtn(idpeli)}
-                        >{peli.title}</StyledLink>
-                        <button onClick={() => handleDeleteProject(idpeli)}>x</button>
-                      </Box>);
-                  })}
-                </BoxFavG>
-              </>
-            )}
+            {profileInfo?.status === "creator approved" &&
+              profileInfo?.creator === true /*&& !outLimit*/ && (
+                <>
+                  <h2>Mis Proyectos</h2>
+                  <BoxFavG>
+                    {pelisdeluser.map(peli => {
+                      let idpeli = peli.id;
+                      return (
+                        <Box paddingLeft={5}>
+                          <ImgP src={peli.poster} alt="Poster" />
+                          <StyledLink
+                            sx={{
+                              bcolor: deepPurple[400],
+                              ":hover": {
+                                bgcolor: deepPurple[200],
+                                color: "black",
+                              },
+                            }}
+                            color="textPrimary"
+                            variant="button"
+                            underline="none"
+                            onClick={() => handleNavigateBtn(idpeli)}
+                          >
+                            {peli.title}
+                          </StyledLink>
+                          <button onClick={() => handleDeleteProject(idpeli)}>
+                            x
+                          </button>
+                        </Box>
+                      );
+                    })}
+                  </BoxFavG>
+                </>
+              )}
 
             {/* {Swal.fire({
               title: "¡Atención!",
@@ -526,7 +544,12 @@ export default function Profile() {
             {profileInfo?.creator === true && profileInfo.status !== "pending" && (
               <>
                 {/* <h2>{profileInfo?.subcription}</h2> */}
-                <Subs currentSub={profileInfo?.subcription} plans={plans} planChangeFn={handlePlanChange} planCanceledFn={handlePlanCancel} />
+                <Subs
+                  currentSub={profileInfo?.subcription}
+                  plans={plans}
+                  planChangeFn={handlePlanChange}
+                  planCanceledFn={handlePlanCancel}
+                />
               </>
             )}
 
