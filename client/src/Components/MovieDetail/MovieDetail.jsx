@@ -414,7 +414,7 @@ export default function MovieDetail() {
                     <div className="detalles4">
                       <FavButton filmId={filmId} />
                       <Link to={`/users/${peli.UserId}`}>
-                        <button className="autorProfile">AUTOR</button>
+                        <button className="autorProfile">PÉRFIL DEL AUTOR</button>
                       </Link>
                       {peli.cafecito && (
                         <CafecitoBtn linkCafecito={profileInfo.cafecito} />
