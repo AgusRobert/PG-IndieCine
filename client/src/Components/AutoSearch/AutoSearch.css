@@ -31,7 +31,8 @@
   .react-autosuggest__input{
     width: 100%;
     font-size: 1rem;
-    padding: 9px;
+    padding: 10px;
+    border: none;
     border-radius: 5px 5px 5px 5px;
   }
   
