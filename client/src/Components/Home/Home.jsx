@@ -175,7 +175,6 @@ export default function Home() {
                 (users?.map((user) => {
                   return (
                     <div>
-                      {/* <h5 className="Title">Usuarios</h5> */}
                       <Grid item m={3}>
                         <UserCards
                           title={user.username}
@@ -187,60 +186,77 @@ export default function Home() {
                     </div>
                   );
                 }))} 
+              {/* CARDS / TWITTER Y RECOMENDACIONES */}
+              <Grid container>
 
-              <ContainerS>
-                <Grid container spacing={15}>
-                  {allMovies ? (
-                    allMovies?.map(data => {
-                      let nombresGen = [];
-                      let generos = data.Genres;
-                      generos.forEach(a => {
-                        nombresGen.push(a.name);
-                      });
+                {/* CARDS */}
+                <Grid item xs={12} sm={12} md={9} lg={9} xl={9} >
+                  <Box>
+                    <Grid 
+                      container 
+                      spacing={8}
+                      direction="row"
+                      justifyContent="center"
+                      alignItems="center"
+                      marginBottom={6}
+                    >
 
+                    {allMovies ? (
+                        allMovies?.map(data => {
+                          let nombresGen = [];
+                          let generos = data.Genres;
+                          generos.forEach(a => {
+                            nombresGen.push(a.name);
+                          });
                       return (
-                        <Grid item m={3}>
-                          {/* <div className="cardgrid" key={data.id}> */}
-                          {/* <Link to={`/detail/${data.id}`}> */}
-                          <Cartas
-                            title={data.title}
-                            poster={data.poster}
-                            year={data.year}
-                            country={data.Country.name}
-                            genres={"Géneros: " + nombresGen.join(", ")}
-                            rating={data.rating}
-                            key={data.id}
-                            duration={data.duration}
-                            synopsis={data.synopsis}
-                            director={data.director}
-                            id={data.id}
-                          />
-                          {/* </Link> */}
-                          {/* </div> */}
+                        <Grid item>
+                            <Cartas
+                              title={data.title}
+                              poster={data.poster}
+                              year={data.year}
+                              country={data.Country.name}
+                              genres={"Géneros: " + nombresGen.join(", ")}
+                              rating={data.rating}
+                              key={data.id}
+                              duration={data.duration}
+                              synopsis={data.synopsis}
+                              director={data.director}
+                              id={data.id}
+                            />
                         </Grid>
                       );
-                    })
+                    })                  
                   ) : (
                     <img
                       src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
                       alt="not found"
                     />
                   )}
+                    </Grid>
+                  </Box>
                 </Grid>
-                <Container3 className="twitter">
-                  <Container2 className="paraTi2">
-                    <Box className="paraTi2">
-                      <ParaTi userId={profileInfo?.id} />
-                    </Box>
-                    <Box>
+
+                {/* TWITTER */}
+                <Grid item xs={12} sm={12} md={3} lg={3} xl={3} >
+                  <Box borderRadius={1}>
                       <Twitter />
-                    </Box>
-                  </Container2>
-                  {/* <Footer className="footer" /> */}
-                </Container3>
-                {/* <ParaTi userId={profileInfo?.id} /> */}
-                {<Footer className="footer" />}
-              </ContainerS>
+                  </Box>
+                </Grid>
+                
+                {/* RECOMENDACIONES */}
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                  <Box>
+                      <ParaTi userId={profileInfo?.id} />
+                  </Box>
+                </Grid>
+
+                {/* FOOTER */}
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                  <Box>
+                    <Footer className="footer" />
+                  </Box>
+                </Grid>
+              </Grid>
             </>
           ) : (
             <div>
