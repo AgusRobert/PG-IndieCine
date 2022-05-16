@@ -119,10 +119,10 @@ export default function Home() {
       <>
         <Header position="sticky" />
         <div className="container">
-          <div>
-            <h1>No se ha podido encontrar la búsqueda.</h1>
+          <div style={{display:"flex", flexDirection: "column" , justifyContent: "center", alignItems:"center"}} >
+            <h1 style={{textAlign:"center"}}>No se ha podido encontrar la búsqueda.</h1>
 
-            <button onClick={() => window.location.reload()}>
+            <button style={{maxWidth:"200px", fontSize:"1rem", padding:"5px"}} onClick={() => window.location.reload()}>
               Volver al Home
             </button>
           </div>

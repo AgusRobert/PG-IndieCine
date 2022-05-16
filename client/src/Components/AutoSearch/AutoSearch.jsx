@@ -179,7 +179,7 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
   }
 
   return (
-    <div>
+    <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
       <Autosuggest
         suggestions={presidentes}
         onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -190,8 +190,9 @@ export default function AutoSearch(/* genres, allMovies, countries */ ) {
         onSuggestionSelected={eventEnter}
       />
       <br />
-      <ButtonStyle
+      <ButtonStyle 
         sx={{
+          color: "white",
           ":hover": {
             bgcolor: "#ffc107",
             color: "black",

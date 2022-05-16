@@ -81,9 +81,9 @@ export default function DrawerMobile(infoUser) {
       </List>
       <Divider />
       <List>
-          <ListItem  disablePadding>
+          <ListItem style={{justifyContent:'center'}}>
            {/* <SearchBar /> */}
-           <AutoSearch />
+           <AutoSearch  />
           </ListItem>
       </List>
     </BoxA>
