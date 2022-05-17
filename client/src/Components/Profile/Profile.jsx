@@ -34,7 +34,7 @@ import Subs from "../Subs/Subs";
 import Swal from "sweetalert2";
 
 const StyledLink = styled(Link)({
-  backgroundColor: deepPurple[500],
+  backgroundColor: "#682f8a",
   justifyContent: "space-between",
   color: deepPurple[50],
   padding: 8,
@@ -85,7 +85,7 @@ const BoxFav = styled(Box)({
 });
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: "#b388ff",
+  backgroundColor: "#682f8a",
   position: "fixed",
   justifyContent: "space-between",
   alignItems: "center",
