@@ -2,7 +2,7 @@ import * as React from "react";
 import { getMovies } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import CachedIcon from "@mui/icons-material/Cached";
-import { yellow } from "@mui/material/colors";
+import { deepPurple, yellow } from "@mui/material/colors";
 
 export default function BotonRecarga() {
   const dispatch = useDispatch();
@@ -20,6 +20,14 @@ export default function BotonRecarga() {
         fontSize="large"
         onClick={e => {
           handleClick(e);
+        }}
+        sx={{
+          bcolor: deepPurple[400],
+          borderRadius:20,
+          ":hover": {
+            bgcolor: deepPurple[500],
+            color: "black",
+          },
         }}
       />
       {/* <img
