@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import {ApiClient} from 'adminjs';
-import {Box, H2, Text} from '@adminjs/design-system';
+import {Box, H2,H3, Text, Link, LinkProps, Label} from '@adminjs/design-system';
 import TaskType from './cards/TaskType';
 import TaskDos from './cards/TaskDos';
 
@@ -24,7 +24,6 @@ const[data, setData] = useState({});
                     <H2>
                         BIENVENIDO AL ADMIN PANEL DE LA PLATAFORMA
                     </H2>
-                    <Text opacity='0.8'>Subtítulo</Text>
                 </Text>
             </Box>
             <Box mt={['xl', 'xl', '-80px']}
@@ -44,6 +43,31 @@ const[data, setData] = useState({});
                         <TaskDos />
                     </Box>
             </Box>
+            <Box>
+            <Box >
+              <Text textAlign="center" color="primary100"> <H2 >Links de Verificación de Identidad</H2></Text> 
+            </Box>
+                <Box flex flexDirection="row" marginLeft='20%'>
+               <Text fontSize='20px' justifyContent="center" alignItems="center" color='black'> 
+               <Link  href='https://www.dateas.com/es/argentina?gclid=EAIaIQobChMI3-3w5IrU9wIVH0JIAB3Qpg3UEAMYASAAEgLHuvD_BwE'>
+                   Argentina - 
+                </Link>
+                <Link  href='https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaWeb.jsp'>
+                  - Perú - 
+                </Link>
+                <Link href='https://www.registrocivil.cl/principal/servicios-en-linea/consulta-vigencia-documento-1'>
+                - Chile -
+                </Link>
+                <Link href='https://www.gob.mx/curp/'>
+                - México -
+                </Link>
+                <Link href=' https://wsp.registraduria.gov.co'>
+                - Colombia -
+                </Link>
+               
+                </Text>
+             </Box>
+             </Box>
         </Box>
         </Box>
     )
