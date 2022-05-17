@@ -26,8 +26,12 @@ export default function FilterMoviesByGenre() {
 
 
   const genres = useSelector((state) => state.genres);
+  
+  const [selectedGenre, setSelectedGenre] = useState("");
 
   function handleChange(e) {
+    e.preventDefault();
+    setSelectedGenre(e.target.value);
     dispatch(getMoviesByGenre(e.target.value));
   }
 
@@ -43,7 +47,7 @@ export default function FilterMoviesByGenre() {
         name="select"
         onChange={(e) => handleChange(e)}
         select
-        value=""
+        value={selectedGenre}
         label="Generos"
         variant="outlined"
         selected

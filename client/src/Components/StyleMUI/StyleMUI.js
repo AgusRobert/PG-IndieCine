@@ -4,8 +4,11 @@ import { styled, Box } from "@mui/system";
 
 export const MenuItemStyle = styled(MenuItem)({
   marginLeft: "auto",
-  color: "white",
-  backgroundColor: "#b388ff",
+  color: "black",
+  backgroundColor: "#682f8a",
+  '&:focus':{
+    backgroundColor:'#682f8a'
+  }
 });
 
 export const InputStyle = styled(InputBase)({
@@ -18,7 +21,7 @@ export const InputStyle = styled(InputBase)({
 export const ButtonStyle = styled(Button)({
   color: "white",
   borderColor: deepPurple[500],
-  backgroundColor: deepPurple[700],
+  backgroundColor: "#682f8a",
   padding: 8,
 });
 
