@@ -67,10 +67,10 @@ const ImgStyle = styled("img")({
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
-  const allMovies = useSelector((state) => state.pelisfiltradas);
+  const allMovies = useSelector(state => state.pelisfiltradas);
   const estrenos = allMovies?.slice(-7).reverse();
-  const users = useSelector((state) => state.usersfiltrados);
-  const { profileInfo } = useSelector((state) => state);
+  const users = useSelector(state => state.usersfiltrados);
+  const { profileInfo } = useSelector(state => state);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -167,7 +167,7 @@ export default function Home() {
                 }}
                 className="mySwiper"
               >
-                {allMovies?.map((m) => {
+                {allMovies?.map(m => {
                   return (
                     <div height={600}>
                       <SwiperSlide>
@@ -181,7 +181,7 @@ export default function Home() {
               </Swiper>
 
               {users.lenght !== 0 &&
-                users?.map((user) => {
+                users?.map(user => {
                   return (
                     <div>
                       <Grid item m={3}>
@@ -209,10 +209,10 @@ export default function Home() {
                       marginBottom={6}
                     >
                       {allMovies ? (
-                        allMovies?.map((data) => {
+                        allMovies?.map(data => {
                           let nombresGen = [];
                           let generos = data.Genres;
-                          generos.forEach((a) => {
+                          generos.forEach(a => {
                             nombresGen.push(a.name);
                           });
                           return (
