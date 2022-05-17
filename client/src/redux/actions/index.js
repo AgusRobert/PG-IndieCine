@@ -36,6 +36,7 @@ import {
   GET_PROFILE_INFO_BY_ID_USER,
   KEEP_FILM,
   GET_USER_HIDDEN_FILMS,
+  KEEP_FILMS_ARRAY,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -118,6 +119,19 @@ export function keepFilm(peli) {
       type: KEEP_FILM,
     });
   };
+}
+
+export function keepFilmsArray(filmsArray) {
+  return async function (dispacth) {
+    // const resp = await axios.put(`${SERVER_BACK}/films`, filmsArray);
+    // tenemos que pasarle el array de pelis a guardar, osea el array de pelis
+    // a modificar su status en 'approved'.
+    await axios.put(`${SERVER_BACK}/films/updateFilms`, filmsArray);
+    // esta ruta devuelve un arreglo con los proyectos actualizado en 'approved'
+    return dispacth({
+      type: KEEP_FILMS_ARRAY,
+    });
+  }
 }
 
 export function deleteExcededFilms(filmsToDelete, userId) {

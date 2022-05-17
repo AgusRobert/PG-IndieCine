@@ -3,7 +3,9 @@ const userService = require("./user");
 
 exports.filmsOfUser = async (email) => {
   const user = await userService.findByEmail(email);
-  const films = await Film.findAll({ where: { UserId: user.id } });
+  const films = await Film.findAll({
+    where: { UserId: user.id, status: "approved" },
+  });
   return films.map((f) => f.dataValues);
 };
 

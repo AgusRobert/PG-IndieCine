@@ -17,6 +17,7 @@ import {
   deleteFilm,
   keepFilm,
   getUserHiddenFilms,
+  keepFilmsArray,
 } from "../../redux/actions";
 import {
   /*Box,*/ AppBar,
@@ -135,6 +136,7 @@ export default function Profile() {
   // estado que controla cuando el usuario está excedido de su plan.
   const [outLimit, setOutLimit] = useState(false);
   const [filmsToDelete, setFilmsToDelete] = useState([]);
+  const [filmsToKeep, setFilmsToKeep] = useState([]);
 
   const profileInfo = useSelector((state) => state.profileInfo);
   const plans = useSelector((state) => state.plans);
@@ -230,7 +232,7 @@ export default function Profile() {
     dispatch(keepFilm({ id: film.id, status: "approved" }));
     // dispatch(getProfileInfo(user.email));
     // setFilmsToDelete(filmsToDelete.filter(film => film.id !== filmId));
-    console.log("EJECUTEEEE!!, ",film);
+    console.log("EJECUTEEEE!!, ", film);
   };
 
   const deleteProjects = () => {
@@ -252,6 +254,30 @@ export default function Profile() {
       }
     });
   };
+
+  const handleOnCheckbox = (e) => {
+    if (e.target.checked) {
+      //agregar el id del proyecto al array para enviar.
+      setFilmsToKeep([
+        ...filmsToKeep,
+        { id: e.target.id /*, title: e.target.name */ }
+      ])
+    } else {
+      setFilmsToKeep(filmsToKeep.filter(film => film.id !== e.target.id))
+    }
+  }
+
+  const handleOnListo = () => {
+    //despachar la accion con el array de peliculas a modificar.
+    if (filmsToKeep.length === limitedeluser[0]) {
+      dispatch(keepFilmsArray(filmsToKeep));
+    } else {
+      Swal.fire({
+        title: "¡Atención!",
+        text: `Por favor selecciona ${limitedeluser[0]} de proyectos para continuar.`
+      });
+    }
+  }
   // -------------------------------------------------------------------------------------------- //
 
   const handleNavigateBtn = (id) => {
@@ -549,25 +575,29 @@ export default function Profile() {
                 <>
                   <h3>Usted tiene los siguientes proyectos en espera.</h3>
                   <h3>
-                    Teniendo en cuenta su plan, puede rehabilitar hasta
+                    Teniendo en cuenta su plan, puede quedarse hasta con
                     {` ${limitedeluser[0] - pelisdeluser.length}`} proyecto
                     {limitedeluser[0] - pelisdeluser.length === 1
                       ? null
                       : "s"}{" "}
                     .{" "}
                   </h3>
-                  {userHiddenFilms.map((film) => {
-                    return (
-                      <>
-                        <Link to={`/detail/${film.id}`}>
-                          <h4>{film.title}</h4>
-                        </Link>
-                        <button onClick={() => handleKeepProject(film)}>
+                  <>
+                    {userHiddenFilms.map((film) => {
+                      return (
+                        <>
+                          <Link to={`/detail/${film.id}`}>
+                            <h4>{film.title}</h4>
+                          </Link>
+                          <input type="checkbox" id={film.id} name={film.title} onChange={handleOnCheckbox} />
+                          {/* <button onClick={() => handleKeepProject(film)}>
                           Recomponer
-                        </button>
-                      </>
-                    );
-                  })}
+                        </button> */}
+                        </>
+                      );
+                    })}
+                    <button onClick={handleOnListo}>Listo</button>
+                  </>
                 </>
               )}
 

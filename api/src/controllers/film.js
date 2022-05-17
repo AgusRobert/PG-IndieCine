@@ -159,6 +159,32 @@ exports.updateFilm = async (req, res, next) => {
   }
 };
 
+exports.updateFilms = async (req, res, next) => {
+  try {
+    const filmsToUpdate = req.body.filmsArray;
+    
+    if (filmsToUpdate.length) {
+      const filmsUpdated = filmsToUpdate.map(async (film) => {
+        // encontrar la pelicula
+        let filmFound = await Film.findOne({
+          where: {
+            id: film.id,
+          },
+        });
+        // actualizarla
+        return await filmFound.update({
+          status: "approved",
+        });
+      });
+      res.json(filmsUpdated);
+    } else {
+      res.json({ msg: "No hay películas para actualizar" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.deleteFilm = async (req, res, next) => {
   try {
     const { id } = req.params;
