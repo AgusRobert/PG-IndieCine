@@ -98,12 +98,9 @@ export function postMovie(movieForm) {
 export function deleteFilm(id) {
   return async function (dispatch) {
     try {
-      console.log("id en la action", id);
       await axios.delete(`${SERVER_BACK}/films/${id}`);
-      // let actualFilms = await axios.get(`${SERVER_BACK}/users/getFilmsById/${userId}`);
       return dispatch({
         type: DELETE_FILM,
-        // payload: actualFilms.data,
       });
     } catch (error) {
       console.log("deleteFilm action", error);

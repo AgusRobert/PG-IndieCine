@@ -4,7 +4,6 @@ import CreatorForm from "../SignUpForm/CreatorForm/CreatorForm";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import {
-  // cameBackToBasic,
   deleteUserInformation,
   getProfileInfo,
   validateSubscription,
@@ -20,7 +19,7 @@ import {
   keepFilmsArray,
 } from "../../redux/actions";
 import {
-  /*Box,*/ AppBar,
+  AppBar,
   Box,
   Container,
   Divider,
@@ -137,6 +136,7 @@ export default function Profile() {
   const [outLimit, setOutLimit] = useState(false);
   const [filmsToDelete, setFilmsToDelete] = useState([]);
   const [filmsToKeep, setFilmsToKeep] = useState([]);
+  const [deleted, setDeleted] = useState(false);
 
   const profileInfo = useSelector((state) => state.profileInfo);
   const plans = useSelector((state) => state.plans);
@@ -154,44 +154,27 @@ export default function Profile() {
   const [showSubs, setShowSubs] = useState(false);
   // validación de suscripción
   const [valid, setValid] = useState(true);
-  // const validatePelis = () => {
-  //   pelisdeluser.
-  // }
-  // var cont = 0;
+
   useEffect(() => {
     dispatch(getPlanInfo());
     dispatch(getMovies());
     if (user) {
       dispatch(getProfileInfo(user.email));
-      // setRender(true);
-      // if (cont === 0) {
       profileInfo?.creator && dispatch(validateSubscription(user.email));
-      // cont++;
-      // }
       profileInfo?.status &&
         setFillForm(profileInfo.status === "registered" ? false : true);
       setLoaded(true);
-      // limitedeluser[0] < pelisdeluser.length && setOutLimit(true);
-      // limitedeluser[0] >= pelisdeluser.length && setOutLimit(false);
-      // if (userHiddenFilms.length) {
-      //   Swal.fire({
-      //     title: "Estas excediendo el límite de proyectos disponibles para tu plan.",
-      //     icon: "warning",
-      //     text: "Por favor, selecciona los proyectos que desea continuar",
-      //     footer: "Los que no sean seleccionados quedarán ocultos hasta que cambie el plan.",
-      //   })
-      // }
-
-      // if (limitedeluser[0] < pelisdeluser.length) {
-      //   let excedente = pelisdeluser.length - limitedeluser[0];
-      //   Swal.fire({
-      //     title: "¡Atención!",
-      //     text: `Tienes más proyectos que los permitidos para tu plan. Por favor, elimina ${excedente} proyectos para poder continuar.`,
-      //     icon: "warning",
-      //   })
-      // }
     }
-  }, [fillForm, dispatch, planChanged, planCanceled, render, user]);
+  }, [
+    dispatch,
+    fillForm,
+    planChanged,
+    planCanceled,
+    render,
+    user,
+    filmsToKeep,
+    deleted,
+  ]);
 
   useEffect(() => {
     if (user) {
@@ -230,9 +213,6 @@ export default function Profile() {
 
   const handleKeepProject = (film) => {
     dispatch(keepFilm({ id: film.id, status: "approved" }));
-    // dispatch(getProfileInfo(user.email));
-    // setFilmsToDelete(filmsToDelete.filter(film => film.id !== filmId));
-    console.log("EJECUTEEEE!!, ", film);
   };
 
   const deleteProjects = () => {
@@ -257,27 +237,23 @@ export default function Profile() {
 
   const handleOnCheckbox = (e) => {
     if (e.target.checked) {
-      //agregar el id del proyecto al array para enviar.
-      setFilmsToKeep([
-        ...filmsToKeep,
-        { id: e.target.id /*, title: e.target.name */ }
-      ])
-    } else {
-      setFilmsToKeep(filmsToKeep.filter(film => film.id !== e.target.id))
-    }
-  }
+      if (!filmsToKeep.includes(e.target.id))
+        setFilmsToKeep([...filmsToKeep, e.target.id]);
+    } else setFilmsToKeep(filmsToKeep.filter((film) => film !== e.target.id));
+  };
 
   const handleOnListo = () => {
     //despachar la accion con el array de peliculas a modificar.
     if (filmsToKeep.length === limitedeluser[0]) {
-      dispatch(keepFilmsArray(filmsToKeep));
+      dispatch(keepFilmsArray([user?.email, ...filmsToKeep]));
+      setFilmsToKeep([]);
     } else {
       Swal.fire({
         title: "¡Atención!",
-        text: `Por favor selecciona ${limitedeluser[0]} de proyectos para continuar.`
+        text: `Por favor selecciona ${limitedeluser[0]} de proyectos para continuar.`,
       });
     }
-  }
+  };
   // -------------------------------------------------------------------------------------------- //
 
   const handleNavigateBtn = (id) => {
@@ -306,12 +282,10 @@ export default function Profile() {
     PlanId: profileInfo?.subcription === "de Culto" ? 2 : 3,
   };
 
-  // function handleOnDelete() {
-  //   logout({ returnTo: window.location.origin });
-  //   dispatch(deleteUserInformation(user.email));
-  //   alert("La eliminación será efectiva en las próximas horas.");
-  //   navigate("/");
-  // }
+  const handleDeleteProject = (peli) => {
+    dispatch(deleteFilm(peli.id));
+    setDeleted(!deleted);
+  };
 
   const handleCameBackToBasic = () => {
     dispatch(
@@ -534,9 +508,10 @@ export default function Profile() {
           </StyledContainer2>
 
           <StyledContainer3>
-            {/* Los proyectos del usuario, mientras la cantidad de proyectos sea menos o igual a su limite
+            {/* Los proyectos del usuario, mientras la cantidad de proyectos sea menos o igual a su limite */}
             {profileInfo?.status === "creator approved" &&
-              profileInfo?.creator === true && !outLimit && (
+              profileInfo?.creator === true &&
+              !outLimit && (
                 <>
                   <h2>Mis Proyectos</h2>
                   <BoxFavG>
@@ -544,7 +519,7 @@ export default function Profile() {
                       let idpeli = peli.id;
                       return (
                         <Box paddingLeft={5}>
-                          { <ImgP src={peli.poster} alt="Poster" /> }
+                          {<ImgP src={peli.poster} alt="Poster" />}
                           <StyledLink
                             sx={{
                               bcolor: deepPurple[400],
@@ -560,18 +535,21 @@ export default function Profile() {
                           >
                             {peli.title}
                           </StyledLink>
-                          { <button onClick={() => handleKeepProject(peli)}>
-                            x
-                          </button> }
+                          {
+                            <button onClick={() => handleDeleteProject(peli)}>
+                              x
+                            </button>
+                          }
                         </Box>
                       );
                     })}
                   </BoxFavG>
                 </>
-              )} */}
+              )}
             {/*----------------------------------*/}
             {profileInfo?.status === "creator approved" &&
-              userHiddenFilms.length && (
+              userHiddenFilms.length &&
+              limitedeluser[0] - pelisdeluser.length && (
                 <>
                   <h3>Usted tiene los siguientes proyectos en espera.</h3>
                   <h3>
@@ -589,7 +567,12 @@ export default function Profile() {
                           <Link to={`/detail/${film.id}`}>
                             <h4>{film.title}</h4>
                           </Link>
-                          <input type="checkbox" id={film.id} name={film.title} onChange={handleOnCheckbox} />
+                          <input
+                            type="checkbox"
+                            id={film.id}
+                            name={film.title}
+                            onChange={handleOnCheckbox}
+                          />
                           {/* <button onClick={() => handleKeepProject(film)}>
                           Recomponer
                         </button> */}

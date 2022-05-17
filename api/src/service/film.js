@@ -1,12 +1,13 @@
 const { Film } = require("../db");
 const userService = require("./user");
 
-exports.filmsOfUser = async (email) => {
+exports.filmsOfUser = async (email, maper = true, status = "approved") => {
   const user = await userService.findByEmail(email);
   const films = await Film.findAll({
-    where: { UserId: user.id, status: "approved" },
+    where: { UserId: user.id, status },
   });
-  return films.map((f) => f.dataValues);
+  if (maper) return films.map((f) => f.dataValues);
+  return films;
 };
 
 exports.update = async (id, status = "hidden") => {

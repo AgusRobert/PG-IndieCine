@@ -17,7 +17,6 @@ exports.getUser = async (req, res) => {
     let user = await User.findByPk(req.params.id, {
       include: [{ model: Film }],
     });
-
     if (user) {
       res.json(user);
     } else {
@@ -29,8 +28,6 @@ exports.getUser = async (req, res) => {
 };
 
 exports.getUserByEmail = async (req, res) => {
-  // res.send({msg: "datos", file: req.body.email})
-  // console.log(req.params);
   try {
     let user = await User.findOne(
       { where: { email: req.params.email } },
@@ -38,7 +35,6 @@ exports.getUserByEmail = async (req, res) => {
         include: [{ model: Film }],
       }
     );
-
     if (user) {
       res.json(user);
     } else {
@@ -194,6 +190,7 @@ exports.addFav = async (req, res) => {
 };
 
 exports.getFavs = async (req, res) => {
+  //revisar*-*
   const { id } = req.params;
   const Usuario = await User.findByPk(id);
   const favoritos = await Usuario.getFilms({

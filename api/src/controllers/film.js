@@ -1,5 +1,6 @@
 const { Film, Genre, Country } = require("../db.js");
 const userService = require("../service/user");
+const filmService = require("../service/film");
 
 exports.getFilms = async (req, res, next) => {
   try {
@@ -161,25 +162,20 @@ exports.updateFilm = async (req, res, next) => {
 
 exports.updateFilms = async (req, res, next) => {
   try {
-    const filmsToUpdate = req.body.filmsArray;
-    
-    if (filmsToUpdate.length) {
-      const filmsUpdated = filmsToUpdate.map(async (film) => {
-        // encontrar la pelicula
-        let filmFound = await Film.findOne({
-          where: {
-            id: film.id,
-          },
-        });
-        // actualizarla
-        return await filmFound.update({
-          status: "approved",
-        });
+    const filmsToUpdate = req.body;
+    const email = filmsToUpdate.shift();
+    console.log("DATOS: ", filmsToUpdate);
+    if (filmsToUpdate?.length) {
+      const filmsOfUser = await filmService.filmsOfUser(email, false, "hidden");
+      const filmsUpdated = filmsOfUser.map(async (film) => {
+        if (filmsToUpdate.includes(film.id.toString()))
+          return await film.update({
+            status: "approved",
+          });
+        return await Film.destroy({ where: { id: film.id } });
       });
-      res.json(filmsUpdated);
-    } else {
-      res.json({ msg: "No hay películas para actualizar" });
-    }
+      res.json([]);
+    } else res.json({ msg: "No hay películas para actualizar" });
   } catch (error) {
     next(error);
   }
