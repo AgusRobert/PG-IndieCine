@@ -8,6 +8,7 @@ import { validate } from "./validates";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 import {
   MenuItemStyle,
   InputStyle,
@@ -26,11 +27,10 @@ import {
   Button,
   ButtonBase,
   Divider,
-  Link,
   Paper,
   Typography,
 } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
   backgroundColor: "#682f8a",
@@ -48,12 +48,10 @@ const Titulo = styled(Typography)({
   fontFamily: "Koulen",
 });
 const ButtonStyle2 = styled(Button)({
-  whiteSpace: "nowrap",
   color: deepPurple[200],
   borderBlockColor: deepPurple[200],
   borderInlineStartColor: deepPurple[900],
   borderInlineEndColor: deepPurple[900],
-
   backgroundColor: deepPurple[400],
 });
 const PaperStyle4 = styled(Paper)({
@@ -62,7 +60,7 @@ const PaperStyle4 = styled(Paper)({
   marginTop: "35px",
   marginBottom: "0px",
   justifyContent: "space-around",
-  alignItems: "center",
+  alignItems: "top",
   backgroundColor: "transparent",
   borderRadius: 20,
   opacity: "90%",
@@ -80,14 +78,15 @@ const PaperStyle3 = styled(Paper)({
   boxShadow: "none",
 });
 const Container12 = styled(Paper)({
-  display: "grid",
-  width: "150px",
-  justifyContent: "space-around",
+  display: "flex",
+  flexDirection: "column",
+  Width: "33%",
+  justifyContent: "top",
+  // padding: "10px",
   alignItems: "left",
   backgroundColor: "transparent",
-  height: "200px",
+  // height: "400px",
   boxShadow: "none",
-  paddingBottom:30
 });
 const Container2 = styled(Paper)({
   display: "flex",
@@ -173,10 +172,10 @@ export function FilmForm() {
   //constantes necesaria para el despacho de peticiones
   const dispatch = useDispatch();
   //paises y generos necesarios para el select
-  const { countries, genres } = useSelector((state) => state);
+  const { countries, genres } = useSelector(state => state);
   const { user } = useAuth0();
   //manejo de cambios en los campos
-  const handleOnChange = (e) => {
+  const handleOnChange = e => {
     setMovieForm({
       ...movieForm,
       [e.target.name]: e.target.value,
@@ -189,12 +188,12 @@ export function FilmForm() {
     );
   };
   //manejo de selecciones
-  const selectMultimedia = (e) => {
+  const selectMultimedia = e => {
     e.preventDefault();
     setMultimedia({ ...multimedia, [e.target.name]: e.target.files[0] });
   };
   //manejo de seleccion de generos
-  const handleGenres = (e) => {
+  const handleGenres = e => {
     if (!movieForm?.genres?.includes(e.target.value))
       setMovieForm({
         ...movieForm,
@@ -205,14 +204,14 @@ export function FilmForm() {
   function handleDeleteGenre(e) {
     setMovieForm({
       ...movieForm,
-      genres: movieForm.genres.filter((data) => data !== e),
+      genres: movieForm.genres.filter(data => data !== e),
     });
   }
 
   function handleDeleteActors(e) {
     setMovieForm({
       ...movieForm,
-      mainActors: movieForm.mainActors.filter((data) => data !== e),
+      mainActors: movieForm.mainActors.filter(data => data !== e),
     });
   }
 
@@ -223,10 +222,10 @@ export function FilmForm() {
     !genres?.length && dispatch(getGenres());
   }, [countries?.length, genres?.length, dispatch]);
   //agregado de un actor a los personajes
-  const handleElenco = (e) => {
+  const handleElenco = e => {
     e.preventDefault();
     //comprobacion de un nombre no existente o nulo
-    let comparacion = movieForm.mainActors.map((p) => {
+    let comparacion = movieForm.mainActors.map(p => {
       return p.toLowerCase();
     });
     console.log("COMPARACION", comparacion);
@@ -249,7 +248,7 @@ export function FilmForm() {
     setActor("");
   };
   //manejador de envio del formulario
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
     const objResponse = {};
     console.log("DATOS FRONT: ", multimedia);
@@ -366,47 +365,50 @@ export function FilmForm() {
             <Titulo variant="bold">Sube tu proyecto</Titulo>
           </Box>
         </Box>
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form onSubmit={e => onSubmit(e)}>
           {/* <Container12> */}
           {/* CONTAINER 1 */}
           <PaperStyle4>
             <Container12>
               {/* Título */}
-              <LabelStyle>Título</LabelStyle>
+              <LabelStyle style={{ color: "#e1ae40" }}>Título</LabelStyle>
               <InputStyle
+                style={{ marginBottom: "20px" }}
                 type="text"
                 value={movieForm.title}
                 placeholder="Título de la Película"
                 name="title"
-                onChange={(e) => handleOnChange(e)}
+                onChange={e => handleOnChange(e)}
                 required
               />
               {errores?.title && <p class="errores">{errores.title}</p>}
               {/* Dirección */}
-              <LabelStyle>Dirección</LabelStyle>
+              <LabelStyle style={{ color: "#e1ae40" }}>Dirección</LabelStyle>
               <InputStyle
+                style={{ marginBottom: "10px" }}
                 type="text"
                 value={movieForm.director}
                 name="director"
                 placeholder="Dirección"
-                onChange={(e) => handleOnChange(e)}
+                onChange={e => handleOnChange(e)}
                 required
               />
               {errores?.director && <p class="errores">{errores.director}</p>}
             </Container12>
             <Container12>
               {/* Productora */}
-              <LabelStyle>Productora Asociada</LabelStyle>
+              <LabelStyle style={{ color: "#e1ae40" }}>
+                Productora Asociada
+              </LabelStyle>
               <InputStyle
+                style={{ marginBottom: "20px" }}
                 type="text"
                 value={movieForm.associateProducer}
                 name="associateProducer"
                 placeholder="Productora"
-                onChange={(e) => handleOnChange(e)}
+                onChange={e => handleOnChange(e)}
                 // required
               />{" "}
-              <br></br>
-              <br></br>
               {/* Elenco */}
               {/* <GyE> */}
               <LabelStyle style={{ color: "#e1ae40" }}>Elenco *</LabelStyle>
@@ -473,10 +475,11 @@ export function FilmForm() {
             {/* CONTAINER 2 */}
             <Container2>
               {/* País */}
-              <LabelStyle>País *</LabelStyle>
+              <LabelStyle style={{ color: "#e1ae40" }}>País *</LabelStyle>
               <SelectStyle
+                style={{ backgroundColor: "#752298", marginBottom: "20px" }}
                 name="country"
-                onChange={(e) => handleOnChange(e)}
+                onChange={e => handleOnChange(e)}
                 select
                 // label="Pais"
                 variant="outlined"
@@ -526,21 +529,22 @@ export function FilmForm() {
               {/* </GyE> */}
               {errores?.genres && <p class="errores">{errores.genres}</p>}
             </Container2>
-            <Container3>
+            
+            <Container2>
               {/* Año*/}
-              <LabelStyle>Año *</LabelStyle>
+              <LabelStyle style={{ color: "#e1ae40" }}>Año *</LabelStyle>
               <SelectStyle
-                style={{ backgroundColor: "#752298", color: "white", marginBottom: "20px" }}
+                style={{ backgroundColor: "#752298", marginBottom: "20px" }}
                 name="year"
                 value={movieForm.year}
-                onChange={(e) => handleOnChange(e)}
+                onChange={e => handleOnChange(e)}
                 select
-                // label="Año"
+                label="año"
                 variant="outlined"
                 size="small"
-                sx={sxSelectStyle}
+                // sx={sxSelectStyle}
               >
-                {años?.map((anio) => (
+                {años?.map(anio => (
                   <MenuItemStyle key={anio} value={anio}>
                     {anio}
                   </MenuItemStyle>
@@ -548,15 +552,16 @@ export function FilmForm() {
               </SelectStyle>
 
               {/* Duración */}
-              <LabelStyle>Duración *</LabelStyle>
+              <LabelStyle style={{ color: "#e1ae40" }}>Duración *</LabelStyle>
               <SelectStyle
+                style={{ backgroundColor: "#752298" }}
                 name="duration"
-                onChange={(e) => handleOnChange(e)}
+                onChange={e => handleOnChange(e)}
                 select
                 // label="Duracion"
                 variant="outlined"
                 size="small"
-                sx={sxSelectStyle}
+                // sx={sxSelectStyle}
               >
                 <MenuItemStyle hidden={true} disabled>Duración</MenuItemStyle>
                 <MenuItemStyle key={1} value="Cortometraje">
@@ -569,7 +574,7 @@ export function FilmForm() {
                   Largometraje
                 </MenuItemStyle>
               </SelectStyle>
-            </Container3>
+            </Container2>
             {/* FIN CONTAINER 2 */}
 
             {/* CONTAINER 4 */}

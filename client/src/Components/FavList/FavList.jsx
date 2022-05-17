@@ -21,14 +21,14 @@ const ImgFav = styled("img")({
     width:"auto"
 })
 const BoxFav =styled(Box)({
-     backgroundColor: deepPurple[500],
+     backgroundColor: "#682f8a",
      border: "none",
-    justifyContent:'space-around',
-    alignItems:"center",
+     justifyContent:'space-around',
+     alignItems:"center",
      boxShadow: 24,
      borderRadius:5,
      display:"flex",
-     width:"200px",
+     width:"fit-content",
      paddingRight:10
    });
    const BoxFavG =styled(Box)({
@@ -106,8 +106,8 @@ export default function FavList(userId) {
                       fontSize="large"
                     />{" "}
                   </IconButton>
-                
-                <Typography variant="h6" fontWeight='medium'>{peli.title}</Typography></BoxFav></Box>
+                <Typography variant="h6" fontWeight='medium'>{peli.title}</Typography>
+                </BoxFav></Box>
              </>
             );
           }) : (

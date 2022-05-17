@@ -29,7 +29,7 @@ import AutoSearch from "../AutoSearch/AutoSearch.jsx";
 import BotonRecarga from "./BotonRecarga.jsx";
 
 const ToolStyle = styled(Toolbar)({
-  marginLeft: 50,
+  // marginLeft: 50,
   position: "sticky",
   justifyContent: "space-between",
   display: "flex",
@@ -41,16 +41,13 @@ const AppStyle = styled(AppBar)({
   position: "fixed",
   justifyContent: "space-between",
   display: "flex",
-  flexWrap: "wrap",
+  // flexWrap: "wrap",
 });
 const AvatarStyle = styled(Avatar)({
   marginLeft: "auto",
   color: amber[200],
-  backgroundColor: deepPurple[900],
   height: 30,
-  borderRadius: 20,
-  border: `2px solid ${amber[500]}`,
-  borderRight: "4px solid transparent",
+  borderRadius: "50%",
 });
 const MenuItemStyle = styled(MenuItem)({
   marginLeft: "auto",
