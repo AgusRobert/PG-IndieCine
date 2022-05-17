@@ -22,17 +22,14 @@ import "./FavListUser.modules.css";
 
 const PaperPelis = styled(Paper)({
   display: "flex",
-  justifyContent: "space-evenly",
+  justifyContent: "center",
   flexDirection: "row",
-  width: "100%",
-  maxWidth: "1150px",
+  maxWidth: "100%",
   backgroundColor: "transparent",
   border: "none",
-  overflowX: "auto",
-  boxShadow: 15,
-  border: "8px solid transparent",
+  overflowX: "scroll",
   maxHeight: "600px",
-  gridColumn: "2/4",
+  overflow: "auto",
 });
 
 export default function FavListUser({ userId }) {
@@ -75,8 +72,7 @@ export default function FavListUser({ userId }) {
   /* console.log("DATOS", profileInfo); */
 
   return (
-    <Box>
-      <div className="wrapper">
+      <PaperPelis>
         {favs.length ? (
           favs?.map((data) => {
             let nombresGen = [];
@@ -86,6 +82,7 @@ export default function FavListUser({ userId }) {
             });
             return (
               <>
+                <div className="contenedor">
                 <Cartas
                   title={data.title}
                   poster={data.poster}
@@ -99,7 +96,7 @@ export default function FavListUser({ userId }) {
                   director={data.director}
                   id={data.id}
                 />
-                <div className="separador"></div>
+                </div>
               </>
             );
           })
@@ -108,7 +105,6 @@ export default function FavListUser({ userId }) {
             <Typography>Este usuario no tiene peliculas favoritas!</Typography>
           </>
         )}
-      </div>
-    </Box>
+     </PaperPelis>
   );
 }

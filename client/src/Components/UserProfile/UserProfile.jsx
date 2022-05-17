@@ -58,7 +58,6 @@ const PaperProyectos = styled(Paper)({
 
 const PaperFavoritos = styled(Paper)({
   display: "flex",
-  flexWrap: "wrap",
   flexDirection: "column",
   width: "100%",
   backgroundColor: "transparent",
@@ -67,16 +66,14 @@ const PaperFavoritos = styled(Paper)({
 
 const PaperPelis = styled(Paper)({
   display: "flex",
-  justifyContent: "space-evenly",
-  flexWrap: "wrap",
-  flexWrap: "wrap",
+  justifyContent: "center",
   flexDirection: "row",
-  width: "100%",
+  maxWidth: "100%",
   backgroundColor: "transparent",
   border: "none",
-  overflow: "hidden",
-  boxShadow: 15,
-  border: "8px solid transparent",
+  overflowX: "scroll",
+  maxHeight: "600px",
+  overflow: "auto",
 });
 
 const PaperTop = styled(Paper)({
@@ -245,9 +242,7 @@ export default function UserProfile() {
                     Peliculas favoritas de {profileInfo?.name}
                   </h5>
                 </PaperTitulo>
-                
                   {profileInfo?.id && <FavListUser userId={id} />}
-               
               </PaperFavoritos>
             </PaperMid>
           </PaperTop>

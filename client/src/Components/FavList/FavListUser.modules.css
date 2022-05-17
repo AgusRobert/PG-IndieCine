@@ -1,13 +1,12 @@
-.separador{
-    width: 405px;
-}
 
 .wrapper{
     padding: 7px;
-    max-height: fit-content;
-    max-width: 1150px;
+    max-height: "200px";
+    max-width: 100%;
     display: flex;
-    overflow-x: auto;
+    background-color: #f4b942;
+    overflow-y: auto;
+    flex-wrap: wrap;
 }
 
 .wrapper::-webkit-scrollbar{
@@ -26,4 +25,9 @@
 .wrpper::-webkit-scrollbar-thumb:hover {
     background: #f4b942;
   }
+
+.contenedor{
+  padding-bottom: 20px;
+  padding-right: 25px;
+}
 
