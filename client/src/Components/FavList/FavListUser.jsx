@@ -42,11 +42,11 @@ export default function FavListUser({ userId }) {
   const profileInfo = useSelector((state) => state.profileInfoUser);
   let favs = useSelector((state) => state.favorites);
 
-  console.log("FAVORITOS", favs);
+  // console.log("FAVORITOS", favs);
 
-  /* console.log("PROFILE", profileInfo); */
+  //  console.log("PROFILE", profileInfo);
   let idFavs = userId;
-  console.log("IDFAVSSS", idFavs);
+  // console.log("IDFAVSSS", idFavs);
 
   // useEffect(() => {
   //   dispatch(getFavorites(idFavs));
@@ -72,17 +72,17 @@ export default function FavListUser({ userId }) {
   /* console.log("DATOS", profileInfo); */
 
   return (
-      <PaperPelis>
-        {favs.length ? (
-          favs?.map((data) => {
-            let nombresGen = [];
-            let generos = data.Genres;
-            generos.forEach((a) => {
-              nombresGen.push(a.name);
-            });
-            return (
-              <>
-                <div className="contenedor">
+    <PaperPelis>
+      {favs.length ? (
+        favs?.map((data) => {
+          let nombresGen = [];
+          let generos = data.Genres;
+          generos.forEach((a) => {
+            nombresGen.push(a.name);
+          });
+          return (
+            <>
+              <div className="contenedor">
                 <Cartas
                   title={data.title}
                   poster={data.poster}
@@ -96,15 +96,15 @@ export default function FavListUser({ userId }) {
                   director={data.director}
                   id={data.id}
                 />
-                </div>
-              </>
-            );
-          })
-        ) : (
-          <>
-            <Typography>Este usuario no tiene peliculas favoritas!</Typography>
-          </>
-        )}
-     </PaperPelis>
+              </div>
+            </>
+          );
+        })
+      ) : (
+        <>
+          <Typography>Este usuario no tiene peliculas favoritas!</Typography>
+        </>
+      )}
+    </PaperPelis>
   );
 }

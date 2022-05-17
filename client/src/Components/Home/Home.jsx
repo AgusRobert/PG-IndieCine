@@ -60,18 +60,17 @@ const Container3 = styled(Paper)({
 
 const ImgStyle = styled("img")({
   maxHeight: 500,
-  width: 'auto',
+  width: "auto",
   color: "white",
 });
 // import "swiper/swiper.min.css";
 export default function Home() {
   const { user, isAuthenticated } = useAuth0();
   const dispatch = useDispatch();
-  const allMovies = useSelector(state => state.pelisfiltradas);
+  const allMovies = useSelector((state) => state.pelisfiltradas);
   const estrenos = allMovies?.slice(-7).reverse();
-  const users = useSelector(state => state.usersfiltrados);
-  /*   console.log("LOSUSERS", users); */
-  const { profileInfo } = useSelector(state => state);
+  const users = useSelector((state) => state.usersfiltrados);
+  const { profileInfo } = useSelector((state) => state);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -119,10 +118,22 @@ export default function Home() {
       <>
         <Header position="sticky" />
         <div className="container">
-          <div style={{display:"flex", flexDirection: "column" , justifyContent: "center", alignItems:"center"}} >
-            <h1 style={{textAlign:"center"}}>No se ha podido encontrar la búsqueda.</h1>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <h1 style={{ textAlign: "center" }}>
+              No se ha podido encontrar la búsqueda.
+            </h1>
 
-            <button style={{maxWidth:"200px", fontSize:"1rem", padding:"5px"}} onClick={() => window.location.reload()}>
+            <button
+              style={{ maxWidth: "200px", fontSize: "1rem", padding: "5px" }}
+              onClick={() => window.location.reload()}
+            >
               Volver al Home
             </button>
           </div>
@@ -154,13 +165,12 @@ export default function Home() {
                   modifier: 1,
                   slideShadows: false,
                 }}
-                
                 className="mySwiper"
               >
-                {allMovies?.map(m => {
+                {allMovies?.map((m) => {
                   return (
                     <div height={600}>
-                      <SwiperSlide >
+                      <SwiperSlide>
                         <Link to={`/detail/${m.id}`}>
                           <ImgStyle src={m.poster} alt="img not found" />
                         </Link>
@@ -170,9 +180,8 @@ export default function Home() {
                 })}
               </Swiper>
 
-               {users.lenght !== 0 && 
-               
-                (users?.map((user) => {
+              {users.lenght !== 0 &&
+                users?.map((user) => {
                   return (
                     <div>
                       <Grid item m={3}>
@@ -185,73 +194,71 @@ export default function Home() {
                       </Grid>
                     </div>
                   );
-                }))} 
+                })}
               {/* CARDS / TWITTER Y RECOMENDACIONES */}
               <Grid container>
-
                 {/* CARDS */}
-                <Grid item xs={12} sm={12} md={9} lg={9} xl={9} >
+                <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
                   <Box>
-                    <Grid 
-                      container 
+                    <Grid
+                      container
                       spacing={8}
                       direction="row"
                       justifyContent="center"
                       alignItems="center"
                       marginBottom={6}
                     >
-
-                    {allMovies ? (
-                        allMovies?.map(data => {
+                      {allMovies ? (
+                        allMovies?.map((data) => {
                           let nombresGen = [];
                           let generos = data.Genres;
-                          generos.forEach(a => {
+                          generos.forEach((a) => {
                             nombresGen.push(a.name);
                           });
-                      return (
-                        <Grid item>
-                            <Cartas
-                              title={data.title}
-                              poster={data.poster}
-                              year={data.year}
-                              country={data.Country.name}
-                              genres={"Géneros: " + nombresGen.join(", ")}
-                              rating={data.rating}
-                              key={data.id}
-                              duration={data.duration}
-                              synopsis={data.synopsis}
-                              director={data.director}
-                              id={data.id}
-                            />
-                        </Grid>
-                      );
-                    })                  
-                  ) : (
-                    <img
-                      src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
-                      alt="not found"
-                    />
-                  )}
+                          return (
+                            <Grid item>
+                              <Cartas
+                                title={data.title}
+                                poster={data.poster}
+                                year={data.year}
+                                country={data.Country.name}
+                                genres={"Géneros: " + nombresGen.join(", ")}
+                                rating={data.rating}
+                                key={data.id}
+                                duration={data.duration}
+                                synopsis={data.synopsis}
+                                director={data.director}
+                                id={data.id}
+                              />
+                            </Grid>
+                          );
+                        })
+                      ) : (
+                        <img
+                          src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
+                          alt="not found"
+                        />
+                      )}
                     </Grid>
                   </Box>
                 </Grid>
 
                 {/* TWITTER */}
-                <Grid item xs={12} sm={12} md={3} lg={3} xl={3} >
+                <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
                   <Box borderRadius={1}>
-                      <Twitter />
+                    <Twitter />
                   </Box>
                 </Grid>
-                
+
                 {/* RECOMENDACIONES */}
-                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                   <Box>
-                      <ParaTi userId={profileInfo?.id} />
+                    <ParaTi userId={profileInfo?.id} />
                   </Box>
                 </Grid>
 
                 {/* FOOTER */}
-                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                   <Box>
                     <Footer className="footer" />
                   </Box>

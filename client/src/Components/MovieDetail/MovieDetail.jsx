@@ -325,9 +325,9 @@ export default function MovieDetail() {
                         >
                           <Titulo variant="bold">{peli.title}</Titulo>
                         </Box>
-                        <PaperStyle4>
+                        {/* <PaperStyle4>
                           <h2 className="rating">Rating: {peli.rating}</h2>
-                        </PaperStyle4>
+                        </PaperStyle4> */}
                       </PaperTitulo>
                       <PaperStyle6>
                         <PaperStyle4>

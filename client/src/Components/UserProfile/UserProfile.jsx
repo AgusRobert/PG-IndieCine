@@ -138,14 +138,7 @@ export default function UserProfile() {
   const profileInfo = useSelector((state) => state.profileInfo);
   let favs = useSelector((state) => state.favorites);
 
-  /* console.log("LOSFAVS", favs); */
-  /*  console.log("ELIDELPERFILQUEESTOYMIRANDO", id); */
-
   const pelisdeluser = profileInfo?.Films;
-
-  console.log("FILTRO", pelisdeluser);
-
-  console.log("PELICULAS USER", profileInfo); //PELICULAS DEL USUARIO DEL PERFIL
 
   useEffect(() => {
     dispatch(getMovies());
@@ -217,7 +210,6 @@ export default function UserProfile() {
                 <PaperPelis>
                   {pelisdeluser ? (
                     pelisdeluser?.map((data) => {
-                      console.log(data);
                       return (
                         <Grid item m={3}>
                           <Cartas
@@ -242,7 +234,7 @@ export default function UserProfile() {
                     Peliculas favoritas de {profileInfo?.name}
                   </h5>
                 </PaperTitulo>
-                  {profileInfo?.id && <FavListUser userId={id} />}
+                {profileInfo?.id && <FavListUser userId={id} />}
               </PaperFavoritos>
             </PaperMid>
           </PaperTop>

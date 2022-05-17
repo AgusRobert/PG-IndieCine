@@ -163,7 +163,7 @@ export default function Header(/* genres, allMovies, countries */) {
             <BotonRecarga />
             <OrderAZ />
             <OrderDate />
-            <OrderRating />
+            {/* <OrderRating /> */}
             <FilterMoviesByGenre />
             <FilterMovieByCountry />
             <FilterMovieByDuration />
