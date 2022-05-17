@@ -16,18 +16,10 @@ export default function BotonRecarga() {
   return (
     <div>
       <CachedIcon
-        sx={{ color: "#ffc107" , "&:hover": { color: "#1f271b" }, cursor: "pointer" }}
+       sx={{ color: "#ffc107" , "&:hover": { color: deepPurple[500] }, cursor:"pointer" }}
         fontSize="large"
         onClick={e => {
           handleClick(e);
-        }}
-        sx={{
-          bcolor: deepPurple[400],
-          borderRadius:20,
-          ":hover": {
-            bgcolor: deepPurple[500],
-            color: "black",
-          },
         }}
       />
       {/* <img

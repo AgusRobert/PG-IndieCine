@@ -81,13 +81,13 @@ export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }
   return (
     <>
       <Box sx={{ flexGrow: 1 }} position={"relative"} left={100}>
-        <Grid container spacing={5}>
+        <Grid container spacing={3}>
           {plans?.map(esteplan => {
             return (
-              <Grid item xs={4} paddingBottom={10}>
+              <Grid item xs={3} paddingBottom={5}>
                 <Card
                   raised={true}
-                  sx={{ maxWidth: 345, backgroundColor: "#673ab7" }}
+                  sx={{ maxWidth: 300, backgroundColor: "#673ab7" }}
                   elevation={2}
                 >
                   <CardContent>
