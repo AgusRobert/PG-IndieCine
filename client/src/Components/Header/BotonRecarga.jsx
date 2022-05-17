@@ -16,7 +16,7 @@ export default function BotonRecarga() {
   return (
     <div>
       <CachedIcon
-        style={{ color: "#ffc107" }}
+        sx={{ color: "#ffc107" , "&:hover": { color: "#1f271b" }, cursor: "pointer" }}
         fontSize="large"
         onClick={e => {
           handleClick(e);
