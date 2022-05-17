@@ -17,7 +17,7 @@ const MenuItemStyle = styled(MenuItem)({
 
 const SelectStyle = styled(TextField)({
   borderRadius: 2,
-  width: 160,
+  width: 100,
   padding: 0,
 });
 

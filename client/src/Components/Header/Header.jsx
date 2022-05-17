@@ -29,7 +29,7 @@ import AutoSearch from "../AutoSearch/AutoSearch.jsx";
 import BotonRecarga from "./BotonRecarga.jsx";
 
 const ToolStyle = styled(Toolbar)({
-  marginLeft: 50,
+  // marginLeft: 50,
   position: "sticky",
   justifyContent: "space-between",
   display: "flex",
@@ -41,7 +41,7 @@ const AppStyle = styled(AppBar)({
   position: "fixed",
   justifyContent: "space-between",
   display: "flex",
-  flexWrap: "wrap",
+  // flexWrap: "wrap",
 });
 const AvatarStyle = styled(Avatar)({
   marginLeft: "auto",

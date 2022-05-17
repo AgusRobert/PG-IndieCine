@@ -14,7 +14,7 @@ const MenuItemStyle = styled(MenuItem)({
 
 const SelectStyle = styled(TextField)({
   borderRadius: 2,
-  width: 150,
+  width: 120,
   padding: 0
 });
 export default function OrderRating (){
