@@ -14,6 +14,14 @@ exports.userResource = {
               return { record: context.record.toJSON() };
             },
           },
+          VerificarDoc: {
+            actionType: "record",
+            icon: "User",
+            component: AdminJS.bundle("../components/verificar.jsx"),
+            handler: async (req, res, context) => {
+              return { record: context.record.toJSON() };
+            },
+          },
         },
         parent: { icon: "User" },
       properties: {
@@ -24,8 +32,9 @@ exports.userResource = {
                     { value: 'admin', label: 'admin' },
               ],
             },
-      },
+            
     },
-};
+}
+}
 
 
