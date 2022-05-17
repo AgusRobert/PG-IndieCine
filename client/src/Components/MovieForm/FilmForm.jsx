@@ -47,20 +47,19 @@ const Titulo = styled(Typography)({
   fontFamily: "Koulen",
 });
 const ButtonStyle2 = styled(Button)({
-  whiteSpace: "nowrap",
   color: deepPurple[200],
   borderBlockColor: deepPurple[200],
   borderInlineStartColor: deepPurple[900],
   borderInlineEndColor: deepPurple[900],
-
   backgroundColor: deepPurple[400],
 });
 const PaperStyle4 = styled(Paper)({
   display: "flex",
-  width: "1500px",
-  padding: 65,
+  // width: "1500px",
+  marginTop: "60px",
+  marginBottom: "30px",
   justifyContent: "space-around",
-  alignItems: "center",
+  alignItems: "top",
   backgroundColor: "transparent",
   borderRadius: 20,
   opacity: "90%",
@@ -77,22 +76,25 @@ const PaperStyle3 = styled(Paper)({
   boxShadow: "none",
 });
 const Container12 = styled(Paper)({
-  display: "grid",
-  width: "150px",
-  justifyContent: "space-around",
+  display: "flex",
+  flexDirection: "column",
+  Width: "33%",
+  justifyContent: "top",
+  // padding: "10px",
   alignItems: "left",
   backgroundColor: "transparent",
-  height: "200px",
+  // height: "400px",
   boxShadow: "none",
-  paddingBottom:30
+  
 });
 const Container2 = styled(Paper)({
-  display: "grid",
-  width: "500px",
-  justifyContent: "space-around",
+  display: "flex",
+  flexDirection: "column",
+  // width: "500px",
+  justifyContent: "top",
   alignItems: "right",
   backgroundColor: "transparent",
-  height: "300px",
+  height: "400px",
   boxShadow: "none",
 });
 const GyE = styled(Paper)({
@@ -317,7 +319,7 @@ export function FilmForm() {
       >
         <Box
           height={100}
-          width={500}
+           width={500}
           display="flex"
           justifyContent="center"
           alignItems="center"
@@ -331,14 +333,14 @@ export function FilmForm() {
         >
           <Titulo variant="bold">Sube tu proyecto</Titulo>
         </Box>
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form  onSubmit={(e) => onSubmit(e)}>
           {/* <Container12> */}
           {/* CONTAINER 1 */}
           <PaperStyle4>
             <Container12>
               {/* Título */}
-              <LabelStyle>Título</LabelStyle>
-              <InputStyle
+              <LabelStyle style={{color:"#e1ae40"}}>Título</LabelStyle>
+              <InputStyle style={{marginBottom:"20px"}}
                 type="text"
                 value={movieForm.title}
                 placeholder="Título de la Película"
@@ -348,8 +350,8 @@ export function FilmForm() {
               />
               {errores?.title && <p class="errores">{errores.title}</p>}
               {/* Dirección */}
-              <LabelStyle>Dirección</LabelStyle>
-              <InputStyle
+              <LabelStyle style={{color:"#e1ae40"}}>Dirección</LabelStyle>
+              <InputStyle  style={{marginBottom:"10px"}}
                 type="text"
                 value={movieForm.director}
                 name="director"
@@ -361,8 +363,8 @@ export function FilmForm() {
             </Container12>
             <Container12>
               {/* Productora */}
-              <LabelStyle>Productora Asociada</LabelStyle>
-              <InputStyle
+              <LabelStyle style={{color:"#e1ae40"}}>Productora Asociada</LabelStyle>
+              <InputStyle style={{marginBottom:"20px"}}
                 type="text"
                 value={movieForm.associateProducer}
                 name="associateProducer"
@@ -370,20 +372,19 @@ export function FilmForm() {
                 onChange={(e) => handleOnChange(e)}
                 // required
               />{" "}
-              <br></br>
-              <br></br>
+              
               {/* Elenco */}
-              <GyE>
-                <LabelStyle>Elenco *</LabelStyle>
-                <InputStyle
+              {/* <GyE> */}
+                <LabelStyle style={{color:"#e1ae40"}}>Elenco *</LabelStyle>
+                <InputStyle style={{marginBottom:"10px"}}
                   type="text"
                   value={actor}
                   placeholder="Actores"
                   name="actor"
                   onChange={(e) => setActor(e.target.value)}
                 />
-                <br></br>
-                <ButtonStyle
+             
+                <ButtonStyle 
                   sx={sxButtonStyle}
                   type="button"
                   name="elenco"
@@ -391,24 +392,26 @@ export function FilmForm() {
                 >
                   Añadir
                 </ButtonStyle>
-                <GyE2>
+                {/* <GyE2> */}
+                <div style={{marginTop:"10px",display:"flex", flexDirection:"column"}}>
                   {movieForm.mainActors.map((data) => (
-                    <ButtonStyle2
+                    <ButtonStyle2 style={{marginBottom:"3px"}}
                       key={data}
                       onClick={() => handleDeleteActors(data)}
                     >
                       {data}
                     </ButtonStyle2>
                   ))}{" "}
-                </GyE2>
-              </GyE>
+                  </div>
+                {/* </GyE2> */}
+              {/* </GyE> */}
             </Container12>
             {/* CONTAINER 3 */}
             <Container12>
               {/* Póster */}
-              <LabelStyle>Póster*</LabelStyle>
+              <LabelStyle style={{color:"#e1ae40"}}>Póster*</LabelStyle>
               <div className="App">
-                <Button variant="contained" component="label" color="secondary">
+                <Button variant="contained" component="label" color="secondary" style={{marginBottom: "20px", width:"100%", height:"50px"}}>
                   {" "}
                   <AddIcon /> Subir Poster
                   <input 
@@ -422,9 +425,9 @@ export function FilmForm() {
               </div>
             
               {/* Película Campo para subir una pelicula*/}
-              <LabelStyle>Proyecto Archivo*</LabelStyle>
+              <LabelStyle style={{color:"#e1ae40"}}>Proyecto Archivo*</LabelStyle>
               <div className="App">
-                <Button variant="contained" component="label" color="secondary">
+                <Button variant="contained" component="label" color="secondary" style={{height:"50px"}}>
                   {" "}
                   <AddIcon /> Subir Proyecto
                   <input 
@@ -442,12 +445,12 @@ export function FilmForm() {
           {/* FIN CONTAINER 1 */}
 
           <Divider orientation="vertical" color="yellow" />
-          <PaperStyle4>
+          <PaperStyle4 >
             {/* CONTAINER 2 */}
-            <Container2>
+            <Container2 >
               {/* País */}
-              <LabelStyle>País *</LabelStyle>
-              <SelectStyle
+              <LabelStyle style={{color:"#e1ae40"}}>País *</LabelStyle>
+              <SelectStyle style={{backgroundColor:"#752298", marginBottom:"20px"}}
                 name="country"
                 onChange={(e) => handleOnChange(e)}
                 select
@@ -465,9 +468,9 @@ export function FilmForm() {
               </SelectStyle>
               {errores?.genres && <p class="errores">{errores.genres}</p>}
               {/* Géneros */}
-              <GyE>
-                <LabelStyle>Géneros *</LabelStyle>
-                <SelectStyle
+              {/* <GyE> */}
+                <LabelStyle style={{color:"#e1ae40"}}>Géneros *</LabelStyle>
+                <SelectStyle style={{backgroundColor:"#752298"}}
                   name="genres"
                   onChange={(e) => handleGenres(e)}
                   select
@@ -483,7 +486,7 @@ export function FilmForm() {
                     </MenuItemStyle>
                   ))}
                 </SelectStyle>
-                <GyE2>
+                {/* <GyE2> */}
                   {movieForm.genres.map((data) => (
                     <div>
                       <ButtonStyle2
@@ -494,14 +497,14 @@ export function FilmForm() {
                       </ButtonStyle2>
                     </div>
                   ))}
-                </GyE2>
-              </GyE>
+                {/* </GyE2> */}
+              {/* </GyE> */}
               {errores?.genres && <p class="errores">{errores.genres}</p>}
             </Container2>
-            <Container12>
+            <Container2>
               {/* Año*/}
-              <LabelStyle>Año *</LabelStyle>
-              <SelectStyle
+              <LabelStyle style={{color:"#e1ae40"}}>Año *</LabelStyle>
+              <SelectStyle style={{backgroundColor:"#752298", marginBottom:"20px"}}
                 name="year"
                 value={movieForm.year}
                 onChange={(e) => handleOnChange(e)}
@@ -509,7 +512,7 @@ export function FilmForm() {
                 label="año"
                 variant="outlined"
                 size="small"
-                sx={sxSelectStyle}
+                // sx={sxSelectStyle}
               >
                 {años?.map((anio) => (
                   <MenuItemStyle key={anio} value={anio}>
@@ -519,15 +522,15 @@ export function FilmForm() {
               </SelectStyle>
 
               {/* Duración */}
-              <LabelStyle>Duración *</LabelStyle>
-              <SelectStyle
+              <LabelStyle style={{color:"#e1ae40"}}>Duración *</LabelStyle>
+              <SelectStyle style={{backgroundColor:"#752298"}}
                 name="duration"
                 onChange={(e) => handleOnChange(e)}
                 select
                 label="Duracion"
                 variant="outlined"
                 size="small"
-                sx={sxSelectStyle}
+                // sx={sxSelectStyle}
               >
                 <MenuItemStyle hidden={true}>Duración</MenuItemStyle>
                 <MenuItemStyle key={1} value="Cortometraje">
@@ -540,14 +543,14 @@ export function FilmForm() {
                   Largometraje
                 </MenuItemStyle>
               </SelectStyle>
-            </Container12>
+            </Container2>
             {/* FIN CONTAINER 2 */}
 
             {/* CONTAINER 4 */}
-            <Container12>
+            <Container2>
               {/* Sinopsis */}
-              <LabelStyle>Sinopsis</LabelStyle>
-              <InputStyle
+              <LabelStyle style={{color:"#e1ae40"}}>Sinopsis</LabelStyle>
+              <InputStyle style={{marginBottom:"20px", width:"100%", height:"50px"}}
                 type="text"
                 value={movieForm.synopsis}
                 placeholder="Sinopsis"
@@ -557,14 +560,14 @@ export function FilmForm() {
               />{" "}
               <br></br>
               {errores?.synopsis && <p class="errores">{errores.synopsis}</p>}
-              <ButtonStyle
+              <ButtonStyle  style={{height:"60px", width:"100%"}}
                 sx={sxButtonStyle}
                 type="submit"
                 // disabled={errores.block}
               >
                 Subir proyecto
               </ButtonStyle>
-            </Container12>
+            </Container2>
           </PaperStyle4>
           {/* FIN DE CONTAINER 4 */}
         </form>
