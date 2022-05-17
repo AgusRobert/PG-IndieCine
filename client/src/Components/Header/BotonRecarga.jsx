@@ -1,8 +1,8 @@
 import * as React from "react";
-import { getMovies } from "../../redux/actions";
+import { getMovies, getUsers } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import CachedIcon from "@mui/icons-material/Cached";
-import { yellow } from "@mui/material/colors";
+import { deepPurple, yellow } from "@mui/material/colors";
 
 export default function BotonRecarga() {
   const dispatch = useDispatch();
@@ -10,15 +10,20 @@ export default function BotonRecarga() {
   function handleClick(e) {
     //funcion para volver a cargar todos los personajes
     e.preventDefault();
+    dispatch(getUsers());
     dispatch(getMovies());
   }
 
   return (
     <div>
       <CachedIcon
-        style={{ color: "#ffc107" }}
+        sx={{
+          color: "#ffc107",
+          "&:hover": { color: deepPurple[500] },
+          cursor: "pointer",
+        }}
         fontSize="large"
-        onClick={e => {
+        onClick={(e) => {
           handleClick(e);
         }}
       />

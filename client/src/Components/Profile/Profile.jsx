@@ -17,6 +17,7 @@ import {
   keepFilm,
   getUserHiddenFilms,
   keepFilmsArray,
+  deleteFilmsUser,
 } from "../../redux/actions";
 import {
   AppBar,
@@ -36,7 +37,7 @@ import Subs from "../Subs/Subs";
 import Swal from "sweetalert2";
 
 const StyledLink = styled(Link)({
-  backgroundColor: deepPurple[500],
+  backgroundColor: "#682f8a",
   justifyContent: "space-between",
   color: deepPurple[50],
   padding: 8,
@@ -87,7 +88,7 @@ const BoxFav = styled(Box)({
 });
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: "#b388ff",
+  backgroundColor: "#682f8a",
   position: "fixed",
   justifyContent: "space-between",
   alignItems: "center",
@@ -178,7 +179,6 @@ export default function Profile() {
 
   useEffect(() => {
     if (user) {
-      console.log("HOLAAAA!!!");
       dispatch(getUserHiddenFilms(user.email));
     }
     if (userHiddenFilms.length) {
@@ -283,28 +283,70 @@ export default function Profile() {
   };
 
   const handleDeleteProject = (peli) => {
-    dispatch(deleteFilm(peli.id));
-    setDeleted(!deleted);
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Una vez borrado no podrás recuperarlo",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteFilm(peli.id));
+        setDeleted(!deleted);
+      }
+    });
+
+    // dispatch(deleteFilm(peli.id));
+    // setDeleted(!deleted);
   };
 
   const handleCameBackToBasic = () => {
-    dispatch(
-      updateUser({ email: user.email, creator: false, status: "registered" })
-    );
     Swal.fire({
-      title: "Dejaste de ser creador... &#128549;",
       width: 600,
       timer: 3000,
-      timerProgressBar: true,
       padding: "1em",
-      icon: "info",
       color: "#716add",
       background: "black",
       backdrop: `
         rgba(0,0,123,0.2)0  `,
-      confirmButtonText: "Entiendo",
+      title: "¿Estás seguro que deseas dejar de ser creador?",
+      text: "Una vez confirmado, se borraran todos tus proyectos",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Aceptar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(
+          updateUser({
+            email: user.email,
+            creator: false,
+            status: "registered",
+          })
+        );
+        dispatch(deleteFilmsUser({ email: user.email }));
+        Swal.fire({
+          title: "Dejaste de ser creador... &#128549;",
+          width: 600,
+          timer: 3000,
+          timerProgressBar: true,
+          padding: "1em",
+          icon: "info",
+          color: "#716add",
+          background: "black",
+          backdrop: `
+            rgba(0,0,123,0.2)0  `,
+          confirmButtonText: "Entiendo",
+        }).then(() => {
+          navigate("/");
+        });
+      }
     });
-    fillForm(false);
   };
 
   const handleUpgradeBtn = () => {
@@ -378,7 +420,7 @@ export default function Profile() {
                     </StyledLink>
                   </Container>
                 )}
-
+              <br></br>
               {profileInfo?.status === "creator approved" &&
                 pelisdeluser.length > limitedeluser[0] && (
                   <>
@@ -411,7 +453,7 @@ export default function Profile() {
                   })}
                 </> PARA ELIMINAR
               )} */}
-
+              <br></br>
               {profileInfo?.status === "creator approved" && (
                 <Container>
                   <StyledLink
@@ -514,34 +556,69 @@ export default function Profile() {
                 <>
                   <h2>Mis Proyectos</h2>
                   <BoxFavG>
-                    {pelisdeluser.map((peli) => {
-                      let idpeli = peli.id;
-                      return (
-                        <Box paddingLeft={5}>
-                          {<ImgP src={peli.poster} alt="Poster" />}
-                          <StyledLink
-                            sx={{
-                              bcolor: deepPurple[400],
-                              ":hover": {
-                                bgcolor: deepPurple[200],
-                                color: "black",
-                              },
-                            }}
-                            color="textPrimary"
-                            variant="button"
-                            underline="none"
-                            onClick={() => handleNavigateBtn(idpeli)}
-                          >
-                            {peli.title}
-                          </StyledLink>
-                          {
-                            <button onClick={() => handleDeleteProject(peli)}>
+                    {pelisdeluser?.length ? (
+                      pelisdeluser.map((peli) => {
+                        let idpeli = peli.id;
+                        return (
+                          <Box paddingRight={20}>
+                            <ImgP src={peli.poster} alt="Poster" />
+                            <br></br>
+                            <StyledLink
+                              sx={{
+                                bcolor: deepPurple[400],
+                                ":hover": {
+                                  bgcolor: deepPurple[200],
+                                  color: "black",
+                                },
+                              }}
+                              color="textPrimary"
+                              variant="button"
+                              underline="none"
+                              onClick={() => handleNavigateBtn(idpeli)}
+                            >
+                              {peli.title}
+                            </StyledLink>
+
+                            <StyledLink
+                              sx={{
+                                bcolor: amber[500],
+                                ":hover": {
+                                  bgcolor: deepPurple[400],
+                                  color: "black",
+                                },
+                              }}
+                              color="textPrimary"
+                              variant="button"
+                              underline="none"
+                              onClick={() => handleDeleteProject(peli)}
+                            >
                               x
-                            </button>
-                          }
-                        </Box>
-                      );
-                    })}
+                            </StyledLink>
+                          </Box>
+                        );
+                      })
+                    ) : (
+                      <Container>
+                        {/* <p>
+                          Aun no tienes Proyectos ¿Qué esperas para subir uno?
+                        </p> */}
+
+                        <StyledLink
+                          sx={{
+                            ":hover": {
+                              bgcolor: deepPurple[200],
+                              color: "black",
+                            },
+                          }}
+                          color="textPrimary"
+                          variant="button"
+                          underline="none"
+                          onClick={() => navigate("/addFilm")}
+                        >
+                          Aun no tienes Proyectos ¿Qué esperas para subir uno?
+                        </StyledLink>
+                      </Container>
+                    )}
                   </BoxFavG>
                 </>
               )}
@@ -552,9 +629,11 @@ export default function Profile() {
               <>
                 <h3>Usted tiene los siguientes proyectos en espera.</h3>
                 <h3>
-                Teniendo en cuenta su plan, debe seleccionar
+                  Teniendo en cuenta su plan, debe seleccionar
                   {` ${limitedeluser[0]} ${
-                    limitedeluser[0] === 1 ? "proyecto con el" : "proyectos con los"
+                    limitedeluser[0] === 1
+                      ? "proyecto con el"
+                      : "proyectos con los"
                   } que desea continuar`}
                 </h3>
                 <>
@@ -636,7 +715,6 @@ export default function Profile() {
                 />
               </>
             )}
-
             {profileInfo?.status === "registered" && fillForm === false && (
               <>
                 <h2>¿Desea subir al siguiente nivel?</h2>

@@ -29,7 +29,6 @@ exports.validate = async (req, res) => {
       let infoToUpdate = {
         subcription: testResult.reason,
         PlanId: plan.id,
-        status: "creator approved",
       };
       respuesta = (await user.update(infoToUpdate))?.dataValues;
       const idToCancel = await paymentService.getIdSubscribe(email, 1);
@@ -52,7 +51,6 @@ exports.validate = async (req, res) => {
       let infoToUpdate = {
         subcription: "Free",
         PlanId: 1,
-        status: "creator approved",
       };
       respuesta = (await user.update(infoToUpdate))?.dataValues;
     }

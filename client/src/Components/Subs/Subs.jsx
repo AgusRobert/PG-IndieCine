@@ -21,8 +21,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2";
 import { deepPurple } from "@mui/material/colors";
 
-export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }) {
-  console.log("currentSub", currentSub);
+export default function Subs({
+  currentSub,
+  plans,
+  planChangeFn,
+  planCanceledFn,
+}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,10 +38,7 @@ export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }
   // }, []);
 
   useEffect(() => {
-    if (paymentLink !== "") {
-      // console.log("ya no soy un array vacio", paymentLink);
-      window.location.replace(paymentLink);
-    }
+    if (paymentLink !== "") window.location.replace(paymentLink);
   }, [paymentLink]);
 
   const { user } = useAuth0();
@@ -50,14 +51,14 @@ export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }
       payer_email: user?.email,
     };
     if (plan.name.toLowerCase() === "free") {
-      dispatch(cancelSubscription(user?.email));//--> de cualquier plan a 'Free'
+      dispatch(cancelSubscription(user?.email)); //--> de cualquier plan a 'Free'
       // Swal.fire("Ahora seras un simple mortal!!").then((result) => {
       //   window.location.reload();
       // });
-      planChangeFn(true)
+      planChangeFn(true);
     } else {
       dispatch(paySubscription(nuestroPlan));
-      planChangeFn(true)
+      planChangeFn(true);
       // dispatch(
       //   updateUser({
       //     email: user?.email,
@@ -70,7 +71,7 @@ export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }
 
   const onCancel = () => {
     dispatch(cancelSubscription(user.email));
-    planCanceledFn(true)
+    planCanceledFn(true);
     Swal.fire("Ahora tendrás el plan Free!!").then(() => {
       // usamos el window.location.reload() para que se actualice la pagina para que se vea el cambio de plan
       // está hardcodeado porque no se encontró la solución óptima en el useEffect.
@@ -81,13 +82,13 @@ export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }
   return (
     <>
       <Box sx={{ flexGrow: 1 }} position={"relative"} left={100}>
-        <Grid container spacing={5}>
-          {plans?.map(esteplan => {
+        <Grid container spacing={3}>
+          {plans?.map((esteplan) => {
             return (
-              <Grid item xs={4} paddingBottom={10}>
+              <Grid item xs={3} paddingBottom={5}>
                 <Card
                   raised={true}
-                  sx={{ maxWidth: 345, backgroundColor: "#673ab7" }}
+                  sx={{ maxWidth: 300, backgroundColor: "#673ab7" }}
                   elevation={2}
                 >
                   <CardContent>
@@ -135,7 +136,7 @@ export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }
 
                   <CardActions>
                     {currentSub?.toLowerCase() ===
-                      esteplan.name.toLowerCase() ? (
+                    esteplan.name.toLowerCase() ? (
                       <Button
                         size="small"
                         onClick={() => {
@@ -155,7 +156,8 @@ export default function Subs({ currentSub, plans, planChangeFn, planCanceledFn }
                           color: "#f3f6f4",
                           textShadow: "0 0 1px #351c75, 0 0 2px #351c75",
                           textAlign: "center",
-                        }} sx={{
+                        }}
+                        sx={{
                           ":hover": {
                             bgcolor: deepPurple[200],
                             color: "black",

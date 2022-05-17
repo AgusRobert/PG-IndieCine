@@ -4,16 +4,17 @@ const { Plans } = require("../db.js");
 //POST plans
 const postPlans = async (req, res, next) => {
   try {
-    const { name, price, currency, period, description, filmsAllowed } = req.body;
+    const { name, price, currency, period, description, filmsAllowed } =
+      req.body;
     const [plan, created] = await Plans.findOrCreate({
       where: { name: name },
-      defaults:{
-          price: price,
-          currency: currency,
-          period: period,
-          description: description,
-          filmsAllowed: filmsAllowed
-      }
+      defaults: {
+        price: price,
+        currency: currency,
+        period: period,
+        description: description,
+        filmsAllowed: filmsAllowed,
+      },
     });
     if (created) {
       res.json({
@@ -46,12 +47,12 @@ const getPlans = async (req, res, next) => {
 
 const getPlan = async (req, res, next) => {
   try {
-    const {id} = req.params 
-    
+    const { id } = req.params;
+
     const plan = await Plans.findOne({
-      where:{
-        id: id
-      }
+      where: {
+        id: id,
+      },
     });
     res.status(200).json(plan);
   } catch (error) {
@@ -61,12 +62,12 @@ const getPlan = async (req, res, next) => {
 
 const getPlanByName = async (req, res, next) => {
   try {
-    const {name} = req.params 
-    
+    const { name } = req.params;
+
     const plan = await Plans.findOne({
-      where:{
-        name: name
-      }
+      where: {
+        name: name,
+      },
     });
     res.status(200).json(plan);
   } catch (error) {
@@ -74,10 +75,9 @@ const getPlanByName = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
   getPlans,
   postPlans,
   getPlan,
-  getPlanByName
+  getPlanByName,
 };

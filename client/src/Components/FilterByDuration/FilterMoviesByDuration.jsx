@@ -5,6 +5,7 @@ import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
 const MenuItemStyle = styled(MenuItem)({
   marginLeft: "auto",
   color: "black",
@@ -13,15 +14,19 @@ const MenuItemStyle = styled(MenuItem)({
 
 const SelectStyle = styled(TextField)({
   borderRadius: 2,
-  width: 160,
+  width: 110,
   padding: 0,
 });
 
 export default function FilterMovieByDuration() {
   let dispatch = useDispatch();
 
+  const [duration, setDuration] = useState("");
+
+
   function onSelectChange(e) {
     e.preventDefault();
+    setDuration(e.target.value)
     dispatch(filterDuration(e.target.value));
   }
 
@@ -31,7 +36,7 @@ export default function FilterMovieByDuration() {
         name="select"
         onChange={onSelectChange}
         select
-        value=""
+        value={duration}
         label="
         Duración"
         variant="outlined"
@@ -46,9 +51,9 @@ export default function FilterMovieByDuration() {
           },
         }}
       >
-        <MenuItemStyle value={Cortometrajes}>Cortometrajes</MenuItemStyle>
-        <MenuItemStyle value={Mediometrajes}>Mediometrajes</MenuItemStyle>
-        <MenuItemStyle value={Largometrajes}>Largometrajes</MenuItemStyle>
+        <MenuItemStyle key={1} value={Cortometrajes}>Cortometrajes</MenuItemStyle>
+        <MenuItemStyle key={2} value={Mediometrajes}>Mediometrajes</MenuItemStyle>
+        <MenuItemStyle key={3} value={Largometrajes}>Largometrajes</MenuItemStyle>
       </SelectStyle>
     </Box>
   );

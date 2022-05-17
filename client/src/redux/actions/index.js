@@ -37,6 +37,7 @@ import {
   KEEP_FILM,
   GET_USER_HIDDEN_FILMS,
   KEEP_FILMS_ARRAY,
+  DELETE_FILMS_USER,
 } from "./actionstype";
 import { SERVER_BACK } from "../../paths/path";
 
@@ -130,6 +131,14 @@ export function keepFilmsArray(filmsArray) {
   };
 }
 
+export function deleteFilmsUser(email) {
+  return async function (dispatch) {
+    const resp = (
+      await axios.delete(`${SERVER_BACK}/films/forUser`, { data: email })
+    )?.data;
+    return dispatch({ type: DELETE_FILMS_USER, payload: [] });
+  };
+}
 export function deleteExcededFilms(filmsToDelete, userId) {
   return async function (dispatch) {
     try {

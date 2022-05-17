@@ -2,37 +2,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import claqueta from "./cargando.png";
+import { Paper} from "@mui/material";
+import { styled } from "@mui/system";
+import "./notfound.css"
 
-const style = {
-  width: "100vw",
-  position: "absolute",
-  top: "0",
-  bottom: "0",
-  backgroundColor: "#24243e",
+const PaperNotFound = styled(Paper)({
   display: "flex",
+  flexDirection: "column",
+  width: "70%",
+  padding: 20,
+  marginLeft: "auto",
+  marginRight: "auto",
+  boxShadow: "none",
   justifyContent: "center",
   alignItems: "center",
-  flexDirection: "column",
-  color: "#fff",
-  fontSize: "1.5rem",
-  fontWeight: "bold",
-  fontFamily: "Roboto, sans-serif",
-  textAlign: "center",
-  padding: "1rem",
-  margin: "0",
-  border: "0",
-};
+  backgroundColor: "transparent",
+  borderRadius: 20,
+});
+
+const ImgNotFound = styled("img")({
+  height: "auto",
+  width: "40%",
+});
+
 export default function NotFound() {
   return (
-    <div style={style}>
-      <h1 style={{ color: "#9974da" }}>CINDIE</h1>
-      <img src={claqueta} alt="not found" />
-      <h2>Cargando...</h2>
+    <PaperNotFound>
+      <h1 className="cindie">CINDIE</h1>
+      <ImgNotFound src={claqueta}/>
+      {/* <img src={claqueta} alt="not found" /> */}
+      <h2 className="cargando">Cargando...</h2>
       <Link to="/">
         <Button variant="contained" color="primary">
           Regresa al Home
         </Button>
       </Link>
-    </div>
+    </PaperNotFound>
   );
 }

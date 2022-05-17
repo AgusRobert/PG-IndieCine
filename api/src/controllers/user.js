@@ -53,7 +53,6 @@ exports.putUser = async (req, res) => {
       },
     });
     if (!user) {
-      // console.log("Usuario no encontrado");
       return res.json({ message: "Usuario no encontrado" });
     } else {
       await user.update(req.body);
@@ -61,7 +60,6 @@ exports.putUser = async (req, res) => {
       return res.json(user);
     }
   } catch (error) {
-    // console.log("Error al actualizar el usuario");
     res.json({ message: "Error al actualizar el usuario", error });
   }
 };
@@ -69,7 +67,6 @@ exports.putUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const { email } = req.body;
-    // console.log("email en deleteUser", email);
     const user = await User.findOne({
       where: {
         email: email,
@@ -77,10 +74,8 @@ exports.deleteUser = async (req, res) => {
     });
     if (user) {
       await user.destroy();
-      console.log("Usuario eliminado correctamente");
       return res.json({ message: "Usuario eliminado correctamente" });
     } else {
-      console.log("Usuario no encontrado");
       return res.json({ message: "Usuario no encontrado" });
     }
   } catch (error) {
@@ -90,7 +85,6 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.registerUser = async (req, res) => {
-  // console.log("req.body", req.body);
   try {
     let user = await User.findOne({
       where: {
@@ -113,12 +107,10 @@ exports.registerUser = async (req, res) => {
     // } else {
     //si 'creator' es false
     if (user) {
-      console.log("El usuario ya existe.");
       return res.json({ message: "El usuario ya existe" });
     } else {
       req.body.password = bcrypt.hashSync(req.body.password, 10);
       let newUser = await userServices.create(req.body);
-      console.log("Usuario creado con éxito");
       return res.json(newUser);
     }
     // }
@@ -193,7 +185,7 @@ exports.getFavs = async (req, res) => {
   //revisar*-*
   const { id } = req.params;
   const Usuario = await User.findByPk(id);
-  const favoritos = await Usuario.getFilms({
+  const favoritos = await Usuario?.getFilms({
     include: [
       {
         model: Genre,
@@ -206,7 +198,6 @@ exports.getFavs = async (req, res) => {
       },
     ],
   });
-  // console.log(favoritos)
   res.json(favoritos);
 };
 

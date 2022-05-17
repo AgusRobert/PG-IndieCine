@@ -31,6 +31,7 @@ import {
   DELETE_EXCEDED_FILMS,
   GET_PROFILE_INFO_BY_ID_USER,
   GET_USER_HIDDEN_FILMS,
+  DELETE_FILMS_USER,
 } from "../actions/actionstype";
 
 import { DATE_DES, NAME_ASC, COM_DES, RATING_ASC } from "./Ordercosntants";
@@ -108,6 +109,7 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           usersfiltrados: userFiltro,
+          pelisfiltradas: state.peliculas,
         };
       } else {
         return {
@@ -134,6 +136,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         users: action.payload,
+        usersfiltrados: [],
       };
 
     case ORDER_DATE:
@@ -253,14 +256,12 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_COUNTRIES:
-      /*   console.log("payload de countries", action.payload); */
       return {
         ...state,
         countries: action.payload,
       };
 
     case MOVIE_DETAIL:
-      /* console.log('movie detail reducer', action.payload) */
       return {
         ...state,
         detalle: action.payload /* Object.keys(action.payload) */,
@@ -304,7 +305,6 @@ function rootReducer(state = initialState, action) {
     //   };
 
     case GET_PROFILE_INFO:
-      // console.log("QUE LLEGA AL REDUCER", action.payload);
       return {
         ...state,
         profileInfo: action.payload,
@@ -333,6 +333,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         profileInfo: action.payload.user,
         userHiddenFilms: action.payload.films,
+      };
+
+    case DELETE_FILMS_USER:
+      return {
+        ...state,
+        userHiddenFilms: action.payload,
       };
 
     case GET_PLAN_INFO:

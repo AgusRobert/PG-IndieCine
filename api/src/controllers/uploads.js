@@ -82,7 +82,6 @@ exports.postFrontDoc = async (req, res) => {
   const { userId } = req.body;
   const { path, mimetype } = req.file;
   const newName = uploadService.rename(path, userId, "frontDoc", mimetype);
-  console.log("tamanio: ", req.file);
   fs.renameSync(path, newName);
   res.send(newName);
 };

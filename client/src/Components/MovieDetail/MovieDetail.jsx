@@ -325,9 +325,9 @@ export default function MovieDetail() {
                         >
                           <Titulo variant="bold">{peli.title}</Titulo>
                         </Box>
-                        <PaperStyle4>
+                        {/* <PaperStyle4>
                           <h2 className="rating">Rating: {peli.rating}</h2>
-                        </PaperStyle4>
+                        </PaperStyle4> */}
                       </PaperTitulo>
                       <PaperStyle6>
                         <PaperStyle4>
@@ -369,7 +369,9 @@ export default function MovieDetail() {
                     <PaperStyle3>
                       <Box paddingRight={12} opacity={"100%"}>
                         <h3>Sinopsis:</h3>
-                        <p>{peli.synopsis}</p>
+                        <div className="sinopsisP">
+                          <p className="sino">{peli.synopsis}</p>
+                        </div>
                       </Box>
                     </PaperStyle3>
                   </PaperMid>

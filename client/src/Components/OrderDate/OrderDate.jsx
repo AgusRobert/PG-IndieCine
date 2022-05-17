@@ -14,7 +14,7 @@ const MenuItemStyle = styled(MenuItem)({
 
 const SelectStyle = styled(TextField)({
   borderRadius: 2,
-  width: 160,
+  width: 130,
   padding: 0,
 });
 
@@ -36,11 +36,11 @@ export default function OrderDate() {
         name="select"
         onChange={onSelectChange}
         select
-        value=""
         label="
   Antigüedad"
         variant="outlined"
         size="small"
+        value={date}
         sx={{
           ":active": {
             color: "black",
@@ -51,8 +51,8 @@ export default function OrderDate() {
           },
         }}
       >
-        <MenuItemStyle value={DATE_ASC}>Lo nuevo</MenuItemStyle>
-        <MenuItemStyle value={DATE_DES}>Lo clásico</MenuItemStyle>
+        <MenuItemStyle key={1} value={DATE_ASC}>Lo nuevo</MenuItemStyle>
+        <MenuItemStyle key={2} value={DATE_DES}>Lo clásico</MenuItemStyle>
       </SelectStyle>
     </Box>
   );

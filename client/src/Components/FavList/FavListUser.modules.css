@@ -1,0 +1,36 @@
+
+.wrapper{
+    padding: 7px;
+    max-height: "200px";
+    max-width: 100%;
+    display: flex;
+    background-color: #f4b942;
+    overflow-y: auto;
+    flex-wrap: wrap;
+}
+
+.wrapper::-webkit-scrollbar{
+    width: 12px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+    background: white;
+  }
+
+
+.wrapper::-webkit-scrollbar-thumb {
+    background: #1f271b;;
+  }
+
+.wrpper::-webkit-scrollbar-thumb:hover {
+    background: #f4b942;
+  }
+
+.contenedor{
+  padding-bottom: 20px;
+  padding-right: 25px;
+}
+
+.favTitle{
+  background-color: #682f8a;
+}

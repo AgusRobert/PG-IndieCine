@@ -214,3 +214,24 @@ exports.deleteFilms = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.deleteForUser = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const filmsToDelete = await filmService.filmsOfUser(email);
+    if (filmsToDelete?.length) {
+      filmsToDelete.forEach(async (film) => {
+        await Film.destroy({
+          where: {
+            id: film.id,
+          },
+        });
+      });
+      res.json({ msg: "Los proyectos se eliminaron con éxito" });
+    } else {
+      res.json({ msg: "No hay proyectos para eliminar" });
+    }
+  } catch (error) {
+    console.log("DELETE FOR USER: ", error);
+  }
+};

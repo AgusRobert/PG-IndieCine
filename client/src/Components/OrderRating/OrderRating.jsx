@@ -6,30 +6,42 @@ import MenuItem from '@mui/material/MenuItem';
 import { styled, Box } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import { TextField } from "@mui/material";
+import { useState } from "react";
 const MenuItemStyle = styled(MenuItem)({
   marginLeft: "auto",
   color: 'black',
   backgroundColor: "#b388ff",
+  '&:focus':{
+    backgroundColor:'#b388ff'
+  }
 });
 
 const SelectStyle = styled(TextField)({
   borderRadius: 2,
-  width: 150,
+  width: 120,
   padding: 0
 });
 export default function OrderRating (){
 
-    let dispatch = useDispatch()
-  
+  let dispatch = useDispatch()
+
+  const [rating, setRating] = useState("");
+
   function onSelectChange(e) {
+    e.preventDefault();
+    setRating(e.target.value);
     dispatch(orderByRating(e.target.value));
   }
+  
+  // function onSelectChange(e) {
+  //   dispatch(orderByRating(e.target.value));
+  // }
 
     return (
       <Box>
         <SelectStyle 
         select
-        value=""
+        value={rating}
         label="Valoracion"
         onChange={onSelectChange}
         variant= 'outlined'
@@ -44,15 +56,11 @@ export default function OrderRating (){
           }
         }}
         >
-      <MenuItemStyle  value={RATING_ASC}
+
+      <MenuItemStyle key={2} value={RATING_ASC} selected
      >Menos a mas</MenuItemStyle>
-      <MenuItemStyle  value={RATING_DES}
-       sx={{
-        ":hover": {
-          bgcolor: deepPurple[200], 
-          color: "black",
-        },
-      }}>Más a menos</MenuItemStyle>
+      <MenuItemStyle key={3} value={RATING_DES}
+    >Más a menos</MenuItemStyle>
     </SelectStyle>
     </Box>
     )
