@@ -470,7 +470,7 @@ export default function Profile() {
                     {pelisdeluser.map(peli => {
                       let idpeli = peli.id;
                       return (
-                        <Box paddingLeft={5}>
+                        <Box paddingRight={20}>
                           <ImgP src={peli.poster} alt="Poster" />
                           <StyledLink
                             sx={{
