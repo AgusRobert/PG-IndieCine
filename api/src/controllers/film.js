@@ -164,7 +164,6 @@ exports.updateFilms = async (req, res, next) => {
   try {
     const filmsToUpdate = req.body;
     const email = filmsToUpdate.shift();
-    console.log("DATOS: ", filmsToUpdate);
     if (filmsToUpdate?.length) {
       const filmsOfUser = await filmService.filmsOfUser(email, false, "hidden");
       const filmsUpdated = filmsOfUser.map(async (film) => {
@@ -174,8 +173,8 @@ exports.updateFilms = async (req, res, next) => {
           });
         return await Film.destroy({ where: { id: film.id } });
       });
-      res.json([]);
-    } else res.json({ msg: "No hay películas para actualizar" });
+      res.json({ msg: "Proyectos actualizados con éxito" });
+    } else res.json({ msg: "No hay proyectos para actualizar" });
   } catch (error) {
     next(error);
   }
@@ -184,13 +183,12 @@ exports.updateFilms = async (req, res, next) => {
 exports.deleteFilm = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log("id en deleteFilm", id);
     await Film.destroy({
       where: {
         id: id,
       },
     });
-    res.send({ msg: "La pelicula se eliminó con éxito" });
+    res.send({ msg: "El proyecto se eliminó con éxito" });
   } catch (err) {
     next(err);
   }
@@ -208,9 +206,9 @@ exports.deleteFilms = async (req, res, next) => {
           },
         });
       });
-      res.json({ msg: "Las peliculas se eliminaron con éxito" });
+      res.json({ msg: "Los proyectos se eliminaron con éxito" });
     } else {
-      res.json({ msg: "No hay películas para eliminar" });
+      res.json({ msg: "No hay proyectos para eliminar" });
     }
   } catch (error) {
     next(error);
