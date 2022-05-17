@@ -111,7 +111,6 @@ export function deleteFilm(id) {
 export function keepFilm(peli) {
   return async function (dispacth) {
     const resp = await axios.put(`${SERVER_BACK}/films`, peli);
-    console.log("ESTO ES PELI!!!: ", resp);
     return dispacth({
       type: KEEP_FILM,
     });
@@ -128,7 +127,7 @@ export function keepFilmsArray(filmsArray) {
     return dispacth({
       type: KEEP_FILMS_ARRAY,
     });
-  }
+  };
 }
 
 export function deleteExcededFilms(filmsToDelete, userId) {
@@ -335,7 +334,6 @@ export function getFavorites(id) {
   return async function (dispatch) {
     try {
       var pelisFav = await axios.get(`${SERVER_BACK}/users/getFavs/${id}`);
-      console.log("ACTION", pelisFav.data);
       return dispatch({
         type: GET_FAV,
         payload: pelisFav.data,
@@ -431,12 +429,15 @@ export function getProfileInfoByIdListUser(id) {
 export function validateSubscription(email) {
   return async function (dispatch) {
     try {
-      let response = await axios.get(
-        `${SERVER_BACK}/payment/validate/${email}`
-      );
+      const val = (await axios.get(`${SERVER_BACK}/payment/validate/${email}`))
+        ?.data;
+      const user = (await axios.get(`${SERVER_BACK}/users/byemail/${email}`))
+        ?.data;
+      const resp = (await axios.get(`${SERVER_BACK}/films/hidden/${user.id}`))
+        ?.data;
       return dispatch({
         type: VALIDATE_SUBSCRIPTION,
-        payload: response.data,
+        payload: { user: val, films: resp },
       });
     } catch (error) {
       console.log("validateSubscription", error);
@@ -516,7 +517,6 @@ export function cancelSubscription(email) {
         subcription: "Free",
         status: "creator approved",
       });
-      console.log("userUpdated", userUpdated);
       return dispatch({
         type: CANCEL_SUBSCRIPTION,
         payload: userUpdated.data,

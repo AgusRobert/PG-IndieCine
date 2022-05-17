@@ -543,43 +543,49 @@ export default function Profile() {
                       );
                     })}
                   </BoxFavG>
-
                 </>
               )}
             {/*----------------------------------*/}
-            {profileInfo?.status === "creator approved" ?
-              limitedeluser[0] - pelisdeluser.length ? userHiddenFilms.length ? (
+            {profileInfo?.status === "creator approved" &&
+            userHiddenFilms.length &&
+            pelisdeluser.length - limitedeluser[0] ? (
+              <>
+                <h3>Usted tiene los siguientes proyectos en espera.</h3>
+                <h3>
+                Teniendo en cuenta su plan, debe seleccionar
+                  {` ${limitedeluser[0]} ${
+                    limitedeluser[0] === 1 ? "proyecto con el" : "proyectos con los"
+                  } que desea continuar`}
+                </h3>
                 <>
-                  <h3>Usted tiene los siguientes proyectos en espera.</h3>
-                  <h3>
-                    Teniendo en cuenta su plan, debe seleccionar
-                    {` ${limitedeluser[0] - pelisdeluser.length}`} proyecto
-                    {limitedeluser[0] - pelisdeluser.length === 1
-                      ? null
-                      : "s"}{" "}
-                    con los que desea continuar.{" "}
-                  </h3>
-                  <>
-                    {userHiddenFilms.forEach((film) => {
-                      return (
-                        <>
-                          <Link to={`/detail/${film.id}`}>
-                            <h4>{film.title}</h4>
-                          </Link>
-                          <input
-                            type="checkbox"
-                            id={film.id}
-                            name={film.title}
-                            onChange={handleOnCheckbox}
-                          />
-                        </>
-                      );
-                    })}
-                    <button onClick={handleOnListo}>Listo</button>
-                  </>
+                  {userHiddenFilms.map((film) => {
+                    return (
+                      <>
+                        <Link to={`/detail/${film.id}`}>
+                          <h4>{film.title}</h4>
+                        </Link>
+                        <input
+                          type="checkbox"
+                          id={film.id}
+                          name={film.title}
+                          onChange={handleOnCheckbox}
+                        />
+                        {/* <button onClick={() => handleKeepProject(film)}>
+                          Recomponer
+                        </button> */}
+                      </>
+                    );
+                  })}
+                  <button onClick={handleOnListo}>Listo</button>
                 </>
-              ) : null : null : null}
+              </>
+            ) : null}
 
+            {/* {Swal.fire({
+              title: "¡Atención!",
+              text: "Tienes más peliculas que las permitidas para tu plan.",
+              icon: "warning",
+            }).then(() => navigate('/profile'))} */}
             {/* Caso en que el usuario supere su limite de proyectos */}
             {/* {profileInfo?.status === "creator approved" && profileInfo?.creator === true && outLimit && (
               <>

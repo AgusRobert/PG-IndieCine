@@ -83,10 +83,6 @@ exports.cancelSubcription = async (req, res) => {
 exports.getIdSubscription = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log(
-      "\n\n--------------------------------------------------------\n\nEMAIL QUE LLEGO: ",
-      email
-    );
     return res.json(await paymentService.getIdSubscribe(email));
   } catch (error) {
     console.log("getIdSubscription controller catch", error);

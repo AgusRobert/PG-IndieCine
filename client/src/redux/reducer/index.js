@@ -329,19 +329,11 @@ function rootReducer(state = initialState, action) {
     // };
 
     case VALIDATE_SUBSCRIPTION:
-      // let updatedSubscription = "Free";
-      // if (action.payload.status !== "Suscripcion cancelada") {
-      //   updatedSubscription = action.payload.subcription;
       return {
         ...state,
-        // profileInfo: {
-        // ...state.profileInfo,
-
-        // subcription: updatedSubscription,
-        // },
-        profileInfo: action.payload,
+        profileInfo: action.payload.user,
+        userHiddenFilms: action.payload.films,
       };
-    // }
 
     case GET_PLAN_INFO:
       return {
@@ -351,7 +343,6 @@ function rootReducer(state = initialState, action) {
 
     case DELETE_FAV:
       let deletedFavs = state.favorites.filter((p) => p.id !== action.payload);
-      console.log("DELETED FAVS", deletedFavs);
       return {
         ...state,
         favorites: deletedFavs,
