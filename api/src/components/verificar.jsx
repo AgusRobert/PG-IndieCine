@@ -24,10 +24,10 @@ useEffect(async() => {
 if (country === "argentina") {
   pais=  "https://www.dateas.com/es/argentina?gclid=EAIaIQobChMI3-3w5IrU9wIVH0JIAB3Qpg3UEAMYASAAEgLHuvD_BwE";
 
- } else if (country === "Peru") {
+ } else if (country === "peru") {
    pais ="https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaWeb.jsp";
   
- } else if (country === "Chile") {
+ } else if (country === "chile") {
    pais ="https://www.registrocivil.cl/principal/servicios-en-linea/consulta-vigencia-documento-1";
 } else {
  pais = "";

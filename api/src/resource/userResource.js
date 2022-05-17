@@ -25,6 +25,7 @@ exports.userResource = {
         },
         parent: { icon: "User" },
       properties: {
+        
           status: {
               availableValues: [
                     { value: "pending", label: "pending" },
@@ -32,6 +33,7 @@ exports.userResource = {
                     { value: 'admin', label: 'admin' },
               ],
             },
+        
             
     },
 }
