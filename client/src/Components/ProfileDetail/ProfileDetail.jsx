@@ -35,8 +35,8 @@ export default function ProfileDetail() {
                         {profileInfo.name && <h4>Nombre: {profileInfo.name}</h4>}
                         {profileInfo.surname && <h4>Apellido: {profileInfo.surname}</h4>}
                         <h4>Email de contacto: {profileInfo.email}</h4>
-                        <h4>País de origen: {profileInfo.country}</h4>
-                        <h4>Breve descrición: ...soy Fulano, me apasionan las peliculas... </h4>
+                        <h4>Lugar de origen: {profileInfo.country}</h4>
+                        <h4>Breve descripción: ...soy Fulano, me apasionan las peliculas... </h4>
                         <br />
                         <h4>Sus películas favoritas: </h4>
                         <br />
