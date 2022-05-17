@@ -1,13 +1,26 @@
-import { deepPurple, grey, amber } from "@mui/material/colors";
-import { Button, InputBase, TextField, Toolbar, MenuItem } from "@mui/material";
-import { styled, Box } from "@mui/system";
+import {
+  deepPurple,
+  grey,
+  amber
+} from "@mui/material/colors";
+import {
+  Button,
+  InputBase,
+  TextField,
+  Toolbar,
+  MenuItem
+} from "@mui/material";
+import {
+  styled,
+  Box
+} from "@mui/system";
 
 export const MenuItemStyle = styled(MenuItem)({
   marginLeft: "auto",
   color: "black",
   backgroundColor: "#682f8a",
-  '&:focus':{
-    backgroundColor:'#682f8a'
+  '&:focus': {
+    backgroundColor: '#682f8a'
   }
 });
 
@@ -23,6 +36,7 @@ export const ButtonStyle = styled(Button)({
   borderColor: deepPurple[500],
   backgroundColor: "#682f8a",
   padding: 8,
+  width: "250px",
 });
 
 export const ButtonStyle2 = styled(Button)({
@@ -31,7 +45,7 @@ export const ButtonStyle2 = styled(Button)({
   borderBlockColor: amber[900],
   borderInlineStartColor: amber[200],
   borderInlineEndColor: amber[200],
-  backgroundColor:amber[800]
+  backgroundColor: amber[800]
 });
 
 export const LabelStyle = styled("label")({
@@ -80,4 +94,3 @@ export const sxButtonStyle = {
     borderInlineEndColor: deepPurple[900],
   },
 };
-
