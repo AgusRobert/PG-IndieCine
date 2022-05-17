@@ -145,7 +145,7 @@ export default function UserProfile() {
                   <h5 className="Title">Nombre de usuario</h5>
                   <h2>{profileInfo?.username}</h2>
 
-                  <h5 className="Title">PaÃ­s de origen</h5>
+                  <h5 className="Title">Pais de origen</h5>
                   <h2>{profileInfo?.country}</h2>
                 </PaperTitulo>
               </PaperStyle5>

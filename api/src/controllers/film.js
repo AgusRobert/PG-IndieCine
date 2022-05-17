@@ -24,29 +24,23 @@ exports.getFilms = async (req, res, next) => {
 };
 
 exports.getHiddenFilms = async (req, res, next) => {
-  try {
-    const allFilms = await Film.findAll({
-      include: [
+  // try {
+    console.log("userId EN LA RUTA" , req.params.id)
+    console.log("PARAMS", req.params)
+    res.json(
+      await Film.findAll(
         {
-          model: Genre,
-          through: {
-            attributes: [],
+          where: {
+            status: "hidden",
+            UserId: req.params.id,
           },
         },
-        {
-          model: Country,
-        },
-      ],
-    });
-    const hiddenFilms = allFilms.filter((film) => film.status === "hidden");
-    const hiddenUserFilms = hiddenFilms.filter(
-      (film) => film.UserId === req.params.id
+      )
     );
-    res.json(hiddenUserFilms);
-  } catch (err) {
-    // res.send("No se pudo acceder a las películas");
-    next(err);
-  }
+  // } catch (err) {
+  //   // res.send("No se pudo acceder a las películas");
+  //   next(err);
+  // }
 };
 
 exports.getById = async (req, res, next) => {

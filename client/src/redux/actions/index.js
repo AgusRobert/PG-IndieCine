@@ -175,7 +175,8 @@ export function getMoviesByGenre(payload) {
 export function getUserHiddenFilms(userId) {
   return async function (dispatch) {
     try {
-      let response = await axios.get(`${SERVER_BACK}/films/${userId}/hidden`);
+      console.log("userId en la action", userId);
+      let response = await axios.get(`${SERVER_BACK}/films/hidden/${userId}`);
       return dispatch({
         type: GET_USER_HIDDEN_FILMS,
         payload: response.data,

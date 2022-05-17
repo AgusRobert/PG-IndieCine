@@ -16,6 +16,7 @@ import {
   deleteExcededFilms,
   deleteFilm,
   keepFilm,
+  getUserHiddenFilms,
 } from "../../redux/actions";
 import {
   /*Box,*/ AppBar,
@@ -170,12 +171,12 @@ export default function Profile() {
       setLoaded(true);
       // limitedeluser[0] < pelisdeluser.length && setOutLimit(true);
       // limitedeluser[0] >= pelisdeluser.length && setOutLimit(false);
-
-      // if (!pelisdeluser.length) {
+      // if (userHiddenFilms.length) {
       //   Swal.fire({
-      //     title: "Como estas excediendo tu limite de proyectos, tus peliculas fueron ocultas",
+      //     title: "Estas excediendo el límite de proyectos disponibles para tu plan.",
       //     icon: "warning",
-      //     text: "Para continuar, selecciona las peliculas que deseas mostrar",
+      //     text: "Por favor, selecciona los proyectos que desea continuar",
+      //     footer: "Los que no sean seleccionados quedarán ocultos hasta que cambie el plan.",
       //   })
       // }
 
@@ -189,6 +190,20 @@ export default function Profile() {
       // }
     }
   }, [fillForm, dispatch, planChanged, planCanceled, render]);
+
+  // useEffect(() => {
+  //   if (profileInfo?.id) {
+  //     dispatch(getUserHiddenFilms(profileInfo.id))
+  //   }
+  //   if (userHiddenFilms.length) {
+  //     Swal.fire({
+  //       title: "Estas excediendo el límite de proyectos disponibles para tu plan.",
+  //       icon: "warning",
+  //       text: "Por favor, selecciona los proyectos que desea continuar",
+  //       footer: "Los que no sean seleccionados quedarán ocultos hasta que cambie el plan.",
+  //     })
+  //   }
+  // })
 
   // funcion para que vuelva a ejecutar el useEffect cuando se cambie el plan
   const handlePlanChange = (payload) => {
@@ -377,11 +392,11 @@ export default function Profile() {
                   </>
                 )}
 
-              {profileInfo?.status === "creator approved" && userHiddenFilms.length && (
+              {/* {profileInfo?.status === "creator approved" && userHiddenFilms.length && (
                 <>
                   <h3>Usted tiene los siguientes proyectos en espera.</h3>
                   <h3>Teniendo en cuenta su plan, puede rehabilitar hasta </h3>
-                  <h3>{pelisdeluser.length - limitedeluser[0]} proyectos. </h3>
+                  <h3>{limitedeluser[0] - pelisdeluser.length} proyectos. </h3>
                   {userHiddenFilms.map((film) => {
                     return (
                       <>
@@ -392,8 +407,8 @@ export default function Profile() {
                       </>
                     )
                   })}
-                </>
-              )}
+                </> PARA ELIMINAR
+              )} */}
 
               {profileInfo?.status === "creator approved" && (
                 <Container>
@@ -501,7 +516,7 @@ export default function Profile() {
                       let idpeli = peli.id;
                       return (
                         <Box paddingLeft={5}>
-                          <ImgP src={peli.poster} alt="Poster" />
+                          {/* <ImgP src={peli.poster} alt="Poster" /> */}
                           <StyledLink
                             sx={{
                               bcolor: deepPurple[400],
@@ -526,6 +541,26 @@ export default function Profile() {
                   </BoxFavG>
                 </>
               )}
+
+            {profileInfo?.status === "creator approved" && userHiddenFilms.length && (
+              <>
+
+                <h3>Usted tiene los siguientes proyectos en espera.</h3>
+                <h3>Teniendo en cuenta su plan, puede rehabilitar hasta {limitedeluser[0] - pelisdeluser.length} proyecto{limitedeluser[0] - pelisdeluser.length === 1
+                  ? null
+                  : "s"}{" "}. </h3>
+                {userHiddenFilms.map((film) => {
+                  return (
+                    <>
+                      <Link to={`/detail/${film.id}`}>
+                        <h4>{film.title}</h4>
+                      </Link>
+                      <button onClick={handleKeepProject}>Recomponer</button>
+                    </>
+                  )
+                })}
+              </>
+            )}
 
             {/* {Swal.fire({
               title: "¡Atención!",
