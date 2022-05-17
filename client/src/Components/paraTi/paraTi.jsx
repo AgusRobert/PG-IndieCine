@@ -89,7 +89,7 @@ export default function ParaTi({ userId }) {
           })}
         </div>
       ) : (
-        <div> </div>
+        <div></div>
       )}
     </>
   );

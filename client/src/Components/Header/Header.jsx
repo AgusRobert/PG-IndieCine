@@ -46,11 +46,8 @@ const AppStyle = styled(AppBar)({
 const AvatarStyle = styled(Avatar)({
   marginLeft: "auto",
   color: amber[200],
-  backgroundColor: deepPurple[900],
   height: 30,
-  borderRadius: 20,
-  border: `2px solid ${amber[500]}`,
-  borderRight: "4px solid transparent",
+  borderRadius: "50%",
 });
 const MenuItemStyle = styled(MenuItem)({
   marginLeft: "auto",
