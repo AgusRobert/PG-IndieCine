@@ -369,7 +369,9 @@ export default function MovieDetail() {
                     <PaperStyle3>
                       <Box paddingRight={12} opacity={"100%"}>
                         <h3>Sinopsis:</h3>
-                        <p>{peli.synopsis}</p>
+                        <div className="sinopsisP">
+                          <p className="sino">{peli.synopsis}</p>
+                        </div>
                       </Box>
                     </PaperStyle3>
                   </PaperMid>

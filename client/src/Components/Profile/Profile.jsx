@@ -349,7 +349,7 @@ export default function Profile() {
                     </StyledLink>
                   </Container>
                 )}
-
+              <br></br>
               {profileInfo?.status === "creator approved" &&
                 pelisdeluser.length > limitedeluser[0] && (
                   <>
@@ -364,7 +364,7 @@ export default function Profile() {
                     </h2>
                   </>
                 )}
-
+               <br></br>
               {profileInfo?.status === "creator approved" && (
                 <Container>
                   <StyledLink
@@ -472,6 +472,7 @@ export default function Profile() {
                       return (
                         <Box paddingRight={20}>
                           <ImgP src={peli.poster} alt="Poster" />
+                          <br></br>
                           <StyledLink
                             sx={{
                               bcolor: deepPurple[400],
@@ -487,9 +488,21 @@ export default function Profile() {
                           >
                             {peli.title}
                           </StyledLink>
-                          <button onClick={() => handleDeleteProject(idpeli)}>
-                            x
-                          </button>
+                        
+                          <StyledLink
+                  sx={{ bcolor: amber[500],
+                    ":hover": {
+                      bgcolor: deepPurple[400],
+                      color: "black",
+                    },
+                  }}
+                  color="textPrimary"
+                  variant="button"
+                  underline="none"
+                  onClick={() => handleDeleteProject(idpeli)}
+                >
+                 x
+                </StyledLink>
                         </Box>
                       );
                     })}

@@ -194,7 +194,7 @@ export default function UserProfile() {
                     <h2 className="Datos">{profileInfo?.rol}</h2>
                   </PaperName>
                   <PaperName>
-                    <h5 className="Title">Paí­s de origen</h5>
+                    <h5 className="Title">Lugar de origen</h5>
                     <h2 className="Datos">{profileInfo?.country}</h2>
                   </PaperName>
                 </PaperStyle>

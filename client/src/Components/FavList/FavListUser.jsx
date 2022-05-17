@@ -48,9 +48,9 @@ export default function FavListUser({ userId }) {
   let idFavs = userId;
   console.log("IDFAVSSS", idFavs);
 
-  useEffect(() => {
-    dispatch(getFavorites(idFavs));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getFavorites(idFavs));
+  // }, [dispatch]);
 
   function handleOnClick(payload) {
     dispatch(deleteFavFilm(payload));
