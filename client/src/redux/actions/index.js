@@ -111,11 +111,12 @@ export function deleteFilm(id) {
 }
 
 export function keepFilm(peli) {
-  return async function () {
-    await axios.put(`${SERVER_BACK}/films`, peli);
-    return {
+  return async function (dispacth) {
+    const resp = await axios.put(`${SERVER_BACK}/films`, peli);
+    console.log("ESTO ES PELI!!!: ", resp);
+    return dispacth({
       type: KEEP_FILM,
-    };
+    });
   };
 }
 
@@ -172,14 +173,16 @@ export function getMoviesByGenre(payload) {
   };
 }
 
-export function getUserHiddenFilms(userId) {
+export function getUserHiddenFilms(email) {
   return async function (dispatch) {
     try {
-      console.log("userId en la action", userId);
-      let response = await axios.get(`${SERVER_BACK}/films/hidden/${userId}`);
+      const user = (await axios.get(`${SERVER_BACK}/users/byemail/${email}`))
+        ?.data;
+      const resp = (await axios.get(`${SERVER_BACK}/films/hidden/${user.id}`))
+        ?.data;
       return dispatch({
         type: GET_USER_HIDDEN_FILMS,
-        payload: response.data,
+        payload: resp,
       });
     } catch (error) {
       console.log(error);
