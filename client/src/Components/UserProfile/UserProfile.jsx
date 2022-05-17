@@ -15,6 +15,7 @@ import { grey } from "@mui/material/colors";
 import logo from "../Header/LOGO.png";
 import "./style.css";
 import FavListUser from "../FavList/FavListUser";
+import cargando from "../NotFound/cargando.png";
 
 const ImgFav = styled("img")({
   height: "auto",
@@ -134,9 +135,9 @@ export default function UserProfile() {
 
   let { id } = useParams();
 
-  const allMovies = useSelector((state) => state.pelisfiltradas);
-  const profileInfo = useSelector((state) => state.profileInfo);
-  let favs = useSelector((state) => state.favorites);
+  const allMovies = useSelector(state => state.pelisfiltradas);
+  const profileInfo = useSelector(state => state.profileInfo);
+  let favs = useSelector(state => state.favorites);
 
   const pelisdeluser = profileInfo?.Films;
 
@@ -209,7 +210,7 @@ export default function UserProfile() {
                 </PaperTitulo>
                 <PaperPelis>
                   {pelisdeluser ? (
-                    pelisdeluser?.map((data) => {
+                    pelisdeluser?.map(data => {
                       return (
                         <Grid item m={3}>
                           <Cartas
@@ -221,10 +222,7 @@ export default function UserProfile() {
                       );
                     })
                   ) : (
-                    <img
-                      src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
-                      alt="not found"
-                    />
+                    <img src={cargando} alt="not found" />
                   )}
                 </PaperPelis>
               </PaperProyectos>
