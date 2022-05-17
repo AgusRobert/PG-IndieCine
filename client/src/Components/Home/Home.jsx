@@ -155,12 +155,12 @@ export default function Home() {
                 navigation={true}
                 effect={"coverflow"}
                 centeredSlides={true}
-                spaceBetween={10}
+                spaceBetween={20}
                 slidesPerView={4}
                 loop={true}
                 coverflowEffect={{
-                  rotate: 30,
-                  stretch: 5,
+                  rotate: 75,
+                  stretch: 50,
                   depth: 1,
                   modifier: 1,
                   slideShadows: false,
