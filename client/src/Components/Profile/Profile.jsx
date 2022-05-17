@@ -510,8 +510,7 @@ export default function Profile() {
           <StyledContainer3>
             {/* Los proyectos del usuario, mientras la cantidad de proyectos sea menos o igual a su limite */}
             {profileInfo?.status === "creator approved" &&
-              profileInfo?.creator === true &&
-              !outLimit && (
+              profileInfo?.creator === true && (
                 <>
                   <h2>Mis Proyectos</h2>
                   <BoxFavG>
@@ -544,24 +543,24 @@ export default function Profile() {
                       );
                     })}
                   </BoxFavG>
+
                 </>
               )}
             {/*----------------------------------*/}
-            {profileInfo?.status === "creator approved" &&
-              userHiddenFilms.length &&
-              limitedeluser[0] - pelisdeluser.length && (
+            {profileInfo?.status === "creator approved" ?
+              limitedeluser[0] - pelisdeluser.length ? userHiddenFilms.length ? (
                 <>
                   <h3>Usted tiene los siguientes proyectos en espera.</h3>
                   <h3>
-                    Teniendo en cuenta su plan, puede quedarse hasta con
+                    Teniendo en cuenta su plan, debe seleccionar
                     {` ${limitedeluser[0] - pelisdeluser.length}`} proyecto
                     {limitedeluser[0] - pelisdeluser.length === 1
                       ? null
                       : "s"}{" "}
-                    .{" "}
+                    con los que desea continuar.{" "}
                   </h3>
                   <>
-                    {userHiddenFilms.map((film) => {
+                    {userHiddenFilms.forEach((film) => {
                       return (
                         <>
                           <Link to={`/detail/${film.id}`}>
@@ -573,22 +572,14 @@ export default function Profile() {
                             name={film.title}
                             onChange={handleOnCheckbox}
                           />
-                          {/* <button onClick={() => handleKeepProject(film)}>
-                          Recomponer
-                        </button> */}
                         </>
                       );
                     })}
                     <button onClick={handleOnListo}>Listo</button>
                   </>
                 </>
-              )}
+              ) : null : null : null}
 
-            {/* {Swal.fire({
-              title: "¡Atención!",
-              text: "Tienes más peliculas que las permitidas para tu plan.",
-              icon: "warning",
-            }).then(() => navigate('/profile'))} */}
             {/* Caso en que el usuario supere su limite de proyectos */}
             {/* {profileInfo?.status === "creator approved" && profileInfo?.creator === true && outLimit && (
               <>
