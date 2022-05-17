@@ -44,7 +44,7 @@ export default function FilterMovieByCountry() {
         label="
   País"
         variant="outlined"
-        value=""
+        value={country}
         size="small"
         sx={{
           ":active": {

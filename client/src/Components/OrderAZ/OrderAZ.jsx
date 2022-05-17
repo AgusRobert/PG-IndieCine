@@ -36,8 +36,8 @@ export default function OrderAZ() {
         <SelectStyle
           select
           label="Orden alfabético"
-          /* value={ordenAlfabetico} */
-          value=""
+          value={ordenAlfabetico} 
+          //value=""
           onChange={handleSort}
           variant="outlined"
           size="small"
@@ -51,8 +51,8 @@ export default function OrderAZ() {
             },
           }}
         >
-          <MenuItemStyle value={NAME_ASC}>A hasta Z</MenuItemStyle>
-          <MenuItemStyle value={NAME_DES}>Z hasta A</MenuItemStyle>
+          <MenuItemStyle key={1} value={NAME_ASC}>A hasta Z</MenuItemStyle>
+          <MenuItemStyle key={2} value={NAME_DES}>Z hasta A</MenuItemStyle>
         </SelectStyle>
     </Box>
   );

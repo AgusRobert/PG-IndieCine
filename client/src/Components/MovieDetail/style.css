@@ -4,6 +4,15 @@
     justify-content: center;
 }
 
+.sinopsisP {
+    max-width: 70%;
+    height: auto;
+    word-wrap: break-word;
+}
+
+.sino{
+}
+
 .imgPoster{
     width: 90%;
 }
