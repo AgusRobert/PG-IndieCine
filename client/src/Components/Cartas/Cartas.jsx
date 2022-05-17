@@ -41,7 +41,7 @@ export default function Cartas({
 
   return (
     <>
-      <Card sx={{  padding:0,maxWidth: 300, backgroundColor: "#1F271B" }}>
+      <Card sx={{  padding:0, minWidth: 300, maxWidth: 300, backgroundColor: "#1F271B" }}>
       <Link variant="button" underline="none" to={`/detail/${id}`}>
         <CardMedia
           component="img"

@@ -23,25 +23,57 @@ const ImgFav = styled("img")({
 
 const PaperStyle = styled(Paper)({
   display: "flex",
-  width: "550px",
-  padding: 25,
+  flexDirection: "row",
+  width: "100%",
+  padding: 20,
+  boxShadow: "none",
   justifyContent: "space-around",
   alignItems: "center",
-  backgroundColor: grey[900],
+  backgroundColor: "#1f271b",
   borderRadius: 20,
   opacity: "90%",
 });
 
 const PaperStyle5 = styled(Paper)({
   display: "flex",
-  flexWrap: "wrap",
-  padding: 45,
-  justifyContent: "space-between",
-  alignItems: "left",
-  width: 500,
-  backgroundColor: grey[900],
+  flexDirection: "column",
+  justifyContent: "space-around",
+  alignItems: "center",
+  width: "100%",
+  backgroundColor: "#1f271b",
   borderRadius: 20,
   opacity: "90%",
+  marginBottom: "20px",
+  paddingTop: "0px",
+});
+
+const PaperProyectos = styled(Paper)({
+  display: "flex",
+  flexWrap: "wrap",
+  flexDirection: "column",
+  width: "100%",
+  backgroundColor: "transparent",
+  border: "none",
+});
+
+const PaperFavoritos = styled(Paper)({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  backgroundColor: "transparent",
+  border: "none",
+});
+
+const PaperPelis = styled(Paper)({
+  display: "flex",
+  justifyContent: "center",
+  flexDirection: "row",
+  maxWidth: "100%",
+  backgroundColor: "transparent",
+  border: "none",
+  overflowX: "scroll",
+  maxHeight: "600px",
+  overflow: "auto",
 });
 
 const PaperTop = styled(Paper)({
@@ -55,34 +87,43 @@ const PaperTop = styled(Paper)({
 });
 const PaperMid = styled(Paper)({
   display: "table-column",
-  padding: 25,
   justifyContent: "space-around",
   alignItems: "center",
   backgroundColor: "transparent",
   borderRadius: 20,
   boxShadow: "none",
-});
-const PaperBot = styled(Paper)({
-  display: "flex",
-  padding: 25,
-  justifyContent: "space-around",
-  alignItems: "center",
-  backgroundColor: "transparent",
-  borderRadius: 20,
-  boxShadow: "none",
+  width: "90%",
+  maxWidth: "1150px",
 });
 const PaperTitulo = styled(Paper)({
-  paddingBottom: 100,
+  display: "flex",
+  flex: "wrap",
+  flexDirection: "row",
   backgroundColor: "transparent",
   boxShadow: "none",
-  alignItems: "left",
-  width: "200",
-  height: "auto",
+  alignItems: "center",
+  justifyContent: "space-evenly",
+  width: "100%",
+  paddingBottom: "10px",
+  marginTop: "0px",
 });
-
+const PaperName = styled(Paper)({
+  display: "flex",
+  flexDirection: "column",
+  backgroundColor: "transparent",
+  boxShadow: "none",
+  alignItems: "center",
+});
+const PaperCafecito = styled(Paper)({
+  display: "flex",
+  flexDirection: "column",
+  backgroundColor: "transparent",
+  boxShadow: "none",
+  alignItems: "center",
+});
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
-  backgroundColor: "#b388ff",
+  backgroundColor: "#682f8a",
   position: "fixed",
   justifyContent: "space-between",
   alignItems: "center",
@@ -93,9 +134,9 @@ export default function UserProfile() {
 
   let { id } = useParams();
 
-  const allMovies = useSelector(state => state.pelisfiltradas);
-  const profileInfo = useSelector(state => state.profileInfo);
-  let favs = useSelector(state => state.favorites);
+  const allMovies = useSelector((state) => state.pelisfiltradas);
+  const profileInfo = useSelector((state) => state.profileInfo);
+  let favs = useSelector((state) => state.favorites);
 
   /* console.log("LOSFAVS", favs); */
   /*  console.log("ELIDELPERFILQUEESTOYMIRANDO", id); */
@@ -125,74 +166,86 @@ export default function UserProfile() {
           {/* <div className="detalles"> */}
           <div className="detalle3"></div>
           <PaperTop>
-            <PaperStyle>
-              <ImgFav
-                src={profileInfo?.image}
-                alt="Poster"
-                className="imgPoster"
-                height="300px"
-              />
-            </PaperStyle>
-            {/* </div> */}
             <PaperMid>
               <PaperStyle5>
                 <PaperTitulo>
-                  <h5 className="Title">Nombre completo</h5>
-                  <h2>
-                    {profileInfo?.name} {profileInfo?.surname}
-                  </h2>
-
-                  <h5 className="Title">Nombre de usuario</h5>
-                  <h2>{profileInfo?.username}</h2>
-
-                  <h5 className="Title">PaÃ­s de origen</h5>
-                  <h2>{profileInfo?.country}</h2>
+                  <PaperName>
+                    <h5 className="Title">Nombre completo</h5>
+                    <h2 className="Nombre">
+                      {profileInfo?.name} {profileInfo?.surname}
+                    </h2>
+                  </PaperName>
+                  <PaperName>
+                    <ImgFav
+                      src={profileInfo?.image}
+                      alt="Poster"
+                      className="imgPoster"
+                      height="300px"
+                    />
+                  </PaperName>
                 </PaperTitulo>
+                <PaperStyle>
+                  <PaperName>
+                    <h5 className="Title">Nombre de usuario</h5>
+                    <h2 className="Datos">{profileInfo?.username}</h2>
+                  </PaperName>
+                  <PaperName>
+                    <h5 className="Title">Rol</h5>
+                    <h2 className="Datos">{profileInfo?.rol}</h2>
+                  </PaperName>
+                  <PaperName>
+                    <h5 className="Title">Paí­s de origen</h5>
+                    <h2 className="Datos">{profileInfo?.country}</h2>
+                  </PaperName>
+                </PaperStyle>
+                {profileInfo?.cafecito && (
+                  <PaperCafecito>
+                    <h5 className="Cafecito">
+                      ¿Te gustan los proyectos de este autor?
+                    </h5>
+                    <CafecitoBtn linkCafecito={profileInfo.cafecito} />
+                    <p className="Pcafecito">
+                      Apoya su trabajo con un cafecito
+                    </p>
+                  </PaperCafecito>
+                )}
               </PaperStyle5>
+              <PaperProyectos>
+                <PaperTitulo>
+                  <h5 className="Proyectos">Proyectos</h5>
+                </PaperTitulo>
+                <PaperPelis>
+                  {pelisdeluser ? (
+                    pelisdeluser?.map((data) => {
+                      console.log(data);
+                      return (
+                        <Grid item m={3}>
+                          <Cartas
+                            id={data.id}
+                            title={data.title}
+                            poster={data.poster}
+                          />
+                        </Grid>
+                      );
+                    })
+                  ) : (
+                    <img
+                      src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
+                      alt="not found"
+                    />
+                  )}
+                </PaperPelis>
+              </PaperProyectos>
+              <PaperFavoritos>
+                <PaperTitulo>
+                  <h5 className="Proyectos">
+                    Peliculas favoritas de {profileInfo?.name}
+                  </h5>
+                </PaperTitulo>
+                  {profileInfo?.id && <FavListUser userId={id} />}
+              </PaperFavoritos>
             </PaperMid>
           </PaperTop>
-          <PaperBot></PaperBot>{" "}
-          <div className="detalles4">
-            {profileInfo?.cafecito && (
-              <CafecitoBtn linkCafecito={profileInfo.cafecito} />
-            )}
-
-            <h5 className="Title">Proyectos</h5>
-            <div>
-              <Grid container spacing={15}>
-                {pelisdeluser ? (
-                  pelisdeluser?.map(data => {
-                    console.log(data);
-                    return (
-                      <Grid item m={3}>
-                        <Cartas
-                          id={data.id}
-                          title={data.title}
-                          poster={data.poster}
-                        />
-                      </Grid>
-                    );
-                  })
-                ) : (
-                  <img
-                    src="https://i.pinimg.com/originals/3d/80/64/3d8064758e54ec662e076b6ca54aa90e.gif"
-                    alt="not found"
-                  />
-                )}
-              </Grid>
-            </div>
-          </div>
-          <div>
-            <div>
-              <h5 className="Title">
-                Peliculas favoritas de {profileInfo?.name}
-              </h5>
-            </div>
-            <div>
-              <h2>Lista de peliculas favoritas.</h2>
-              {profileInfo?.id && <FavListUser userId={id} />}
-            </div>
-          </div>
           <Footer />
         </Box>
       </>
