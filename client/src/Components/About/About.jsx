@@ -16,6 +16,8 @@ import IconButton from "@material-ui/core/IconButton";
 import deco from "./deco.png";
 import deco2 from "./deco2.png";
 import Divider from '@mui/material/Divider';
+import GitHubIcon from '@mui/icons-material/GitHub';
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor:
     "black" /* theme.palette.mode === 'dark' ? '#1A2027' : '#fff' */,
@@ -177,39 +179,155 @@ export default function About() {
         <Box sx={{ paddingTop: 15, flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <ItemStyle >Key</ItemStyle>
+              <ItemStyle ><IconButton
+                  onClick={() => {
+                   window.open('https://github.com/keyn4','_blank');
+                  }}
+                >
+                  <GitHubIcon
+                    sx={{
+                      color: grey[200],
+                      ":hover": {
+                        color: "#FFBE0B",
+                      },
+                    }}
+                    fontSize="large"
+                  />
+                </IconButton> Key</ItemStyle>
               <ItemStyle>keynarafaelp@gmail.com</ItemStyle>
+             
             </Grid>
             <Grid item xs={4}>
-              <ItemStyle>Valen</ItemStyle>
+              <ItemStyle><IconButton
+                  onClick={() => {
+                   window.open('https://github.com/valentinnavalos','_blank');
+                  }}
+                >
+                  <GitHubIcon
+                    sx={{
+                      color: grey[200],
+                      ":hover": {
+                        color: "#FFBE0B",
+                      },
+                    }}
+                    fontSize="large"
+                  />
+                </IconButton>Valen</ItemStyle>
               <ItemStyle>valentinnavalos@gmail.com</ItemStyle>
             </Grid>
             <Grid item xs={4}>
-              <ItemStyle>Agus</ItemStyle>
+              <ItemStyle><IconButton
+                  onClick={() => {
+                   window.open('https://github.com/AgusRobert','_blank');
+                  }}
+                >
+                  <GitHubIcon
+                    sx={{
+                      color: grey[200],
+                      ":hover": {
+                        color: "#FFBE0B",
+                      },
+                    }}
+                    fontSize="large"
+                  />
+                </IconButton>Agus</ItemStyle>
               <ItemStyle>iabichellarobert@gmail.com</ItemStyle>
             </Grid>
             <Grid item xs={4}>
-              <ItemStyle>Xavi</ItemStyle>
+              <ItemStyle><IconButton
+                  onClick={() => {
+                   window.open('https://github.com/Xavier2092','_blank');
+                  }}
+                >
+                  <GitHubIcon
+                    sx={{
+                      color: grey[200],
+                      ":hover": {
+                        color: "#FFBE0B",
+                      },
+                    }}
+                    fontSize="large"
+                  />
+                </IconButton>Xavi</ItemStyle>
               <ItemStyle>2092.rxcm@gmail.com</ItemStyle>
             </Grid>
             <Grid item xs={4}>
-              <ItemStyle>Facu</ItemStyle>
+              <ItemStyle><IconButton
+                  onClick={() => {
+                   window.open('https://github.com/fsr1410','_blank');
+                  }}
+                >
+                  <GitHubIcon
+                    sx={{
+                      color: grey[200],
+                      ":hover": {
+                        color: "#FFBE0B",
+                      },
+                    }}
+                    fontSize="large"
+                  />
+                </IconButton>Facu</ItemStyle>
               <ItemStyle>faq.ramos.14101999@gmail.com</ItemStyle>
             </Grid>
             <Grid item xs={4}>
-              <ItemStyle>Gus</ItemStyle>
+              <ItemStyle><IconButton
+                  onClick={() => {
+                   window.open('https://github.com/guenga1968','_blank');
+                  }}
+                >
+                  <GitHubIcon
+                    sx={{
+                      color: grey[200],
+                      ":hover": {
+                        color: "#FFBE0B",
+                      },
+                    }}
+                    fontSize="large"
+                  />
+                </IconButton>Gus</ItemStyle>
               <ItemStyle>gustavogallesio@hotmail.com</ItemStyle>
             </Grid>
             <Grid item xs={4}>
-              <ItemStyle>Dani</ItemStyle>
+              <ItemStyle><IconButton
+                  onClick={() => {
+                   window.open('https://github.com/Aterael','_blank');
+                  }}
+                >
+                  <GitHubIcon
+                    sx={{
+                      color: grey[200],
+                      ":hover": {
+                        color: "#FFBE0B",
+                      },
+                    }}
+                    fontSize="large"
+                  />
+                </IconButton>Dani</ItemStyle>
               <ItemStyle>dasmmer@gmail.com</ItemStyle>
             </Grid>
             <Grid item xs={4}>
-              <ItemStyle>Ton</ItemStyle>
+              <ItemStyle><IconButton
+                  onClick={() => {
+                   window.open('https://github.com/gastond90','_blank');
+                  }}
+                >
+                  <GitHubIcon
+                    sx={{
+                      color: grey[200],
+                      ":hover": {
+                        color: "#FFBE0B",
+                      },
+                    }}
+                    fontSize="large"
+                  />
+                </IconButton>Ton</ItemStyle>
               <ItemStyle>gduba90@gmail.com</ItemStyle>
             </Grid>
             <Grid item xs={4}>
-              <ItemStyle>
+              <ItemStyle sx={{
+                      paddingBottom:3.7,
+                      paddingTop:2.8
+                    }}>
                 CONTÁCTANOS
                 <IconButton
                   onClick={() => {

@@ -20,6 +20,12 @@ import MovieCreationIcon from "@mui/icons-material/MovieCreation";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2";
 import { deepPurple } from "@mui/material/colors";
+import {  styled } from "@mui/system";
+
+const CardActionsS = styled(CardActions)({
+  display:'flex',
+  justifyContent: "center",
+});
 
 export default function Subs({
   currentSub,
@@ -132,9 +138,8 @@ export default function Subs({
                       {esteplan.currency}/mes
                       <br />
                     </h3>
-                  </CardContent>
-
-                  <CardActions>
+                    
+                  <CardActionsS >
                     {currentSub?.toLowerCase() ===
                     esteplan.name.toLowerCase() ? (
                       <Button
@@ -143,11 +148,25 @@ export default function Subs({
                           onCancel();
                         }}
                         disabled={esteplan.id === 1 ? true : false}
+                        style={{
+                          color: "#f3f6f4",
+                          textShadow: "0 0 1px #351c75, 0 0 2px #351c75",
+                          textAlign: "center",
+                          borderRadius: 5,
+                          padding:5
+                        }}
+                        sx={{
+                          ":hover": {
+                            bgcolor: deepPurple[800],
+                            color: "black",
+                          },
+                        }}
                       >
                         <h3>CANCELAR</h3>
                       </Button>
                     ) : (
                       <Button
+                        
                         size="medium"
                         onClick={() => {
                           onSubscribe(esteplan);
@@ -156,10 +175,12 @@ export default function Subs({
                           color: "#f3f6f4",
                           textShadow: "0 0 1px #351c75, 0 0 2px #351c75",
                           textAlign: "center",
+                          borderRadius: 5,
+                          padding:5
                         }}
                         sx={{
                           ":hover": {
-                            bgcolor: deepPurple[200],
+                            bgcolor: deepPurple[800],
                             color: "black",
                           },
                         }}
@@ -167,7 +188,9 @@ export default function Subs({
                         <h3>SELECCIONAR PLAN</h3>
                       </Button>
                     )}
-                  </CardActions>
+                  </CardActionsS>
+                  </CardContent>
+
                 </Card>
               </Grid>
             );

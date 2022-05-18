@@ -40,6 +40,8 @@ const ContainerS = styled(Container)({
 });
 SwiperCore.use([EffectCoverflow, Pagination, Navigation]);
 
+
+
 const Container2 = styled(Paper)({
   display: "flex",
   width: "800px",

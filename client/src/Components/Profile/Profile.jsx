@@ -27,7 +27,7 @@ import {
   Link,
   Typography,
 } from "@mui/material";
-import { color, styled } from "@mui/system";
+import {  styled } from "@mui/system";
 import { deepPurple, grey, amber } from "@mui/material/colors";
 import logo from "../Header/LOGO.png";
 import { useEffect, useState } from "react";
@@ -284,13 +284,21 @@ export default function Profile() {
 
   const handleDeleteProject = (peli) => {
     Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Una vez borrado no podrás recuperarlo",
+    
+      width: 600,
+      timer: 3000,
+      padding: "1em",
+      color: "#716add",
+      background: "black",
+      backdrop: `
+        rgba(0,0,123,0.2)0  `,
+        title: "¿Estás seguro?",
+        text: "Una vez borrado no podrás recuperarlo",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si, borrar",
+      confirmButtonText: "Si, Borrar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -409,6 +417,7 @@ export default function Profile() {
                         ":hover": {
                           bgcolor: deepPurple[200],
                           color: "black",
+                          cursor:"pointer"
                         },
                       }}
                       color="textPrimary"
@@ -461,6 +470,7 @@ export default function Profile() {
                       ":hover": {
                         bgcolor: deepPurple[200],
                         color: "black",
+                        cursor:"pointer"
                       },
                     }}
                     color="textPrimary"
@@ -569,6 +579,7 @@ export default function Profile() {
                                 ":hover": {
                                   bgcolor: deepPurple[200],
                                   color: "black",
+                                  cursor:"pointer"
                                 },
                               }}
                               color="textPrimary"
@@ -585,11 +596,13 @@ export default function Profile() {
                                 ":hover": {
                                   bgcolor: deepPurple[400],
                                   color: "black",
+                                  cursor:"pointer"
                                 },
                               }}
                               color="textPrimary"
                               variant="button"
                               underline="none"
+                              
                               onClick={() => handleDeleteProject(peli)}
                             >
                               x
