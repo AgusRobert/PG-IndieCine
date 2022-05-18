@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../Header/LOGO.png";
@@ -7,34 +6,34 @@ import Footer from "../Footer/Footer";
 import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import { AppBar } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import { borderRadius, Box, display } from "@mui/system";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import { ButtonStyle } from "../StyleMUI/StyleMUI";
 import { Container } from "@mui/material";
-
+import { SERVER_BACK } from "../../paths/path";
 
 const AppStyle = styled(AppBar)({
   opacity: 0.85,
   backgroundColor: "#682F8A",
   position: "fixed",
   justifyContent: "space-between",
-  alignItems: "center"
+  alignItems: "center",
 });
 
 const BoxS = styled(Box)({
-  paddingTop: 80
+  paddingTop: 80,
 });
 const ContainerR = styled(Container)({
-  paddingTop: 300
+  paddingTop: 300,
 });
 const BoxR = styled(Box)({
-  padding:100,
-  backgroundColor:"#424242",
-  display:"flex",
-  justifyContent:"center",
-  alignItems:"center",
-  borderRadius:20
+  padding: 100,
+  backgroundColor: "#424242",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: 20,
 });
 export default function Contact() {
   const [redir, setRedir] = useState(false);
@@ -51,22 +50,22 @@ export default function Contact() {
     };
     /* alert("Espere por Favor"); */
     Swal.fire({
-      title: 'Espere un momento por favor.',
+      title: "Espere un momento por favor.",
       width: 600,
       timer: 5000,
       timerProgressBar: true,
-      padding: '1em',
-      icon: 'warning',
-      color: '#716add',
-      background: 'black',
+      padding: "1em",
+      icon: "warning",
+      color: "#716add",
+      background: "black",
       backdrop: `
         rgba(0,0,123,0.2)0  `,
-      confirmButtonText: 'Entiendo',
-    })
-    await axios.post("http://localhost:3001/mail", data);
+      confirmButtonText: "Entiendo",
+    });
+    await axios.post(`${SERVER_BACK}/mail`, data);
 
     data.type = "contactAdmin";
-    await axios.post("http://localhost:3001/mail", data);
+    await axios.post(`${SERVER_BACK}/mail`, data);
     e.target.reset();
     e.target.boton.disable = true;
     setRedir(true);
@@ -75,7 +74,9 @@ export default function Contact() {
     return (
       <>
         <AppStyle>
-          <Link to={'/'}><img src={logo} alt="img not found" /></Link>
+          <Link to={"/"}>
+            <img src={logo} alt="img not found" />
+          </Link>
         </AppStyle>
         <BoxS></BoxS>
         <div className={s.content}>
@@ -119,11 +120,11 @@ export default function Contact() {
   } else {
     return (
       <ContainerR>
-      <BoxR>
-        <Link to="/">
-          <ButtonStyle>Gracias por contactarnos</ButtonStyle>
-        </Link>
-      </BoxR>
+        <BoxR>
+          <Link to="/">
+            <ButtonStyle>Gracias por contactarnos</ButtonStyle>
+          </Link>
+        </BoxR>
       </ContainerR>
     );
   }

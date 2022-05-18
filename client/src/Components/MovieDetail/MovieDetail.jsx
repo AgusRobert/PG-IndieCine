@@ -19,6 +19,7 @@ import CafecitoBtn from "../CafecitoBtn/CafecitoBtn.jsx";
 import { AppBar, Box, Paper, Typography } from "@mui/material";
 import { deepPurple, grey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { SERVER_FRONT } from "../../paths/path";
 
 const theme = createTheme({
   breakpoints: {
@@ -186,15 +187,17 @@ export default function MovieDetail() {
   let filmId = id;
   const [loaded, setLoaded] = useState(false);
 
-  const allMovies = useSelector(state => state.pelisfiltradas);
-  const profileInfo = useSelector(state => state.profileInfo);
+  const allMovies = useSelector((state) => state.pelisfiltradas);
+  const profileInfo = useSelector((state) => state.profileInfo);
 
-  const pelisdeluser = allMovies.filter(peli => peli.UserId === profileInfo.id);
+  const pelisdeluser = allMovies.filter(
+    (peli) => peli.UserId === profileInfo.id
+  );
 
   /* console.log("USER", pelisdeluser); */
 
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
-  const peli = useSelector(state => state.detalle);
+  const peli = useSelector((state) => state.detalle);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -245,11 +248,11 @@ export default function MovieDetail() {
           background: "black",
           backdrop: `
             rgba(0,0,123,0.2)0  `,
-        }).then(result => {
+        }).then((result) => {
           if (result.isConfirmed) {
             handleSignUp();
           } else {
-            window.location.replace("http://localhost:3000/");
+            window.location.replace(`${SERVER_FRONT}/`);
           }
         })}
       </>
@@ -343,7 +346,7 @@ export default function MovieDetail() {
                           <h3>Género:</h3>
                           {/* <p color="#1f271b">_</p> */}
                           <p>
-                            &nbsp;{peli.Genres?.map(a => a.name).join(", ")}
+                            &nbsp;{peli.Genres?.map((a) => a.name).join(", ")}
                           </p>
                         </PaperStyle4>
                       </PaperStyle6>

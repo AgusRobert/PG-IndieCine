@@ -4,6 +4,7 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { fontSize, fontWeight, styled } from "@mui/system";
 import { deepPurple } from "@mui/material/colors";
+import { SERVER_FRONT } from "../../paths/path";
 
 const StyledLink = styled(Link)({
   marginRight: 150,
@@ -25,9 +26,9 @@ const ConStyle = styled(Container)({
   alignItems: "center",
 });
 const navlinks = [
-  { name: "Nosotros", href: "http://localhost:3000/about" },
-  { name: "Contacto", href: "http://localhost:3000/contact" },
-  { name: "TyC", href: "http://localhost:3000/terms" },
+  { name: "Nosotros", href: `${SERVER_FRONT}/about` },
+  { name: "Contacto", href: `${SERVER_FRONT}/contact` },
+  { name: "TyC", href: `${SERVER_FRONT}/terms` },
 ];
 
 export default function Footer() {
@@ -40,7 +41,7 @@ export default function Footer() {
         flexDirection: "column",
         minHeight: "18vh",
         alignContent: "space-between",
-        marginTop: 4
+        marginTop: 4,
       }}
     >
       <BoxStyle
@@ -52,7 +53,7 @@ export default function Footer() {
         }}
       >
         <ConStyle maxWidth="sm">
-          {navlinks.map(navl => (
+          {navlinks.map((navl) => (
             <StyledLink
               sx={{
                 ":hover": {

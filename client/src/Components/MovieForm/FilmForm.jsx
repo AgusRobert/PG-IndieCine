@@ -19,7 +19,7 @@ import {
   sxSelectStyle,
   sxButtonStyle,
 } from "../StyleMUI/StyleMUI";
-import { SERVER_BACK } from "../../paths/path";
+import { SERVER_BACK, SERVER_FRONT } from "../../paths/path";
 import { styled } from "@mui/material/styles";
 import logo from "../Header/LOGO.png";
 import "./FilmForm.css";
@@ -184,10 +184,10 @@ export function FilmForm() {
   //constantes necesaria para el despacho de peticiones
   const dispatch = useDispatch();
   //paises y generos necesarios para el select
-  const { countries, genres } = useSelector(state => state);
+  const { countries, genres } = useSelector((state) => state);
   const { user } = useAuth0();
   //manejo de cambios en los campos
-  const handleOnChange = e => {
+  const handleOnChange = (e) => {
     console.log("NAME", e.target.name);
     console.log("VALUE", e.target.value);
     setMovieForm({
@@ -202,12 +202,12 @@ export function FilmForm() {
     );
   };
   //manejo de selecciones
-  const selectMultimedia = e => {
+  const selectMultimedia = (e) => {
     e.preventDefault();
     setMultimedia({ ...multimedia, [e.target.name]: e.target.files[0] });
   };
   //manejo de seleccion de generos
-  const handleGenres = e => {
+  const handleGenres = (e) => {
     if (!movieForm?.genres?.includes(e.target.value))
       setMovieForm({
         ...movieForm,
@@ -218,14 +218,14 @@ export function FilmForm() {
   function handleDeleteGenre(e) {
     setMovieForm({
       ...movieForm,
-      genres: movieForm.genres.filter(data => data !== e),
+      genres: movieForm.genres.filter((data) => data !== e),
     });
   }
 
   function handleDeleteActors(e) {
     setMovieForm({
       ...movieForm,
-      mainActors: movieForm.mainActors.filter(data => data !== e),
+      mainActors: movieForm.mainActors.filter((data) => data !== e),
     });
   }
 
@@ -236,10 +236,10 @@ export function FilmForm() {
     !genres?.length && dispatch(getGenres());
   }, [countries?.length, genres?.length, dispatch]);
   //agregado de un actor a los personajes
-  const handleElenco = e => {
+  const handleElenco = (e) => {
     e.preventDefault();
     //comprobacion de un nombre no existente o nulo
-    let comparacion = movieForm.mainActors.map(p => {
+    let comparacion = movieForm.mainActors.map((p) => {
       return p.toLowerCase();
     });
     console.log("COMPARACION", comparacion);
@@ -262,7 +262,7 @@ export function FilmForm() {
     setActor("");
   };
   //manejador de envio del formulario
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const objResponse = {};
     console.log("DATOS FRONT: ", multimedia);
@@ -338,7 +338,7 @@ export function FilmForm() {
         rgba(0,0,123,0.2)0  `,
       confirmButtonText: "Entiendo",
     }).then(() => {
-      window.location.replace("http://localhost:3000/");
+      window.location.replace(`${SERVER_FRONT}`);
     });
     //despacho de la accion para guardar una pelicula
     console.log("Datos actuales: ", movieForm);
@@ -379,7 +379,7 @@ export function FilmForm() {
             <Titulo variant="bold">Sube tu proyecto</Titulo>
           </Box>
         </Box>
-        <form onSubmit={e => onSubmit(e)}>
+        <form onSubmit={(e) => onSubmit(e)}>
           {/* <Container12> */}
           {/* CONTAINER 1 */}
           <PaperStyle4>
@@ -392,7 +392,7 @@ export function FilmForm() {
                 value={movieForm.title}
                 placeholder="Título de la Película"
                 name="title"
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
                 required
               />
               {errores?.title && <p class="errores">{errores.title}</p>}
@@ -404,7 +404,7 @@ export function FilmForm() {
                 value={movieForm.director}
                 name="director"
                 placeholder="Dirección"
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
                 required
               />
               {errores?.director && <p class="errores">{errores.director}</p>}
@@ -420,7 +420,7 @@ export function FilmForm() {
                 value={movieForm.associateProducer}
                 name="associateProducer"
                 placeholder="Productora"
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
                 // required
               />{" "}
               {/* Elenco */}
@@ -432,13 +432,13 @@ export function FilmForm() {
                 value={actor}
                 placeholder="Actores"
                 name="actor"
-                onChange={e => setActor(e.target.value)}
+                onChange={(e) => setActor(e.target.value)}
               />
               <ButtonStyle
                 sx={sxButtonStyle}
                 type="button"
                 name="elenco"
-                onClick={e => handleElenco(e)}
+                onClick={(e) => handleElenco(e)}
               >
                 Añadir
               </ButtonStyle>
@@ -451,7 +451,7 @@ export function FilmForm() {
                 }}
               >
                 <BoxGenre>
-                  {movieForm.mainActors.map(data => (
+                  {movieForm.mainActors.map((data) => (
                     <ButtonStyle2
                       style={{
                         marginBottom: "3px",
@@ -485,7 +485,7 @@ export function FilmForm() {
                 value={movieForm.synopsis}
                 placeholder="Sinopsis"
                 name="synopsis"
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
                 required
               />{" "}
               <br></br>
@@ -505,7 +505,7 @@ export function FilmForm() {
               <SelectStyle
                 style={{ backgroundColor: "#752298", marginBottom: "20px" }}
                 name="country"
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
                 select
                 // label="Pais"
                 variant="outlined"
@@ -515,7 +515,7 @@ export function FilmForm() {
                 <MenuItemStyle hidden={true} disabled>
                   Países
                 </MenuItemStyle>
-                {countries?.map(country => (
+                {countries?.map((country) => (
                   <MenuItemStyle key={country.id} value={country.id}>
                     {country.name}
                   </MenuItemStyle>
@@ -528,7 +528,7 @@ export function FilmForm() {
               <SelectStyle
                 style={{ backgroundColor: "#752298" }}
                 name="genres"
-                onChange={e => handleGenres(e)}
+                onChange={(e) => handleGenres(e)}
                 select
                 // label="Generos"
                 variant="outlined"
@@ -538,7 +538,7 @@ export function FilmForm() {
                 <MenuItemStyle hidden={true} disabled>
                   Géneros
                 </MenuItemStyle>
-                {genres?.map(genre => (
+                {genres?.map((genre) => (
                   <MenuItemStyle key={genre.id} value={genre.name}>
                     {genre.name}
                   </MenuItemStyle>
@@ -546,7 +546,7 @@ export function FilmForm() {
               </SelectStyle>
               {/* <GyE2> */}
               <BoxGenre>
-                {movieForm.genres.map(data => (
+                {movieForm.genres.map((data) => (
                   <div style={{ marginRight: "5px" }}>
                     <ButtonStyle2
                       key={data.id}
@@ -569,13 +569,13 @@ export function FilmForm() {
                 style={{ backgroundColor: "#752298", marginBottom: "20px" }}
                 name="year"
                 value={movieForm.year}
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
                 select
                 variant="outlined"
                 size="small"
                 // sx={sxSelectStyle}
               >
-                {años?.map(anio => (
+                {años?.map((anio) => (
                   <MenuItemStyle key={anio} value={anio}>
                     {anio}
                   </MenuItemStyle>
@@ -587,7 +587,7 @@ export function FilmForm() {
               <SelectStyle
                 style={{ backgroundColor: "#752298" }}
                 name="duration"
-                onChange={e => handleOnChange(e)}
+                onChange={(e) => handleOnChange(e)}
                 select
                 // label="Duracion"
                 variant="outlined"
@@ -631,7 +631,7 @@ export function FilmForm() {
                     accept="image/jpg image/png image/jpeg"
                     name="port"
                     placeholder="Portada de la Pelicula"
-                    onChange={e => selectMultimedia(e)}
+                    onChange={(e) => selectMultimedia(e)}
                     required
                     type="file"
                     hidden
@@ -657,7 +657,7 @@ export function FilmForm() {
                     accept="video/mp4"
                     name="film"
                     placeholder="Subir Película.mp4"
-                    onChange={e => selectMultimedia(e)}
+                    onChange={(e) => selectMultimedia(e)}
                     type="file"
                     hidden
                   />

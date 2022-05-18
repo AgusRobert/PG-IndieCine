@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { ApiClient } from "adminjs";
 import { Box, H2, Text, Button } from "@adminjs/design-system";
 import axios from "axios";
+import { SERVER_BACK } from "../../paths/path";
 
 const api = new ApiClient();
 
 const Dashboard = (props) => {
- 
   const mail = {
     type: "creator",
     name: props.record.params.name,
@@ -22,12 +22,12 @@ const Dashboard = (props) => {
     });
   }, []);
   async function handleAceptar() {
-     axios.post("http://localhost:3001/mail", mail);
+    axios.post(`${SERVER_BACK}/mail`, mail);
     setAceptar(true);
   }
   async function handleRechazar() {
     mail.type = "creatorRechazo";
-     axios.post("http://localhost:3001/mail", mail);
+    axios.post(`${SERVER_BACK}/mail`, mail);
     setRechazar(true);
   }
 
@@ -64,6 +64,5 @@ const Dashboard = (props) => {
     </Box>
   );
 };
-
 
 export default Dashboard;
