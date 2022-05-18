@@ -1,2 +1,2 @@
-export const SERVER_BACK = "http://localhost:3001";
-export const SERVER_FRONT = "http://localhost:3000";
+export const SERVER_BACK = "https://cinde.herokuapp.com";
+export const SERVER_FRONT = " https://cindie-front.vercel.app";
