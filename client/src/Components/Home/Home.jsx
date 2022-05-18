@@ -198,7 +198,15 @@ export default function Home() {
               {/* CARDS / TWITTER Y RECOMENDACIONES */}
               <Grid container>
                 {/* CARDS */}
-                <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={9}
+                  lg={9}
+                  xl={9}
+                  marginBottom={2}
+                >
                   <Box>
                     <Grid
                       container
@@ -206,7 +214,6 @@ export default function Home() {
                       direction="row"
                       justifyContent="center"
                       alignItems="center"
-                      marginBottom={6}
                     >
                       {allMovies ? (
                         allMovies?.map(data => {
