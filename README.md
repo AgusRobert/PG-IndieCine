@@ -14,6 +14,9 @@ Cindie is a platform where we offer a wide catalog of fiction feature films, doc
 
 -> **Home**
 > In the home of the page you can see a login button, a swiper with new releases, filters and a search bar to find your favorite movies, a sidebar with Cindie's twitter and a recommendations section.
+> ![home0](https://i.ibb.co/C9C64zq/home0.png)
+> ![home1](https://i.ibb.co/6nbt8Hq/home1.png)
+> ![home2](https://i.ibb.co/JqFMnt8/home2.png)
 
 -> **MovieDetail**
 > If you are registered, you can access the MovieDetail section where you will see the movie of your choice and all its data, in addition to being able to visit the profile of the author of the movie, you can add it to your favorites list and/or make comments.
