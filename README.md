@@ -1,8 +1,8 @@
 <h1 align="center">Welcome to CINDIE 👋</h1>
 <p>
+Cindie is a platform where we offer a wide catalog of fiction feature films, documentaries and short films made by Latin American artists for the Latin American community. Whoever visits Cindie can enjoy a wide variety of films of all genres and nationalities, both by established authors and new talents of independent cinema.
 </p>
 
-> Cindie is a platform where we offer a wide catalog of fiction feature films, documentaries and short films made by Latin American artists for the Latin American community. Whoever visits Cindie can enjoy a wide variety of films of all genres and nationalities, both by established authors and new talents of independent cinema.
 
 > **Our mission** is to provide a space for those who want to show their film content to the Latin American community. In the same way we want whoever wants to be able to consume and enjoy that original content.
 
