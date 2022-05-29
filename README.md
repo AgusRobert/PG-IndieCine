@@ -17,9 +17,12 @@ Cindie is a platform where we offer a wide catalog of fiction feature films, doc
 
 -> **MovieDetail**
 > If you are registered, you can access the MovieDetail section where you will see the movie of your choice and all its data, in addition to being able to visit the profile of the author of the movie, you can add it to your favorites list and/or make comments.
+![MovieDetail0](https://i.ibb.co/TbFJ83Y/movie-Detail0.png)
+![MovieDetail1](https://i.ibb.co/y049F1n/movie-Detail1.png)
 
 -> **Author’s profile**
 > There, you will find information about the author of your favorite film, his other projects carried out and his list of favorite films.
+> [author'sProfileImage](https://i.ibb.co/HBTRcY6/authors-Profile0.png)
 
 -> **My profile**
 > By logging in and accessing the profile you can view your data, along with a list of your favorite movies. There is also the option to become a movie maker to showcase your content on the platform and reach more people.
@@ -30,7 +33,8 @@ Cindie is a platform where we offer a wide catalog of fiction feature films, doc
 
 -> **Admin**
 > In the case of the Superuser, you can access through the front and with an email validated by the page to Cindie's administration dashboard. Here you can approve users or movies, change plans, notify users by email and modify all the fields on the page that are necessary.
-
+[adminImage](https://i.ibb.co/h7KvqLb/admin0.png)
+[adminImage1](https://i.ibb.co/zfKk6nL/admin1.png)
 
 ## The team
 
