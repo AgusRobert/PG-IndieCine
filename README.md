@@ -9,7 +9,8 @@ Cindie is a platform where we offer a wide catalog of fiction feature films, doc
 
 **About us?** We are a team from different parts of Latin America who decided to develop this website as the final project of our Full Stack-Developers career.
 
-                                         -------------------------------------------------------
+
+## Our Project!
 
 -> **Home**
 > In the home of the page you can see a login button, a swiper with new releases, filters and a search bar to find your favorite movies, a sidebar with Cindie's twitter and a recommendations section.
