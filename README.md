@@ -3,12 +3,11 @@
 Cindie is a platform where we offer a wide catalog of fiction feature films, documentaries and short films made by Latin American artists for the Latin American community. Whoever visits Cindie can enjoy a wide variety of films of all genres and nationalities, both by established authors and new talents of independent cinema.
 </p>
 
+**Our mission** is to provide a space for those who want to show their film content to the Latin American community. In the same way we want whoever wants to be able to consume and enjoy that original content.
 
-> **Our mission** is to provide a space for those who want to show their film content to the Latin American community. In the same way we want whoever wants to be able to consume and enjoy that original content.
+**Our vision** is to be the platform par excellence for the distribution and consumption of independent content.
 
-> **Our vision** is to be the platform par excellence for the distribution and consumption of independent content.
-
-> **About us?** We are a team from different parts of Latin America who decided to develop this website as the final project of our Full Stack-Developers career.
+**About us?** We are a team from different parts of Latin America who decided to develop this website as the final project of our Full Stack-Developers career.
 
 * Github: [@valentinnavalos @AgusRobert @Aterael @fsr1410 @guenga1968 @gastond90 @keyn4 @Xavier2092 ](https://github.com/valentinnavalos @AgusRobert @Aterael @fsr1410 @guenga1968 @gastond90 @keyn4 @Xavier2092 )
 * LinkedIn: [@richardcarrillodev @iabichellarobert @dasmmer @gastonduba @gustavogallesio @keynarp @seba-ramos @valentinnavalos ](https://linkedin.com/in/richardcarrillodev @iabichellarobert @dasmmer @gastonduba @gustavogallesio @keynarp @seba-ramos @valentinnavalos )
