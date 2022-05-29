@@ -45,6 +45,6 @@ Cindie is a platform where we offer a wide catalog of fiction feature films, doc
 
 ## Show your support
 
-Give a ⭐️ if this project helped you!
+Give a ⭐️ if this project liked you!
 
 ***
