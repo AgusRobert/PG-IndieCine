@@ -29,6 +29,8 @@ Cindie is a platform where we offer a wide catalog of fiction feature films, doc
 
 -> **My profile**
 > By logging in and accessing the profile you can view your data, along with a list of your favorite movies. There is also the option to become a movie maker to showcase your content on the platform and reach more people.
+> ![myProfile](https://i.ibb.co/pWJqxYk/my-Profile0.png)
+> ![myProfile1](https://i.ibb.co/QnX4Rxb/my-Profile1.png)
 
 -> **Creator user profile**
 > To be a creator user you can register using the form. Once approved by the admin, the link to upload movies is displayed on your profile according to the subscription plan you are on.
