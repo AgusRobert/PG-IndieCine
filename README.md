@@ -35,6 +35,8 @@ Cindie is a platform where we offer a wide catalog of fiction feature films, doc
 -> **Creator user profile**
 > To be a creator user you can register using the form. Once approved by the admin, the link to upload movies is displayed on your profile according to the subscription plan you are on.
 > We offer 3 plans, with different content upload capacity: Free Plan, Cult Plan, Creator Plan. You can upload up to 2 movies with the free plan and if you want to upload more content, the page will redirect you to MercadoPago to pay for the chosen subscription.
+> ![creatorUser](https://i.ibb.co/pxJBDJ4/creator.png)
+> ![creatorUser1](https://i.ibb.co/S5Ww8tJ/creator1.png)
 
 -> **Admin**
 > In the case of the Superuser, you can access through the front and with an email validated by the page to Cindie's administration dashboard. Here you can approve users or movies, change plans, notify users by email and modify all the fields on the page that are necessary.
