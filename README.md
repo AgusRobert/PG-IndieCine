@@ -34,8 +34,14 @@ Cindie is a platform where we offer a wide catalog of fiction feature films, doc
 
 ## The team
 
-* Github: [@valentinnavalos @AgusRobert @Aterael @fsr1410 @guenga1968 @gastond90 @keyn4 @Xavier2092 ](https://github.com/valentinnavalos @AgusRobert @Aterael @fsr1410 @guenga1968 @gastond90 @keyn4 @Xavier2092 )
-* LinkedIn: [@richardcarrillodev @iabichellarobert @dasmmer @gastonduba @gustavogallesio @keynarp @seba-ramos @valentinnavalos ](https://linkedin.com/in/richardcarrillodev @iabichellarobert @dasmmer @gastonduba @gustavogallesio @keynarp @seba-ramos @valentinnavalos )
+* Keyna Payano: [Linkedin](https://www.linkedin.com/in/keynarp/) [GitHub](https://github.com/keyn4)
+* Agustín Iabichella: [Linkedin](https://www.linkedin.com/in/iabichellarobert/) [GitHub](https://github.com/AgusRobert)
+* Daniel Sanchez: [Linkedin](https://www.linkedin.com/in/dasmmer/) [GitHub](https://github.com/Aterael)
+* Valentín Avalos: [Linkedin](https://www.linkedin.com/in/valentinnavalos/) [GitHub](https://github.com/valentinnavalos)
+* Gustavo Gallesio: [Linkedin](https://www.linkedin.com/in/gustavogallesio/) [GitHub](https://github.com/guenga1968)
+* Gastón Duba: [Linkedin](https://www.linkedin.com/in/gastonduba/) [GitHub](https://github.com/gastond90)
+* Xavier Carrillo: [Linkedin](https://www.linkedin.com/in/richardcarrillodev/) [GitHub](https://github.com/Xavier2092)
+* Facundo Ramos: [Linkedin](https://www.linkedin.com/in/seba-ramos/) [GitHub](https://github.com/fsr1410)
 
 ## Show your support
 
